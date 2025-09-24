@@ -183,7 +183,7 @@ ul {
 
 .wrapper-heading::after {
 	position: absolute;
-	content: url(../img/zigzag.svg);
+	content: url(../img/yzigzag.svg);
 	top: 35px;
 	left: 0;
 	transform: rotateX(180deg);
