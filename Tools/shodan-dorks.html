@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Faizee Asad">
+    <meta name="referrer" content="never">
+    <title>Shodan Dork - Advanced IoT Search Tool</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+            min-height: 100vh;
+            color: #ffffff;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Animated background particles */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.15) 0%, transparent 50%);
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 1; }
+            50% { transform: translateY(-20px) rotate(180deg); opacity: 0.8; }
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 4rem 2rem 3rem;
+            position: relative;
+        }
+
+        .main-title {
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 40px rgba(102, 126, 234, 0.5);
+            margin-bottom: 1rem;
+            animation: glow 2s ease-in-out infinite alternate;
+            transform: perspective(1000px) rotateX(15deg);
+        }
+
+        @keyframes glow {
+            from { filter: drop-shadow(0 0 20px rgba(102, 126, 234, 0.5)); }
+            to { filter: drop-shadow(0 0 40px rgba(102, 126, 234, 0.8)); }
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            color: #a0aec0;
+            font-weight: 300;
+            margin-bottom: 0.5rem;
+        }
+
+        .author {
+            font-size: 1.1rem;
+            color: #718096;
+            font-weight: 400;
+        }
+
+        /* Search container */
+        .search-container {
+            display: flex;
+            justify-content: center;
+            margin: 2rem auto 4rem;
+            padding: 0 2rem;
+        }
+
+        .search-box {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 1.5rem 2rem;
+            font-size: 1.1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            color: #ffffff;
+            backdrop-filter: blur(20px);
+            transition: all 0.3s ease;
+            outline: none;
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.3),
+                inset 0 2px 4px rgba(255, 255, 255, 0.1);
+        }
+
+        .search-input:focus {
+            border-color: #667eea;
+            box-shadow: 
+                0 0 0 4px rgba(102, 126, 234, 0.2),
+                0 12px 40px rgba(0, 0, 0, 0.4),
+                inset 0 2px 4px rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .search-input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* Main content grid */
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            padding: 0 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .category-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 2rem;
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .category-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .category-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 
+                0 20px 60px rgba(0, 0, 0, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+
+        .category-card:hover::before {
+            opacity: 1;
+        }
+
+        .category-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .dork-link {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            margin-bottom: 0.5rem;
+            color: #cbd5e0;
+            text-decoration: none;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid transparent;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+        }
+
+        .dork-link:hover {
+            background: rgba(102, 126, 234, 0.1);
+            border-color: rgba(102, 126, 234, 0.3);
+            color: #ffffff;
+            transform: translateX(8px);
+            box-shadow: 0 4px 20px rgba(102, 126, 234, 0.2);
+        }
+
+        .dork-icon {
+            font-size: 1rem;
+            opacity: 0.7;
+        }
+
+        .cve-badge {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: #ffffff;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 12px;
+            font-weight: 600;
+            margin-left: auto;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 4rem 2rem 2rem;
+            margin-top: 4rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-text {
+            color: #a0aec0;
+            font-size: 1rem;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+                padding: 0 1rem;
+            }
+            
+            .header {
+                padding: 2rem 1rem 2rem;
+            }
+            
+            .search-container {
+                padding: 0 1rem;
+            }
+            
+            .category-card {
+                padding: 1.5rem;
+            }
+        }
+
+        /* 3D Elements */
+        .floating-cube {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.3), rgba(118, 75, 162, 0.3));
+            border-radius: 12px;
+            animation: cube-float 8s ease-in-out infinite;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        @keyframes cube-float {
+            0%, 100% { transform: translateY(0px) rotateZ(0deg) rotateY(0deg); }
+            25% { transform: translateY(-20px) rotateZ(90deg) rotateY(90deg); }
+            50% { transform: translateY(0px) rotateZ(180deg) rotateY(180deg); }
+            75% { transform: translateY(-20px) rotateZ(270deg) rotateY(270deg); }
+        }
+
+        .cube-1 { top: 20%; right: 10%; animation-delay: -2s; }
+        .cube-2 { top: 60%; left: 5%; animation-delay: -4s; }
+        .cube-3 { top: 80%; right: 20%; animation-delay: -6s; }
+    </style>
+</head>
+<body>
+    <div class="particles"></div>
+    <div class="floating-cube cube-1"></div>
+    <div class="floating-cube cube-2"></div>
+    <div class="floating-cube cube-3"></div>
+
+    <div class="header">
+        <h1 class="main-title">Shodan Dork</h1>
+        <p class="subtitle">Advanced IoT & Infrastructure Search</p>
+        <p class="author">by Faizee Asad</p>
+    </div>
+
+    <div class="search-container">
+        <div class="search-box">
+            <input 
+                id="target" 
+                name="target" 
+                class="search-input" 
+                placeholder='Enter target (e.g., org:"google" or ssl:"microsoft.com")' 
+                autofocus 
+                type="text"
+            >
+        </div>
+    </div>
+
+    <div class="content-grid">
+        <div class="category-card">
+            <h3 class="category-title">🗄️ Database Exposures</h3>
+            <a href="#" onclick="shodan_it(1)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>MySQL Database</span>
+            </a>
+            <a href="#" onclick="shodan_it(2)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>MongoDB (No Auth)</span>
+            </a>
+            <a href="#" onclick="shodan_it(13)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>CouchDB</span>
+            </a>
+            <a href="#" onclick="shodan_it(12)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>phpMyAdmin</span>
+            </a>
+            <a href="#" onclick="shodan_it(34)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>Mongo Express GUI</span>
+            </a>
+        </div>
+
+        <div class="category-card">
+            <h3 class="category-title">🔐 Authentication Issues</h3>
+            <a href="#" onclick="shodan_it(3)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>Default Passwords</span>
+            </a>
+            <a href="#" onclick="shodan_it(4)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>Guest Login OK</span>
+            </a>
+            <a href="#" onclick="shodan_it(9)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>Auth Disabled</span>
+            </a>
+            <a href="#" onclick="shodan_it(8)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>Default WiFi Password</span>
+            </a>
+            <a href="#" onclick="shodan_it(30)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>VNC No Auth (RFB)</span>
+            </a>
+            <a href="#" onclick="shodan_it(33)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>Unauthorized Access</span>
+            </a>
+        </div>
+
+        <div class="category-card">
+            <h3 class="category-title">🎛️ Control Panels & Dashboards</h3>
+            <a href="#" onclick="shodan_it(10)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>Dashboard</span>
+            </a>
+            <a href="#" onclick="shodan_it(11)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>Control Panel</span>
+            </a>
+            <a href="#" onclick="shodan_it(5)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>Jenkins Dashboard</span>
+            </a>
+            <a href="#" onclick="shodan_it(21)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>All Jenkins Servers</span>
+            </a>
+            <a href="#" onclick="shodan_it(35)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>Jenkins CI</span>
+            </a>
+            <a href="#" onclick="shodan_it(22)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>Grafana Dashboards</span>
+            </a>
+            <a href="#" onclick="shodan_it(14)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>Kibana</span>
+            </a>
+            <a href="#" onclick="shodan_it(25)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>Argo CD</span>
+                <span class="cve-badge">CVE</span>
+            </a>
+        </div>
+
+        <div class="category-card">
+            <h3 class="category-title">🚨 Critical CVE Exploits</h3>
+            <a href="#" onclick="shodan_it(15)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>Microsoft Exchange RCE</span>
+                <span class="cve-badge">CVE-2021-26855</span>
+            </a>
+            <a href="#" onclick="shodan_it(16)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>WSO2 RCE</span>
+                <span class="cve-badge">CVE-2022-29464</span>
+            </a>
+            <a href="#" onclick="shodan_it(17)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>WSO2 RCE (Alt)</span>
+                <span class="cve-badge">CVE-2022-29464</span>
+            </a>
+            <a href="#" onclick="shodan_it(17.1)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>Cisco ASA</span>
+                <span class="cve-badge">CVE-2020-3452</span>
+            </a>
+            <a href="#" onclick="shodan_it(19)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>VMware Workspace ONE</span>
+                <span class="cve-badge">CVE-2022-22954</span>
+            </a>
+            <a href="#" onclick="shodan_it(23)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>Zabbix Auth Bypass</span>
+                <span class="cve-badge">CVE-2022-24255</span>
+            </a>
+            <a href="#" onclick="shodan_it(24)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>Argo CD Path Traversal</span>
+                <span class="cve-badge">CVE-2022-24348</span>
+            </a>
+            <a href="#" onclick="shodan_it(31)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>Pulse Secure VPN</span>
+                <span class="cve-badge">CVE-2019-11510</span>
+            </a>
+            <a href="#" onclick="shodan_it(32)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>F5 BIG-IP</span>
+                <span class="cve-badge">CVE-2020-5902</span>
+            </a>
+            <a href="#" onclick="shodan_it(36)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>Intel AMT</span>
+                <span class="cve-badge">CVE-2017-5689</span>
+            </a>
+        </div>
+
+        <div class="category-card">
+            <h3 class="category-title">🌐 Web Applications</h3>
+            <a href="#" onclick="shodan_it(6)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>WordPress Config</span>
+            </a>
+            <a href="#" onclick="shodan_it(24)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>Horde Webmail</span>
+            </a>
+            <a href="#" onclick="shodan_it(26)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>Tomcat (Log4j)</span>
+            </a>
+            <a href="#" onclick="shodan_it(20)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>Exposed API Keys</span>
+            </a>
+            <a href="#" onclick="shodan_it(37)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>Apache Directory Listings</span>
+            </a>
+        </div>
+
+        <div class="category-card">
+            <h3 class="category-title">💻 Network Services</h3>
+            <a href="#" onclick="shodan_it(7)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>Root Telnet Session</span>
+            </a>
+            <a href="#" onclick="shodan_it(18)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>Windows SMB</span>
+            </a>
+            <a href="#" onclick="shodan_it(27)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>Telnet (No Password)</span>
+            </a>
+            <a href="#" onclick="shodan_it(28)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>Windows RDP</span>
+            </a>
+            <a href="#" onclick="shodan_it(29)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>ProFTPD</span>
+            </a>
+            <a href="#" onclick="shodan_it(38)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>HP Printers</span>
+            </a>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p class="footer-text">
+            Created by <strong>Faizee Asad</strong> • Thanks to faisalahmed and Mr.Koanti
+        </p>
+    </div>
+
+    <script>
+        function shodan_it(type) {
+            const site = document.getElementById('target').value;
+            let url = 'https://www.shodan.io/search?query=' + site + " ";
+
+            switch(type) {
+                case 1: url += 'product:MySQL'; break;
+                case 2: url += '"MongoDB Server Information" -authentication'; break;
+                case 3: url += '"default password"'; break;
+                case 4: url += 'guest login ok'; break;
+                case 5: url += 'x-jenkins 200'; break;
+                case 6: url += 'http.html:"* The wp-config.php creation script uses this file"'; break;
+                case 7: url += '"root@" port:23 -login -password -name -Session '; break;
+                case 8: url += 'html:"def_wirelesspassword"'; break;
+                case 9: url += '"authentication disabled"'; break;
+                case 10: url += 'http.title:"dashboard"'; break;
+                case 11: url += 'http.title:"control panel"'; break;
+                case 12: url += 'http.title:"phpmyadmin"'; break;
+                case 13: url += 'product:"CouchDB"'; break;
+                case 14: url += 'kibana content-length:217'; break;
+                case 15: url += 'http.title:outlook exchange'; break;
+                case 16: url += 'http.favicon.hash:1398055326'; break;
+                case 17: url += 'http.html:WSO2'; break;
+                case 17.1: url += '"webvpn="'; break;
+                case 18: url += 'port:"445" os:"Windows"'; break;
+                case 19: url += 'http.favicon.hash:-1250474341'; break;
+                case 20: url += 'http.html:"xoxb-"'; break;
+                case 21: url += 'http.favicon.hash:81586312'; break;
+                case 22: url += 'http.title:"Grafana"'; break;
+                case 23: url += 'http.html:zabbix'; break;
+                case 24: url += 'http.html:Horde:'; break;
+                case 25: url += 'http.title:"Argo CD"'; break;
+                case 26: url += 'product:tomcat'; break;
+                case 27: url += 'port:23 console gateway'; break;
+                case 28: url += '"\x03\x00\x00\x0b\x06\xd0\x00\x00\x124\x00"'; break;
+                case 29: url += 'proftpd port:21'; break;
+                case 30: url += '"authentication disabled" "RFB 003.008"'; break;
+                case 31: url += 'http.html:/dana-na/'; break;
+                case 32: url += 'http.title:"BIG-IP&reg;-Redirect"'; break;
+                case 33: url += '"unauthorized"'; break;
+                case 34: url += '"Set-Cookie: mongo-express=" "200 OK"'; break;
+                case 35: url += '"X-Jenkins" "Set-Cookie: JSESSIONID" http.title:"Dashboard"'; break;
+                case 36: url += '"Intel(R) Active Management Technology" port:623,664,16992,16993,16994,16995'; break;
+                case 37: url += 'http.title:"Index of /" http.html:".pem"'; break;
+                case 38: url += '"Serial Number:" "Built:" "Server: HP HTTP"'; break;
+            }
+            window.open(url);
+        }
+
+        // Create animated particles
+        function createParticles() {
+            const particlesContainer = document.querySelector('.particles');
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 6 + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Initialize particles on load
+        document.addEventListener('DOMContentLoaded', createParticles);
+
+        // Enter key functionality
+        document.getElementById('target').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                // You can add default search behavior here if needed
+            }
+        });
+    </script>
+</body>
+</html>

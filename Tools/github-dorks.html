@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Faizee Asad">
+    <meta name="referrer" content="never">
+    <title>GitHub Dork - Advanced Search Tool</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+            min-height: 100vh;
+            color: #ffffff;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Animated background particles */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.15) 0%, transparent 50%);
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 1; }
+            50% { transform: translateY(-20px) rotate(180deg); opacity: 0.8; }
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 4rem 2rem 3rem;
+            position: relative;
+        }
+
+        .main-title {
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 40px rgba(102, 126, 234, 0.5);
+            margin-bottom: 1rem;
+            animation: glow 2s ease-in-out infinite alternate;
+            transform: perspective(1000px) rotateX(15deg);
+        }
+
+        @keyframes glow {
+            from { filter: drop-shadow(0 0 20px rgba(102, 126, 234, 0.5)); }
+            to { filter: drop-shadow(0 0 40px rgba(102, 126, 234, 0.8)); }
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            color: #a0aec0;
+            font-weight: 300;
+            margin-bottom: 0.5rem;
+        }
+
+        .author {
+            font-size: 1.1rem;
+            color: #718096;
+            font-weight: 400;
+        }
+
+        /* Search container */
+        .search-container {
+            display: flex;
+            justify-content: center;
+            margin: 2rem auto 4rem;
+            padding: 0 2rem;
+        }
+
+        .search-box {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 1.5rem 2rem;
+            font-size: 1.1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            color: #ffffff;
+            backdrop-filter: blur(20px);
+            transition: all 0.3s ease;
+            outline: none;
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.3),
+                inset 0 2px 4px rgba(255, 255, 255, 0.1);
+        }
+
+        .search-input:focus {
+            border-color: #667eea;
+            box-shadow: 
+                0 0 0 4px rgba(102, 126, 234, 0.2),
+                0 12px 40px rgba(0, 0, 0, 0.4),
+                inset 0 2px 4px rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .search-input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* Main content grid */
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            padding: 0 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .category-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 2rem;
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .category-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .category-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 
+                0 20px 60px rgba(0, 0, 0, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+
+        .category-card:hover::before {
+            opacity: 1;
+        }
+
+        .category-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .dork-link {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            margin-bottom: 0.5rem;
+            color: #cbd5e0;
+            text-decoration: none;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid transparent;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+        }
+
+        .dork-link:hover {
+            background: rgba(102, 126, 234, 0.1);
+            border-color: rgba(102, 126, 234, 0.3);
+            color: #ffffff;
+            transform: translateX(8px);
+            box-shadow: 0 4px 20px rgba(102, 126, 234, 0.2);
+        }
+
+        .dork-icon {
+            font-size: 1rem;
+            opacity: 0.7;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 4rem 2rem 2rem;
+            margin-top: 4rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-text {
+            color: #a0aec0;
+            font-size: 1rem;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+                padding: 0 1rem;
+            }
+            
+            .header {
+                padding: 2rem 1rem 2rem;
+            }
+            
+            .search-container {
+                padding: 0 1rem;
+            }
+            
+            .category-card {
+                padding: 1.5rem;
+            }
+        }
+
+        /* 3D Elements */
+        .floating-cube {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.3), rgba(118, 75, 162, 0.3));
+            border-radius: 12px;
+            animation: cube-float 8s ease-in-out infinite;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        @keyframes cube-float {
+            0%, 100% { transform: translateY(0px) rotateZ(0deg) rotateY(0deg); }
+            25% { transform: translateY(-20px) rotateZ(90deg) rotateY(90deg); }
+            50% { transform: translateY(0px) rotateZ(180deg) rotateY(180deg); }
+            75% { transform: translateY(-20px) rotateZ(270deg) rotateY(270deg); }
+        }
+
+        .cube-1 { top: 20%; right: 10%; animation-delay: -2s; }
+        .cube-2 { top: 60%; left: 5%; animation-delay: -4s; }
+        .cube-3 { top: 80%; right: 20%; animation-delay: -6s; }
+    </style>
+</head>
+<body>
+    <div class="particles"></div>
+    <div class="floating-cube cube-1"></div>
+    <div class="floating-cube cube-2"></div>
+    <div class="floating-cube cube-3"></div>
+
+    <div class="header">
+        <h1 class="main-title">GitHub Dork</h1>
+        <p class="subtitle">Advanced Repository Search Tool</p>
+        <p class="author">by Faizee Asad</p>
+    </div>
+
+    <div class="search-container">
+        <div class="search-box">
+            <input 
+                id="target" 
+                name="target" 
+                class="search-input" 
+                placeholder='Enter target domain (e.g., "microsoft.com" or org:github)' 
+                autofocus 
+                type="text"
+            >
+        </div>
+    </div>
+
+    <div class="content-grid">
+        <div class="category-card">
+            <h3 class="category-title">🔑 API Keys & Secrets</h3>
+            <a href="#" onclick="shodan_it(1)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>api_key</span>
+            </a>
+            <a href="#" onclick="shodan_it(2)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>AWS_SECRET_ACCESS_KEY</span>
+            </a>
+            <a href="#" onclick="shodan_it(3)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>app_secret</span>
+            </a>
+            <a href="#" onclick="shodan_it(6)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>aws_access_key_id</span>
+            </a>
+            <a href="#" onclick="shodan_it(7)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>secret</span>
+            </a>
+            <a href="#" onclick="shodan_it(11)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>client secret</span>
+            </a>
+            <a href="#" onclick="shodan_it(45)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>github_token</span>
+            </a>
+            <a href="#" onclick="shodan_it(46)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>HEROKU_API_KEY (JSON)</span>
+            </a>
+            <a href="#" onclick="shodan_it(47)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>HEROKU_API_KEY (Shell)</span>
+            </a>
+            <a href="#" onclick="shodan_it(48)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>HOMEBREW_GITHUB_API_TOKEN</span>
+            </a>
+            <a href="#" onclick="shodan_it(62)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>token</span>
+            </a>
+        </div>
+
+        <div class="category-card">
+            <h3 class="category-title">🗃️ Configuration Files</h3>
+            <a href="#" onclick="shodan_it(12)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>composer.json</span>
+            </a>
+            <a href="#" onclick="shodan_it(13)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>config</span>
+            </a>
+            <a href="#" onclick="shodan_it(17.1)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>.env</span>
+            </a>
+            <a href="#" onclick="shodan_it(18)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>.exs</span>
+            </a>
+            <a href="#" onclick="shodan_it(30)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>config.json auths</span>
+            </a>
+            <a href="#" onclick="shodan_it(43)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>wp-config.php</span>
+            </a>
+            <a href="#" onclick="shodan_it(60)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>s3cfg</span>
+            </a>
+            <a href="#" onclick="shodan_it(33)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>connections.xml</span>
+            </a>
+            <a href="#" onclick="shodan_it(10)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>beanstalkd.yml</span>
+            </a>
+            <a href="#" onclick="shodan_it(16)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>deploy.rake</span>
+            </a>
+            <a href="#" onclick="shodan_it(17)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>dotfiles</span>
+            </a>
+        </div>
+
+        <div class="category-card">
+            <h3 class="category-title">🔐 Credentials & Passwords</h3>
+            <a href="#" onclick="shodan_it(4)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>authoriztion</span>
+            </a>
+            <a href="#" onclick="shodan_it(14)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>credentials</span>
+            </a>
+            <a href="#" onclick="shodan_it(15)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>DB_PASSWORD</span>
+            </a>
+            <a href="#" onclick="shodan_it(52)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>oauth</span>
+            </a>
+            <a href="#" onclick="shodan_it(54)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>pass</span>
+            </a>
+            <a href="#" onclick="shodan_it(55)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>passkey</span>
+            </a>
+            <a href="#" onclick="shodan_it(56)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>passwd</span>
+            </a>
+            <a href="#" onclick="shodan_it(57)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>password</span>
+            </a>
+            <a href="#" onclick="shodan_it(58)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>databases password</span>
+            </a>
+            <a href="#" onclick="shodan_it(9)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>bashrc password</span>
+            </a>
+        </div>
+
+        <div class="category-card">
+            <h3 class="category-title">📁 System & History Files</h3>
+            <a href="#" onclick="shodan_it(8)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>.bash_history</span>
+            </a>
+            <a href="#" onclick="shodan_it(24)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>filename:.bash_history</span>
+            </a>
+            <a href="#" onclick="shodan_it(25)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>filename:.bash_profile aws</span>
+            </a>
+            <a href="#" onclick="shodan_it(26)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>filename:.bashrc mailchimp</span>
+            </a>
+            <a href="#" onclick="shodan_it(34)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>filename:.cshrc</span>
+            </a>
+            <a href="#" onclick="shodan_it(37)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>filename:.history</span>
+            </a>
+            <a href="#" onclick="shodan_it(35)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>filename:.git-credentials</span>
+            </a>
+            <a href="#" onclick="shodan_it(44)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>git-credentials</span>
+            </a>
+            <a href="#" onclick="shodan_it(36)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>filename:.ftpconfig</span>
+            </a>
+            <a href="#" onclick="shodan_it(42)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>FTP</span>
+            </a>
+        </div>
+
+        <div class="category-card">
+            <h3 class="category-title">🗄️ Database & Storage</h3>
+            <a href="#" onclick="shodan_it(50)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>mysql</span>
+            </a>
+            <a href="#" onclick="shodan_it(22)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>extension:sql mysql dump</span>
+            </a>
+            <a href="#" onclick="shodan_it(19)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>extension:json mongolab.com</span>
+            </a>
+            <a href="#" onclick="shodan_it(23)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>extension:yaml mongolab.com</span>
+            </a>
+            <a href="#" onclick="shodan_it(49)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>.mlab.com password</span>
+            </a>
+            <a href="#" onclick="shodan_it(59)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>rds.amazonaws.com password</span>
+            </a>
+            <a href="#" onclick="shodan_it(5)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>Ldap</span>
+            </a>
+        </div>
+
+        <div class="category-card">
+            <h3 class="category-title">🔑 Keys & Certificates</h3>
+            <a href="#" onclick="shodan_it(20)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>extension:pem private</span>
+            </a>
+            <a href="#" onclick="shodan_it(21)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>extension:ppk private</span>
+            </a>
+            <a href="#" onclick="shodan_it(40)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>filename:id_rsa</span>
+            </a>
+            <a href="#" onclick="shodan_it(38)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>filename:gitlab-recovery-codes.txt</span>
+            </a>
+            <a href="#" onclick="shodan_it(39)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>filename:.htpasswd</span>
+            </a>
+            <a href="#" onclick="shodan_it(41)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>filename:.netrc password</span>
+            </a>
+            <a href="#" onclick="shodan_it(53)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>OTP</span>
+            </a>
+            <a href="#" onclick="shodan_it(61)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>send_key-keys</span>
+            </a>
+            <a href="#" onclick="shodan_it(65)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>security_credentials</span>
+            </a>
+        </div>
+
+        <div class="category-card">
+            <h3 class="category-title">⚙️ Specific Config Files</h3>
+            <a href="#" onclick="shodan_it(27)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>filename:CCCam.cfg</span>
+            </a>
+            <a href="#" onclick="shodan_it(28)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>filename:config irc_pass</span>
+            </a>
+            <a href="#" onclick="shodan_it(29)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>filename:config.php dbpasswd</span>
+            </a>
+            <a href="#" onclick="shodan_it(31)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>filename:config.php pass</span>
+            </a>
+            <a href="#" onclick="shodan_it(32)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>filename:config.php dbpasswd</span>
+            </a>
+            <a href="#" onclick="shodan_it(51)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>npmrc _auth</span>
+            </a>
+            <a href="#" onclick="shodan_it(63)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>[WFClient] Password= extension:ica</span>
+            </a>
+            <a href="#" onclick="shodan_it(64)" class="dork-link">
+                <span class="dork-icon">🔍</span>
+                <span>xoxp OR xoxb OR xoxaJenkins</span>
+            </a>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p class="footer-text">
+            Created by <strong>Faizee Asad</strong> • Thanks to faisalahmed and Mr.Koanti
+        </p>
+    </div>
+
+    <script>
+        function shodan_it(type) {
+            const site = document.getElementById('target').value;
+            let url = 'https://github.com/search?q=' + site + " ";
+
+            switch(type) {
+                case 1: url += 'api_key'; break;
+                case 2: url += 'app_AWS_SECRET_ACCESS_KEY '; break;
+                case 3: url += 'app_secret'; break;
+                case 4: url += 'authoriztion'; break;
+                case 5: url += 'Ldap '; break;
+                case 6: url += 'aws_access_key_id'; break;
+                case 7: url += 'secret'; break;
+                case 8: url += '.bash_history'; break;
+                case 9: url += 'bashrc%20password'; break;
+                case 10: url += 'beanstalkd.yml'; break;
+                case 11: url += 'client secret'; break;
+                case 12: url += 'composer.json'; break;
+                case 13: url += 'config'; break;
+                case 14: url += 'credentials'; break;
+                case 15: url += 'DB_PASSWORD'; break;
+                case 16: url += 'deploy.rake'; break;
+                case 17: url += 'dotfiles'; break;
+                case 17.1: url += '.env'; break;
+                case 18: url += '.exs'; break;
+                case 19: url += 'extension:json mongolab.com'; break;
+                case 20: url += 'extension:pem%20private'; break;
+                case 21: url += 'extension:ppk private'; break;
+                case 22: url += 'extension:sql mysql dump'; break;
+                case 23: url += 'extension:yaml mongolab.com'; break;
+                case 24: url += 'filename:.bash_history'; break;
+                case 25: url += 'filename:.bash_profile aws'; break;
+                case 26: url += 'filename:.bashrc mailchimp'; break;
+                case 27: url += 'filename:CCCam.cfg'; break;
+                case 28: url += 'filename:config irc_pass'; break;
+                case 29: url += 'filename:config.php dbpasswd'; break;
+                case 30: url += 'filename:config.json auths'; break;
+                case 31: url += 'filename:config.php pass'; break;
+                case 32: url += 'filename:config.php dbpasswd'; break;
+                case 33: url += 'filename:connections.xml'; break;
+                case 34: url += 'filename:.cshrc'; break;
+                case 35: url += 'filename:.git-credentials'; break;
+                case 36: url += 'filename:.ftpconfig'; break;
+                case 37: url += 'filename:.history'; break;
+                case 38: url += 'filename:gitlab-recovery-codes.txt'; break;
+                case 39: url += 'filename:.htpasswd'; break;
+                case 40: url += 'filename:id_rsa'; break;
+                case 41: url += 'filename:.netrc password'; break;
+                case 42: url += 'FTP'; break;
+                case 43: url += 'filename:wp-config.php'; break;
+                case 44: url += 'git-credentials'; break;
+                case 45: url += 'github_token'; break;
+                case 46: url += 'HEROKU_API_KEY language:json'; break;
+                case 47: url += 'HEROKU_API_KEY language:shell'; break;
+                case 48: url += 'HOMEBREW_GITHUB_API_TOKEN language:shell'; break;
+                case 49: url += '.mlab.com password'; break;
+                case 50: url += 'mysql'; break;
+                case 51: url += 'npmrc%20_auth'; break;
+                case 52: url += 'oauth'; break;
+                case 53: url += 'OTP'; break;
+                case 54: url += 'pass'; break;
+                case 55: url += 'passkey'; break;
+                case 56: url += 'passwd'; break;
+                case 57: url += 'password'; break;
+                case 58: url += 'databases password'; break;
+                case 59: url += 'rds.amazonaws.com password'; break;
+                case 60: url += 's3cfg'; break;
+                case 61: url += 'send_key-keys'; break;
+                case 62: url += 'token'; break;
+                case 63: url += '[WFClient] Password= extension:ica'; break;
+                case 64: url += 'xoxp%20OR%20xoxb%20OR%20xoxaJenkins'; break;
+                case 65: url += 'security_credentials'; break;
+            }
+            window.open(url);
+        }
+
+        // Create animated particles
+        function createParticles() {
+            const particlesContainer = document.querySelector('.particles');
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 6 + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Initialize particles on load
+        document.addEventListener('DOMContentLoaded', createParticles);
+
+        // Enter key functionality
+        document.getElementById('target').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                // You can add default search behavior here if needed
+            }
+        });
+    </script>
+</body>
+</html>

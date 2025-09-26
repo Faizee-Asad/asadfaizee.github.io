@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Faizee Asad">
+    <meta name="referrer" content="never">
+    <title>Google Dork - Advanced Search Tool</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+            min-height: 100vh;
+            color: #ffffff;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Animated background particles */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.15) 0%, transparent 50%);
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 1; }
+            50% { transform: translateY(-20px) rotate(180deg); opacity: 0.8; }
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 4rem 2rem 3rem;
+            position: relative;
+        }
+
+        .main-title {
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 40px rgba(102, 126, 234, 0.5);
+            margin-bottom: 1rem;
+            animation: glow 2s ease-in-out infinite alternate;
+            transform: perspective(1000px) rotateX(15deg);
+        }
+
+        @keyframes glow {
+            from { filter: drop-shadow(0 0 20px rgba(102, 126, 234, 0.5)); }
+            to { filter: drop-shadow(0 0 40px rgba(102, 126, 234, 0.8)); }
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            color: #a0aec0;
+            font-weight: 300;
+            margin-bottom: 0.5rem;
+        }
+
+        .author {
+            font-size: 1.1rem;
+            color: #718096;
+            font-weight: 400;
+        }
+
+        /* Search container */
+        .search-container {
+            display: flex;
+            justify-content: center;
+            margin: 2rem auto 4rem;
+            padding: 0 2rem;
+        }
+
+        .search-box {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 1.5rem 2rem;
+            font-size: 1.1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            color: #ffffff;
+            backdrop-filter: blur(20px);
+            transition: all 0.3s ease;
+            outline: none;
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.3),
+                inset 0 2px 4px rgba(255, 255, 255, 0.1);
+        }
+
+        .search-input:focus {
+            border-color: #667eea;
+            box-shadow: 
+                0 0 0 4px rgba(102, 126, 234, 0.2),
+                0 12px 40px rgba(0, 0, 0, 0.4),
+                inset 0 2px 4px rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .search-input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* Main content grid */
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            padding: 0 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .category-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 2rem;
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .category-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .category-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 
+                0 20px 60px rgba(0, 0, 0, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+
+        .category-card:hover::before {
+            opacity: 1;
+        }
+
+        .category-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .dork-link {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            margin-bottom: 0.5rem;
+            color: #cbd5e0;
+            text-decoration: none;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid transparent;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+        }
+
+        .dork-link:hover {
+            background: rgba(102, 126, 234, 0.1);
+            border-color: rgba(102, 126, 234, 0.3);
+            color: #ffffff;
+            transform: translateX(8px);
+            box-shadow: 0 4px 20px rgba(102, 126, 234, 0.2);
+        }
+
+        .dork-icon {
+            font-size: 1rem;
+            opacity: 0.7;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 4rem 2rem 2rem;
+            margin-top: 4rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-text {
+            color: #a0aec0;
+            font-size: 1rem;
+        }
+
+        /* Helper websites section */
+        .helper-section {
+            margin-top: 4rem;
+            padding: 2rem;
+        }
+
+        .helper-title {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(255, 107, 107, 0.5);
+        }
+
+        .helper-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .helper-link {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem 1.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: #cbd5e0;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .helper-link:hover {
+            background: rgba(102, 126, 234, 0.1);
+            border-color: rgba(102, 126, 234, 0.3);
+            color: #ffffff;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.2);
+        }
+
+        .helper-icon {
+            font-size: 1.2rem;
+            opacity: 0.8;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .content-grid, .helper-grid {
+                grid-template-columns: 1fr;
+                padding: 0 1rem;
+            }
+            
+            .header {
+                padding: 2rem 1rem 2rem;
+            }
+            
+            .search-container {
+                padding: 0 1rem;
+            }
+            
+            .category-card {
+                padding: 1.5rem;
+            }
+        }
+
+        /* 3D Elements */
+        .floating-cube {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.3), rgba(118, 75, 162, 0.3));
+            border-radius: 12px;
+            animation: cube-float 8s ease-in-out infinite;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        @keyframes cube-float {
+            0%, 100% { transform: translateY(0px) rotateZ(0deg) rotateY(0deg); }
+            25% { transform: translateY(-20px) rotateZ(90deg) rotateY(90deg); }
+            50% { transform: translateY(0px) rotateZ(180deg) rotateY(180deg); }
+            75% { transform: translateY(-20px) rotateZ(270deg) rotateY(270deg); }
+        }
+
+        .cube-1 { top: 20%; right: 10%; animation-delay: -2s; }
+        .cube-2 { top: 60%; left: 5%; animation-delay: -4s; }
+        .cube-3 { top: 80%; right: 20%; animation-delay: -6s; }
+    </style>
+</head>
+<body>
+    <div class="particles"></div>
+    <div class="floating-cube cube-1"></div>
+    <div class="floating-cube cube-2"></div>
+    <div class="floating-cube cube-3"></div>
+
+    <div class="header">
+        <h1 class="main-title">Google Dork</h1>
+        <p class="subtitle">Advanced Repository Search Tool</p>
+        <p class="author">by Faizee Asad</p>
+    </div>
+
+    <div class="search-container">
+        <div class="search-box">
+            <input 
+                id="target" 
+                name="target" 
+                class="search-input" 
+                placeholder="Enter target domain (e.g., site.com)" 
+                autofocus 
+                type="text"
+            >
+        </div>
+    </div>
+
+<div class="category-card">
+    <h3 class="category-title">📁 Directory & File Discovery</h3>
+    <a href="#" onclick="google_it(1)" class="dork-link">
+        <span class="dork-icon">🔍</span>
+        <span>Directory Listing Vulnerabilities</span>
+    </a>
+    <a href="#" onclick="google_it(2)" class="dork-link">
+        <span class="dork-icon">🔍</span>
+        <span>Configuration Files</span>
+    </a>
+    <a href="#" onclick="google_it(3)" class="dork-link">
+        <span class="dork-icon">🔍</span>
+        <span>Database Files</span>
+    </a>
+    <a href="#" onclick="google_it(4)" class="dork-link">
+        <span class="dork-icon">🔍</span>
+        <span>Log Files</span>
+    </a>
+    <a href="#" onclick="google_it(5)" class="dork-link">
+        <span class="dork-icon">🔍</span>
+        <span>Backup & Old Files</span>
+    </a>
+    <a href="#" onclick="google_it(8)" class="dork-link">
+        <span class="dork-icon">🔍</span>
+        <span>Public Documents</span>
+    </a>
+    <a href="#" onclick="google_it(12)" class="dork-link">
+        <span class="dork-icon">🔍</span>
+        <span>Install/Setup Files</span>
+    </a>
+</div>
+
+<div class="category-card">
+    <h3 class="category-title">🔐 Authentication & Security</h3>
+    <a href="#" onclick="google_it(6)" class="dork-link">
+        <span class="dork-icon">🔍</span>
+        <span>Login Pages</span>
+    </a>
+    <a href="#" onclick="google_it(7)" class="dork-link">
+        <span class="dork-icon">🔍</span>
+        <span>SQL Errors</span>
+    </a>
+    <a href="#" onclick="google_it(9)" class="dork-link">
+        <span class="dork-icon">🔍</span>
+        <span>phpinfo() Pages</span>
+    </a>
+    <a href="#" onclick="google_it(11)" class="dork-link">
+        <span class="dork-icon">🔍</span>
+        <span>Backdoors</span>
+    </a>
+    <a href="#" onclick="google_it(17)" class="dork-link">
+        <span class="dork-icon">🔍</span>
+        <span>.htaccess Sensitive Files</span>
+    </a>
+</div>
+
+<div class="category-card">
+    <h3 class="category-title">🌐 WordPress Discovery</h3>
+    <a href="#" onclick="google_it(10)" class="dork-link">
+        <span class="dork-icon">🔍</span>
+        <span>Find WordPress Sites</span>
+    </a>
+    <a href="#" onclick="google_it(20)" class="dork-link">
+        <span class="dork-icon">🔍</span>
+        <span>WordPress #2</span>
+    </a>
+    <a href="#" onclick="google_it(33)" class="dork-link">
+        <span class="dork-icon">🔍</span>
+        <span>WordPress (Wayback Machine)</span>
+    </a>
+</div>
+
+<div class="category-card">
+    <h3 class="category-title">🕷️ Web Vulnerabilities</h3>
+    <a href="#" onclick="google_it(13)" class="dork-link">
+        <span class="dork-icon">🔍</span>
+        <span>Open Redirects</span>
+    </a>
+    <a href="#" onclick="google_it(14)" class="dork-link">
+        <span class="dork-icon">🔍</span>
+        <span>Apache Struts RCE</span>
+    </a>
+    <a href="#" onclick="google_it(22)" class="dork-link">
+        <span class="dork-icon">🔍</span>
+        <span>Test CrossDomain</span>
+    </a>
+</div>
+
+<div class="category-card">
+    <h3 class="category-title">🔍 Intelligence Gathering</h3>
+    <a href="#" onclick="google_it(15)" class="dork-link">
+        <span class="dork-icon">🔍</span>
+        <span>Pastebin Entries</span>
+    </a>
+    <a href="#" onclick="google_it(16)" class="dork-link">
+        <span class="dork-icon">🔍</span>
+        <span>Employees on LinkedIn</span>
+    </a>
+    <a href="#" onclick="google_it(21)" class="dork-link">
+        <span class="dork-icon">🔍</span>
+        <span>Search in GitHub</span>
+    </a>
+    <a href="#" onclick="google_it(31)" class="dork-link">
+        <span class="dork-icon">🔍</span>
+        <span>OpenBugBounty</span>
+    </a>
+    <a href="#" onclick="google_it(32)" class="dork-link">
+        <span class="dork-icon">🔍</span>
+        <span>Reddit Search</span>
+    </a>
+</div>
+
+<div class="category-card">
+    <h3 class="category-title">🌏 Domain & Subdomain Discovery</h3>
+    <a href="#" onclick="google_it(18)" class="dork-link">
+        <span class="dork-icon">🔍</span>
+        <span>Find Subdomains</span>
+    </a>
+    <a href="#" onclick="google_it(19)" class="dork-link">
+        <span class="dork-icon">🔍</span>
+        <span>Sub-Subdomains</span>
+    </a>
+    <a href="#" onclick="google_it(30)" class="dork-link">
+        <span class="dork-icon">🔍</span>
+        <span>Check crt.sh</span>
+    </a>
+</div>
+
+<div class="category-card">
+    <h3 class="category-title">📱 Media & Flash Files</h3>
+    <a href="#" onclick="google_it(24)" class="dork-link">
+        <span class="dork-icon">🔍</span>
+        <span>SWF Files (Google)</span>
+    </a>
+    <a href="#" onclick="google_it(25)" class="dork-link">
+        <span class="dork-icon">🔍</span>
+        <span>SWF Files (Yandex)</span>
+    </a>
+    <a href="#" onclick="google_it(26)" class="dork-link">
+        <span class="dork-icon">🔍</span>
+        <span>SWF in Wayback Machine</span>
+    </a>
+    <a href="#" onclick="google_it(27)" class="dork-link">
+        <span class="dork-icon">🔍</span>
+        <span>Wayback Machine #2</span>
+    </a>
+</div>
+
+<div class="category-card">
+    <h3 class="category-title">🔧 External Tools & Services</h3>
+    <a href="#" onclick="google_it(23)" class="dork-link">
+        <span class="dork-icon">🔍</span>
+        <span>ThreatCrowd</span>
+    </a>
+    <a href="#" onclick="google_it(28)" class="dork-link">
+        <span class="dork-icon">🔍</span>
+        <span>Wayback Machine #3</span>
+    </a>
+    <a href="#" onclick="google_it(29)" class="dork-link">
+        <span class="dork-icon">🔍</span>
+        <span>Wayback Machine (All)</span>
+    </a>
+    <a href="#" onclick="google_it(34)" class="dork-link">
+        <span class="dork-icon">🔍</span>
+        <span>Censys IPv4</span>
+    </a>
+    <a href="#" onclick="google_it(35)" class="dork-link">
+        <span class="dork-icon">🔍</span>
+        <span>Censys Domains</span>
+    </a>
+    <a href="#" onclick="google_it(36)" class="dork-link">
+        <span class="dork-icon">🔍</span>
+        <span>Censys Certificates</span>
+    </a>
+    <a href="#" onclick="google_it(37)" class="dork-link">
+        <span class="dork-icon">🔍</span>
+        <span>Shodan Search</span>
+    </a>
+
+<div class="helper-section">
+    <h2 class="helper-title">Helper Websites</h2>
+    <div class="helper-grid">
+        <a href="https://requestbin.net/" target="_blank" rel="noopener noreferrer" class="helper-link">
+            <span class="helper-icon">🔵</span>
+            <span>DNSBin - The request.bin of DNS!</span>
+        </a>
+        
+        <a href="https://hackertarget.com/wordpress-security-scan/" target="_blank" rel="noopener noreferrer" class="helper-link">
+            <span class="helper-icon">🔵</span>
+            <span>WordPress Scan #1</span>
+        </a>
+        
+        <a href="https://wprecon.com/" target="_blank" rel="noopener noreferrer" class="helper-link">
+            <span class="helper-icon">🔵</span>
+            <span>WordPress Scan #2</span>
+        </a>
+        
+        <a href="https://developers.facebook.com/tools/ct/" target="_blank" rel="noopener noreferrer" class="helper-link">
+            <span class="helper-icon">🔵</span>
+            <span>Facebook Certificate Transparency Monitoring</span>
+        </a>
+        
+        <a href="https://www.smartconversion.com/unit_conversion/IP_Address_Converter.aspx" target="_blank" rel="noopener noreferrer" class="helper-link">
+            <span class="helper-icon">🔵</span>
+            <span>IP Address Converter</span>
+        </a>
+        
+        <a href="https://whoisrequest.com/history/" target="_blank" rel="noopener noreferrer" class="helper-link">
+            <span class="helper-icon">🔵</span>
+            <span>Domain History Checker</span>
+        </a>
+        
+        <a href="https://publicwww.com/" target="_blank" rel="noopener noreferrer" class="helper-link">
+            <span class="helper-icon">🔵</span>
+            <span>Source Code Search Engine</span>
+        </a>
+    </div>
+</div>
+
+<div class="footer">
+    <p class="footer-text">
+        Created by <strong>Faizee Asad</strong> • Thanks to faisalahmed and Mr.Koanti
+    </p>
+</div> 
+</div>
+
+<!-- Part 4: JavaScript Functions - Insert this before closing </body> tag -->
+
+<script>
+// Main Google Dorking Function
+function google_it(type) {
+    const site = document.getElementById('target').value;
+    
+    if (!site || site.trim() === '') {
+        alert('Please enter a target domain first!');
+        return;
+    }
+    
+    let cleanSite = site;
+    if (site.indexOf('://') > 0) {
+        cleanSite = site.substr(site.indexOf('://') + 3);
+    }
+    
+    let url = 'https://www.google.com/search?q=';
+    url += 'site:' + cleanSite;
+
+    switch(type) {
+        case 1:
+            url += '+intitle:index.of';
+            break;
+        case 2:
+            url += '+ext:xml+|+ext:conf+|+ext:cnf+|+ext:reg+|+ext:inf+|+ext:rdp+|+ext:cfg+|+ext:txt+|+ext:ora+|+ext:ini';
+            break;
+        case 3:
+            url += '+ext:sql+|+ext:dbf+|+ext:mdb';
+            break;
+        case 4:
+            url += '+ext:log';
+            break;
+        case 5:
+            url += '+ext:bkf+|+ext:bkp+|+ext:bak+|+ext:old+|+ext:backup';
+            break;
+        case 6:
+            url += '+inurl:login';
+            break;
+        case 7:
+            url += '+intext:"sql+syntax+near"+|+intext:"syntax+error+has+occurred"+|+intext:"incorrect+syntax+near"+|+intext:"unexpected+end+of+SQL+command"+|+intext:"Warning:+mysql_connect()"+|+intext:"Warning:+mysql_query()"+|+intext:"Warning:+pg_connect()"';
+            break;
+        case 8:
+            url += '+ext:doc+|+ext:docx+|+ext:odt+|+ext:pdf+|+ext:rtf+|+ext:sxw+|+ext:psw+|+ext:ppt+|+ext:pptx+|+ext:pps+|+ext:csv';
+            break;
+        case 9:
+            url += '+ext:php+intitle:phpinfo+"published+by+the+PHP+Group"';
+            break;
+        case 10:
+            url += '+inurl:wp-+|+inurl:wp-content+|+inurl:plugins+|+inurl:uploads+|+inurl:themes+|+inurl:download';
+            break;
+        case 11:
+            url += '+inurl:shell+|+inurl:backdoor+|+inurl:wso+|+inurl:cmd+|+shadow+|+passwd+|+boot.ini+|+inurl:backdoor';
+            break;
+        case 12:
+            url += '+inurl:readme+|+inurl:license+|+inurl:install+|+inurl:setup+|+inurl:config';
+            break;
+        case 13:
+            url += '+inurl:redir+|+inurl:url+|+inurl:redirect+|+inurl:return+|+inurl:src=http+|+inurl:r=http';
+            break;
+        case 14:
+            url += '+ext:action+|+ext:struts+|+ext:do';
+            break;
+        case 15:
+            url = 'https://www.google.com/search?q=site:pastebin.com+' + cleanSite;
+            break;
+        case 16:
+            url = 'https://www.google.com/search?q=site:linkedin.com+employees+' + cleanSite;
+            break;
+        case 17:
+            url += '+inurl:"/phpinfo.php"+|+inurl:".htaccess"+|+inurl:"/.git"+' + cleanSite + ' -github';
+            break;
+        case 18:
+            url = 'https://www.google.com/search?q=site:*.' + cleanSite;
+            break;
+        case 19:
+            url = 'https://www.google.com/search?q=site:*.*.' + cleanSite;
+            break;
+        case 20:
+            url += '+inurl:wp-content+|+inurl:wp-includes';
+            break;
+        case 21:
+            url = 'https://github.com/search?q="*.' + cleanSite +'"&type=host';
+            break;
+        case 22:
+            url = 'http://' + cleanSite + '/crossdomain.xml';
+            break;
+        case 23:
+            url = 'http://threatcrowd.org/domain.php?domain=' + cleanSite;
+            break;
+        case 24:
+            url = 'https://www.google.com/search?q=+inurl:' + cleanSite + '+ext:swf';
+            break;
+        case 25:
+            url = 'https://yandex.com/search/?text=site:' + cleanSite + '%20mime:swf';
+            break;
+        case 26:
+            url = 'https://web.archive.org/cdx/search?url=' + cleanSite + '/&matchType=domain&collapse=urlkey&output=text&fl=original&filter=urlkey:.*swf&limit=100000&_=1507209148310';
+            break;
+        case 27:
+            url = 'https://web.archive.org/cdx/search?url=' + cleanSite + '/&matchType=domain&collapse=urlkey&output=text&fl=original&filter=mimetype:application/x-shockwave-flash&limit=100000&_=1507209148310';
+            break;
+        case 28:
+            url = 'https://web.archive.org/web/*/(.' + cleanSite + ')';
+            break;
+        case 29:
+            url = 'https://web.archive.org/web/*/' + cleanSite + '/*';
+            break;
+        case 30:
+            url = 'https://crt.sh/?q=%25.' + cleanSite;
+            break;
+        case 31:
+            url = 'https://www.openbugbounty.org/search/?search=' + cleanSite +'&type=host';
+            break;
+        case 32:
+            url = 'https://www.reddit.com/search/?q=' + cleanSite +'&source=recent';
+            break;
+        case 33:
+            url = 'http://wwwb-dedup.us.archive.org:8083/cdx/search?url=' + cleanSite + '/&matchType=domain&collapse=digest&output=text&fl=original,timestamp&filter=urlkey:.*wp[-].*&limit=1000000&xx=';
+            break;
+        case 34:
+            url = 'https://censys.io/ipv4?q=' + cleanSite;
+            break;
+        case 35:
+            url = 'https://censys.io/domain?q=' + cleanSite;
+            break;
+        case 36:
+            url = 'https://censys.io/certificates?q=' + cleanSite;
+            break;
+        case 37:
+            url = 'https://www.shodan.io/search?query=' + cleanSite;
+            break;
+        default:
+            alert('Invalid search type');
+            return;
+    }
+    
+    window.open(url, '_blank');
+}
+
+// Form validation function (keeping original functionality)
+function check_submit(e) {
+    if (e && e.keyCode == 13 && e.target.type != 'textarea') {
+        e.preventDefault();
+        e.defaultPrevented = true;
+        // You can add form validation logic here if needed
+    }
+}
+
+// Create animated particles
+function createParticles() {
+    const particlesContainer = document.querySelector('.particles');
+    for (let i = 0; i < 50; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.top = Math.random() * 100 + '%';
+        particle.style.animationDelay = Math.random() * 6 + 's';
+        particlesContainer.appendChild(particle);
+    }
+}
+
+// Initialize particles on page load
+document.addEventListener('DOMContentLoaded', function() {
+    createParticles();
+});
+
+// Enter key functionality for search input
+document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('target');
+    if (searchInput) {
+        searchInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                // You can add a default search action here if needed
+                console.log('Enter pressed with value:', this.value);
+            }
+        });
+    }
+});
+
+// Add smooth scrolling for better UX
+document.addEventListener('DOMContentLoaded', function() {
+    // Smooth scroll behavior
+    document.documentElement.style.scrollBehavior = 'smooth';
+    
+    // Add fade-in animation to cards
+    const cards = document.querySelectorAll('.category-card, .helper-link');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, { threshold: 0.1 });
+    
+    cards.forEach(card => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        observer.observe(card);
+    });
+});
+
+// Google Analytics (keeping original functionality)
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-100953906-1', 'auto');
+ga('send', 'pageview');
+
+// jQuery validation and other original jQuery functionality
+// (The original jQuery code from your HTML would be included here)
+// Note: For production, you'd want to load jQuery from a CDN instead of inline
+</script>  
+</body>
+</html>
