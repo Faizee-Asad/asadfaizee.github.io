@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AURA ARCHITECTS</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/ScrollTrigger.min.js"></script>
+</head>
+<body>
+    <!-- Theme toggle and sound toggle -->
+    <div class="controls">
+        <button id="theme-toggle" class="control-btn">
+            <span class="light-icon">☀️</span>
+            <span class="dark-icon">🌙</span>
+        </button>
+        <button id="sound-toggle" class="control-btn">
+            <span class="sound-on">🔊</span>
+            <span class="sound-off">🔇</span>
+        </button>
+    </div>
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero">
+        <div id="webgl-container"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">Designing Space.<br>Shaping Futures.</h1>
+            <p class="hero-subtitle">Award-winning architectural design studio</p>
+        </div>
+        <div class="scroll-indicator">
+            <span>Scroll</span>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <h2 class="section-title">About AURA</h2>
+            <div class="about-content">
+                <p class="about-text">
+                    Founded in 2010, AURA ARCHITECTS blends innovation with timeless design principles. 
+                    Our team of visionary architects and designers create spaces that transcend conventional 
+                    boundaries, focusing on sustainability, human experience, and architectural integrity.
+                </p>
+                <p class="about-text">
+                    With projects spanning luxury residences, commercial spaces, and urban masterplans, 
+                    we approach each commission as a unique narrative waiting to be shaped.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="services">
+        <div class="container">
+            <h2 class="section-title">Our Services</h2>
+            <div class="services-grid">
+                <div class="service-card" data-service="1">
+                    <h3>Architectural Design</h3>
+                    <p>Conceptual to construction documentation, our holistic approach ensures design integrity throughout the process.</p>
+                </div>
+                <div class="service-card" data-service="2">
+                    <h3>Interior Design</h3>
+                    <p>Curated spatial experiences that complement and enhance the architectural vision.</p>
+                </div>
+                <div class="service-card" data-service="3">
+                    <h3>Urban Planning</h3>
+                    <p>Strategic masterplanning for communities that balance density, green spaces, and human scale.</p>
+                </div>
+                <div class="service-card" data-service="4">
+                    <h3>3D Visualization</h3>
+                    <p>Immersive representations that bring architectural concepts to life before construction begins.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="projects">
+        <div class="container">
+            <h2 class="section-title">Featured Projects</h2>
+            <div class="projects-grid">
+                <div class="project-card" data-project="1">
+                    <div class="project-visual"></div>
+                    <h3>Horizon Residence</h3>
+                    <p>Malibu, California</p>
+                </div>
+                <div class="project-card" data-project="2">
+                    <div class="project-visual"></div>
+                    <h3>Atrium Tower</h3>
+                    <p>Tokyo, Japan</p>
+                </div>
+                <div class="project-card" data-project="3">
+                    <div class="project-visual"></div>
+                    <h3>Serene Pavilion</h3>
+                    <p>Copenhagen, Denmark</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section id="cta" class="cta">
+        <div class="container">
+            <h2 class="cta-text">Let’s build something iconic.</h2>
+            <a href="#" class="cta-button">Start a Project</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>© 2025 AURA ARCHITECTS. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Fallback for non-WebGL browsers -->
+    <div id="fallback" class="fallback hidden">
+        <div class="fallback-content">
+            <h2>Your browser doesn't support WebGL</h2>
+            <p>Please use a modern browser like Chrome, Firefox, or Safari for the full experience.</p>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="main.js"></script>
+    <script src="animations.js"></script>
+</body>
+</html>
