@@ -1,0 +1,1505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Finance Tracker</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .card {
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.95);
+        }
+        .progress-bar {
+            transition: width 0.5s ease-in-out;
+        }
+        .tab-active {
+            border-bottom: 3px solid #667eea;
+            color: #667eea;
+        }
+        .transaction-row:hover {
+            transform: translateX(5px);
+            transition: transform 0.2s ease;
+        }
+    </style>
+</head>
+<body class="min-h-screen gradient-bg">
+    <div class="container mx-auto px-4 py-8 max-w-7xl">
+        <!-- Header -->
+        <header class="text-center mb-8">
+            <div class="flex justify-center items-center gap-4 mb-2">
+                <h1 class="text-4xl font-bold text-white">
+                    <i class="fas fa-wallet mr-3"></i>Finance Tracker
+                </h1>
+                <!-- Currency Selector -->
+                <div class="relative">
+                    <select id="currencySelector" onchange="changeCurrency(this.value)" 
+                        class="appearance-none bg-white/20 text-white border border-white/30 rounded-lg px-4 py-2 pr-8 font-semibold cursor-pointer hover:bg-white/30 transition focus:outline-none focus:ring-2 focus:ring-white/50">
+                        <option value="USD" class="text-gray-800">🇺🇸 USD ($)</option>
+                        <option value="EUR" class="text-gray-800">🇪🇺 EUR (€)</option>
+                        <option value="GBP" class="text-gray-800">🇬🇧 GBP (£)</option>
+                        <option value="JPY" class="text-gray-800">🇯🇵 JPY (¥)</option>
+                        <option value="CNY" class="text-gray-800">🇨🇳 CNY (¥)</option>
+                        <option value="INR" class="text-gray-800">🇮🇳 INR (₹)</option>
+                        <option value="CAD" class="text-gray-800">🇨🇦 CAD ($)</option>
+                        <option value="AUD" class="text-gray-800">🇦🇺 AUD ($)</option>
+                        <option value="CHF" class="text-gray-800">🇨🇭 CHF (Fr)</option>
+                        <option value="KRW" class="text-gray-800">🇰🇷 KRW (₩)</option>
+                        <option value="MXN" class="text-gray-800">🇲🇽 MXN ($)</option>
+                        <option value="BRL" class="text-gray-800">🇧🇷 BRL (R$)</option>
+                        <option value="SGD" class="text-gray-800">🇸🇬 SGD ($)</option>
+                        <option value="HKD" class="text-gray-800">🇭🇰 HKD ($)</option>
+                        <option value="SEK" class="text-gray-800">🇸🇪 SEK (kr)</option>
+                        <option value="NOK" class="text-gray-800">🇳🇴 NOK (kr)</option>
+                        <option value="NZD" class="text-gray-800">🇳🇿 NZD ($)</option>
+                        <option value="ZAR" class="text-gray-800">🇿🇦 ZAR (R)</option>
+                        <option value="RUB" class="text-gray-800">🇷🇺 RUB (₽)</option>
+                        <option value="TRY" class="text-gray-800">🇹🇷 TRY (₺)</option>
+                        <option value="AED" class="text-gray-800">🇦🇪 AED (د.إ)</option>
+                        <option value="SAR" class="text-gray-800">🇸🇦 SAR (﷼)</option>
+                        <option value="PLN" class="text-gray-800">🇵🇱 PLN (zł)</option>
+                        <option value="THB" class="text-gray-800">🇹🇭 THB (฿)</option>
+                        <option value="PHP" class="text-gray-800">🇵🇭 PHP (₱)</option>
+                    </select>
+                    <i class="fas fa-chevron-down absolute right-2 top-1/2 -translate-y-1/2 text-white pointer-events-none text-sm"></i>
+                </div>
+            </div>
+            <p class="text-purple-200">Track your income, expenses, and achieve your financial goals</p>
+            
+            <!-- Backup/Import/Export Buttons -->
+            <div class="flex justify-center gap-3 mt-4">
+                <button onclick="exportData()" class="flex items-center gap-2 bg-white/20 hover:bg-white/30 text-white px-4 py-2 rounded-lg font-medium transition border border-white/30">
+                    <i class="fas fa-download"></i>
+                    <span>Export</span>
+                </button>
+                <button onclick="openImportModal()" class="flex items-center gap-2 bg-white/20 hover:bg-white/30 text-white px-4 py-2 rounded-lg font-medium transition border border-white/30">
+                    <i class="fas fa-upload"></i>
+                    <span>Import</span>
+                </button>
+                <button onclick="openBackupModal()" class="flex items-center gap-2 bg-white/20 hover:bg-white/30 text-white px-4 py-2 rounded-lg font-medium transition border border-white/30">
+                    <i class="fas fa-cloud"></i>
+                    <span>Backup</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Summary Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+            <div class="card rounded-2xl p-6 shadow-xl">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-gray-500 text-sm">Total Balance</p>
+                        <p id="totalBalance" class="text-2xl font-bold text-gray-800">$0.00</p>
+                    </div>
+                    <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
+                        <i class="fas fa-piggy-bank text-purple-600 text-xl"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="card rounded-2xl p-6 shadow-xl">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-gray-500 text-sm">Monthly Income</p>
+                        <p id="monthlyIncome" class="text-2xl font-bold text-green-600">$0.00</p>
+                    </div>
+                    <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
+                        <i class="fas fa-arrow-up text-green-600 text-xl"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="card rounded-2xl p-6 shadow-xl">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-gray-500 text-sm">Monthly Expenses</p>
+                        <p id="monthlyExpenses" class="text-2xl font-bold text-red-600">$0.00</p>
+                    </div>
+                    <div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center">
+                        <i class="fas fa-arrow-down text-red-600 text-xl"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="card rounded-2xl p-6 shadow-xl">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-gray-500 text-sm">Savings Rate</p>
+                        <p id="savingsRate" class="text-2xl font-bold text-blue-600">0%</p>
+                    </div>
+                    <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
+                        <i class="fas fa-chart-line text-blue-600 text-xl"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+            <!-- Add Transaction Form -->
+            <div class="card rounded-2xl p-6 shadow-xl">
+                <h2 class="text-xl font-bold text-gray-800 mb-4">
+                    <i class="fas fa-plus-circle mr-2 text-purple-600"></i>Add Transaction
+                </h2>
+                <form id="transactionForm" class="space-y-4">
+                    <div class="flex gap-2">
+                        <button type="button" id="incomeBtn" class="flex-1 py-2 px-4 rounded-lg border-2 border-green-500 text-green-600 font-semibold transition hover:bg-green-500 hover:text-white">
+                            <i class="fas fa-plus mr-1"></i>Income
+                        </button>
+                        <button type="button" id="expenseBtn" class="flex-1 py-2 px-4 rounded-lg border-2 border-red-500 bg-red-500 text-white font-semibold transition">
+                            <i class="fas fa-minus mr-1"></i>Expense
+                        </button>
+                    </div>
+                    <input type="hidden" id="transactionType" value="expense">
+                    
+                    <div>
+                        <label class="block text-gray-600 text-sm mb-1">Amount</label>
+                        <div class="relative">
+                            <span id="amountCurrencySymbol" class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">$</span>
+                            <input type="number" id="amount" step="0.01" min="0" required
+                                class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-gray-600 text-sm mb-1">Category</label>
+                        <select id="category" required
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                            <optgroup label="Expenses" id="expenseCategories">
+                                <option value="food">🍔 Food & Dining</option>
+                                <option value="transport">🚗 Transportation</option>
+                                <option value="utilities">💡 Utilities</option>
+                                <option value="entertainment">🎬 Entertainment</option>
+                                <option value="shopping">🛍️ Shopping</option>
+                                <option value="health">🏥 Healthcare</option>
+                                <option value="education">📚 Education</option>
+                                <option value="other_expense">📦 Other</option>
+                            </optgroup>
+                            <optgroup label="Income" id="incomeCategories" class="hidden">
+                                <option value="salary">💼 Salary</option>
+                                <option value="freelance">💻 Freelance</option>
+                                <option value="investments">📈 Investments</option>
+                                <option value="other_income">💰 Other Income</option>
+                            </optgroup>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-gray-600 text-sm mb-1">Date</label>
+                        <input type="date" id="date" required
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-gray-600 text-sm mb-1">Description</label>
+                        <input type="text" id="description" placeholder="Enter description"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                    </div>
+                    
+                    <button type="submit" class="w-full py-3 bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-semibold rounded-lg hover:opacity-90 transition">
+                        <i class="fas fa-save mr-2"></i>Save Transaction
+                    </button>
+                </form>
+            </div>
+
+            <!-- Category Breakdown Chart -->
+            <div class="card rounded-2xl p-6 shadow-xl">
+                <h2 class="text-xl font-bold text-gray-800 mb-4">
+                    <i class="fas fa-chart-pie mr-2 text-purple-600"></i>Spending by Category
+                </h2>
+                <div class="h-64 flex items-center justify-center">
+                    <canvas id="categoryChart"></canvas>
+                </div>
+                <div id="categoryLegend" class="mt-4 grid grid-cols-2 gap-2 text-sm"></div>
+            </div>
+
+            <!-- Budget Progress -->
+            <div class="card rounded-2xl p-6 shadow-xl">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-xl font-bold text-gray-800">
+                        <i class="fas fa-bullseye mr-2 text-purple-600"></i>Budget Limits
+                    </h2>
+                    <button onclick="openBudgetModal()" class="text-purple-600 hover:text-purple-800">
+                        <i class="fas fa-cog"></i>
+                    </button>
+                </div>
+                <div id="budgetProgress" class="space-y-4 max-h-80 overflow-y-auto">
+                    <p class="text-gray-500 text-center py-8">Set budgets to track your spending limits</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Monthly Trends -->
+        <div class="card rounded-2xl p-6 shadow-xl mb-8">
+            <h2 class="text-xl font-bold text-gray-800 mb-4">
+                <i class="fas fa-chart-area mr-2 text-purple-600"></i>Monthly Trends
+            </h2>
+            <div class="h-72">
+                <canvas id="trendsChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Transaction History -->
+        <div class="card rounded-2xl p-6 shadow-xl">
+            <h2 class="text-xl font-bold text-gray-800 mb-4">
+                <i class="fas fa-history mr-2 text-purple-600"></i>Transaction History
+            </h2>
+            
+            <!-- Filters -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6 p-4 bg-gray-50 rounded-xl">
+                <div>
+                    <label class="block text-gray-600 text-sm mb-1">Date From</label>
+                    <input type="date" id="filterDateFrom" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm">
+                </div>
+                <div>
+                    <label class="block text-gray-600 text-sm mb-1">Date To</label>
+                    <input type="date" id="filterDateTo" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm">
+                </div>
+                <div>
+                    <label class="block text-gray-600 text-sm mb-1">Type</label>
+                    <select id="filterType" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm">
+                        <option value="all">All Types</option>
+                        <option value="income">Income</option>
+                        <option value="expense">Expense</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-gray-600 text-sm mb-1">Category</label>
+                    <select id="filterCategory" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm">
+                        <option value="all">All Categories</option>
+                    </select>
+                </div>
+            </div>
+            
+            <!-- Transactions List -->
+            <div id="transactionsList" class="space-y-3 max-h-96 overflow-y-auto">
+                <p class="text-gray-500 text-center py-8">No transactions yet. Add your first transaction above!</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Budget Modal -->
+    <div id="budgetModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-white rounded-2xl p-6 max-w-md w-full mx-4 max-h-[80vh] overflow-y-auto">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-bold text-gray-800">Set Budget Limits</h3>
+                <button onclick="closeBudgetModal()" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            <div id="budgetForm" class="space-y-4">
+                <!-- Budget inputs will be dynamically added -->
+            </div>
+            <button onclick="saveBudgets()" class="w-full mt-6 py-3 bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-semibold rounded-lg hover:opacity-90 transition">
+                Save Budgets
+            </button>
+        </div>
+    </div>
+
+    <!-- Import Modal -->
+    <div id="importModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-white rounded-2xl p-6 max-w-md w-full mx-4">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-bold text-gray-800">
+                    <i class="fas fa-upload mr-2 text-purple-600"></i>Import Data
+                </h3>
+                <button onclick="closeImportModal()" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            
+            <div class="space-y-4">
+                <p class="text-gray-600 text-sm">Upload a previously exported JSON file to restore your data.</p>
+                
+                <!-- File Upload Area -->
+                <div id="dropZone" class="border-2 border-dashed border-gray-300 rounded-xl p-8 text-center hover:border-purple-500 hover:bg-purple-50 transition cursor-pointer">
+                    <input type="file" id="importFile" accept=".json" class="hidden" onchange="handleFileSelect(event)">
+                    <i class="fas fa-cloud-upload-alt text-4xl text-gray-400 mb-3"></i>
+                    <p class="text-gray-600 font-medium">Click to upload or drag & drop</p>
+                    <p class="text-gray-400 text-sm mt-1">JSON files only</p>
+                </div>
+                
+                <!-- Import Options -->
+                <div class="bg-gray-50 rounded-xl p-4">
+                    <p class="font-medium text-gray-700 mb-3">Import Options:</p>
+                    <label class="flex items-center gap-2 mb-2 cursor-pointer">
+                        <input type="radio" name="importOption" value="replace" checked class="text-purple-600">
+                        <span class="text-gray-600">Replace all existing data</span>
+                    </label>
+                    <label class="flex items-center gap-2 cursor-pointer">
+                        <input type="radio" name="importOption" value="merge" class="text-purple-600">
+                        <span class="text-gray-600">Merge with existing data</span>
+                    </label>
+                </div>
+                
+                <!-- File Info -->
+                <div id="fileInfo" class="hidden bg-green-50 border border-green-200 rounded-xl p-4">
+                    <div class="flex items-center gap-3">
+                        <i class="fas fa-file-alt text-green-600 text-xl"></i>
+                        <div class="flex-1">
+                            <p id="fileName" class="font-medium text-green-800"></p>
+                            <p id="fileDetails" class="text-green-600 text-sm"></p>
+                        </div>
+                        <button onclick="clearFileSelection()" class="text-green-600 hover:text-green-800">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Error Message -->
+                <div id="importError" class="hidden bg-red-50 border border-red-200 rounded-xl p-4 text-red-600">
+                    <i class="fas fa-exclamation-circle mr-2"></i>
+                    <span id="importErrorText"></span>
+                </div>
+            </div>
+            
+            <button id="importBtn" onclick="importData()" disabled class="w-full mt-6 py-3 bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-semibold rounded-lg hover:opacity-90 transition disabled:opacity-50 disabled:cursor-not-allowed">
+                <i class="fas fa-file-import mr-2"></i>Import Data
+            </button>
+        </div>
+    </div>
+
+    <!-- Backup Modal -->
+    <div id="backupModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-white rounded-2xl p-6 max-w-md w-full mx-4">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-bold text-gray-800">
+                    <i class="fas fa-cloud mr-2 text-purple-600"></i>Backup & Restore
+                </h3>
+                <button onclick="closeBackupModal()" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            
+            <div class="space-y-4">
+                <!-- Current Data Summary -->
+                <div class="bg-purple-50 rounded-xl p-4">
+                    <h4 class="font-semibold text-purple-800 mb-2">
+                        <i class="fas fa-database mr-2"></i>Current Data Summary
+                    </h4>
+                    <div id="dataSummary" class="grid grid-cols-2 gap-2 text-sm text-purple-700">
+                        <!-- Filled dynamically -->
+                    </div>
+                </div>
+                
+                <!-- Backup Options -->
+                <div class="space-y-3">
+                    <button onclick="exportData()" class="w-full flex items-center justify-between p-4 bg-gray-50 hover:bg-gray-100 rounded-xl transition">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
+                                <i class="fas fa-download text-blue-600"></i>
+                            </div>
+                            <div class="text-left">
+                                <p class="font-medium text-gray-800">Download Backup</p>
+                                <p class="text-gray-500 text-sm">Save data as JSON file</p>
+                            </div>
+                        </div>
+                        <i class="fas fa-chevron-right text-gray-400"></i>
+                    </button>
+                    
+                    <button onclick="closeBackupModal(); openImportModal();" class="w-full flex items-center justify-between p-4 bg-gray-50 hover:bg-gray-100 rounded-xl transition">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
+                                <i class="fas fa-upload text-green-600"></i>
+                            </div>
+                            <div class="text-left">
+                                <p class="font-medium text-gray-800">Restore from Backup</p>
+                                <p class="text-gray-500 text-sm">Import JSON backup file</p>
+                            </div>
+                        </div>
+                        <i class="fas fa-chevron-right text-gray-400"></i>
+                    </button>
+                    
+                    <button onclick="exportAsCSV()" class="w-full flex items-center justify-between p-4 bg-gray-50 hover:bg-gray-100 rounded-xl transition">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center">
+                                <i class="fas fa-file-csv text-orange-600"></i>
+                            </div>
+                            <div class="text-left">
+                                <p class="font-medium text-gray-800">Export as CSV</p>
+                                <p class="text-gray-500 text-sm">For use in Excel/Sheets</p>
+                            </div>
+                        </div>
+                        <i class="fas fa-chevron-right text-gray-400"></i>
+                    </button>
+                    
+                    <button onclick="confirmClearData()" class="w-full flex items-center justify-between p-4 bg-red-50 hover:bg-red-100 rounded-xl transition">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center">
+                                <i class="fas fa-trash text-red-600"></i>
+                            </div>
+                            <div class="text-left">
+                                <p class="font-medium text-red-700">Clear All Data</p>
+                                <p class="text-red-500 text-sm">Delete all transactions & settings</p>
+                            </div>
+                        </div>
+                        <i class="fas fa-chevron-right text-red-400"></i>
+                    </button>
+                </div>
+                
+                <!-- Last Backup Info -->
+                <div id="lastBackupInfo" class="text-center text-sm text-gray-500 pt-2">
+                    <!-- Filled dynamically -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirm Clear Modal -->
+    <div id="confirmClearModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-white rounded-2xl p-6 max-w-sm w-full mx-4 text-center">
+            <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <i class="fas fa-exclamation-triangle text-red-600 text-2xl"></i>
+            </div>
+            <h3 class="text-xl font-bold text-gray-800 mb-2">Clear All Data?</h3>
+            <p class="text-gray-600 mb-6">This will permanently delete all your transactions, budgets, and settings. This action cannot be undone.</p>
+            <div class="flex gap-3">
+                <button onclick="closeConfirmClearModal()" class="flex-1 py-3 bg-gray-200 text-gray-700 font-semibold rounded-lg hover:bg-gray-300 transition">
+                    Cancel
+                </button>
+                <button onclick="clearAllData()" class="flex-1 py-3 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-700 transition">
+                    Delete All
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Save Data Modal (for Mobile) -->
+    <div id="saveDataModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-white rounded-2xl p-6 max-w-lg w-full mx-4 max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-bold text-gray-800">
+                    <i class="fas fa-save mr-2 text-purple-600"></i>Save Your Backup
+                </h3>
+                <button onclick="closeSaveDataModal()" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            
+            <div class="space-y-4">
+                <!-- Instructions -->
+                <div class="bg-blue-50 border border-blue-200 rounded-xl p-4">
+                    <p class="text-blue-800 font-medium mb-2">
+                        <i class="fas fa-info-circle mr-2"></i>Save Options for Mobile
+                    </p>
+                    <p class="text-blue-700 text-sm">Choose one of the methods below to save your <span id="saveDataType" class="font-bold">JSON</span> backup data:</p>
+                </div>
+                
+                <!-- Filename -->
+                <div class="bg-gray-100 rounded-lg px-4 py-3">
+                    <span class="text-gray-500 text-sm">Filename:</span>
+                    <span id="saveDataFilename" class="font-mono font-medium text-gray-800 ml-2"></span>
+                </div>
+                
+                <!-- Action Buttons -->
+                <div class="grid grid-cols-1 gap-3">
+                    <button onclick="copyDataToClipboard()" class="flex items-center justify-center gap-3 p-4 bg-purple-100 hover:bg-purple-200 rounded-xl transition">
+                        <div class="w-10 h-10 bg-purple-600 rounded-full flex items-center justify-center">
+                            <i class="fas fa-copy text-white"></i>
+                        </div>
+                        <div class="text-left flex-1">
+                            <p class="font-semibold text-purple-900">Copy to Clipboard</p>
+                            <p class="text-purple-700 text-sm">Paste into Notes app and save</p>
+                        </div>
+                    </button>
+                    
+                    <button onclick="shareDataNative()" class="flex items-center justify-center gap-3 p-4 bg-green-100 hover:bg-green-200 rounded-xl transition">
+                        <div class="w-10 h-10 bg-green-600 rounded-full flex items-center justify-center">
+                            <i class="fas fa-share-alt text-white"></i>
+                        </div>
+                        <div class="text-left flex-1">
+                            <p class="font-semibold text-green-900">Share</p>
+                            <p class="text-green-700 text-sm">Send to Files, Drive, or other apps</p>
+                        </div>
+                    </button>
+                    
+                    <button onclick="emailData()" class="flex items-center justify-center gap-3 p-4 bg-blue-100 hover:bg-blue-200 rounded-xl transition">
+                        <div class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center">
+                            <i class="fas fa-envelope text-white"></i>
+                        </div>
+                        <div class="text-left flex-1">
+                            <p class="font-semibold text-blue-900">Email to Yourself</p>
+                            <p class="text-blue-700 text-sm">Send backup via email</p>
+                        </div>
+                    </button>
+                </div>
+                
+                <!-- Data Preview -->
+                <div>
+                    <label class="block text-gray-600 text-sm mb-2">
+                        <i class="fas fa-code mr-1"></i>Backup Data (you can also manually copy):
+                    </label>
+                    <textarea id="saveDataContent" readonly 
+                        class="w-full h-32 px-3 py-2 border border-gray-300 rounded-lg font-mono text-xs bg-gray-50 focus:ring-2 focus:ring-purple-500"></textarea>
+                </div>
+                
+                <!-- How to Restore Info -->
+                <div class="bg-yellow-50 border border-yellow-200 rounded-xl p-4">
+                    <p class="text-yellow-800 font-medium mb-1">
+                        <i class="fas fa-lightbulb mr-2"></i>How to Restore Later
+                    </p>
+                    <ol class="text-yellow-700 text-sm list-decimal list-inside space-y-1">
+                        <li>Save this data as a <strong>.json</strong> file</li>
+                        <li>Open Finance Tracker and click <strong>Import</strong></li>
+                        <li>Upload your saved .json file</li>
+                    </ol>
+                </div>
+            </div>
+            
+            <button onclick="closeSaveDataModal()" class="w-full mt-6 py-3 bg-gray-200 text-gray-700 font-semibold rounded-lg hover:bg-gray-300 transition">
+                Done
+            </button>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-6 right-6 transform translate-y-20 opacity-0 transition-all duration-300 z-50">
+        <div class="bg-gray-800 text-white px-6 py-4 rounded-xl shadow-lg flex items-center gap-3">
+            <i id="toastIcon" class="fas fa-check-circle text-green-400"></i>
+            <span id="toastMessage"></span>
+        </div>
+    </div>
+
+    <script>
+        // Data Storage
+        let transactions = JSON.parse(localStorage.getItem('transactions')) || [];
+        let budgets = JSON.parse(localStorage.getItem('budgets')) || {};
+        let selectedCurrency = localStorage.getItem('selectedCurrency') || 'USD';
+        
+        // Currency symbols for display
+        const currencySymbols = {
+            USD: '$', EUR: '€', GBP: '£', JPY: '¥', CNY: '¥',
+            INR: '₹', CAD: '$', AUD: '$', CHF: 'Fr', KRW: '₩',
+            MXN: '$', BRL: 'R$', SGD: '$', HKD: '$', SEK: 'kr',
+            NOK: 'kr', NZD: '$', ZAR: 'R', RUB: '₽', TRY: '₺',
+            AED: 'د.إ', SAR: '﷼', PLN: 'zł', THB: '฿', PHP: '₱'
+        };
+        
+        // Categories with colors and icons
+        const categories = {
+            food: { name: 'Food & Dining', icon: '🍔', color: '#FF6384' },
+            transport: { name: 'Transportation', icon: '🚗', color: '#36A2EB' },
+            utilities: { name: 'Utilities', icon: '💡', color: '#FFCE56' },
+            entertainment: { name: 'Entertainment', icon: '🎬', color: '#4BC0C0' },
+            shopping: { name: 'Shopping', icon: '🛍️', color: '#9966FF' },
+            health: { name: 'Healthcare', icon: '🏥', color: '#FF9F40' },
+            education: { name: 'Education', icon: '📚', color: '#C9CBCF' },
+            other_expense: { name: 'Other', icon: '📦', color: '#7C8798' },
+            salary: { name: 'Salary', icon: '💼', color: '#4CAF50' },
+            freelance: { name: 'Freelance', icon: '💻', color: '#8BC34A' },
+            investments: { name: 'Investments', icon: '📈', color: '#CDDC39' },
+            other_income: { name: 'Other Income', icon: '💰', color: '#009688' }
+        };
+        
+        // Charts
+        let categoryChart, trendsChart;
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            setDefaultDate();
+            initializeCurrency();
+            initializeCharts();
+            populateFilterCategories();
+            setupEventListeners();
+            updateUI();
+        });
+        
+        function initializeCurrency() {
+            document.getElementById('currencySelector').value = selectedCurrency;
+            updateCurrencySymbol();
+        }
+        
+        function changeCurrency(currency) {
+            selectedCurrency = currency;
+            localStorage.setItem('selectedCurrency', currency);
+            updateCurrencySymbol();
+            updateUI();
+            // Update chart y-axis
+            trendsChart.options.scales.y.ticks.callback = value => getCurrencySymbol() + value;
+            trendsChart.update();
+        }
+        
+        function getCurrencySymbol() {
+            return currencySymbols[selectedCurrency] || '$';
+        }
+        
+        function updateCurrencySymbol() {
+            // Update the amount input symbol
+            const amountSymbol = document.getElementById('amountCurrencySymbol');
+            if (amountSymbol) {
+                amountSymbol.textContent = getCurrencySymbol();
+            }
+        }
+        
+        function setDefaultDate() {
+            document.getElementById('date').valueAsDate = new Date();
+        }
+        
+        function setupEventListeners() {
+            // Transaction type toggle
+            document.getElementById('incomeBtn').addEventListener('click', () => setTransactionType('income'));
+            document.getElementById('expenseBtn').addEventListener('click', () => setTransactionType('expense'));
+            
+            // Form submission
+            document.getElementById('transactionForm').addEventListener('submit', addTransaction);
+            
+            // Filters
+            document.getElementById('filterDateFrom').addEventListener('change', renderTransactions);
+            document.getElementById('filterDateTo').addEventListener('change', renderTransactions);
+            document.getElementById('filterType').addEventListener('change', renderTransactions);
+            document.getElementById('filterCategory').addEventListener('change', renderTransactions);
+        }
+        
+        function setTransactionType(type) {
+            document.getElementById('transactionType').value = type;
+            const incomeBtn = document.getElementById('incomeBtn');
+            const expenseBtn = document.getElementById('expenseBtn');
+            const categorySelect = document.getElementById('category');
+            
+            if (type === 'income') {
+                incomeBtn.classList.add('bg-green-500', 'text-white');
+                incomeBtn.classList.remove('text-green-600');
+                expenseBtn.classList.remove('bg-red-500', 'text-white');
+                expenseBtn.classList.add('text-red-600');
+                categorySelect.innerHTML = `
+                    <option value="salary">💼 Salary</option>
+                    <option value="freelance">💻 Freelance</option>
+                    <option value="investments">📈 Investments</option>
+                    <option value="other_income">💰 Other Income</option>
+                `;
+            } else {
+                expenseBtn.classList.add('bg-red-500', 'text-white');
+                expenseBtn.classList.remove('text-red-600');
+                incomeBtn.classList.remove('bg-green-500', 'text-white');
+                incomeBtn.classList.add('text-green-600');
+                categorySelect.innerHTML = `
+                    <option value="food">🍔 Food & Dining</option>
+                    <option value="transport">🚗 Transportation</option>
+                    <option value="utilities">💡 Utilities</option>
+                    <option value="entertainment">🎬 Entertainment</option>
+                    <option value="shopping">🛍️ Shopping</option>
+                    <option value="health">🏥 Healthcare</option>
+                    <option value="education">📚 Education</option>
+                    <option value="other_expense">📦 Other</option>
+                `;
+            }
+        }
+        
+        function addTransaction(e) {
+            e.preventDefault();
+            
+            const transaction = {
+                id: Date.now(),
+                type: document.getElementById('transactionType').value,
+                amount: parseFloat(document.getElementById('amount').value),
+                category: document.getElementById('category').value,
+                date: document.getElementById('date').value,
+                description: document.getElementById('description').value || categories[document.getElementById('category').value].name
+            };
+            
+            transactions.push(transaction);
+            saveTransactions();
+            updateUI();
+            
+            // Reset form
+            document.getElementById('amount').value = '';
+            document.getElementById('description').value = '';
+            setDefaultDate();
+        }
+        
+        function deleteTransaction(id) {
+            transactions = transactions.filter(t => t.id !== id);
+            saveTransactions();
+            updateUI();
+        }
+        
+        function saveTransactions() {
+            localStorage.setItem('transactions', JSON.stringify(transactions));
+        }
+        
+        function updateUI() {
+            updateSummaryCards();
+            updateCategoryChart();
+            updateBudgetProgress();
+            updateTrendsChart();
+            renderTransactions();
+        }
+        
+        function updateSummaryCards() {
+            const now = new Date();
+            const currentMonth = now.getMonth();
+            const currentYear = now.getFullYear();
+            
+            const monthlyTransactions = transactions.filter(t => {
+                const date = new Date(t.date);
+                return date.getMonth() === currentMonth && date.getFullYear() === currentYear;
+            });
+            
+            const totalIncome = transactions.filter(t => t.type === 'income').reduce((sum, t) => sum + t.amount, 0);
+            const totalExpenses = transactions.filter(t => t.type === 'expense').reduce((sum, t) => sum + t.amount, 0);
+            const monthlyIncome = monthlyTransactions.filter(t => t.type === 'income').reduce((sum, t) => sum + t.amount, 0);
+            const monthlyExpenses = monthlyTransactions.filter(t => t.type === 'expense').reduce((sum, t) => sum + t.amount, 0);
+            
+            const balance = totalIncome - totalExpenses;
+            const savingsRate = monthlyIncome > 0 ? ((monthlyIncome - monthlyExpenses) / monthlyIncome * 100).toFixed(1) : 0;
+            
+            document.getElementById('totalBalance').textContent = formatCurrency(balance);
+            document.getElementById('totalBalance').className = `text-2xl font-bold ${balance >= 0 ? 'text-gray-800' : 'text-red-600'}`;
+            document.getElementById('monthlyIncome').textContent = formatCurrency(monthlyIncome);
+            document.getElementById('monthlyExpenses').textContent = formatCurrency(monthlyExpenses);
+            document.getElementById('savingsRate').textContent = `${savingsRate}%`;
+        }
+        
+        function initializeCharts() {
+            // Category Chart
+            const categoryCtx = document.getElementById('categoryChart').getContext('2d');
+            categoryChart = new Chart(categoryCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: [],
+                    datasets: [{
+                        data: [],
+                        backgroundColor: [],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    cutout: '60%'
+                }
+            });
+            
+            // Trends Chart
+            const trendsCtx = document.getElementById('trendsChart').getContext('2d');
+            trendsChart = new Chart(trendsCtx, {
+                type: 'line',
+                data: {
+                    labels: [],
+                    datasets: [
+                        {
+                            label: 'Income',
+                            data: [],
+                            borderColor: '#4CAF50',
+                            backgroundColor: 'rgba(76, 175, 80, 0.1)',
+                            fill: true,
+                            tension: 0.4
+                        },
+                        {
+                            label: 'Expenses',
+                            data: [],
+                            borderColor: '#FF6384',
+                            backgroundColor: 'rgba(255, 99, 132, 0.1)',
+                            fill: true,
+                            tension: 0.4
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top'
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: value => getCurrencySymbol() + value
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        function updateCategoryChart() {
+            const now = new Date();
+            const currentMonth = now.getMonth();
+            const currentYear = now.getFullYear();
+            
+            const monthlyExpenses = transactions.filter(t => {
+                const date = new Date(t.date);
+                return t.type === 'expense' && date.getMonth() === currentMonth && date.getFullYear() === currentYear;
+            });
+            
+            const categoryTotals = {};
+            monthlyExpenses.forEach(t => {
+                categoryTotals[t.category] = (categoryTotals[t.category] || 0) + t.amount;
+            });
+            
+            const labels = Object.keys(categoryTotals).map(c => categories[c]?.name || c);
+            const data = Object.values(categoryTotals);
+            const colors = Object.keys(categoryTotals).map(c => categories[c]?.color || '#999');
+            
+            categoryChart.data.labels = labels;
+            categoryChart.data.datasets[0].data = data;
+            categoryChart.data.datasets[0].backgroundColor = colors;
+            categoryChart.update();
+            
+            // Update legend
+            const legendContainer = document.getElementById('categoryLegend');
+            legendContainer.innerHTML = Object.entries(categoryTotals).map(([cat, amount]) => `
+                <div class="flex items-center gap-2">
+                    <div class="w-3 h-3 rounded-full" style="background: ${categories[cat]?.color}"></div>
+                    <span class="text-gray-600">${categories[cat]?.icon} ${formatCurrency(amount)}</span>
+                </div>
+            `).join('');
+        }
+        
+        function updateTrendsChart() {
+            const months = [];
+            const incomeData = [];
+            const expenseData = [];
+            
+            for (let i = 5; i >= 0; i--) {
+                const date = new Date();
+                date.setMonth(date.getMonth() - i);
+                const month = date.getMonth();
+                const year = date.getFullYear();
+                
+                months.push(date.toLocaleDateString('en-US', { month: 'short', year: '2-digit' }));
+                
+                const monthTransactions = transactions.filter(t => {
+                    const tDate = new Date(t.date);
+                    return tDate.getMonth() === month && tDate.getFullYear() === year;
+                });
+                
+                incomeData.push(monthTransactions.filter(t => t.type === 'income').reduce((sum, t) => sum + t.amount, 0));
+                expenseData.push(monthTransactions.filter(t => t.type === 'expense').reduce((sum, t) => sum + t.amount, 0));
+            }
+            
+            trendsChart.data.labels = months;
+            trendsChart.data.datasets[0].data = incomeData;
+            trendsChart.data.datasets[1].data = expenseData;
+            trendsChart.update();
+        }
+        
+        function updateBudgetProgress() {
+            const container = document.getElementById('budgetProgress');
+            const now = new Date();
+            const currentMonth = now.getMonth();
+            const currentYear = now.getFullYear();
+            
+            const expenseCategories = ['food', 'transport', 'utilities', 'entertainment', 'shopping', 'health', 'education', 'other_expense'];
+            
+            if (Object.keys(budgets).length === 0) {
+                container.innerHTML = '<p class="text-gray-500 text-center py-8">Set budgets to track your spending limits</p>';
+                return;
+            }
+            
+            container.innerHTML = '';
+            
+            expenseCategories.forEach(cat => {
+                if (budgets[cat]) {
+                    const spent = transactions.filter(t => {
+                        const date = new Date(t.date);
+                        return t.category === cat && date.getMonth() === currentMonth && date.getFullYear() === currentYear;
+                    }).reduce((sum, t) => sum + t.amount, 0);
+                    
+                    const budget = budgets[cat];
+                    const percentage = Math.min((spent / budget) * 100, 100);
+                    const isOver = spent > budget;
+                    
+                    container.innerHTML += `
+                        <div class="space-y-1">
+                            <div class="flex justify-between text-sm">
+                                <span class="font-medium">${categories[cat].icon} ${categories[cat].name}</span>
+                                <span class="${isOver ? 'text-red-600 font-bold' : 'text-gray-600'}">${formatCurrency(spent)} / ${formatCurrency(budget)}</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                <div class="progress-bar h-2.5 rounded-full ${isOver ? 'bg-red-500' : percentage > 75 ? 'bg-yellow-500' : 'bg-green-500'}" 
+                                    style="width: ${percentage}%"></div>
+                            </div>
+                            ${isOver ? '<p class="text-red-500 text-xs">Over budget by ' + formatCurrency(spent - budget) + '</p>' : ''}
+                        </div>
+                    `;
+                }
+            });
+        }
+        
+        function renderTransactions() {
+            const container = document.getElementById('transactionsList');
+            
+            let filtered = [...transactions];
+            
+            // Apply filters
+            const dateFrom = document.getElementById('filterDateFrom').value;
+            const dateTo = document.getElementById('filterDateTo').value;
+            const typeFilter = document.getElementById('filterType').value;
+            const categoryFilter = document.getElementById('filterCategory').value;
+            
+            if (dateFrom) filtered = filtered.filter(t => t.date >= dateFrom);
+            if (dateTo) filtered = filtered.filter(t => t.date <= dateTo);
+            if (typeFilter !== 'all') filtered = filtered.filter(t => t.type === typeFilter);
+            if (categoryFilter !== 'all') filtered = filtered.filter(t => t.category === categoryFilter);
+            
+            // Sort by date (newest first)
+            filtered.sort((a, b) => new Date(b.date) - new Date(a.date));
+            
+            if (filtered.length === 0) {
+                container.innerHTML = '<p class="text-gray-500 text-center py-8">No transactions found.</p>';
+                return;
+            }
+            
+            container.innerHTML = filtered.map(t => `
+                <div class="transaction-row flex items-center justify-between p-4 bg-gray-50 rounded-xl">
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 rounded-full flex items-center justify-center text-xl" 
+                            style="background: ${categories[t.category]?.color}20">
+                            ${categories[t.category]?.icon || '💰'}
+                        </div>
+                        <div>
+                            <p class="font-medium text-gray-800">${t.description}</p>
+                            <p class="text-sm text-gray-500">${categories[t.category]?.name || t.category} • ${formatDate(t.date)}</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <span class="font-bold ${t.type === 'income' ? 'text-green-600' : 'text-red-600'}">
+                            ${t.type === 'income' ? '+' : '-'}${formatCurrency(t.amount)}
+                        </span>
+                        <button onclick="deleteTransaction(${t.id})" class="text-gray-400 hover:text-red-500 transition">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        function populateFilterCategories() {
+            const select = document.getElementById('filterCategory');
+            select.innerHTML = '<option value="all">All Categories</option>';
+            Object.entries(categories).forEach(([key, cat]) => {
+                select.innerHTML += `<option value="${key}">${cat.icon} ${cat.name}</option>`;
+            });
+        }
+        
+        // Budget Modal
+        function openBudgetModal() {
+            const modal = document.getElementById('budgetModal');
+            const form = document.getElementById('budgetForm');
+            
+            const expenseCategories = ['food', 'transport', 'utilities', 'entertainment', 'shopping', 'health', 'education', 'other_expense'];
+            
+            form.innerHTML = expenseCategories.map(cat => `
+                <div>
+                    <label class="block text-gray-600 text-sm mb-1">${categories[cat].icon} ${categories[cat].name}</label>
+                    <div class="relative">
+                        <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">${getCurrencySymbol()}</span>
+                        <input type="number" id="budget_${cat}" step="0.01" min="0" value="${budgets[cat] || ''}" placeholder="No limit"
+                            class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                    </div>
+                </div>
+            `).join('');
+            
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+        
+        function closeBudgetModal() {
+            const modal = document.getElementById('budgetModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+        
+        function saveBudgets() {
+            const expenseCategories = ['food', 'transport', 'utilities', 'entertainment', 'shopping', 'health', 'education', 'other_expense'];
+            
+            budgets = {};
+            expenseCategories.forEach(cat => {
+                const value = document.getElementById(`budget_${cat}`).value;
+                if (value && parseFloat(value) > 0) {
+                    budgets[cat] = parseFloat(value);
+                }
+            });
+            
+            localStorage.setItem('budgets', JSON.stringify(budgets));
+            closeBudgetModal();
+            updateBudgetProgress();
+        }
+        
+        // Utility functions
+        function formatCurrency(amount) {
+            const locales = {
+                USD: 'en-US', EUR: 'de-DE', GBP: 'en-GB', JPY: 'ja-JP', CNY: 'zh-CN',
+                INR: 'en-IN', CAD: 'en-CA', AUD: 'en-AU', CHF: 'de-CH', KRW: 'ko-KR',
+                MXN: 'es-MX', BRL: 'pt-BR', SGD: 'en-SG', HKD: 'zh-HK', SEK: 'sv-SE',
+                NOK: 'nb-NO', NZD: 'en-NZ', ZAR: 'en-ZA', RUB: 'ru-RU', TRY: 'tr-TR',
+                AED: 'ar-AE', SAR: 'ar-SA', PLN: 'pl-PL', THB: 'th-TH', PHP: 'en-PH'
+            };
+            const locale = locales[selectedCurrency] || 'en-US';
+            return new Intl.NumberFormat(locale, { style: 'currency', currency: selectedCurrency }).format(amount);
+        }
+        
+        function formatDate(dateString) {
+            return new Date(dateString).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+        }
+        
+        // Close modal on outside click
+        document.getElementById('budgetModal').addEventListener('click', (e) => {
+            if (e.target.id === 'budgetModal') closeBudgetModal();
+        });
+        
+        // =====================
+        // BACKUP & IMPORT/EXPORT FUNCTIONS
+        // =====================
+        
+        let pendingImportData = null;
+        
+        // Detect mobile device
+        function isMobileDevice() {
+            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        }
+        
+        // Export Data as JSON
+        async function exportData() {
+            const exportObj = {
+                version: '1.0',
+                exportDate: new Date().toISOString(),
+                currency: selectedCurrency,
+                transactions: transactions,
+                budgets: budgets
+            };
+            
+            const dataStr = JSON.stringify(exportObj, null, 2);
+            const date = new Date().toISOString().split('T')[0];
+            const filename = `finance-tracker-backup-${date}.json`;
+            
+            // Try Web Share API first (works great on mobile)
+            if (navigator.share && navigator.canShare && isMobileDevice()) {
+                try {
+                    const file = new File([dataStr], filename, { type: 'application/json' });
+                    if (navigator.canShare({ files: [file] })) {
+                        await navigator.share({
+                            files: [file],
+                            title: 'Finance Tracker Backup',
+                            text: 'My finance tracker data backup'
+                        });
+                        localStorage.setItem('lastBackup', new Date().toISOString());
+                        showToast('Backup shared successfully!', 'success');
+                        return;
+                    }
+                } catch (err) {
+                    if (err.name !== 'AbortError') {
+                        console.log('Share failed, trying alternative method');
+                    } else {
+                        return; // User cancelled
+                    }
+                }
+            }
+            
+            // Try standard download
+            const blob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            a.style.display = 'none';
+            document.body.appendChild(a);
+            a.click();
+            
+            // For mobile: open save dialog modal if download might have failed
+            if (isMobileDevice()) {
+                setTimeout(() => {
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                    openSaveDataModal(dataStr, filename, 'json');
+                }, 500);
+            } else {
+                setTimeout(() => {
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                }, 100);
+                localStorage.setItem('lastBackup', new Date().toISOString());
+                showToast('Backup downloaded successfully!', 'success');
+            }
+        }
+        
+        // Export as CSV
+        async function exportAsCSV() {
+            if (transactions.length === 0) {
+                showToast('No transactions to export', 'error');
+                return;
+            }
+            
+            const headers = ['Date', 'Type', 'Category', 'Description', 'Amount', 'Currency'];
+            const rows = transactions.map(t => [
+                t.date,
+                t.type,
+                categories[t.category]?.name || t.category,
+                `"${t.description.replace(/"/g, '""')}"`,
+                t.amount,
+                selectedCurrency
+            ]);
+            
+            const csvContent = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
+            const date = new Date().toISOString().split('T')[0];
+            const filename = `finance-tracker-transactions-${date}.csv`;
+            
+            // Try Web Share API first (works great on mobile)
+            if (navigator.share && navigator.canShare && isMobileDevice()) {
+                try {
+                    const file = new File([csvContent], filename, { type: 'text/csv' });
+                    if (navigator.canShare({ files: [file] })) {
+                        await navigator.share({
+                            files: [file],
+                            title: 'Finance Tracker Transactions',
+                            text: 'My finance tracker transactions'
+                        });
+                        showToast('CSV shared successfully!', 'success');
+                        return;
+                    }
+                } catch (err) {
+                    if (err.name !== 'AbortError') {
+                        console.log('Share failed, trying alternative method');
+                    } else {
+                        return; // User cancelled
+                    }
+                }
+            }
+            
+            // Try standard download
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            a.style.display = 'none';
+            document.body.appendChild(a);
+            a.click();
+            
+            // For mobile: open save dialog modal if download might have failed
+            if (isMobileDevice()) {
+                setTimeout(() => {
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                    openSaveDataModal(csvContent, filename, 'csv');
+                }, 500);
+            } else {
+                setTimeout(() => {
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                }, 100);
+                showToast('CSV exported successfully!', 'success');
+            }
+        }
+        
+        // Open Save Data Modal for Mobile
+        function openSaveDataModal(content, filename, type) {
+            const modal = document.getElementById('saveDataModal');
+            document.getElementById('saveDataFilename').textContent = filename;
+            document.getElementById('saveDataContent').value = content;
+            document.getElementById('saveDataType').textContent = type.toUpperCase();
+            
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+        
+        function closeSaveDataModal() {
+            const modal = document.getElementById('saveDataModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            localStorage.setItem('lastBackup', new Date().toISOString());
+        }
+        
+        // Copy data to clipboard
+        async function copyDataToClipboard() {
+            const content = document.getElementById('saveDataContent').value;
+            try {
+                await navigator.clipboard.writeText(content);
+                showToast('Data copied to clipboard!', 'success');
+            } catch (err) {
+                // Fallback for older browsers
+                const textarea = document.getElementById('saveDataContent');
+                textarea.select();
+                document.execCommand('copy');
+                showToast('Data copied to clipboard!', 'success');
+            }
+        }
+        
+        // Share data using native share
+        async function shareDataNative() {
+            const content = document.getElementById('saveDataContent').value;
+            const filename = document.getElementById('saveDataFilename').textContent;
+            
+            if (navigator.share) {
+                try {
+                    await navigator.share({
+                        title: 'Finance Tracker Backup',
+                        text: content
+                    });
+                    showToast('Shared successfully!', 'success');
+                    closeSaveDataModal();
+                } catch (err) {
+                    if (err.name !== 'AbortError') {
+                        showToast('Sharing failed', 'error');
+                    }
+                }
+            } else {
+                showToast('Sharing not supported', 'error');
+            }
+        }
+        
+        // Email data to self
+        function emailData() {
+            const content = document.getElementById('saveDataContent').value;
+            const filename = document.getElementById('saveDataFilename').textContent;
+            const subject = encodeURIComponent(`Finance Tracker Backup - ${filename}`);
+            const body = encodeURIComponent(`Finance Tracker Backup\n\nFilename: ${filename}\n\n--- DATA START ---\n${content}\n--- DATA END ---\n\nTo restore: Copy the data between DATA START and DATA END, save it as a .json file, then import it in the app.`);
+            
+            window.location.href = `mailto:?subject=${subject}&body=${body}`;
+            showToast('Opening email app...', 'success');
+        }
+        
+        // Open Import Modal
+        function openImportModal() {
+            const modal = document.getElementById('importModal');
+            clearFileSelection();
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            
+            // Setup drag and drop
+            setupDragAndDrop();
+        }
+        
+        function closeImportModal() {
+            const modal = document.getElementById('importModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            clearFileSelection();
+        }
+        
+        // Setup Drag and Drop
+        function setupDragAndDrop() {
+            const dropZone = document.getElementById('dropZone');
+            
+            dropZone.onclick = () => document.getElementById('importFile').click();
+            
+            dropZone.ondragover = (e) => {
+                e.preventDefault();
+                dropZone.classList.add('border-purple-500', 'bg-purple-50');
+            };
+            
+            dropZone.ondragleave = (e) => {
+                e.preventDefault();
+                dropZone.classList.remove('border-purple-500', 'bg-purple-50');
+            };
+            
+            dropZone.ondrop = (e) => {
+                e.preventDefault();
+                dropZone.classList.remove('border-purple-500', 'bg-purple-50');
+                
+                const files = e.dataTransfer.files;
+                if (files.length > 0) {
+                    processFile(files[0]);
+                }
+            };
+        }
+        
+        // Handle File Selection
+        function handleFileSelect(event) {
+            const file = event.target.files[0];
+            if (file) {
+                processFile(file);
+            }
+        }
+        
+        // Process Uploaded File
+        function processFile(file) {
+            const errorDiv = document.getElementById('importError');
+            const errorText = document.getElementById('importErrorText');
+            errorDiv.classList.add('hidden');
+            
+            if (!file.name.endsWith('.json')) {
+                errorText.textContent = 'Please select a valid JSON file.';
+                errorDiv.classList.remove('hidden');
+                return;
+            }
+            
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                try {
+                    const data = JSON.parse(e.target.result);
+                    
+                    // Validate data structure
+                    if (!data.transactions || !Array.isArray(data.transactions)) {
+                        throw new Error('Invalid file format: missing transactions array');
+                    }
+                    
+                    pendingImportData = data;
+                    
+                    // Show file info
+                    document.getElementById('fileName').textContent = file.name;
+                    document.getElementById('fileDetails').textContent = 
+                        `${data.transactions.length} transactions, ${Object.keys(data.budgets || {}).length} budgets`;
+                    document.getElementById('fileInfo').classList.remove('hidden');
+                    document.getElementById('dropZone').classList.add('hidden');
+                    document.getElementById('importBtn').disabled = false;
+                    
+                } catch (err) {
+                    errorText.textContent = err.message || 'Failed to parse file. Please ensure it\'s a valid backup file.';
+                    errorDiv.classList.remove('hidden');
+                    pendingImportData = null;
+                }
+            };
+            reader.readAsText(file);
+        }
+        
+        // Clear File Selection
+        function clearFileSelection() {
+            document.getElementById('importFile').value = '';
+            document.getElementById('fileInfo').classList.add('hidden');
+            document.getElementById('dropZone').classList.remove('hidden');
+            document.getElementById('importBtn').disabled = true;
+            document.getElementById('importError').classList.add('hidden');
+            pendingImportData = null;
+        }
+        
+        // Import Data
+        function importData() {
+            if (!pendingImportData) return;
+            
+            const importOption = document.querySelector('input[name="importOption"]:checked').value;
+            
+            if (importOption === 'replace') {
+                // Replace all data
+                transactions = pendingImportData.transactions || [];
+                budgets = pendingImportData.budgets || {};
+                if (pendingImportData.currency) {
+                    selectedCurrency = pendingImportData.currency;
+                    localStorage.setItem('selectedCurrency', selectedCurrency);
+                    document.getElementById('currencySelector').value = selectedCurrency;
+                    updateCurrencySymbol();
+                }
+            } else {
+                // Merge data - add new transactions (avoid duplicates by ID)
+                const existingIds = new Set(transactions.map(t => t.id));
+                const newTransactions = pendingImportData.transactions.filter(t => !existingIds.has(t.id));
+                transactions = [...transactions, ...newTransactions];
+                
+                // Merge budgets (new budgets override existing)
+                budgets = { ...budgets, ...pendingImportData.budgets };
+            }
+            
+            // Save to localStorage
+            saveTransactions();
+            localStorage.setItem('budgets', JSON.stringify(budgets));
+            
+            // Update UI
+            updateUI();
+            closeImportModal();
+            
+            const count = importOption === 'replace' 
+                ? pendingImportData.transactions.length 
+                : pendingImportData.transactions.filter(t => !new Set(transactions.map(x => x.id)).has(t.id)).length;
+            
+            showToast(`Data imported successfully! ${pendingImportData.transactions.length} transactions loaded.`, 'success');
+        }
+        
+        // Open Backup Modal
+        function openBackupModal() {
+            const modal = document.getElementById('backupModal');
+            
+            // Update data summary
+            const totalIncome = transactions.filter(t => t.type === 'income').reduce((s, t) => s + t.amount, 0);
+            const totalExpenses = transactions.filter(t => t.type === 'expense').reduce((s, t) => s + t.amount, 0);
+            
+            document.getElementById('dataSummary').innerHTML = `
+                <div><i class="fas fa-receipt mr-1"></i>${transactions.length} Transactions</div>
+                <div><i class="fas fa-bullseye mr-1"></i>${Object.keys(budgets).length} Budgets Set</div>
+                <div><i class="fas fa-arrow-up mr-1 text-green-600"></i>Income: ${formatCurrency(totalIncome)}</div>
+                <div><i class="fas fa-arrow-down mr-1 text-red-600"></i>Expenses: ${formatCurrency(totalExpenses)}</div>
+            `;
+            
+            // Last backup info
+            const lastBackup = localStorage.getItem('lastBackup');
+            document.getElementById('lastBackupInfo').innerHTML = lastBackup 
+                ? `<i class="fas fa-clock mr-1"></i>Last backup: ${formatDate(lastBackup.split('T')[0])} at ${new Date(lastBackup).toLocaleTimeString()}`
+                : '<i class="fas fa-info-circle mr-1"></i>No backups created yet';
+            
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+        
+        function closeBackupModal() {
+            const modal = document.getElementById('backupModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+        
+        // Clear Data Confirmation
+        function confirmClearData() {
+            closeBackupModal();
+            const modal = document.getElementById('confirmClearModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+        
+        function closeConfirmClearModal() {
+            const modal = document.getElementById('confirmClearModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+        
+        function clearAllData() {
+            transactions = [];
+            budgets = {};
+            localStorage.removeItem('transactions');
+            localStorage.removeItem('budgets');
+            localStorage.removeItem('lastBackup');
+            
+            updateUI();
+            closeConfirmClearModal();
+            showToast('All data has been cleared', 'success');
+        }
+        
+        // Toast Notification
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            const toastIcon = document.getElementById('toastIcon');
+            const toastMessage = document.getElementById('toastMessage');
+            
+            toastMessage.textContent = message;
+            
+            if (type === 'success') {
+                toastIcon.className = 'fas fa-check-circle text-green-400';
+            } else if (type === 'error') {
+                toastIcon.className = 'fas fa-exclamation-circle text-red-400';
+            } else {
+                toastIcon.className = 'fas fa-info-circle text-blue-400';
+            }
+            
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+            
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+                toast.classList.remove('translate-y-0', 'opacity-100');
+            }, 3000);
+        }
+        
+        // Close modals on outside click
+        document.getElementById('importModal').addEventListener('click', (e) => {
+            if (e.target.id === 'importModal') closeImportModal();
+        });
+        document.getElementById('backupModal').addEventListener('click', (e) => {
+            if (e.target.id === 'backupModal') closeBackupModal();
+        });
+        document.getElementById('confirmClearModal').addEventListener('click', (e) => {
+            if (e.target.id === 'confirmClearModal') closeConfirmClearModal();
+        });
+        document.getElementById('saveDataModal').addEventListener('click', (e) => {
+            if (e.target.id === 'saveDataModal') closeSaveDataModal();
+        });
+    </script>
+</body>
+</html>
