@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ATS-Friendly Resume Builder & Checker</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Merriweather:wght@400;700&family=Source+Sans+Pro:wght@400;600;700&family=Playfair+Display:wght@400;600;700&family=Roboto:wght@400;500;700&family=Lato:wght@400;700&family=Open+Sans:wght@400;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        @media print {
+            @page { 
+                size: A4; 
+                margin: 0 !important;
+            }
+            * { 
+                -webkit-print-color-adjust: exact !important; 
+                print-color-adjust: exact !important;
+            }
+            html, body { 
+                width: 210mm !important; 
+                height: 297mm !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                background: white !important;
+                overflow: hidden !important;
+            }
+            body > *:not(main) { display: none !important; }
+            main { 
+                display: block !important; 
+                padding: 0 !important; 
+                margin: 0 !important; 
+                max-width: none !important;
+                width: 210mm !important;
+                height: 297mm !important;
+            }
+            main > *:not(.lg\\:sticky) { display: none !important; }
+            .lg\\:sticky { 
+                position: static !important;
+                width: 210mm !important;
+                height: 297mm !important;
+            }
+            .lg\\:sticky > *:first-child { display: none !important; }
+            #resumePreview { 
+                box-shadow: none !important; 
+                border-radius: 0 !important; 
+                margin: 0 !important;
+                width: 210mm !important; 
+                height: 297mm !important;
+            }
+            .resume-page { 
+                width: 210mm !important; 
+                height: 297mm !important; 
+                margin: 0 !important;
+                padding: 8mm 10mm !important;
+                box-sizing: border-box !important;
+                overflow: hidden !important;
+            }
+            .grid { display: block !important; }
+            .no-print { display: none !important; }
+        }
+
+        #resumePreview { aspect-ratio: 210 / 297; max-width: 100%; }
+        .score-ring { transform: rotate(-90deg); }
+        .score-ring-bg { stroke: #e5e7eb; }
+        .score-ring-fill { stroke-linecap: round; transition: stroke-dashoffset 0.5s ease; }
+        .keyword-match { background: linear-gradient(120deg, #d1fae5 0%, #a7f3d0 100%); }
+        .keyword-missing { background: linear-gradient(120deg, #fee2e2 0%, #fecaca 100%); }
+        .category-bar { transition: width 0.5s ease; }
+        .check-item { transition: all 0.2s ease; }
+        .check-item:hover { transform: translateX(4px); }
+        .tab-active { border-bottom: 3px solid #4f46e5; color: #4f46e5; }
+        .issue-card { border-left: 4px solid; }
+        .issue-critical { border-color: #ef4444; background: #fef2f2; }
+        .issue-warning { border-color: #f59e0b; background: #fffbeb; }
+        .issue-suggestion { border-color: #3b82f6; background: #eff6ff; }
+        .issue-success { border-color: #22c55e; background: #f0fdf4; }
+        .template-card { transition: all 0.3s ease; cursor: pointer; }
+        .template-card:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+        .template-card.active { border-color: #4f46e5; background: #eef2ff; }
+        .resume-bullets { margin: 0; padding: 0; list-style: none; }
+        .resume-bullets li { position: relative; padding-left: 12px; margin-bottom: 2px; }
+        .resume-bullets li::before { content: "•"; position: absolute; left: 0; }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-indigo-100 via-purple-50 to-pink-100 min-h-screen">
+    <header class="bg-white/80 backdrop-blur-sm shadow-lg no-print sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="bg-gradient-to-r from-indigo-600 to-purple-600 p-2 rounded-lg">
+                    <i class="fas fa-file-alt text-white text-xl"></i>
+                </div>
+                <div>
+                    <h1 class="text-2xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">ATS Resume Builder</h1>
+                    <p class="text-xs text-gray-500">12 Professional Templates</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-3">
+                <div class="hidden md:flex items-center gap-2 bg-gray-100 px-4 py-2 rounded-lg">
+                    <span class="text-sm text-gray-600">ATS Score:</span>
+                    <span id="headerAtsScore" class="font-bold text-green-600 text-xl">0</span>
+                </div>
+                <button onclick="printResume()" class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-6 py-2 rounded-lg hover:opacity-90 transition flex items-center gap-2 shadow-lg">
+                    <i class="fas fa-download"></i> Download PDF
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 py-8">
+        <div class="no-print bg-white rounded-xl shadow-lg mb-6 p-1 flex">
+            <button onclick="switchTab('builder')" id="tab-builder" class="flex-1 py-3 px-6 rounded-lg font-medium transition tab-active flex items-center justify-center gap-2">
+                <i class="fas fa-edit"></i> Resume Builder
+            </button>
+            <button onclick="switchTab('checker')" id="tab-checker" class="flex-1 py-3 px-6 rounded-lg font-medium transition text-gray-600 hover:bg-gray-50 flex items-center justify-center gap-2">
+                <i class="fas fa-check-circle"></i> ATS Checker
+            </button>
+            <button onclick="switchTab('templates')" id="tab-templates" class="flex-1 py-3 px-6 rounded-lg font-medium transition text-gray-600 hover:bg-gray-50 flex items-center justify-center gap-2">
+                <i class="fas fa-palette"></i> Templates
+            </button>
+        </div>
+
+        <div class="grid lg:grid-cols-2 gap-8">
+            <!-- Builder Content -->
+            <div id="builderContent" class="no-print space-y-6">
+                <section class="bg-white rounded-2xl shadow-xl p-6">
+                    <h2 class="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+                        <i class="fas fa-user text-indigo-600"></i> Personal Information
+                    </h2>
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <input type="text" id="fullName" placeholder="Full Name" oninput="updatePreview()" class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
+                        <input type="text" id="jobTitle" placeholder="Target Job Title" oninput="updatePreview()" class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
+                        <input type="email" id="email" placeholder="Email Address" oninput="updatePreview()" class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
+                        <input type="tel" id="phone" placeholder="Phone Number" oninput="updatePreview()" class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
+                        <input type="text" id="location" placeholder="City, State/Country" oninput="updatePreview()" class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
+                        <input type="url" id="linkedin" placeholder="LinkedIn URL" oninput="updatePreview()" class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
+                        <input type="url" id="github" placeholder="GitHub URL" oninput="updatePreview()" class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
+                        <input type="url" id="website" placeholder="Portfolio/Website URL" oninput="updatePreview()" class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
+                    </div>
+                    <textarea id="summary" placeholder="Professional Summary - Write 2-4 sentences about your experience..." oninput="updatePreview()" class="w-full mt-4 px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none h-24 resize-none"></textarea>
+                </section>
+
+                <section class="bg-white rounded-2xl shadow-xl p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <h2 class="text-xl font-bold text-gray-800 flex items-center gap-2">
+                            <i class="fas fa-briefcase text-indigo-600"></i> Work Experience
+                        </h2>
+                        <button onclick="addExperience()" class="bg-indigo-100 text-indigo-600 px-4 py-2 rounded-lg hover:bg-indigo-200 transition flex items-center gap-2">
+                            <i class="fas fa-plus"></i> Add
+                        </button>
+                    </div>
+                    <div id="experienceContainer" class="space-y-4"></div>
+                </section>
+
+                <section class="bg-white rounded-2xl shadow-xl p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <h2 class="text-xl font-bold text-gray-800 flex items-center gap-2">
+                            <i class="fas fa-diagram-project text-indigo-600"></i> Projects
+                        </h2>
+                        <button onclick="addProject()" class="bg-indigo-100 text-indigo-600 px-4 py-2 rounded-lg hover:bg-indigo-200 transition flex items-center gap-2">
+                            <i class="fas fa-plus"></i> Add
+                        </button>
+                    </div>
+                    <div id="projectContainer" class="space-y-4"></div>
+                </section>
+
+                <section class="bg-white rounded-2xl shadow-xl p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <h2 class="text-xl font-bold text-gray-800 flex items-center gap-2">
+                            <i class="fas fa-graduation-cap text-indigo-600"></i> Education
+                        </h2>
+                        <button onclick="addEducation()" class="bg-indigo-100 text-indigo-600 px-4 py-2 rounded-lg hover:bg-indigo-200 transition flex items-center gap-2">
+                            <i class="fas fa-plus"></i> Add
+                        </button>
+                    </div>
+                    <div id="educationContainer" class="space-y-4"></div>
+                </section>
+
+                <section class="bg-white rounded-2xl shadow-xl p-6">
+                    <h2 class="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+                        <i class="fas fa-cogs text-indigo-600"></i> Skills
+                    </h2>
+                    <textarea id="skills" placeholder="Enter skills separated by commas" oninput="updatePreview()" class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none h-20 resize-none"></textarea>
+                </section>
+
+                <section class="bg-white rounded-2xl shadow-xl p-6">
+                    <h2 class="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+                        <i class="fas fa-certificate text-indigo-600"></i> Certifications
+                    </h2>
+                    <textarea id="certifications" placeholder="Enter certifications (one per line)" oninput="updatePreview()" class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none h-20 resize-none"></textarea>
+                </section>
+
+                <section class="bg-white rounded-2xl shadow-xl p-6">
+                    <h2 class="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+                        <i class="fas fa-language text-indigo-600"></i> Languages
+                    </h2>
+                    <textarea id="languages" placeholder="Enter languages (one per line)" oninput="updatePreview()" class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none h-16 resize-none"></textarea>
+                </section>
+            </div>
+
+            <!-- Templates Content -->
+            <div id="templatesContent" class="no-print space-y-6 hidden">
+                <section class="bg-white rounded-2xl shadow-xl p-6">
+                    <h2 class="text-xl font-bold text-gray-800 mb-4">Choose Template (12 Designs)</h2>
+                    <div class="grid grid-cols-3 gap-3" id="templateGrid"></div>
+                </section>
+
+                <section class="bg-white rounded-2xl shadow-xl p-6">
+                    <h2 class="text-xl font-bold text-gray-800 mb-4">Accent Color</h2>
+                    <div class="flex gap-3 flex-wrap" id="colorPalette"></div>
+                </section>
+
+                <section class="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl shadow-xl p-6 border border-green-200">
+                    <h2 class="text-lg font-bold text-gray-800 mb-3 flex items-center gap-2">
+                        <i class="fas fa-lightbulb text-green-500"></i> ATS Tips
+                    </h2>
+                    <ul class="space-y-2 text-sm text-gray-700">
+                        <li class="flex items-start gap-2"><i class="fas fa-check text-green-500 mt-1"></i> Use standard section headings</li>
+                        <li class="flex items-start gap-2"><i class="fas fa-check text-green-500 mt-1"></i> Include keywords from job description</li>
+                        <li class="flex items-start gap-2"><i class="fas fa-check text-green-500 mt-1"></i> Start bullets with action verbs</li>
+                        <li class="flex items-start gap-2"><i class="fas fa-check text-green-500 mt-1"></i> Add measurable achievements</li>
+                    </ul>
+                </section>
+            </div>
+
+            <!-- Checker Content -->
+            <div id="checkerContent" class="no-print space-y-6 hidden">
+                <section class="bg-white rounded-2xl shadow-xl p-6">
+                    <div class="flex items-center gap-6">
+                        <div class="relative">
+                            <svg class="w-32 h-32 score-ring" viewBox="0 0 100 100">
+                                <circle class="score-ring-bg" cx="50" cy="50" r="45" fill="none" stroke-width="8"/>
+                                <circle id="scoreRingFill" class="score-ring-fill" cx="50" cy="50" r="45" fill="none" stroke-width="8" stroke="#22c55e" stroke-dasharray="283" stroke-dashoffset="283"/>
+                            </svg>
+                            <div class="absolute inset-0 flex flex-col items-center justify-center">
+                                <span id="mainScore" class="text-3xl font-bold text-gray-800">0</span>
+                                <span class="text-xs text-gray-500">/ 100</span>
+                            </div>
+                        </div>
+                        <div class="flex-1">
+                            <h2 class="text-xl font-bold text-gray-800 mb-1">ATS Score</h2>
+                            <p id="scoreMessage" class="text-gray-600 text-sm mb-3">Add content to see your score</p>
+                            <div id="scoreStatus" class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-sm font-medium bg-gray-100 text-gray-600">
+                                <i class="fas fa-circle-info"></i> Needs Content
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="bg-white rounded-2xl shadow-xl p-6">
+                    <h2 class="text-lg font-bold text-gray-800 mb-4">Score Breakdown</h2>
+                    <div class="space-y-3" id="scoreBreakdown"></div>
+                </section>
+
+                <section class="bg-white rounded-2xl shadow-xl p-6">
+                    <h2 class="text-lg font-bold text-gray-800 mb-4">Analysis</h2>
+                    <div id="issuesList" class="space-y-2"></div>
+                </section>
+
+                <section class="bg-white rounded-2xl shadow-xl p-6">
+                    <h2 class="text-lg font-bold text-gray-800 mb-4">Statistics</h2>
+                    <div class="grid grid-cols-4 gap-3">
+                        <div class="bg-gray-50 rounded-xl p-3 text-center">
+                            <div id="statWords" class="text-xl font-bold text-indigo-600">0</div>
+                            <div class="text-xs text-gray-500">Words</div>
+                        </div>
+                        <div class="bg-gray-50 rounded-xl p-3 text-center">
+                            <div id="statBullets" class="text-xl font-bold text-purple-600">0</div>
+                            <div class="text-xs text-gray-500">Bullets</div>
+                        </div>
+                        <div class="bg-gray-50 rounded-xl p-3 text-center">
+                            <div id="statActionVerbs" class="text-xl font-bold text-green-600">0</div>
+                            <div class="text-xs text-gray-500">Actions</div>
+                        </div>
+                        <div class="bg-gray-50 rounded-xl p-3 text-center">
+                            <div id="statMetrics" class="text-xl font-bold text-amber-600">0</div>
+                            <div class="text-xs text-gray-500">Metrics</div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="bg-white rounded-2xl shadow-xl p-6">
+                    <h2 class="text-lg font-bold text-gray-800 mb-2">Job Matcher</h2>
+                    <textarea id="jobDescription" placeholder="Paste job description..." oninput="analyzeJobMatch()" class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none h-24 resize-none text-sm"></textarea>
+                    <div id="keywordAnalysis" class="mt-4 hidden">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="font-medium text-gray-700">Match Rate</span>
+                            <span id="matchRate" class="font-bold text-xl">0%</span>
+                        </div>
+                        <div class="h-2 bg-gray-200 rounded-full overflow-hidden mb-3">
+                            <div id="matchBar" class="h-full bg-green-500 transition-all" style="width: 0%"></div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div class="bg-green-50 rounded-lg p-3">
+                                <h4 class="text-xs font-bold text-green-700 mb-2">Matched (<span id="matchedCount">0</span>)</h4>
+                                <div id="matchedKeywords" class="flex flex-wrap gap-1"></div>
+                            </div>
+                            <div class="bg-red-50 rounded-lg p-3">
+                                <h4 class="text-xs font-bold text-red-700 mb-2">Missing (<span id="missingCount">0</span>)</h4>
+                                <div id="missingKeywords" class="flex flex-wrap gap-1"></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Resume Preview -->
+            <div class="lg:sticky lg:top-24 h-fit">
+                <div class="bg-white rounded-2xl shadow-2xl overflow-hidden no-print mb-4">
+                    <div class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-4 py-2 flex items-center justify-between">
+                        <span class="flex items-center gap-2"><i class="fas fa-eye"></i> Live Preview</span>
+                        <span id="previewScore" class="bg-white/20 px-3 py-1 rounded-full text-sm">Score: 0</span>
+                    </div>
+                </div>
+                <div id="resumePreview" class="bg-white shadow-2xl rounded-lg overflow-hidden"></div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        let currentTheme = 'indigo';
+        let currentTemplate = 'professional';
+        let experienceCount = 0;
+        let educationCount = 0;
+        let projectCount = 0;
+        let currentTab = 'builder';
+
+        const templates = {
+            professional: { name: 'Professional', font: 'Source Sans Pro', desc: 'ATS Best' },
+            modern: { name: 'Modern', font: 'Inter', desc: 'Bold Header' },
+            classic: { name: 'Classic', font: 'Merriweather', desc: 'Traditional' },
+            minimal: { name: 'Minimal', font: 'Inter', desc: 'Clean' },
+            executive: { name: 'Executive', font: 'Playfair Display', desc: 'Senior' },
+            creative: { name: 'Creative', font: 'Poppins', desc: 'Design' },
+            tech: { name: 'Tech', font: 'Roboto', desc: 'IT & Dev' },
+            elegant: { name: 'Elegant', font: 'Lato', desc: 'Refined' },
+            bold: { name: 'Bold', font: 'Open Sans', desc: 'Stand Out' },
+            compact: { name: 'Compact', font: 'Inter', desc: 'Dense' },
+            corporate: { name: 'Corporate', font: 'Source Sans Pro', desc: 'Business' },
+            clean: { name: 'Clean', font: 'Roboto', desc: 'Fresh' }
+        };
+
+        const themeColors = {
+            indigo: { primary: '#4f46e5', light: '#e0e7ff', dark: '#3730a3' },
+            emerald: { primary: '#059669', light: '#d1fae5', dark: '#047857' },
+            rose: { primary: '#e11d48', light: '#ffe4e6', dark: '#be123c' },
+            amber: { primary: '#d97706', light: '#fef3c7', dark: '#b45309' },
+            slate: { primary: '#475569', light: '#f1f5f9', dark: '#334155' },
+            teal: { primary: '#0d9488', light: '#ccfbf1', dark: '#0f766e' },
+            blue: { primary: '#2563eb', light: '#dbeafe', dark: '#1d4ed8' },
+            purple: { primary: '#7c3aed', light: '#ede9fe', dark: '#6d28d9' },
+            pink: { primary: '#db2777', light: '#fce7f3', dark: '#be185d' },
+            cyan: { primary: '#0891b2', light: '#cffafe', dark: '#0e7490' }
+        };
+
+        const actionVerbs = ['achieved', 'administered', 'analyzed', 'automated', 'built', 'collaborated', 'completed', 'conducted', 'coordinated', 'created', 'decreased', 'delivered', 'designed', 'developed', 'directed', 'drove', 'enhanced', 'established', 'executed', 'expanded', 'facilitated', 'generated', 'grew', 'headed', 'implemented', 'improved', 'increased', 'initiated', 'introduced', 'launched', 'led', 'managed', 'mentored', 'negotiated', 'optimized', 'orchestrated', 'organized', 'oversaw', 'performed', 'pioneered', 'planned', 'produced', 'promoted', 'reduced', 'resolved', 'restructured', 'revamped', 'scaled', 'spearheaded', 'streamlined', 'strengthened', 'supervised', 'trained', 'transformed'];
+
+        function initUI() {
+            const templateGrid = document.getElementById('templateGrid');
+            templateGrid.innerHTML = Object.entries(templates).map(([key, t]) => `
+                <div onclick="setTemplate('${key}')" id="tpl-${key}" class="template-card border-2 ${key === currentTemplate ? 'border-indigo-500 active' : 'border-gray-200'} rounded-lg p-2 text-center">
+                    <div class="w-full h-12 rounded mb-1 bg-gradient-to-br from-gray-100 to-gray-50 flex items-center justify-center">
+                        <div class="w-6 h-6 rounded" style="background: ${themeColors[currentTheme].primary};"></div>
+                    </div>
+                    <p class="font-semibold text-gray-800 text-xs">${t.name}</p>
+                    <p class="text-xs text-gray-400">${t.desc}</p>
+                </div>
+            `).join('');
+
+            const colorPalette = document.getElementById('colorPalette');
+            colorPalette.innerHTML = Object.entries(themeColors).map(([key, c]) => `
+                <button onclick="setTheme('${key}')" class="w-10 h-10 rounded-full hover:scale-110 transition shadow-md ${key === currentTheme ? 'ring-2 ring-offset-2' : ''}" style="background: ${c.primary};"></button>
+            `).join('');
+
+            const categories = [
+                { id: 'contact', name: 'Contact', max: 15, icon: 'id-card', color: 'blue' },
+                { id: 'summary', name: 'Summary', max: 15, icon: 'file-lines', color: 'purple' },
+                { id: 'experience', name: 'Experience', max: 30, icon: 'briefcase', color: 'amber' },
+                { id: 'education', name: 'Education', max: 15, icon: 'graduation-cap', color: 'green' },
+                { id: 'skills', name: 'Skills', max: 15, icon: 'cogs', color: 'rose' },
+                { id: 'format', name: 'Format', max: 10, icon: 'spell-check', color: 'cyan' }
+            ];
+            document.getElementById('scoreBreakdown').innerHTML = categories.map(c => `
+                <div>
+                    <div class="flex justify-between items-center mb-1">
+                        <span class="text-sm font-medium text-gray-700"><i class="fas fa-${c.icon} text-${c.color}-500 mr-2"></i>${c.name}</span>
+                        <span id="cat${c.id.charAt(0).toUpperCase() + c.id.slice(1)}" class="text-sm font-bold">0/${c.max}</span>
+                    </div>
+                    <div class="h-2 bg-gray-200 rounded-full overflow-hidden">
+                        <div id="bar${c.id.charAt(0).toUpperCase() + c.id.slice(1)}" class="h-full bg-${c.color}-500 category-bar" style="width: 0%"></div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function switchTab(tab) {
+            currentTab = tab;
+            ['builder', 'checker', 'templates'].forEach(t => {
+                document.getElementById(`tab-${t}`).className = t === tab 
+                    ? 'flex-1 py-3 px-6 rounded-lg font-medium transition tab-active flex items-center justify-center gap-2'
+                    : 'flex-1 py-3 px-6 rounded-lg font-medium transition text-gray-600 hover:bg-gray-50 flex items-center justify-center gap-2';
+                document.getElementById(`${t}Content`).classList.toggle('hidden', t !== tab);
+            });
+            if (tab === 'checker') runFullATSCheck();
+        }
+
+        function setTemplate(template) {
+            currentTemplate = template;
+            Object.keys(templates).forEach(t => {
+                const el = document.getElementById(`tpl-${t}`);
+                if (el) el.className = t === template 
+                    ? 'template-card border-2 border-indigo-500 rounded-lg p-2 text-center active'
+                    : 'template-card border-2 border-gray-200 rounded-lg p-2 text-center';
+            });
+            updatePreview();
+        }
+
+        function setTheme(theme) {
+            currentTheme = theme;
+            initUI();
+            updatePreview();
+        }
+
+        function addExperience() {
+            experienceCount++;
+            const container = document.getElementById('experienceContainer');
+            const div = document.createElement('div');
+            div.className = 'bg-gray-50 p-4 rounded-xl space-y-3';
+            div.id = `exp-${experienceCount}`;
+            div.innerHTML = `
+                <div class="flex justify-between items-center">
+                    <span class="font-medium text-gray-700">Experience #${experienceCount}</span>
+                    <button onclick="removeItem('exp-${experienceCount}')" class="text-red-500 hover:text-red-700"><i class="fas fa-trash"></i></button>
+                </div>
+                <div class="grid md:grid-cols-2 gap-3">
+                    <input type="text" placeholder="Job Title" oninput="updatePreview()" class="exp-title w-full px-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
+                    <input type="text" placeholder="Company Name" oninput="updatePreview()" class="exp-company w-full px-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
+                    <input type="text" placeholder="Location" oninput="updatePreview()" class="exp-location w-full px-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
+                    <div class="flex gap-2">
+                        <input type="text" placeholder="Start" oninput="updatePreview()" class="exp-start w-full px-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
+                        <input type="text" placeholder="End" oninput="updatePreview()" class="exp-end w-full px-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
+                    </div>
+                </div>
+                <textarea placeholder="• Achievement with metrics&#10;• Another accomplishment" oninput="updatePreview()" class="exp-desc w-full px-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none h-24 resize-none text-sm"></textarea>
+            `;
+            container.appendChild(div);
+            updatePreview();
+        }
+
+        function addEducation() {
+            educationCount++;
+            const container = document.getElementById('educationContainer');
+            const div = document.createElement('div');
+            div.className = 'bg-gray-50 p-4 rounded-xl space-y-3';
+            div.id = `edu-${educationCount}`;
+            div.innerHTML = `
+                <div class="flex justify-between items-center">
+                    <span class="font-medium text-gray-700">Education #${educationCount}</span>
+                    <button onclick="removeItem('edu-${educationCount}')" class="text-red-500 hover:text-red-700"><i class="fas fa-trash"></i></button>
+                </div>
+                <div class="grid md:grid-cols-2 gap-3">
+                    <input type="text" placeholder="Degree" oninput="updatePreview()" class="edu-degree w-full px-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
+                    <input type="text" placeholder="School" oninput="updatePreview()" class="edu-school w-full px-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
+                    <input type="text" placeholder="Location" oninput="updatePreview()" class="edu-location w-full px-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
+                    <input type="text" placeholder="Year" oninput="updatePreview()" class="edu-year w-full px-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
+                </div>
+                <input type="text" placeholder="GPA / Honors" oninput="updatePreview()" class="edu-gpa w-full px-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
+            `;
+            container.appendChild(div);
+            updatePreview();
+        }
+
+        function addProject() {
+            projectCount++;
+            const container = document.getElementById('projectContainer');
+            const div = document.createElement('div');
+            div.className = 'bg-gray-50 p-4 rounded-xl space-y-3';
+            div.id = `proj-${projectCount}`;
+            div.innerHTML = `
+                <div class="flex justify-between items-center">
+                    <span class="font-medium text-gray-700">Project #${projectCount}</span>
+                    <button onclick="removeItem('proj-${projectCount}')" class="text-red-500 hover:text-red-700"><i class="fas fa-trash"></i></button>
+                </div>
+                <div class="grid md:grid-cols-2 gap-3">
+                    <input type="text" placeholder="Project Name" oninput="updatePreview()" class="proj-name w-full px-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
+                    <input type="text" placeholder="Technologies" oninput="updatePreview()" class="proj-tech w-full px-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
+                    <input type="url" placeholder="Project URL" oninput="updatePreview()" class="proj-url w-full px-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
+                    <input type="text" placeholder="Date" oninput="updatePreview()" class="proj-date w-full px-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
+                </div>
+                <textarea placeholder="• Key achievement" oninput="updatePreview()" class="proj-desc w-full px-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none h-16 resize-none text-sm"></textarea>
+            `;
+            container.appendChild(div);
+            updatePreview();
+        }
+
+        function removeItem(id) {
+            document.getElementById(id)?.remove();
+            updatePreview();
+        }
+
+        function formatUrl(url) {
+            if (!url) return '';
+            return url.startsWith('http') ? url : 'https://' + url;
+        }
+
+        function getResumeText() {
+            let text = '';
+            ['fullName', 'jobTitle', 'email', 'phone', 'location', 'summary', 'skills', 'certifications', 'languages'].forEach(id => {
+                text += (document.getElementById(id)?.value || '') + ' ';
+            });
+            document.querySelectorAll('[id^="exp-"]').forEach(exp => {
+                text += (exp.querySelector('.exp-title')?.value || '') + ' ';
+                text += (exp.querySelector('.exp-company')?.value || '') + ' ';
+                text += (exp.querySelector('.exp-desc')?.value || '') + ' ';
+            });
+            document.querySelectorAll('[id^="edu-"]').forEach(edu => {
+                text += (edu.querySelector('.edu-degree')?.value || '') + ' ';
+                text += (edu.querySelector('.edu-school')?.value || '') + ' ';
+            });
+            document.querySelectorAll('[id^="proj-"]').forEach(proj => {
+                text += (proj.querySelector('.proj-name')?.value || '') + ' ';
+                text += (proj.querySelector('.proj-tech')?.value || '') + ' ';
+                text += (proj.querySelector('.proj-desc')?.value || '') + ' ';
+            });
+            return text;
+        }
+
+        function countWords(text) { return text.trim().split(/\s+/).filter(w => w.length > 0).length; }
+        
+        function countBulletPoints() {
+            let count = 0;
+            document.querySelectorAll('.exp-desc, .proj-desc').forEach(desc => {
+                count += (desc.value || '').split('\n').filter(line => line.trim().match(/^[•\-\*]/)).length;
+            });
+            return count;
+        }
+
+        function countActionVerbs(text) {
+            const lower = text.toLowerCase();
+            let count = 0;
+            actionVerbs.forEach(verb => {
+                const matches = lower.match(new RegExp('\\b' + verb + '\\w*\\b', 'gi'));
+                if (matches) count += matches.length;
+            });
+            return count;
+        }
+
+        function countMetrics(text) {
+            const patterns = [/\d+%/g, /\$[\d,]+k?/gi, /\d+\+/g, /\b\d+\s*(million|billion|thousand|k)\b/gi, /\b\d+\s*(team|people|users|customers)\b/gi];
+            let count = 0;
+            patterns.forEach(p => { const m = text.match(p); if (m) count += m.length; });
+            return count;
+        }
+
+        function runFullATSCheck() {
+            const issues = [];
+            let scores = { contact: 0, summary: 0, experience: 0, education: 0, skills: 0, format: 0 };
+
+            const fullName = document.getElementById('fullName').value.trim();
+            const jobTitle = document.getElementById('jobTitle').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const location = document.getElementById('location').value.trim();
+            const summary = document.getElementById('summary').value.trim();
+            const skills = document.getElementById('skills').value.trim();
+            const resumeText = getResumeText();
+            const wordCount = countWords(resumeText);
+            const bulletCount = countBulletPoints();
+            const actionVerbCount = countActionVerbs(resumeText);
+            const metricCount = countMetrics(resumeText);
+
+            if (fullName) { scores.contact += 4; issues.push({ type: 'success', cat: 'Contact', text: 'Name provided', icon: 'check-circle' }); }
+            else { issues.push({ type: 'critical', cat: 'Contact', text: 'Add your name', icon: 'exclamation-circle' }); }
+            if (email?.includes('@')) { scores.contact += 4; issues.push({ type: 'success', cat: 'Contact', text: 'Email included', icon: 'check-circle' }); }
+            else { issues.push({ type: 'critical', cat: 'Contact', text: 'Add email', icon: 'exclamation-circle' }); }
+            if (phone?.length >= 10) { scores.contact += 4; issues.push({ type: 'success', cat: 'Contact', text: 'Phone provided', icon: 'check-circle' }); }
+            else { issues.push({ type: 'critical', cat: 'Contact', text: 'Add phone', icon: 'exclamation-circle' }); }
+            if (location) { scores.contact += 3; } else { issues.push({ type: 'warning', cat: 'Contact', text: 'Add location', icon: 'exclamation-triangle' }); }
+
+            if (summary.length >= 100) { scores.summary += 10; issues.push({ type: 'success', cat: 'Summary', text: 'Good summary', icon: 'check-circle' }); }
+            else if (summary.length >= 50) { scores.summary += 5; issues.push({ type: 'warning', cat: 'Summary', text: 'Expand summary', icon: 'exclamation-triangle' }); }
+            else { issues.push({ type: 'critical', cat: 'Summary', text: 'Add summary', icon: 'exclamation-circle' }); }
+            if (jobTitle) { scores.summary += 5; } else { issues.push({ type: 'critical', cat: 'Summary', text: 'Add job title', icon: 'exclamation-circle' }); }
+
+            const expCount = document.querySelectorAll('[id^="exp-"]').length;
+            if (expCount >= 2) { scores.experience += 10; issues.push({ type: 'success', cat: 'Experience', text: `${expCount} experiences`, icon: 'check-circle' }); }
+            else if (expCount === 1) { scores.experience += 5; }
+            else { issues.push({ type: 'critical', cat: 'Experience', text: 'Add experience', icon: 'exclamation-circle' }); }
+            if (actionVerbCount >= 6) { scores.experience += 10; issues.push({ type: 'success', cat: 'Experience', text: `${actionVerbCount} action verbs`, icon: 'check-circle' }); }
+            else if (actionVerbCount >= 3) { scores.experience += 5; }
+            else { issues.push({ type: 'warning', cat: 'Experience', text: 'Use action verbs', icon: 'exclamation-triangle' }); }
+            if (metricCount >= 4) { scores.experience += 10; issues.push({ type: 'success', cat: 'Experience', text: `${metricCount} metrics`, icon: 'check-circle' }); }
+            else if (metricCount >= 2) { scores.experience += 5; }
+            else { issues.push({ type: 'warning', cat: 'Experience', text: 'Add metrics (%,$)', icon: 'exclamation-triangle' }); }
+
+            if (document.querySelectorAll('[id^="edu-"]').length >= 1) { scores.education += 15; issues.push({ type: 'success', cat: 'Education', text: 'Education added', icon: 'check-circle' }); }
+            else { issues.push({ type: 'warning', cat: 'Education', text: 'Add education', icon: 'exclamation-triangle' }); }
+
+            const skillCount = skills.split(',').filter(s => s.trim()).length;
+            if (skillCount >= 8) { scores.skills += 15; issues.push({ type: 'success', cat: 'Skills', text: `${skillCount} skills`, icon: 'check-circle' }); }
+            else if (skillCount >= 4) { scores.skills += 8; }
+            else { issues.push({ type: 'warning', cat: 'Skills', text: 'Add more skills', icon: 'exclamation-triangle' }); }
+
+            if (wordCount >= 300 && wordCount <= 600) { scores.format += 5; issues.push({ type: 'success', cat: 'Format', text: `${wordCount} words (optimal)`, icon: 'check-circle' }); }
+            else if (wordCount >= 200) { scores.format += 3; issues.push({ type: 'warning', cat: 'Format', text: `${wordCount} words - add more`, icon: 'exclamation-triangle' }); }
+            else { issues.push({ type: 'warning', cat: 'Format', text: `${wordCount} words - too short`, icon: 'exclamation-triangle' }); }
+            if (bulletCount >= 5) { scores.format += 5; } else if (bulletCount >= 2) { scores.format += 3; }
+
+            const totalScore = Object.values(scores).reduce((a, b) => a + b, 0);
+            updateScoreUI(totalScore, scores, issues, wordCount, bulletCount, actionVerbCount, metricCount);
+        }
+
+        function updateScoreUI(total, scores, issues, wordCount, bulletCount, actionVerbCount, metricCount) {
+            const offset = 283 - (total / 100) * 283;
+            document.getElementById('scoreRingFill').style.strokeDashoffset = offset;
+            document.getElementById('scoreRingFill').style.stroke = total >= 70 ? '#22c55e' : total >= 50 ? '#f59e0b' : '#ef4444';
+            
+            document.getElementById('mainScore').textContent = total;
+            document.getElementById('headerAtsScore').textContent = total;
+            document.getElementById('previewScore').textContent = `Score: ${total}`;
+
+            const message = total >= 80 ? 'Excellent! ATS ready.' : total >= 60 ? 'Good. Minor improvements.' : 'Needs work.';
+            document.getElementById('scoreMessage').textContent = message;
+            document.getElementById('scoreStatus').className = `inline-flex items-center gap-2 px-3 py-1 rounded-full text-sm font-medium ${total >= 70 ? 'bg-green-100 text-green-700' : total >= 50 ? 'bg-amber-100 text-amber-700' : 'bg-red-100 text-red-700'}`;
+            document.getElementById('scoreStatus').innerHTML = `<i class="fas fa-${total >= 70 ? 'check-circle' : 'exclamation-triangle'}"></i> ${total >= 70 ? 'ATS Ready' : 'Needs Work'}`;
+
+            const maxScores = { contact: 15, summary: 15, experience: 30, education: 15, skills: 15, format: 10 };
+            Object.keys(scores).forEach(cat => {
+                const percent = (scores[cat] / maxScores[cat]) * 100;
+                const barEl = document.getElementById(`bar${cat.charAt(0).toUpperCase() + cat.slice(1)}`);
+                const catEl = document.getElementById(`cat${cat.charAt(0).toUpperCase() + cat.slice(1)}`);
+                if (barEl) barEl.style.width = `${percent}%`;
+                if (catEl) catEl.textContent = `${scores[cat]}/${maxScores[cat]}`;
+            });
+
+            document.getElementById('statWords').textContent = wordCount;
+            document.getElementById('statBullets').textContent = bulletCount;
+            document.getElementById('statActionVerbs').textContent = actionVerbCount;
+            document.getElementById('statMetrics').textContent = metricCount;
+
+            const order = { critical: 0, warning: 1, suggestion: 2, success: 3 };
+            issues.sort((a, b) => order[a.type] - order[b.type]);
+            document.getElementById('issuesList').innerHTML = issues.map(i => {
+                const bg = { critical: 'issue-critical', warning: 'issue-warning', suggestion: 'issue-suggestion', success: 'issue-success' }[i.type];
+                const ic = { critical: 'text-red-500', warning: 'text-amber-500', suggestion: 'text-blue-500', success: 'text-green-500' }[i.type];
+                return `<div class="issue-card ${bg} p-2 rounded-r-lg check-item"><div class="flex items-center gap-2"><i class="fas fa-${i.icon} ${ic}"></i><span class="text-xs text-gray-500">${i.cat}:</span><span class="text-sm">${i.text}</span></div></div>`;
+            }).join('');
+        }
+
+        function analyzeJobMatch() {
+            const jobDesc = document.getElementById('jobDescription').value.toLowerCase();
+            const div = document.getElementById('keywordAnalysis');
+            if (jobDesc.length < 50) { div.classList.add('hidden'); return; }
+            div.classList.remove('hidden');
+
+            const stopWords = ['the', 'a', 'an', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for', 'of', 'with', 'by', 'is', 'are', 'was', 'were', 'be', 'been', 'have', 'has', 'had', 'do', 'does', 'will', 'would', 'could', 'should', 'may', 'can', 'as', 'if', 'that', 'which', 'who', 'this', 'these', 'we', 'you', 'your', 'our', 'their', 'from', 'about', 'into', 'through', 'during', 'before', 'after', 'between', 'all', 'each', 'more', 'most', 'other', 'some', 'no', 'not', 'only', 'same', 'so', 'just', 'also', 'now', 'very', 'any', 'both', 'while', 'what'];
+            const words = jobDesc.match(/\b[a-z]{3,}\b/g) || [];
+            const freq = {};
+            words.forEach(w => { if (!stopWords.includes(w)) freq[w] = (freq[w] || 0) + 1; });
+            
+            const keywords = Object.entries(freq).sort((a, b) => b[1] - a[1]).slice(0, 20).map(([w]) => w);
+            const resume = getResumeText().toLowerCase();
+            const matched = keywords.filter(k => resume.includes(k));
+            const missing = keywords.filter(k => !resume.includes(k));
+            const rate = keywords.length ? Math.round((matched.length / keywords.length) * 100) : 0;
+            
+            document.getElementById('matchRate').textContent = rate + '%';
+            document.getElementById('matchRate').className = `font-bold text-xl ${rate >= 60 ? 'text-green-600' : rate >= 40 ? 'text-amber-600' : 'text-red-600'}`;
+            document.getElementById('matchBar').style.width = rate + '%';
+            document.getElementById('matchBar').className = `h-full transition-all ${rate >= 60 ? 'bg-green-500' : rate >= 40 ? 'bg-amber-500' : 'bg-red-500'}`;
+            document.getElementById('matchedCount').textContent = matched.length;
+            document.getElementById('missingCount').textContent = missing.length;
+            document.getElementById('matchedKeywords').innerHTML = matched.map(k => `<span class="keyword-match px-2 py-0.5 rounded text-xs">${k}</span>`).join('');
+            document.getElementById('missingKeywords').innerHTML = missing.slice(0, 10).map(k => `<span class="keyword-missing px-2 py-0.5 rounded text-xs cursor-pointer" onclick="addToSkills('${k}')">${k}</span>`).join('');
+        }
+
+        function addToSkills(kw) {
+            const el = document.getElementById('skills');
+            el.value = el.value ? el.value + ', ' + kw : kw;
+            updatePreview();
+            analyzeJobMatch();
+        }
+
+        function updatePreview() {
+            if (currentTab === 'checker') runFullATSCheck();
+
+            const theme = themeColors[currentTheme];
+            const tpl = templates[currentTemplate];
+            const font = tpl.font;
+            
+            const fullName = document.getElementById('fullName').value || 'Your Name';
+            const jobTitle = document.getElementById('jobTitle').value || 'Professional Title';
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const location = document.getElementById('location').value;
+            const linkedin = document.getElementById('linkedin').value;
+            const github = document.getElementById('github').value;
+            const website = document.getElementById('website').value;
+            const summary = document.getElementById('summary').value;
+            const skills = document.getElementById('skills').value;
+            const certifications = document.getElementById('certifications').value;
+            const languages = document.getElementById('languages').value;
+
+            const contact = [];
+            if (email) contact.push(`<a href="mailto:${email}" style="color:inherit;text-decoration:none;">${email}</a>`);
+            if (phone) contact.push(`<a href="tel:${phone.replace(/[^0-9+]/g,'')}" style="color:inherit;text-decoration:none;">${phone}</a>`);
+            if (location) contact.push(location);
+            if (linkedin) contact.push(`<a href="${formatUrl(linkedin)}" target="_blank" style="color:inherit;text-decoration:none;">LinkedIn</a>`);
+            if (github) contact.push(`<a href="${formatUrl(github)}" target="_blank" style="color:inherit;text-decoration:none;">GitHub</a>`);
+            if (website) contact.push(`<a href="${formatUrl(website)}" target="_blank" style="color:inherit;text-decoration:none;">Portfolio</a>`);
+
+            let expHTML = '';
+            document.querySelectorAll('[id^="exp-"]').forEach(exp => {
+                const title = exp.querySelector('.exp-title')?.value;
+                const company = exp.querySelector('.exp-company')?.value;
+                const loc = exp.querySelector('.exp-location')?.value || '';
+                const start = exp.querySelector('.exp-start')?.value;
+                const end = exp.querySelector('.exp-end')?.value;
+                const desc = exp.querySelector('.exp-desc')?.value || '';
+                if (title || company) {
+                    const bullets = desc.split('\n').filter(l => l.trim()).map(l => 
+                        `<li>${l.trim().replace(/^[•\-\*]\s*/,'')}</li>`
+                    ).join('');
+                    expHTML += `
+                        <div style="margin-bottom:8px;">
+                            <div style="display:flex;justify-content:space-between;flex-wrap:wrap;">
+                                <div><strong>${title || 'Position'}</strong> <span style="color:${theme.primary};">| ${company || 'Company'}${loc ? ', '+loc : ''}</span></div>
+                                <div style="color:#666;font-size:0.85em;font-style:italic;">${start || ''}${start && end ? ' – ' : ''}${end || ''}</div>
+                            </div>
+                            <ul class="resume-bullets" style="margin-top:3px;">${bullets}</ul>
+                        </div>`;
+                }
+            });
+
+            let eduHTML = '';
+            document.querySelectorAll('[id^="edu-"]').forEach(edu => {
+                const degree = edu.querySelector('.edu-degree')?.value;
+                const school = edu.querySelector('.edu-school')?.value;
+                const loc = edu.querySelector('.edu-location')?.value || '';
+                const year = edu.querySelector('.edu-year')?.value;
+                const gpa = edu.querySelector('.edu-gpa')?.value || '';
+                if (degree || school) {
+                    eduHTML += `
+                        <div style="margin-bottom:6px;">
+                            <div style="display:flex;justify-content:space-between;flex-wrap:wrap;">
+                                <div><strong>${degree || 'Degree'}</strong> <span style="color:${theme.primary};">| ${school || 'School'}${loc ? ', '+loc : ''}</span></div>
+                                <div style="color:#666;font-size:0.85em;font-style:italic;">${year || ''}</div>
+                            </div>
+                            ${gpa ? `<div style="color:#666;font-size:0.85em;">${gpa}</div>` : ''}
+                        </div>`;
+                }
+            });
+
+            let projHTML = '';
+            document.querySelectorAll('[id^="proj-"]').forEach(proj => {
+                const name = proj.querySelector('.proj-name')?.value;
+                const tech = proj.querySelector('.proj-tech')?.value;
+                const url = proj.querySelector('.proj-url')?.value;
+                const date = proj.querySelector('.proj-date')?.value;
+                const desc = proj.querySelector('.proj-desc')?.value || '';
+                if (name || desc) {
+                    const bullets = desc.split('\n').filter(l => l.trim()).map(l => 
+                        `<li>${l.trim().replace(/^[•\-\*]\s*/,'')}</li>`
+                    ).join('');
+                    projHTML += `
+                        <div style="margin-bottom:8px;">
+                            <div style="display:flex;justify-content:space-between;flex-wrap:wrap;">
+                                <div>
+                                    <strong>${name || 'Project'}</strong>
+                                    ${url ? `<a href="${formatUrl(url)}" target="_blank" style="color:${theme.primary};margin-left:4px;font-size:0.8em;">↗</a>` : ''}
+                                    ${tech ? `<span style="color:#666;font-size:0.85em;"> | ${tech}</span>` : ''}
+                                </div>
+                                <div style="color:#666;font-size:0.85em;font-style:italic;">${date || ''}</div>
+                            </div>
+                            <ul class="resume-bullets" style="margin-top:3px;">${bullets}</ul>
+                        </div>`;
+                }
+            });
+
+            const skillList = skills.split(',').map(s => s.trim()).filter(s => s).join(' • ');
+            const certList = certifications.split('\n').filter(c => c.trim()).map(c => `• ${c.trim()}`).join('  ');
+            const langList = languages.split('\n').filter(l => l.trim()).join(' • ');
+
+            // Unified section title function
+            const sectionTitle = (title) => {
+                const base = {
+                    professional: `color:${theme.primary};font-weight:700;text-transform:uppercase;letter-spacing:0.5px;border-bottom:2px solid ${theme.primary};padding-bottom:2px;margin:10px 0 6px 0;font-size:11px;`,
+                    modern: `color:white;font-weight:700;background:${theme.primary};padding:4px 10px;margin:10px -15px 6px -15px;font-size:11px;`,
+                    classic: `color:#333;font-weight:700;text-transform:uppercase;letter-spacing:1px;border-bottom:2px solid #333;padding-bottom:2px;margin:10px 0 6px 0;font-size:11px;`,
+                    minimal: `color:#666;font-weight:600;text-transform:uppercase;letter-spacing:1.5px;border-bottom:1px solid #ddd;padding-bottom:2px;margin:10px 0 6px 0;font-size:10px;`,
+                    executive: `color:${theme.primary};font-weight:700;border-left:3px solid ${theme.primary};padding-left:8px;margin:10px 0 6px 0;font-size:11px;`,
+                    creative: `color:${theme.primary};font-weight:700;background:${theme.light};padding:4px 8px;border-radius:3px;margin:10px 0 6px 0;display:inline-block;font-size:11px;`,
+                    tech: `color:${theme.primary};font-weight:700;border-bottom:2px dashed ${theme.primary};padding-bottom:2px;margin:10px 0 6px 0;font-size:11px;`,
+                    elegant: `color:#444;font-weight:600;font-style:italic;border-bottom:1px solid ${theme.primary};padding-bottom:2px;margin:10px 0 6px 0;font-size:11px;`,
+                    bold: `color:white;font-weight:800;text-transform:uppercase;background:${theme.primary};padding:5px 10px;margin:10px -15px 6px -15px;font-size:11px;letter-spacing:1px;`,
+                    compact: `color:${theme.primary};font-weight:700;text-transform:uppercase;border-bottom:1px solid ${theme.primary};padding-bottom:1px;margin:8px 0 4px 0;font-size:10px;`,
+                    corporate: `color:#333;font-weight:700;background:#f5f5f5;padding:4px 8px;border-left:3px solid ${theme.primary};margin:10px 0 6px 0;font-size:11px;`,
+                    clean: `color:${theme.primary};font-weight:600;margin:10px 0 6px 0;font-size:11px;`
+                };
+                return `<div style="${base[currentTemplate] || base.professional}">${title}</div>`;
+            };
+
+            // Header styles
+            const headerStyles = {
+                professional: `<div style="padding:12px 15px;border-bottom:3px solid ${theme.primary};"><h1 style="font-size:22px;font-weight:700;color:#222;margin:0;">${fullName}</h1><div style="color:${theme.primary};font-size:13px;font-weight:600;margin:2px 0 6px 0;">${jobTitle}</div><div style="font-size:9px;color:#555;">${contact.join(' | ')}</div></div>`,
+                modern: `<div style="background:linear-gradient(135deg,${theme.primary},${theme.dark});padding:14px 15px;color:white;"><h1 style="font-size:22px;font-weight:700;margin:0;">${fullName}</h1><div style="font-size:13px;opacity:0.95;margin:2px 0 6px 0;">${jobTitle}</div><div style="font-size:9px;opacity:0.9;">${contact.join(' • ')}</div></div>`,
+                classic: `<div style="text-align:center;padding:14px;border-bottom:2px solid #333;"><h1 style="font-size:24px;font-weight:700;color:#222;margin:0;">${fullName}</h1><div style="color:#555;font-size:13px;margin:3px 0 6px 0;">${jobTitle}</div><div style="font-size:9px;color:#666;">${contact.join(' | ')}</div></div>`,
+                minimal: `<div style="padding:12px 15px;border-bottom:1px solid #ddd;"><h1 style="font-size:22px;font-weight:700;color:#333;margin:0;">${fullName}</h1><div style="color:#777;font-size:12px;margin:2px 0 6px 0;">${jobTitle}</div><div style="font-size:9px;color:#888;">${contact.join(' • ')}</div></div>`,
+                executive: `<div style="padding:14px 15px;border-bottom:3px double ${theme.primary};"><h1 style="font-size:24px;font-weight:700;color:#222;margin:0;letter-spacing:0.5px;">${fullName}</h1><div style="color:${theme.primary};font-size:14px;font-weight:600;margin:3px 0 6px 0;">${jobTitle}</div><div style="font-size:9px;color:#555;">${contact.join(' | ')}</div></div>`,
+                creative: `<div style="background:${theme.light};padding:14px 15px;border-bottom:4px solid ${theme.primary};"><h1 style="font-size:22px;font-weight:700;color:${theme.primary};margin:0;">${fullName}</h1><div style="color:#444;font-size:13px;margin:2px 0 6px 0;">${jobTitle}</div><div style="font-size:9px;color:#666;">${contact.join(' • ')}</div></div>`,
+                tech: `<div style="padding:12px 15px;border-left:5px solid ${theme.primary};background:#f8f9fa;"><h1 style="font-size:22px;font-weight:700;color:#222;margin:0;">${fullName}</h1><div style="color:${theme.primary};font-size:13px;font-weight:600;margin:2px 0 6px 0;">${jobTitle}</div><div style="font-size:9px;color:#555;">${contact.join(' | ')}</div></div>`,
+                elegant: `<div style="text-align:center;padding:14px;border-bottom:1px solid #ccc;"><h1 style="font-size:24px;font-weight:400;color:#333;margin:0;letter-spacing:1px;">${fullName}</h1><div style="color:#666;font-size:13px;font-style:italic;margin:3px 0 6px 0;">${jobTitle}</div><div style="font-size:9px;color:#777;">${contact.join(' • ')}</div></div>`,
+                bold: `<div style="background:${theme.primary};padding:14px 15px;color:white;"><h1 style="font-size:24px;font-weight:800;margin:0;text-transform:uppercase;letter-spacing:1px;">${fullName}</h1><div style="font-size:13px;opacity:0.95;margin:3px 0 6px 0;">${jobTitle}</div><div style="font-size:9px;opacity:0.9;">${contact.join(' • ')}</div></div>`,
+                compact: `<div style="padding:10px 12px;border-bottom:2px solid ${theme.primary};"><h1 style="font-size:20px;font-weight:700;color:#222;margin:0;">${fullName}</h1><div style="color:${theme.primary};font-size:12px;margin:1px 0 4px 0;">${jobTitle}</div><div style="font-size:8px;color:#666;">${contact.join(' | ')}</div></div>`,
+                corporate: `<div style="padding:12px 15px;background:#f5f5f5;border-bottom:3px solid ${theme.primary};"><h1 style="font-size:22px;font-weight:700;color:#222;margin:0;">${fullName}</h1><div style="color:${theme.primary};font-size:13px;font-weight:600;margin:2px 0 6px 0;">${jobTitle}</div><div style="font-size:9px;color:#555;">${contact.join(' | ')}</div></div>`,
+                clean: `<div style="padding:12px 15px;"><h1 style="font-size:22px;font-weight:700;color:${theme.primary};margin:0;">${fullName}</h1><div style="color:#555;font-size:13px;margin:2px 0 6px 0;">${jobTitle}</div><div style="font-size:9px;color:#666;border-top:1px solid #eee;padding-top:6px;">${contact.join(' • ')}</div></div>`
+            };
+
+            const headerHTML = headerStyles[currentTemplate] || headerStyles.professional;
+            const bodyPadding = currentTemplate === 'compact' ? '8px 12px' : '10px 15px';
+            const fontSize = currentTemplate === 'compact' ? '9px' : '10px';
+
+            const resumeHTML = `
+                <div class="resume-page" style="font-family:'${font}',sans-serif;font-size:${fontSize};line-height:1.4;color:#333;background:white;">
+                    ${headerHTML}
+                    <div style="padding:${bodyPadding};">
+                        ${summary ? `<p style="margin:0 0 8px 0;color:#444;line-height:1.45;">${summary}</p>` : ''}
+                        ${expHTML ? `${sectionTitle('Experience')}${expHTML}` : ''}
+                        ${projHTML ? `${sectionTitle('Projects')}${projHTML}` : ''}
+                        ${eduHTML ? `${sectionTitle('Education')}${eduHTML}` : ''}
+                        ${skillList ? `${sectionTitle('Skills')}<p style="margin:0;color:#444;">${skillList}</p>` : ''}
+                        ${certList ? `${sectionTitle('Certifications')}<p style="margin:0;color:#444;">${certList}</p>` : ''}
+                        ${langList ? `${sectionTitle('Languages')}<p style="margin:0;color:#444;">${langList}</p>` : ''}
+                    </div>
+                </div>`;
+
+            document.getElementById('resumePreview').innerHTML = resumeHTML;
+        }
+
+        function printResume() { window.print(); }
+
+        // Sample data with 400+ words
+        window.onload = function() {
+            initUI();
+            
+            document.getElementById('fullName').value = 'Sarah Johnson';
+            document.getElementById('jobTitle').value = 'Senior Software Engineer';
+            document.getElementById('email').value = 'sarah.johnson@email.com';
+            document.getElementById('phone').value = '+1 (555) 123-4567';
+            document.getElementById('location').value = 'San Francisco, CA';
+            document.getElementById('linkedin').value = 'linkedin.com/in/sarahjohnson';
+            document.getElementById('github').value = 'github.com/sarahjohnson';
+            document.getElementById('website').value = 'sarahjohnson.dev';
+            document.getElementById('summary').value = 'Results-driven Senior Software Engineer with 7+ years of experience building scalable web applications and microservices. Expert in JavaScript, TypeScript, React, Node.js, Python, and cloud technologies (AWS, GCP). Proven track record of delivering projects 25% ahead of schedule while maintaining 99.9% uptime. Passionate about mentoring junior developers and implementing engineering best practices.';
+            document.getElementById('skills').value = 'JavaScript, TypeScript, React, Redux, Next.js, Node.js, Express, Python, Django, AWS (EC2, S3, Lambda, RDS), Docker, Kubernetes, PostgreSQL, MongoDB, Redis, GraphQL, REST APIs, Git, CI/CD, Jenkins, Agile, Scrum, System Design, Microservices, TDD';
+            document.getElementById('certifications').value = 'AWS Solutions Architect Professional - 2023\nGoogle Cloud Professional Developer - 2022\nKubernetes Administrator (CKA) - 2022';
+            document.getElementById('languages').value = 'English (Native)\nSpanish (Professional)\nMandarin (Conversational)';
+            
+            addExperience();
+            document.querySelector('#exp-1 .exp-title').value = 'Senior Software Engineer';
+            document.querySelector('#exp-1 .exp-company').value = 'Tech Innovations Inc.';
+            document.querySelector('#exp-1 .exp-location').value = 'San Francisco, CA';
+            document.querySelector('#exp-1 .exp-start').value = 'Jan 2021';
+            document.querySelector('#exp-1 .exp-end').value = 'Present';
+            document.querySelector('#exp-1 .exp-desc').value = '• Architected microservices platform serving 2M+ daily users, improving performance by 40% and reducing latency from 500ms to 200ms\n• Led team of 5 engineers, implementing code review processes that reduced production bugs by 35%\n• Designed CI/CD pipelines using Jenkins and GitHub Actions, reducing deployment time from 2 hours to 15 minutes\n• Spearheaded migration to AWS microservices, cutting infrastructure costs by $60K annually\n• Developed real-time analytics dashboard using React and D3.js for data-driven product decisions';
+
+            addExperience();
+            document.querySelector('#exp-2 .exp-title').value = 'Software Developer';
+            document.querySelector('#exp-2 .exp-company').value = 'Digital Solutions Ltd.';
+            document.querySelector('#exp-2 .exp-location').value = 'Austin, TX';
+            document.querySelector('#exp-2 .exp-start').value = 'Mar 2018';
+            document.querySelector('#exp-2 .exp-end').value = 'Dec 2020';
+            document.querySelector('#exp-2 .exp-desc').value = '• Developed React applications serving 150K+ monthly users with 99.5% uptime SLA\n• Optimized PostgreSQL queries and implemented Redis caching, reducing page load time by 65%\n• Built RESTful and GraphQL APIs using Node.js handling 15K+ concurrent connections\n• Implemented A/B testing framework increasing user engagement by 28%';
+
+            addEducation();
+            document.querySelector('#edu-1 .edu-degree').value = 'Bachelor of Science in Computer Science';
+            document.querySelector('#edu-1 .edu-school').value = 'Stanford University';
+            document.querySelector('#edu-1 .edu-location').value = 'Stanford, CA';
+            document.querySelector('#edu-1 .edu-year').value = '2017';
+            document.querySelector('#edu-1 .edu-gpa').value = 'GPA: 3.85/4.0 | Dean\'s List | Tau Beta Pi Honor Society';
+
+            addProject();
+            document.querySelector('#proj-1 .proj-name').value = 'TaskFlow - Project Management Platform';
+            document.querySelector('#proj-1 .proj-tech').value = 'React, Node.js, MongoDB, Socket.io';
+            document.querySelector('#proj-1 .proj-url').value = 'github.com/sarahjohnson/taskflow';
+            document.querySelector('#proj-1 .proj-date').value = '2023';
+            document.querySelector('#proj-1 .proj-desc').value = '• Built full-stack project management app with real-time collaboration serving 800+ active users\n• Implemented WebSocket live updates and notifications achieving 4.8/5 user satisfaction\n• Deployed on AWS with Docker and Kubernetes with automated scaling and 99.9% uptime';
+
+            updatePreview();
+        };
+    </script>
+</body>
+</html>
