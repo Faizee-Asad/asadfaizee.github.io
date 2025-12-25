@@ -1,0 +1,2305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RxLens — Medicine Name OCR Tool</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+  <style>
+    :root { color-scheme: light; }
+    html { scroll-behavior: smooth; }
+    /* Subtle scanline effect for preview */
+    .scanlines::before{
+      content:"";
+      position:absolute; inset:0;
+      background: linear-gradient(to bottom, rgba(255,255,255,0.0), rgba(255,255,255,0.0) 2px, rgba(0,0,0,0.03) 3px);
+      background-size: 100% 4px;
+      pointer-events:none;
+      mix-blend-mode:multiply;
+      opacity:.45;
+      border-radius: 0.75rem;
+    }
+    .mono { font-variant-ligatures: none; }
+    .kbd { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+  </style>
+</head>
+<body class="min-h-screen bg-gradient-to-b from-slate-50 to-white text-slate-900">
+  <header class="sticky top-0 z-30 backdrop-blur bg-white/70 border-b border-slate-200">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between gap-3">
+      <div class="flex items-center gap-3">
+        <div class="h-10 w-10 rounded-xl bg-gradient-to-br from-teal-600 to-indigo-600 grid place-items-center shadow-sm">
+          <span class="text-white font-semibold">Rx</span>
+        </div>
+        <div>
+          <div class="flex items-center gap-2 flex-wrap">
+            <h1 class="text-lg sm:text-xl font-semibold">RxLens</h1>
+            <span class="text-xs px-2 py-0.5 rounded-full bg-teal-50 text-teal-800 border border-teal-200">Healthcare / Pharma</span>
+            <span class="text-xs px-2 py-0.5 rounded-full bg-indigo-50 text-indigo-800 border border-indigo-200">Medicine Name OCR Tool</span>
+            <span class="text-xs px-2 py-0.5 rounded-full bg-amber-50 text-amber-900 border border-amber-200">Accuracy helpers</span>
+            <span class="text-xs px-2 py-0.5 rounded-full bg-fuchsia-50 text-fuchsia-900 border border-fuchsia-200">Gemini AI (optional)</span>
+          </div>
+          <p class="text-xs sm:text-sm text-slate-600">Upload prescription image → extract medicine names → match with a local database → verify spelling via online sources or Gemini AI (optional).</p>
+
+          <nav class="mt-2 hidden sm:flex items-center gap-2 text-xs text-slate-600 flex-wrap">
+            <a class="px-2 py-1 rounded-lg hover:bg-white/70 border border-transparent hover:border-slate-200" href="#app">App</a>
+            <a class="px-2 py-1 rounded-lg hover:bg-white/70 border border-transparent hover:border-slate-200" href="#overview">About</a>
+            <a class="px-2 py-1 rounded-lg hover:bg-white/70 border border-transparent hover:border-slate-200" href="#features">Features</a>
+            <a class="px-2 py-1 rounded-lg hover:bg-white/70 border border-transparent hover:border-slate-200" href="#accuracy">Accuracy</a>
+            <a class="px-2 py-1 rounded-lg hover:bg-white/70 border border-transparent hover:border-slate-200" href="#faq">FAQ</a>
+            <a class="px-2 py-1 rounded-lg hover:bg-white/70 border border-transparent hover:border-slate-200" href="#roadmap">Roadmap</a>
+          </nav>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <a href="#app" class="hidden sm:inline-flex text-sm px-3 py-2 rounded-lg border border-slate-200 hover:bg-slate-50">Open app</a>
+        <button id="btnDemo" class="text-sm px-3 py-2 rounded-lg border border-slate-200 hover:bg-slate-50">Use sample text</button>
+        <button id="btnReset" class="text-sm px-3 py-2 rounded-lg bg-slate-900 text-white hover:bg-slate-800">Reset</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 py-6">
+    <section id="app" class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <!-- Left: Input -->
+      <div id="upload" class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+        <div class="p-5 border-b border-slate-100">
+          <h2 class="text-base font-semibold">1) Upload a prescription image</h2>
+          <p class="text-sm text-slate-600 mt-1">Best results with clear, high-contrast images. OCR runs in your browser (unless you choose Gemini image extraction).</p>
+        </div>
+
+        <div class="p-5 space-y-4">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <label class="block">
+              <span class="text-sm font-medium">Image file</span>
+              <input id="fileInput" type="file" accept="image/*" class="mt-2 block w-full text-sm file:mr-4 file:py-2 file:px-3 file:rounded-lg file:border-0 file:bg-slate-900 file:text-white hover:file:bg-slate-800" />
+            </label>
+
+            <div class="rounded-xl border border-slate-200 p-3 bg-slate-50">
+              <div class="flex items-start justify-between gap-3">
+                <div>
+                  <div class="text-sm font-medium">Matching & accuracy</div>
+                  <div class="text-xs text-slate-600">Tune fuzzy matching + online verification + Gemini AI.</div>
+                </div>
+              </div>
+
+              <div class="mt-3">
+                <div class="flex items-center justify-between">
+                  <label class="text-xs font-medium text-slate-700" for="threshold">Match threshold</label>
+                  <span id="thresholdLabel" class="text-xs text-slate-600 mono">0.75</span>
+                </div>
+                <input id="threshold" type="range" min="0.55" max="0.95" step="0.01" value="0.75" class="mt-2 w-full" />
+                <div class="mt-2 text-xs text-slate-600">Higher = stricter. Lower = more suggestions.</div>
+              </div>
+
+              <div class="mt-4 border-t border-slate-200 pt-3">
+                <label class="flex items-start gap-2 text-xs text-slate-700 cursor-pointer">
+                  <input id="includeStrengthInSearch" type="checkbox" class="mt-0.5" />
+                  <span>
+                    Include extracted strength in online searches (e.g., <span class="mono">"Amlodipine 5 mg"</span>)
+                    <span class="block text-[11px] text-slate-500 mt-0.5">Only affects search links & suggestions, not local OCR.</span>
+                  </span>
+                </label>
+                <div class="mt-2 text-[11px] text-slate-500">
+                  Online suggestions (optional) send the typed token to public sources (NLM RxTerms / Wikipedia). No images are uploaded.
+                </div>
+              </div>
+
+              <div class="mt-4 border-t border-slate-200 pt-3">
+                <details class="group">
+                  <summary class="cursor-pointer text-xs font-semibold text-slate-800 select-none">Gemini AI extraction (optional, higher accuracy)</summary>
+                  <div class="mt-3 space-y-3">
+                    <div class="text-[11px] text-slate-600">
+                      Uses Google Gemini API to extract and correct medicine names. Costs may apply. Your OCR text / image is sent to Google when you run Gemini.
+                    </div>
+
+                    <label class="block">
+                      <div class="flex items-center justify-between">
+                        <span class="text-xs font-medium text-slate-700">Gemini API key</span>
+                        <button id="btnClearGeminiKey" class="text-[11px] px-2 py-1 rounded-lg border border-slate-200 hover:bg-white" type="button">Clear key</button>
+                      </div>
+                      <input id="geminiKey" type="password" class="mt-2 w-full rounded-xl border border-slate-200 px-3 py-2 text-sm" placeholder="Paste your Google AI Studio / Gemini API key…" autocomplete="off" />
+                      <label class="mt-2 flex items-start gap-2 text-[11px] text-slate-600 cursor-pointer">
+                        <input id="rememberGeminiKey" type="checkbox" class="mt-0.5" />
+                        <span>Remember API key in this browser (localStorage). Not recommended on shared devices.</span>
+                      </label>
+                    </label>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                      <label class="block">
+                        <span class="text-xs font-medium text-slate-700">Model</span>
+                        <select id="geminiModel" class="mt-2 w-full rounded-xl border border-slate-200 px-3 py-2 text-sm bg-white">
+                          <optgroup label="Gemini 3">
+                            <option value="gemini-3-flash">gemini-3-flash</option>
+                            <option value="gemini-3-pro">gemini-3-pro</option>
+                          </optgroup>
+                          <optgroup label="Gemini 2.5">
+                            <option value="gemini-2.5-flash">gemini-2.5-flash</option>
+                            <option value="gemini-2.5-flash-lite">gemini-2.5-flash-lite</option>
+                            <option value="gemini-2.5-pro">gemini-2.5-pro</option>
+                          </optgroup>
+                          <optgroup label="Gemini 2.0">
+                            <option value="gemini-2.0-flash">gemini-2.0-flash</option>
+                            <option value="gemini-2.0-flash-lite">gemini-2.0-flash-lite</option>
+                          </optgroup>
+                          <optgroup label="Gemini 1.5 (legacy)">
+                            <option value="gemini-1.5-flash">gemini-1.5-flash (cheaper, fast)</option>
+                            <option value="gemini-1.5-pro">gemini-1.5-pro (more accurate)</option>
+                          </optgroup>
+                        </select>
+                      </label>
+                      <div class="rounded-xl border border-slate-200 bg-white p-3">
+                        <div class="text-xs font-medium text-slate-700">What to send</div>
+                        <div class="mt-2 flex flex-col gap-1 text-[11px] text-slate-600">
+                          <div>• <span class="font-medium">From OCR text</span>: cheaper, no image upload</div>
+                          <div>• <span class="font-medium">From image</span>: most accurate, uploads image</div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="flex flex-wrap gap-2">
+                      <button id="btnGeminiText" class="px-3 py-2 text-sm rounded-lg bg-fuchsia-600 text-white hover:bg-fuchsia-700 disabled:opacity-50 disabled:cursor-not-allowed" type="button">Gemini: Extract from OCR text</button>
+                      <button id="btnGeminiImage" class="px-3 py-2 text-sm rounded-lg border border-slate-200 hover:bg-white disabled:opacity-50 disabled:cursor-not-allowed" type="button">Gemini: Extract from image</button>
+                      <button id="btnGeminiClear" class="px-3 py-2 text-sm rounded-lg border border-slate-200 hover:bg-white disabled:opacity-50 disabled:cursor-not-allowed" type="button">Clear AI results</button>
+                    </div>
+
+                    <div id="geminiStatus" class="text-[11px] text-slate-500">Idle</div>
+
+                    <div class="rounded-xl border border-amber-200 bg-amber-50 p-3">
+                      <div class="text-[11px] font-semibold text-amber-900">Privacy & compliance note</div>
+                      <div class="text-[11px] text-amber-900/80 mt-1">Using Gemini sends text/image to Google. Do not include patient-identifying info. Ensure compliance with your local regulations.</div>
+                    </div>
+                  </div>
+                </details>
+              </div>
+            </div>
+          </div>
+
+          <div class="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+            <div class="flex items-center justify-between gap-3 flex-wrap">
+              <div>
+                <h3 class="text-sm font-semibold">Preview</h3>
+                <p class="text-xs text-slate-600">Your image stays local (no server upload) unless you choose Gemini image extraction.</p>
+              </div>
+              <div class="flex gap-2">
+                <button id="btnRun" class="px-3 py-2 text-sm rounded-lg bg-teal-600 text-white hover:bg-teal-700 disabled:opacity-50 disabled:cursor-not-allowed">Run OCR</button>
+                <button id="btnClearImage" class="px-3 py-2 text-sm rounded-lg border border-slate-200 hover:bg-white disabled:opacity-50 disabled:cursor-not-allowed">Clear</button>
+              </div>
+            </div>
+
+            <div class="mt-4 relative scanlines rounded-xl overflow-hidden border border-slate-200 bg-white">
+              <div class="aspect-[4/3] grid place-items-center" id="previewWrap">
+                <div class="text-center p-6" id="emptyPreview">
+                  <div class="text-sm font-medium">No image selected</div>
+                  <div class="text-xs text-slate-600 mt-1">Choose a photo or screenshot of a prescription.</div>
+                </div>
+                <img id="imgPreview" alt="Prescription preview" class="hidden w-full h-full object-contain" />
+              </div>
+            </div>
+
+            <div class="mt-4">
+              <div class="flex items-center justify-between">
+                <div class="text-sm font-semibold">OCR progress</div>
+                <div id="progressLabel" class="text-xs text-slate-600 mono">Idle</div>
+              </div>
+              <div class="mt-2 h-2 rounded-full bg-slate-200 overflow-hidden">
+                <div id="progressBar" class="h-2 w-0 bg-gradient-to-r from-teal-500 to-indigo-500"></div>
+              </div>
+            </div>
+          </div>
+
+          <details class="rounded-2xl border border-slate-200 p-4 bg-white">
+            <summary class="cursor-pointer text-sm font-semibold">No image? Paste text instead (manual)</summary>
+            <div class="mt-3">
+              <label class="text-xs font-medium text-slate-700">Prescription text</label>
+              <textarea id="manualText" rows="6" class="mt-2 w-full rounded-xl border border-slate-200 p-3 text-sm mono bg-slate-50" placeholder="e.g., Tab. Metformin 500mg\nCap Amoxicillin 250mg\nInj. Ceftriaxone 1g"></textarea>
+              <div class="mt-3 flex gap-2">
+                <button id="btnParse" class="px-3 py-2 text-sm rounded-lg bg-slate-900 text-white hover:bg-slate-800">Extract & Match</button>
+                <button id="btnClearText" class="px-3 py-2 text-sm rounded-lg border border-slate-200 hover:bg-slate-50">Clear text</button>
+              </div>
+              <p class="mt-3 text-xs text-slate-600">Tip: include one medicine per line for best matching.</p>
+            </div>
+          </details>
+
+          <div class="rounded-2xl border border-amber-200 bg-amber-50 p-4">
+            <div class="text-sm font-semibold text-amber-900">Important</div>
+            <p class="text-xs text-amber-900/80 mt-1">This tool is for assistive parsing and may misread text. Always verify with a pharmacist/clinician.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Output -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+        <div class="p-5 border-b border-slate-100">
+          <h2 class="text-base font-semibold">2) Extract medicine names & match database</h2>
+          <p class="text-sm text-slate-600 mt-1">We detect candidate drug names (and strengths), then fuzzy-match against a local database. For higher accuracy, you can use Gemini AI extraction and use those results as candidates.</p>
+        </div>
+
+        <div class="p-5 space-y-5">
+          <div class="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+            <div class="flex items-start justify-between gap-3 flex-wrap">
+              <div>
+                <div class="text-sm font-semibold">Extraction source</div>
+                <div class="text-xs text-slate-600 mt-1">Choose where the “Candidates” list comes from.</div>
+              </div>
+              <div class="flex items-center gap-4 text-sm">
+                <label class="flex items-center gap-2 cursor-pointer">
+                  <input id="sourceLocal" type="radio" name="source" value="local" checked />
+                  <span>Local (offline)</span>
+                </label>
+                <label class="flex items-center gap-2 cursor-pointer">
+                  <input id="sourceGemini" type="radio" name="source" value="gemini" disabled />
+                  <span>Gemini (AI)</span>
+                </label>
+              </div>
+            </div>
+            <div class="mt-3 grid grid-cols-1 lg:grid-cols-3 gap-3">
+              <div class="rounded-xl border border-slate-200 bg-white p-3">
+                <div class="text-[11px] text-slate-600">Gemini summary</div>
+                <div id="geminiSummary" class="mt-1 text-sm font-semibold">No AI results yet</div>
+                <div id="geminiSummarySub" class="mt-1 text-[11px] text-slate-500">Run “Gemini: Extract…” from the left panel.</div>
+              </div>
+              <div class="lg:col-span-2 rounded-xl border border-slate-200 bg-white p-3">
+                <div class="flex items-center justify-between gap-2 flex-wrap">
+                  <div>
+                    <div class="text-[11px] text-slate-600">AI extracted medicines</div>
+                    <div class="text-xs text-slate-700">Click “Use” to save a correction for a candidate.</div>
+                  </div>
+                  <button id="btnUseAiAsCandidates" class="text-xs px-2 py-1 rounded-lg bg-fuchsia-600 text-white hover:bg-fuchsia-700 disabled:opacity-50 disabled:cursor-not-allowed" disabled type="button">Use Gemini as Candidates</button>
+                </div>
+                <div id="aiResults" class="mt-3 space-y-2"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+              <div class="flex items-center justify-between">
+                <div>
+                  <div class="text-sm font-semibold">Candidates</div>
+                  <div class="text-xs text-slate-600">Extracted from OCR text (or Gemini)</div>
+                </div>
+                <span id="candCount" class="text-xs px-2 py-1 rounded-full bg-white border border-slate-200 mono">0</span>
+              </div>
+              <div class="mt-3 text-[11px] text-slate-600">Tip: click <span class="kbd px-1.5 py-0.5 rounded bg-white border border-slate-200">Find accurate name</span> to fetch spellings from NLM RxTerms / Wikipedia / Gemini (if configured).</div>
+              <div id="candidates" class="mt-3 space-y-2"></div>
+            </div>
+
+            <div class="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+              <div class="flex items-center justify-between">
+                <div>
+                  <div class="text-sm font-semibold">Matches</div>
+                  <div class="text-xs text-slate-600">Best matches above threshold</div>
+                </div>
+                <span id="matchCount" class="text-xs px-2 py-1 rounded-full bg-white border border-slate-200 mono">0</span>
+              </div>
+              <div id="matches" class="mt-3 space-y-2"></div>
+            </div>
+          </div>
+
+          <div class="rounded-2xl border border-slate-200 overflow-hidden">
+            <div class="p-4 bg-white border-b border-slate-100 flex items-center justify-between flex-wrap gap-2">
+              <div>
+                <div class="text-sm font-semibold">OCR text</div>
+                <div class="text-xs text-slate-600">Raw recognized text for auditing.</div>
+              </div>
+              <div class="flex gap-2">
+                <button id="btnCopy" class="px-3 py-2 text-sm rounded-lg border border-slate-200 hover:bg-slate-50 disabled:opacity-50" disabled>Copy</button>
+                <button id="btnExport" class="px-3 py-2 text-sm rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 disabled:opacity-50" disabled>Export CSV</button>
+              </div>
+            </div>
+            <div class="p-4 bg-slate-50">
+              <pre id="ocrText" class="whitespace-pre-wrap text-xs mono text-slate-800 leading-relaxed">(No OCR run yet)</pre>
+            </div>
+          </div>
+
+          <div class="rounded-2xl border border-slate-200 p-4 bg-white">
+            <div class="flex items-start justify-between gap-3 flex-wrap">
+              <div>
+                <div class="text-sm font-semibold">Future: Local pharmacy integration</div>
+                <div class="text-xs text-slate-600 mt-1">Connect matched medicines to local inventory, prices, substitutions, and delivery.</div>
+              </div>
+              <button id="btnFindPharmacy" class="px-3 py-2 text-sm rounded-lg border border-slate-200 hover:bg-slate-50">Find pharmacies near me</button>
+            </div>
+            <div id="pharmacyHint" class="mt-3 text-xs text-slate-600">No location is stored; we open a map search in a new tab.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Overview / Product info -->
+    <section id="overview" class="mt-8">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+        <div class="lg:col-span-2 bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
+          <div class="flex items-start justify-between gap-3 flex-wrap">
+            <div>
+              <h3 class="text-lg font-semibold">About RxLens</h3>
+              <p class="text-sm text-slate-600 mt-2">
+                RxLens is a browser-first tool for quickly digitizing medicine names from prescriptions.
+                It combines <span class="font-medium">local OCR</span> + <span class="font-medium">fuzzy matching</span> + optional <span class="font-medium">Gemini AI</span> to improve spelling and reduce manual work.
+              </p>
+            </div>
+            <div class="flex flex-wrap gap-2">
+              <span class="text-xs px-2 py-1 rounded-full bg-slate-50 border border-slate-200 text-slate-700">Runs in browser</span>
+              <span class="text-xs px-2 py-1 rounded-full bg-teal-50 border border-teal-200 text-teal-800">OCR + extraction</span>
+              <span class="text-xs px-2 py-1 rounded-full bg-indigo-50 border border-indigo-200 text-indigo-800">Match + export</span>
+              <span class="text-xs px-2 py-1 rounded-full bg-fuchsia-50 border border-fuchsia-200 text-fuchsia-900">Gemini optional</span>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-5">
+            <div class="rounded-xl border border-slate-200 bg-slate-50 p-4">
+              <div class="text-sm font-semibold">Who it’s for</div>
+              <ul class="mt-2 text-sm text-slate-600 space-y-1 list-disc pl-5">
+                <li>Pharmacies doing quick order entry and substitutions</li>
+                <li>Clinics digitizing handwritten/printed prescriptions</li>
+                <li>Insurance & claims teams validating medication names</li>
+                <li>Healthtech product demos and internal tooling</li>
+              </ul>
+            </div>
+            <div class="rounded-xl border border-slate-200 bg-slate-50 p-4">
+              <div class="text-sm font-semibold">What it does (today)</div>
+              <ul class="mt-2 text-sm text-slate-600 space-y-1 list-disc pl-5">
+                <li>Extracts candidate names + strengths from OCR text</li>
+                <li>Matches candidates against a local drug list</li>
+                <li>Helps correct spelling via RxTerms/Wikipedia + optional Gemini</li>
+                <li>Exports matched results as CSV</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-slate-900 text-white rounded-2xl border border-slate-800 p-6">
+          <div class="text-sm text-white/70">Quick start</div>
+          <h4 class="text-lg font-semibold mt-1">Get accurate medicine names in minutes</h4>
+          <ol class="mt-4 space-y-2 text-sm text-white/80 list-decimal pl-5">
+            <li>Upload a prescription image (or paste text).</li>
+            <li>Run OCR (or use Gemini from image for higher accuracy).</li>
+            <li>Review candidates, then click <span class="kbd px-1.5 py-0.5 rounded bg-white/10 border border-white/10">Find accurate name</span> to fix spelling.</li>
+            <li>Export CSV or open web links for verification.</li>
+          </ol>
+          <div class="mt-5 flex flex-wrap gap-2">
+            <button id="btnJumpToUpload" class="px-3 py-2 text-sm rounded-lg bg-teal-600 text-white hover:bg-teal-700">Jump to upload</button>
+            <a href="#faq" class="px-3 py-2 text-sm rounded-lg border border-white/15 hover:bg-white/10">Read FAQ</a>
+          </div>
+          <div class="mt-5 text-[11px] text-white/60">
+            Tip: For messy handwriting, try <span class="font-medium">Gemini: Extract from image</span> (uploads the image to Google).
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features -->
+    <section id="features" class="mt-8">
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+        <div class="p-6 border-b border-slate-100">
+          <h3 class="text-lg font-semibold">Features</h3>
+          <p class="text-sm text-slate-600 mt-1">Designed for speed, auditability, and accuracy helpers when OCR is imperfect.</p>
+        </div>
+        <div class="p-6 bg-slate-50">
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div class="rounded-xl bg-white border border-slate-200 p-4">
+              <div class="text-sm font-semibold">Browser OCR (offline-first)</div>
+              <p class="text-sm text-slate-600 mt-1">Runs locally with Tesseract.js—no default server upload.</p>
+            </div>
+            <div class="rounded-xl bg-white border border-slate-200 p-4">
+              <div class="text-sm font-semibold">Medicine candidate extraction</div>
+              <p class="text-sm text-slate-600 mt-1">Unigrams + bigrams + line heuristics to catch multi-word drugs.</p>
+            </div>
+            <div class="rounded-xl bg-white border border-slate-200 p-4">
+              <div class="text-sm font-semibold">Strength detection</div>
+              <p class="text-sm text-slate-600 mt-1">Detects tokens like <span class="mono">500 mg</span>, <span class="mono">1 g</span>, <span class="mono">60000 IU</span>.</p>
+            </div>
+            <div class="rounded-xl bg-white border border-slate-200 p-4">
+              <div class="text-sm font-semibold">Fuzzy matching</div>
+              <p class="text-sm text-slate-600 mt-1">OCR-friendly similarity scoring with a threshold slider.</p>
+            </div>
+            <div class="rounded-xl bg-white border border-slate-200 p-4">
+              <div class="text-sm font-semibold">Accuracy workflow</div>
+              <p class="text-sm text-slate-600 mt-1">“Find accurate name” modal + saved corrections (localStorage).</p>
+            </div>
+            <div class="rounded-xl bg-white border border-slate-200 p-4">
+              <div class="text-sm font-semibold">Gemini AI (optional)</div>
+              <p class="text-sm text-slate-600 mt-1">Extract from OCR text or directly from image for maximum accuracy.</p>
+            </div>
+          </div>
+
+          <div class="mt-5 rounded-xl border border-indigo-200 bg-indigo-50 p-4">
+            <div class="text-sm font-semibold text-indigo-900">Export & integrate</div>
+            <p class="text-sm text-indigo-900/80 mt-1">Export CSV for spreadsheets, EMR imports, pharmacy inventory systems, or claims workflows.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Accuracy + Privacy -->
+    <section id="accuracy" class="mt-8">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
+          <h3 class="text-lg font-semibold">Accuracy tips</h3>
+          <ul class="mt-3 text-sm text-slate-600 space-y-2 list-disc pl-5">
+            <li>Use a sharp, well-lit photo (avoid shadows and blur).</li>
+            <li>Crop to the prescription area only (less background noise).</li>
+            <li>Prefer one medicine per line when pasting text manually.</li>
+            <li>If OCR misspells names, click <span class="font-medium">Find accurate name</span> and apply a suggestion.</li>
+            <li>For handwritten/low-quality images, use <span class="font-medium">Gemini: Extract from image</span>.</li>
+          </ul>
+          <div class="mt-4 rounded-xl border border-amber-200 bg-amber-50 p-4">
+            <div class="text-sm font-semibold text-amber-900">Clinical safety</div>
+            <p class="text-sm text-amber-900/80 mt-1">Always verify with a pharmacist/clinician. This tool can misread prescriptions.</p>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
+          <h3 class="text-lg font-semibold">Privacy & compliance</h3>
+          <div class="mt-3 text-sm text-slate-600 space-y-3">
+            <p>
+              By default, RxLens runs locally in your browser. Only optional features may send data externally:
+            </p>
+            <ul class="space-y-2 list-disc pl-5">
+              <li><span class="font-medium">Online suggestions</span> send only the typed candidate token to public sources (RxTerms/Wikipedia).</li>
+              <li><span class="font-medium">Gemini</span> sends OCR text and/or your image to Google when you click the Gemini buttons.</li>
+            </ul>
+            <p class="text-xs text-slate-500">Avoid patient identifiers when using online features. Ensure regulatory compliance for your region.</p>
+          </div>
+          <div class="mt-4 rounded-xl border border-slate-200 bg-slate-50 p-4">
+            <div class="text-sm font-semibold">Audit-friendly</div>
+            <p class="text-sm text-slate-600 mt-1">Raw OCR text remains visible for review, and corrections are explicit.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="mt-8">
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+        <div class="p-6 border-b border-slate-100">
+          <h3 class="text-lg font-semibold">FAQ</h3>
+          <p class="text-sm text-slate-600 mt-1">Common questions about accuracy, cost, and data handling.</p>
+        </div>
+        <div class="p-6 space-y-3">
+          <details class="rounded-xl border border-slate-200 p-4 bg-slate-50">
+            <summary class="cursor-pointer text-sm font-semibold select-none">Why are some medicines not matched?</summary>
+            <div class="mt-2 text-sm text-slate-600">This demo includes a small built-in drug list. In production, connect a licensed drug database + regional brand/generic mapping.</div>
+          </details>
+          <details class="rounded-xl border border-slate-200 p-4 bg-slate-50">
+            <summary class="cursor-pointer text-sm font-semibold select-none">OCR is wrong—what’s the fastest fix?</summary>
+            <div class="mt-2 text-sm text-slate-600">Open <span class="font-medium">Find accurate name</span> and apply a suggestion or type the correct spelling. Corrections are saved locally in your browser.</div>
+          </details>
+          <details class="rounded-xl border border-slate-200 p-4 bg-slate-50">
+            <summary class="cursor-pointer text-sm font-semibold select-none">When should I use Gemini?</summary>
+            <div class="mt-2 text-sm text-slate-600">Use Gemini for messy handwriting or when OCR produces unreadable text. “From image” is most accurate but sends the image to Google and may cost more.</div>
+          </details>
+          <details class="rounded-xl border border-slate-200 p-4 bg-slate-50">
+            <summary class="cursor-pointer text-sm font-semibold select-none">Does RxLens store data?</summary>
+            <div class="mt-2 text-sm text-slate-600">No server storage. Optional: your corrections and (optionally) Gemini API key can be stored in <span class="mono">localStorage</span> on your device if you enable it.</div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- Roadmap -->
+    <section id="roadmap" class="mt-8">
+      <div class="bg-slate-900 text-white rounded-2xl overflow-hidden border border-slate-800">
+        <div class="p-6">
+          <div class="flex items-start justify-between gap-3 flex-wrap">
+            <div>
+              <h3 class="text-lg font-semibold">Roadmap</h3>
+              <p class="text-sm text-white/80 mt-1">Where this product can go next for real pharmacy workflows.</p>
+            </div>
+            <a href="#overview" class="text-sm px-3 py-2 rounded-lg border border-white/15 hover:bg-white/10">Back to top</a>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-5">
+            <div class="rounded-xl bg-white/5 border border-white/10 p-4">
+              <div class="text-sm font-semibold">Local pharmacy integration</div>
+              <p class="text-sm text-white/80 mt-1">Inventory lookup, pricing, alternatives, delivery, and availability by store.</p>
+            </div>
+            <div class="rounded-xl bg-white/5 border border-white/10 p-4">
+              <div class="text-sm font-semibold">Brand ↔ generic mapping</div>
+              <p class="text-sm text-white/80 mt-1">Regional brands, salt compositions, and substitutions.</p>
+            </div>
+            <div class="rounded-xl bg-white/5 border border-white/10 p-4">
+              <div class="text-sm font-semibold">Structured Rx parsing</div>
+              <p class="text-sm text-white/80 mt-1">Form, frequency, duration, route, and dose normalization.</p>
+            </div>
+          </div>
+
+          <div class="mt-5 text-xs text-white/60">For production use, pair RxLens with a licensed drug database and appropriate clinical validation.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="mt-8">
+      <div class="bg-slate-900 text-white rounded-2xl overflow-hidden border border-slate-800">
+        <div class="p-6">
+          <h3 class="text-lg font-semibold">How it works</h3>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+            <div class="rounded-xl bg-white/5 border border-white/10 p-4">
+              <div class="text-sm font-semibold">1) OCR</div>
+              <p class="text-sm text-white/80 mt-1">Tesseract.js reads text directly in your browser.</p>
+            </div>
+            <div class="rounded-xl bg-white/5 border border-white/10 p-4">
+              <div class="text-sm font-semibold">2) Extraction</div>
+              <p class="text-sm text-white/80 mt-1">Heuristics remove doses and symbols to isolate medicine-name candidates and strengths.</p>
+            </div>
+            <div class="rounded-xl bg-white/5 border border-white/10 p-4">
+              <div class="text-sm font-semibold">3) Matching + verification</div>
+              <p class="text-sm text-white/80 mt-1">Local fuzzy-match suggests medicines; optional online suggestions or Gemini AI help correct spelling (1mg/Netmeds/etc).</p>
+            </div>
+          </div>
+          <p class="mt-5 text-xs text-white/70">Note: This demo uses a small built-in database. In production, integrate with a licensed drug database and Rx-specific parsing (strength, form, frequency).</p>
+        </div>
+      </div>
+    </section>
+
+    <footer class="mt-10 pb-10 text-xs text-slate-500">
+      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+        <div>RxLens — browser-only demo.</div>
+        <div class="mono">Privacy: no server uploads by default • Gemini AI (optional) uses Google API • Works offline after first load (except optional online features)</div>
+      </div>
+    </footer>
+  </main>
+
+  <!-- Suggest / Correction Modal -->
+  <div id="suggestModal" class="fixed inset-0 z-50 hidden">
+    <div class="absolute inset-0 bg-slate-900/50" data-close="1"></div>
+    <div class="relative max-w-3xl mx-auto mt-10 sm:mt-16 px-4">
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-xl overflow-hidden">
+        <div class="p-4 border-b border-slate-100 flex items-start justify-between gap-3">
+          <div>
+            <div class="text-sm font-semibold">Find accurate medicine name</div>
+            <div class="text-xs text-slate-600">Correct spelling using online suggestions (optional) + quick links to online pharmacies + Gemini (optional).</div>
+          </div>
+          <button id="btnCloseSuggest" class="px-3 py-2 text-sm rounded-lg border border-slate-200 hover:bg-slate-50">Close</button>
+        </div>
+
+        <div class="p-4 space-y-4">
+          <div class="rounded-xl border border-slate-200 bg-slate-50 p-3">
+            <div class="text-xs text-slate-600">Candidate</div>
+            <div class="mt-1 flex items-start justify-between gap-3 flex-wrap">
+              <div>
+                <div id="suggestCandidate" class="text-sm font-semibold"></div>
+                <div id="suggestStrengths" class="mt-1 text-xs text-slate-600"></div>
+              </div>
+              <div class="flex flex-wrap gap-2">
+                <a id="link1mg" class="px-3 py-2 text-sm rounded-lg bg-emerald-600 text-white hover:bg-emerald-700" href="#" target="_blank" rel="noreferrer">Search 1mg</a>
+                <a id="linkNetmeds" class="px-3 py-2 text-sm rounded-lg border border-slate-200 hover:bg-white" href="#" target="_blank" rel="noreferrer">Netmeds</a>
+                <a id="linkPharmEasy" class="px-3 py-2 text-sm rounded-lg border border-slate-200 hover:bg-white" href="#" target="_blank" rel="noreferrer">PharmEasy</a>
+                <a id="linkGoogle" class="px-3 py-2 text-sm rounded-lg border border-slate-200 hover:bg-white" href="#" target="_blank" rel="noreferrer">Google</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            <div class="rounded-xl border border-slate-200 p-3">
+              <div class="text-sm font-semibold">Manual correction</div>
+              <div class="text-xs text-slate-600 mt-1">Edit the medicine name (saved only in your browser).</div>
+              <input id="suggestInput" class="mt-3 w-full rounded-xl border border-slate-200 px-3 py-2 text-sm" placeholder="Type correct medicine name…" />
+              <div class="mt-3 flex flex-wrap gap-2">
+                <button id="btnApplyCorrection" class="px-3 py-2 text-sm rounded-lg bg-slate-900 text-white hover:bg-slate-800">Apply correction</button>
+                <button id="btnClearCorrection" class="px-3 py-2 text-sm rounded-lg border border-slate-200 hover:bg-slate-50">Clear correction</button>
+              </div>
+              <div id="suggestSavedHint" class="mt-2 text-[11px] text-slate-500"></div>
+            </div>
+
+            <div class="rounded-xl border border-slate-200 p-3">
+              <div class="text-sm font-semibold">Online spelling suggestions</div>
+              <div class="text-xs text-slate-600 mt-1">Sources: <span class="mono">clinicaltables.nlm.nih.gov</span> (RxTerms), Wikipedia (fallback).</div>
+
+              <div class="mt-3">
+                <div class="flex items-center justify-between">
+                  <div class="text-xs font-medium text-slate-700">RxTerms suggestions</div>
+                  <button id="btnRefreshSuggest" class="text-xs px-2 py-1 rounded-lg border border-slate-200 hover:bg-slate-50">Refresh</button>
+                </div>
+                <div id="rxtermsStatus" class="mt-2 text-[11px] text-slate-500">Idle</div>
+                <div id="rxtermsList" class="mt-2 space-y-2"></div>
+              </div>
+
+              <div class="mt-4 border-t border-slate-200 pt-3">
+                <div class="text-xs font-medium text-slate-700">Wikipedia suggestions</div>
+                <div id="wikiStatus" class="mt-2 text-[11px] text-slate-500">Idle</div>
+                <div id="wikiList" class="mt-2 space-y-2"></div>
+              </div>
+
+              <div class="mt-4 border-t border-slate-200 pt-3">
+                <div class="flex items-center justify-between gap-2">
+                  <div class="text-xs font-medium text-slate-700">Gemini suggestion (optional)</div>
+                  <button id="btnGeminiSuggest" class="text-xs px-2 py-1 rounded-lg bg-fuchsia-600 text-white hover:bg-fuchsia-700 disabled:opacity-50 disabled:cursor-not-allowed" disabled type="button">Ask Gemini</button>
+                </div>
+                <div id="geminiSuggestStatus" class="mt-2 text-[11px] text-slate-500">Idle</div>
+                <div id="geminiSuggestList" class="mt-2 space-y-2"></div>
+                <div class="mt-2 text-[11px] text-slate-500">Uses the Gemini key set in the left panel.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="rounded-xl border border-amber-200 bg-amber-50 p-3">
+            <div class="text-xs font-semibold text-amber-900">Privacy note</div>
+            <div class="text-[11px] text-amber-900/80 mt-1">Online suggestions send only the candidate token. Gemini suggestions send candidate text to Google. Do not use patient-identifying details.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // -----------------------------
+    // Small in-browser drug database (demo)
+    // In production: replace with a real dataset + country-specific brand/generic mapping.
+    // -----------------------------
+    const DRUG_DB = [
+      { name: "Paracetamol", generic: "Acetaminophen", category: "Analgesic/antipyretic", commonStrengths: ["500 mg", "650 mg"], notes: "Often written as PCM / Acetaminophen." },
+      { name: "Ibuprofen", generic: "Ibuprofen", category: "NSAID", commonStrengths: ["200 mg", "400 mg"], notes: "Take with food; GI risk." },
+      { name: "Amoxicillin", generic: "Amoxicillin", category: "Antibiotic (penicillin)", commonStrengths: ["250 mg", "500 mg"], notes: "Common miss-OCR: amoxcillin, amoxilin." },
+      { name: "Azithromycin", generic: "Azithromycin", category: "Antibiotic (macrolide)", commonStrengths: ["250 mg", "500 mg"], notes: "Often written as AZI." },
+      { name: "Cefixime", generic: "Cefixime", category: "Antibiotic (cephalosporin)", commonStrengths: ["200 mg"], notes: "Common in URTI prescriptions." },
+      { name: "Ceftriaxone", generic: "Ceftriaxone", category: "Antibiotic (cephalosporin)", commonStrengths: ["1 g"], notes: "Usually injection." },
+      { name: "Metformin", generic: "Metformin", category: "Antidiabetic (biguanide)", commonStrengths: ["500 mg", "850 mg", "1000 mg"], notes: "Often appears with XR/SR." },
+      { name: "Gliclazide", generic: "Gliclazide", category: "Antidiabetic (sulfonylurea)", commonStrengths: ["40 mg", "80 mg"], notes: "Often written as MR/SR for modified release." },
+      { name: "Amlodipine", generic: "Amlodipine", category: "Antihypertensive (CCB)", commonStrengths: ["2.5 mg", "5 mg", "10 mg"], notes: "Common miss-OCR: amlodipin." },
+      { name: "Losartan", generic: "Losartan", category: "Antihypertensive (ARB)", commonStrengths: ["25 mg", "50 mg"], notes: "Often with HCTZ." },
+      { name: "Hydrochlorothiazide", generic: "Hydrochlorothiazide", category: "Diuretic (thiazide)", commonStrengths: ["12.5 mg", "25 mg"], notes: "Often abbreviated HCTZ." },
+      { name: "Atorvastatin", generic: "Atorvastatin", category: "Statin", commonStrengths: ["10 mg", "20 mg", "40 mg"], notes: "Often nightly." },
+      { name: "Rosuvastatin", generic: "Rosuvastatin", category: "Statin", commonStrengths: ["5 mg", "10 mg", "20 mg"], notes: "Common cardio prescriptions." },
+      { name: "Pantoprazole", generic: "Pantoprazole", category: "PPI", commonStrengths: ["20 mg", "40 mg"], notes: "Often written as Panto." },
+      { name: "Omeprazole", generic: "Omeprazole", category: "PPI", commonStrengths: ["20 mg"], notes: "Common for acid reflux." },
+      { name: "Cetirizine", generic: "Cetirizine", category: "Antihistamine", commonStrengths: ["10 mg"], notes: "Allergy relief." },
+      { name: "Levocetirizine", generic: "Levocetirizine", category: "Antihistamine", commonStrengths: ["5 mg"], notes: "Often written as Levo-cet." },
+      { name: "Doxycycline", generic: "Doxycycline", category: "Antibiotic (tetracycline)", commonStrengths: ["100 mg"], notes: "Photosensitivity." },
+      { name: "Prednisolone", generic: "Prednisolone", category: "Corticosteroid", commonStrengths: ["5 mg", "10 mg"], notes: "Tapering may be needed." },
+      { name: "Salbutamol", generic: "Albuterol", category: "Bronchodilator", commonStrengths: ["100 mcg"], notes: "Often inhaler." },
+      { name: "Montelukast", generic: "Montelukast", category: "Leukotriene receptor antagonist", commonStrengths: ["10 mg"], notes: "Often with antihistamines." },
+      { name: "Vitamin D3", generic: "Cholecalciferol", category: "Vitamin", commonStrengths: ["1000 IU", "2000 IU", "60000 IU"], notes: "OCR may split as 'Vitamin' 'D3'." },
+      { name: "Folic Acid", generic: "Folic acid", category: "Vitamin", commonStrengths: ["5 mg"], notes: "OCR may split as 'Folic' 'Acid'." },
+      { name: "Aspirin", generic: "Acetylsalicylic acid", category: "Antiplatelet/NSAID", commonStrengths: ["75 mg", "81 mg", "325 mg"], notes: "Low-dose common in cardiac care." }
+    ];
+
+    // Common non-drug tokens frequently found in prescriptions.
+    const STOPWORDS = new Set([
+      "tab", "tabs", "tablet", "tablets", "cap", "caps", "capsule", "capsules", "syp", "syr", "syrup",
+      "inj", "injection", "drop", "drops", "cream", "ointment", "gel", "lotion", "spray", "inh", "inhaler",
+      "sr", "xr", "cr", "er", "mr", "ds", "dt", "plus",
+      "mg", "mcg", "g", "ml", "iu", "od", "bd", "tid", "qid", "hs", "prn", "stat",
+      "morning", "noon", "night", "daily", "days", "week", "weeks", "after", "before", "food", "meal", "meals",
+      "take", "apply", "use", "for", "x", "×", "-", "+", "and", "or", "the", "a", "an", "patient", "rx",
+      "sig", "disp", "refill", "route", "po", "iv", "im", "sc", "subcut", "nebulize", "nebuliser", "nebulizer",
+      "once", "twice", "thrice", "every", "hours", "hour", "h", "q", "q8", "q12", "q24"
+    ]);
+
+    // -----------------------------
+    // Helpers
+    // -----------------------------
+    const el = (id) => document.getElementById(id);
+
+    function clamp(n, a, b) { return Math.max(a, Math.min(b, n)); }
+
+    function fixOCRMistakes(text) {
+      return (text || "")
+        // common OCR confusions around 1mg (lmg/img)
+        .replace(/\b[il]mg\b/gi, "1mg")
+        .replace(/\b(\d+)\s*mg\b/gi, "$1mg")
+        .replace(/\b(\d+(?:\.\d+)?)\s*(mcg|mg|ml|g|iu)\b/gi, "$1 $2")
+        .replace(/\s+/g, " ");
+    }
+
+    function normalizeToken(s) {
+      return (s || "")
+        .toLowerCase()
+        .replace(/[®™]/g, "")
+        .replace(/[^a-z0-9]+/g, " ")
+        .trim();
+    }
+
+    function tokenize(text) {
+      const cleaned = normalizeToken(fixOCRMistakes(text))
+        .replace(/\b(\d+)(mg|ml|mcg|g|iu)\b/g, "$1 $2");
+      return cleaned.split(/\s+/).filter(Boolean);
+    }
+
+    function extractStrengthsFromText(text) {
+      const strengths = [];
+      const s = fixOCRMistakes(text || "");
+      const re = /\b(\d+(?:\.\d+)?)\s*(mcg|mg|ml|g|iu)\b/gi;
+      let m;
+      while ((m = re.exec(s))) {
+        strengths.push(`${m[1]} ${m[2].toLowerCase()}`);
+      }
+      // de-dup
+      return Array.from(new Set(strengths));
+    }
+
+    // Levenshtein distance (small + fast enough for demo)
+    function levenshtein(a, b) {
+      a = a || ""; b = b || "";
+      if (a === b) return 0;
+      const m = a.length, n = b.length;
+      if (m === 0) return n;
+      if (n === 0) return m;
+
+      const dp = new Array(n + 1);
+      for (let j = 0; j <= n; j++) dp[j] = j;
+      for (let i = 1; i <= m; i++) {
+        let prev = dp[0];
+        dp[0] = i;
+        for (let j = 1; j <= n; j++) {
+          const temp = dp[j];
+          const cost = a[i - 1] === b[j - 1] ? 0 : 1;
+          dp[j] = Math.min(
+            dp[j] + 1,
+            dp[j - 1] + 1,
+            prev + cost
+          );
+          prev = temp;
+        }
+      }
+      return dp[n];
+    }
+
+    function jaroWinkler(a, b) {
+      a = normalizeToken(a).replace(/\s+/g, " ");
+      b = normalizeToken(b).replace(/\s+/g, " ");
+      if (!a || !b) return 0;
+      if (a === b) return 1;
+
+      const s1 = a, s2 = b;
+      const len1 = s1.length, len2 = s2.length;
+      const matchDistance = Math.floor(Math.max(len1, len2) / 2) - 1;
+
+      const s1Matches = new Array(len1).fill(false);
+      const s2Matches = new Array(len2).fill(false);
+
+      let matches = 0;
+      for (let i = 0; i < len1; i++) {
+        const start = Math.max(0, i - matchDistance);
+        const end = Math.min(i + matchDistance + 1, len2);
+        for (let j = start; j < end; j++) {
+          if (s2Matches[j]) continue;
+          if (s1[i] !== s2[j]) continue;
+          s1Matches[i] = true;
+          s2Matches[j] = true;
+          matches++;
+          break;
+        }
+      }
+
+      if (matches === 0) return 0;
+
+      let t = 0;
+      let k = 0;
+      for (let i = 0; i < len1; i++) {
+        if (!s1Matches[i]) continue;
+        while (!s2Matches[k]) k++;
+        if (s1[i] !== s2[k]) t++;
+        k++;
+      }
+      const transpositions = t / 2;
+
+      const jaro = (matches / len1 + matches / len2 + (matches - transpositions) / matches) / 3;
+
+      // Winkler boost
+      let prefix = 0;
+      const maxPrefix = 4;
+      for (let i = 0; i < Math.min(maxPrefix, len1, len2); i++) {
+        if (s1[i] === s2[i]) prefix++;
+        else break;
+      }
+      const p = 0.1;
+      return jaro + prefix * p * (1 - jaro);
+    }
+
+    function similarity(a, b) {
+      const aa = normalizeToken(a).replace(/\s+/g, " ");
+      const bb = normalizeToken(b).replace(/\s+/g, " ");
+      if (!aa || !bb) return 0;
+      const dist = levenshtein(aa, bb);
+      const maxLen = Math.max(aa.length, bb.length) || 1;
+      const lev = 1 - dist / maxLen;
+      const jw = jaroWinkler(aa, bb);
+      // Slightly favor Jaro-Winkler for OCR-style typos
+      return clamp(0.45 * lev + 0.55 * jw, 0, 1);
+    }
+
+    function isMostlyStopwords(str) {
+      const parts = normalizeToken(str).split(" ").filter(Boolean);
+      if (!parts.length) return true;
+      return parts.every(p => STOPWORDS.has(p));
+    }
+
+    function uniq(arr) {
+      return Array.from(new Set((arr || []).filter(Boolean)));
+    }
+
+    // Extract candidate medicine names from OCR text:
+    // - Consider unigrams + bigrams (to catch "folic acid", "vitamin d3")
+    // - Keep extracted strengths per candidate (e.g., 1 mg)
+    function extractCandidates(rawText) {
+      const tokens = tokenize(rawText);
+      const candidates = new Map();
+
+      function consider(str, reason, meta = {}) {
+        const norm = normalizeToken(str).replace(/\s+/g, " ").trim();
+        if (!norm) return;
+        if (norm.length < 3) return;
+
+        const parts = norm.split(" ").filter(Boolean);
+        if (!parts.length) return;
+
+        // Filter: ignore mostly numeric tokens
+        const alphaCount = (norm.match(/[a-z]/g) || []).length;
+        if (alphaCount < 2) return;
+
+        // Filter stopwords when single token
+        if (parts.length === 1 && STOPWORDS.has(parts[0])) return;
+        if (isMostlyStopwords(norm)) return;
+
+        // Ignore tokens that are clearly dosage units on their own
+        if (parts.length === 1 && ["mg","ml","mcg","g","iu"].includes(parts[0])) return;
+
+        const key = norm;
+        if (!candidates.has(key)) {
+          candidates.set(key, { text: key, reasons: new Set(), strengths: new Set() });
+        }
+        const obj = candidates.get(key);
+        obj.reasons.add(reason);
+        if (meta.strengths && meta.strengths.length) {
+          for (const s of meta.strengths) obj.strengths.add(s);
+        }
+      }
+
+      for (let i = 0; i < tokens.length; i++) {
+        const t = tokens[i];
+        if (!t) continue;
+        if (STOPWORDS.has(t)) continue;
+
+        // Ignore pure numbers
+        if (/^\d+(?:\.\d+)?$/.test(t)) continue;
+        // Ignore common strength units as standalone
+        if (["mg","ml","mcg","g","iu"].includes(t)) continue;
+
+        consider(t, "unigram");
+
+        // Bigrams
+        if (i + 1 < tokens.length) {
+          const t2 = tokens[i + 1];
+          const bigram = `${t} ${t2}`;
+          consider(bigram, "bigram");
+        }
+      }
+
+      // Consider lines as candidates (often written one per line)
+      const lines = (rawText || "").split(/\r?\n/).map(l => l.trim()).filter(Boolean);
+      for (const line of lines) {
+        const strengths = extractStrengthsFromText(line);
+
+        // Remove dose-like patterns and directions + forms
+        const simplified = fixOCRMistakes(line)
+          .replace(/\b\d+(?:\.\d+)?\s*(mg|ml|mcg|g|iu)\b/gi, " ")
+          .replace(/\b(od|bd|tid|qid|hs|prn|po|iv|im|sc|stat)\b/gi, " ")
+          .replace(/\b(tab|tabs|tablet|tablets|cap|caps|capsule|capsules|syrup|syp|inj|injection)\b/gi, " ")
+          .replace(/[^A-Za-z0-9 ]+/g, " ")
+          .replace(/\s+/g, " ")
+          .trim();
+
+        if (simplified) consider(simplified, "line", { strengths });
+      }
+
+      return Array.from(candidates.values())
+        .map(x => ({ text: x.text, reasons: Array.from(x.reasons), strengths: Array.from(x.strengths) }))
+        .sort((a, b) => (b.text.length - a.text.length) || a.text.localeCompare(b.text));
+    }
+
+    function bestMatchesForCandidate(candidateText) {
+      const results = DRUG_DB.map(d => {
+        const score1 = similarity(candidateText, d.name);
+        const score2 = similarity(candidateText, d.generic);
+        const score = Math.max(score1, score2);
+        return { drug: d, score, matchedField: score1 >= score2 ? "brand/given" : "generic" };
+      }).sort((a, b) => b.score - a.score);
+
+      // Return top 4 for display
+      return results.slice(0, 4);
+    }
+
+    function computeMatches(candidates, threshold, overrides) {
+      const matched = [];
+      for (const c of candidates) {
+        const query = (overrides && overrides.get(c.text)) ? overrides.get(c.text) : c.text;
+        const top = bestMatchesForCandidate(query);
+        const best = top[0];
+        if (best && best.score >= threshold) {
+          matched.push({
+            candidateOriginal: c.text,
+            candidateQuery: query,
+            strengths: c.strengths || [],
+            best,
+            alternatives: top.slice(1)
+          });
+        }
+      }
+
+      // De-duplicate by drug name (keep best scoring appearance)
+      const byDrug = new Map();
+      for (const m of matched) {
+        const key = m.best.drug.name;
+        if (!byDrug.has(key) || byDrug.get(key).best.score < m.best.score) byDrug.set(key, m);
+      }
+
+      return Array.from(byDrug.values()).sort((a, b) => b.best.score - a.best.score);
+    }
+
+    function setProgress(pct, label) {
+      const p = clamp(pct, 0, 1);
+      el("progressBar").style.width = `${Math.round(p * 100)}%`;
+      el("progressLabel").textContent = label;
+    }
+
+    function pill(text, cls="") {
+      const span = document.createElement("span");
+      span.className = `inline-flex items-center gap-1 text-xs px-2 py-1 rounded-full border ${cls}`;
+      span.textContent = text;
+      return span;
+    }
+
+    function truncate(s, n) {
+      if (!s) return "";
+      return s.length > n ? s.slice(0, n - 1) + "…" : s;
+    }
+
+    function escapeHtml(str) {
+      return String(str)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function downloadText(filename, text) {
+      const blob = new Blob([text], { type: "text/plain;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 500);
+    }
+
+    function toCSV(matches) {
+      const header = ["candidate_original", "candidate_corrected", "strengths", "matched_name", "generic", "category", "score"].join(",");
+      const rows = matches.map(m => {
+        const d = m.best.drug;
+        const strengths = (m.strengths || []).join(";");
+        return [m.candidateOriginal, m.candidateQuery, strengths, d.name, d.generic, d.category, m.best.score.toFixed(3)]
+          .map(v => `"${String(v).replaceAll('"', '""')}"`)
+          .join(",");
+      });
+      return [header, ...rows].join("\n");
+    }
+
+    function openPharmacySearch(query) {
+      const q = query ? `${query} pharmacy near me` : "pharmacy near me";
+      window.open(`https://www.google.com/maps/search/${encodeURIComponent(q)}`, "_blank", "noreferrer");
+    }
+
+    function makeSearchQuery(name, strengths=[]) {
+      const includeStrength = !!el("includeStrengthInSearch")?.checked;
+      const s = includeStrength && strengths && strengths.length ? ` ${strengths[0]}` : "";
+      return `${name}${s}`.trim();
+    }
+
+    function buildExternalLinks(query) {
+      const q = encodeURIComponent(query);
+      return {
+        oneMg: `https://www.1mg.com/search/all?name=${q}`,
+        netmeds: `https://www.netmeds.com/catalogsearch/result/${q}/all`,
+        pharmeasy: `https://pharmeasy.in/search/all?name=${q}`,
+        google: `https://www.google.com/search?q=${q}+medicine`
+      };
+    }
+
+    function safeParseJSON(text) {
+      if (!text) return null;
+      try { return JSON.parse(text); } catch {}
+      // Try to recover JSON substring
+      const start = text.indexOf("{");
+      const end = text.lastIndexOf("}");
+      if (start >= 0 && end > start) {
+        const sub = text.slice(start, end + 1);
+        try { return JSON.parse(sub); } catch {}
+      }
+      return null;
+    }
+
+    // -----------------------------
+    // Gemini API
+    // -----------------------------
+    function getGeminiKey() {
+      return (el("geminiKey")?.value || "").trim();
+    }
+
+    function getGeminiModel() {
+      return el("geminiModel")?.value || "gemini-1.5-flash";
+    }
+
+    function setGeminiStatus(msg) {
+      el("geminiStatus").textContent = msg;
+    }
+
+    async function geminiGenerate({ promptText, imageDataUrl }) {
+      const key = getGeminiKey();
+      const model = getGeminiModel();
+      if (!key) throw new Error("Missing Gemini API key");
+
+      const url = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent?key=${encodeURIComponent(key)}`;
+
+      const parts = [];
+      if (promptText) parts.push({ text: promptText });
+
+      if (imageDataUrl) {
+        const [meta, b64] = String(imageDataUrl).split(",");
+        const mimeMatch = /data:(.*?);base64/.exec(meta || "");
+        const mime_type = (mimeMatch && mimeMatch[1]) ? mimeMatch[1] : "image/png";
+        parts.push({ inline_data: { mime_type, data: b64 } });
+      }
+
+      const body = {
+        contents: [
+          { role: "user", parts }
+        ],
+        generationConfig: {
+          temperature: 0.1,
+          top_p: 0.9,
+          max_output_tokens: 1024,
+          response_mime_type: "application/json"
+        }
+      };
+
+      const res = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body)
+      });
+
+      if (!res.ok) {
+        const t = await res.text().catch(() => "");
+        throw new Error(`Gemini HTTP ${res.status}${t ? ` — ${t.slice(0, 160)}` : ""}`);
+      }
+
+      const data = await res.json();
+      const text = data?.candidates?.[0]?.content?.parts?.map(p => p.text).filter(Boolean).join("\n") || "";
+      if (!text) {
+        throw new Error("Gemini returned an empty response. (Check API key/model/quota.)");
+      }
+      return text;
+    }
+
+    function normalizeGeminiMedicines(parsed) {
+      const medicines = parsed?.medicines || parsed?.drugs || parsed?.items || [];
+      if (!Array.isArray(medicines)) return [];
+      return medicines
+        .map(m => {
+          if (!m) return null;
+          if (typeof m === "string") return { name: m, strength: null, form: null, frequency: null, duration: null, notes: null };
+          const name = (m.name || m.medicine || m.drug || m.brand || "").toString().trim();
+          const strength = (m.strength || m.dose || m.dosage || "").toString().trim();
+          const form = (m.form || m.dosage_form || "").toString().trim();
+          const frequency = (m.frequency || m.sig || m.schedule || "").toString().trim();
+          const duration = (m.duration || m.days || "").toString().trim();
+          const notes = (m.notes || "").toString().trim();
+          if (!name) return null;
+          return {
+            name,
+            strength: strength || null,
+            form: form || null,
+            frequency: frequency || null,
+            duration: duration || null,
+            notes: notes || null
+          };
+        })
+        .filter(Boolean);
+    }
+
+    async function geminiExtractFromOCRText() {
+      const text = (state.ocrText || "").trim();
+      if (!text) throw new Error("No OCR text available. Run OCR or paste text first.");
+
+      const prompt = [
+        "You are a prescription parser.",
+        "Extract only the medicine list and correct spelling to the most likely standard medicine names.",
+        "Return JSON ONLY (no markdown) with schema:",
+        "{\"medicines\":[{\"name\":string,\"strength\":string|null,\"form\":string|null,\"frequency\":string|null,\"duration\":string|null}]}",
+        "Rules:",
+        "- Do not include patient details, headings, or directions that are not medicine names.",
+        "- If strength is present (e.g., 500 mg, 5 ml, 1 g, 60000 IU), put it in strength.",
+        "- If brand vs generic is unclear, choose the most common/recognized spelling.",
+        "Text:",
+        text
+      ].join("\n");
+
+      setGeminiStatus("Gemini: extracting from OCR text…");
+      const raw = await geminiGenerate({ promptText: prompt });
+      const parsed = safeParseJSON(raw);
+      if (!parsed) throw new Error("Could not parse Gemini JSON response.");
+      const meds = normalizeGeminiMedicines(parsed);
+
+      state.ai.raw = raw;
+      state.ai.medicines = meds;
+      state.ai.candidates = meds.map(m => ({
+        text: m.name,
+        reasons: ["gemini"],
+        strengths: uniq([m.strength].filter(Boolean))
+      }));
+
+      setGeminiStatus(`Gemini: extracted ${meds.length} medicine(s) from OCR text.`);
+      renderAIResults();
+      enableGeminiSourceIfAvailable();
+    }
+
+    async function geminiExtractFromImage() {
+      if (!state.imageDataUrl) throw new Error("No image selected.");
+
+      const prompt = [
+        "You are a prescription parser.",
+        "Read the prescription image. Extract only the medicine list and correct spelling to the most likely standard medicine names.",
+        "Return JSON ONLY (no markdown) with schema:",
+        "{\"medicines\":[{\"name\":string,\"strength\":string|null,\"form\":string|null,\"frequency\":string|null,\"duration\":string|null}]}",
+        "Rules:",
+        "- Do not include patient details.",
+        "- If strength is present (e.g., 500 mg, 5 ml, 1 g, 60000 IU), put it in strength.",
+        "- If something is unreadable, omit it rather than guessing wildly.",
+        "- Output must be strict JSON."
+      ].join("\n");
+
+      setGeminiStatus("Gemini: extracting from image…");
+      const raw = await geminiGenerate({ promptText: prompt, imageDataUrl: state.imageDataUrl });
+      const parsed = safeParseJSON(raw);
+      if (!parsed) throw new Error("Could not parse Gemini JSON response.");
+      const meds = normalizeGeminiMedicines(parsed);
+
+      state.ai.raw = raw;
+      state.ai.medicines = meds;
+      state.ai.candidates = meds.map(m => ({
+        text: m.name,
+        reasons: ["gemini"],
+        strengths: uniq([m.strength].filter(Boolean))
+      }));
+
+      setGeminiStatus(`Gemini: extracted ${meds.length} medicine(s) from image.`);
+      renderAIResults();
+      enableGeminiSourceIfAvailable();
+    }
+
+    async function geminiSuggestForCandidate(candidateOriginal) {
+      const candObj = state.candidates.find(c => c.text === candidateOriginal);
+      const strengths = candObj?.strengths || [];
+
+      const prompt = [
+        "You are helping correct OCR medicine names.",
+        "Given the OCR token below, suggest the most likely correct medicine name spellings.",
+        "Return JSON ONLY (no markdown) with schema:",
+        "{\"suggestions\":[{\"name\":string,\"confidence\":number,\"reason\":string}]}",
+        "Provide up to 8 suggestions. Use common international generic names when possible.",
+        `OCR token: ${candidateOriginal}`,
+        strengths.length ? `Detected strengths: ${strengths.join(", ")}` : "Detected strengths: none"
+      ].join("\n");
+
+      el("geminiSuggestStatus").textContent = "Gemini: thinking…";
+      el("geminiSuggestList").innerHTML = "";
+
+      const raw = await geminiGenerate({ promptText: prompt });
+      const parsed = safeParseJSON(raw);
+      const items = parsed?.suggestions;
+      if (!Array.isArray(items)) {
+        el("geminiSuggestStatus").textContent = "Gemini did not return suggestions.";
+        return;
+      }
+
+      const normalized = items
+        .map(s => {
+          if (!s) return null;
+          if (typeof s === "string") return { name: s, confidence: null, reason: null };
+          const name = (s.name || s.medicine || "").toString().trim();
+          const confidence = (s.confidence != null) ? Number(s.confidence) : null;
+          const reason = (s.reason || "").toString().trim() || null;
+          if (!name) return null;
+          return { name, confidence: Number.isFinite(confidence) ? clamp(confidence, 0, 1) : null, reason };
+        })
+        .filter(Boolean);
+
+      el("geminiSuggestStatus").textContent = normalized.length ? `Found ${normalized.length} suggestion(s).` : "No suggestions.";
+      renderGeminiSuggestionList(el("geminiSuggestList"), normalized);
+    }
+
+    // -----------------------------
+    // Rendering
+    // -----------------------------
+    function renderCandidates(candidates) {
+      const wrap = el("candidates");
+      wrap.innerHTML = "";
+      el("candCount").textContent = String(candidates.length);
+
+      if (candidates.length === 0) {
+        const empty = document.createElement("div");
+        empty.className = "text-xs text-slate-600";
+        empty.textContent = "No candidates yet. Run OCR, paste text, or run Gemini extraction.";
+        wrap.appendChild(empty);
+        return;
+      }
+
+      for (const c of candidates.slice(0, 25)) {
+        const row = document.createElement("div");
+        row.className = "rounded-xl bg-white border border-slate-200 p-3";
+
+        const top = document.createElement("div");
+        top.className = "flex items-start justify-between gap-2";
+
+        const left = document.createElement("div");
+        const correction = state.overrides.get(c.text);
+        const shown = correction ? correction : c.text;
+        left.innerHTML = `
+          <div class="text-sm font-semibold">${escapeHtml(shown)}</div>
+          ${correction ? `<div class="text-[11px] text-slate-600">from OCR: <span class="mono">${escapeHtml(c.text)}</span></div>` : ""}
+        `;
+
+        const right = document.createElement("div");
+        right.className = "flex flex-wrap justify-end gap-1";
+        for (const r of c.reasons) {
+          const cls = r === "line"
+            ? "bg-teal-50 border-teal-200 text-teal-800"
+            : (r === "gemini" ? "bg-fuchsia-50 border-fuchsia-200 text-fuchsia-900" : "bg-slate-50 border-slate-200 text-slate-700");
+          right.appendChild(pill(r, cls));
+        }
+
+        top.appendChild(left);
+        top.appendChild(right);
+        row.appendChild(top);
+
+        const meta = document.createElement("div");
+        meta.className = "mt-2 flex flex-wrap items-center justify-between gap-2";
+
+        const strengthsWrap = document.createElement("div");
+        strengthsWrap.className = "flex flex-wrap gap-1";
+        if (c.strengths && c.strengths.length) {
+          for (const s of c.strengths.slice(0, 3)) {
+            strengthsWrap.appendChild(pill(s, "bg-amber-50 border-amber-200 text-amber-900 mono"));
+          }
+        } else {
+          strengthsWrap.appendChild(pill("no strength detected", "bg-white border-slate-200 text-slate-500"));
+        }
+
+        const actions = document.createElement("div");
+        actions.className = "flex flex-wrap gap-2";
+
+        const btnSuggest = document.createElement("button");
+        btnSuggest.className = "px-3 py-2 text-sm rounded-lg bg-slate-900 text-white hover:bg-slate-800";
+        btnSuggest.textContent = "Find accurate name";
+        btnSuggest.dataset.action = "suggest";
+        btnSuggest.dataset.cand = encodeURIComponent(c.text);
+
+        const btn1mg = document.createElement("button");
+        btn1mg.className = "px-3 py-2 text-sm rounded-lg border border-slate-200 hover:bg-slate-50";
+        btn1mg.textContent = "Search 1mg";
+        btn1mg.dataset.action = "search1mg";
+        btn1mg.dataset.cand = encodeURIComponent(c.text);
+
+        const btnWeb = document.createElement("button");
+        btnWeb.className = "px-3 py-2 text-sm rounded-lg border border-slate-200 hover:bg-slate-50";
+        btnWeb.textContent = "Google";
+        btnWeb.dataset.action = "searchGoogle";
+        btnWeb.dataset.cand = encodeURIComponent(c.text);
+
+        actions.appendChild(btnSuggest);
+        actions.appendChild(btn1mg);
+        actions.appendChild(btnWeb);
+
+        meta.appendChild(strengthsWrap);
+        meta.appendChild(actions);
+        row.appendChild(meta);
+
+        wrap.appendChild(row);
+      }
+
+      if (candidates.length > 25) {
+        const more = document.createElement("div");
+        more.className = "text-xs text-slate-500";
+        more.textContent = `Showing 25 of ${candidates.length} candidates.`;
+        wrap.appendChild(more);
+      }
+    }
+
+    function renderMatches(matches, threshold) {
+      const wrap = el("matches");
+      wrap.innerHTML = "";
+      el("matchCount").textContent = String(matches.length);
+
+      if (matches.length === 0) {
+        const empty = document.createElement("div");
+        empty.className = "text-xs text-slate-600";
+        empty.innerHTML = `No matches above threshold (<span class="mono">${threshold.toFixed(2)}</span>). Try lowering it, use “Find accurate name”, or use Gemini extraction.`;
+        wrap.appendChild(empty);
+        return;
+      }
+
+      for (const m of matches) {
+        const { drug } = m.best;
+        const score = m.best.score;
+
+        const card = document.createElement("div");
+        card.className = "rounded-xl bg-white border border-slate-200 p-3";
+
+        const header = document.createElement("div");
+        header.className = "flex items-start justify-between gap-2";
+
+        const title = document.createElement("div");
+        title.innerHTML = `
+          <div class="text-sm font-semibold">${escapeHtml(drug.name)}</div>
+          <div class="text-xs text-slate-600">Generic: <span class="mono">${escapeHtml(drug.generic)}</span></div>
+        `;
+
+        const badgeWrap = document.createElement("div");
+        badgeWrap.className = "flex flex-col items-end gap-1";
+        const scoreBadge = document.createElement("div");
+        scoreBadge.className = "text-xs px-2 py-1 rounded-full border bg-indigo-50 border-indigo-200 text-indigo-800 mono";
+        scoreBadge.textContent = `${score.toFixed(2)} match`;
+
+        const candBadge = document.createElement("div");
+        candBadge.className = "text-[11px] px-2 py-1 rounded-full border bg-slate-50 border-slate-200 text-slate-700";
+        const fromText = m.candidateQuery && m.candidateQuery !== m.candidateOriginal
+          ? `${truncate(m.candidateQuery, 18)} (from OCR)`
+          : truncate(m.candidateOriginal, 22);
+        candBadge.textContent = `from: ${fromText}`;
+
+        badgeWrap.appendChild(scoreBadge);
+        badgeWrap.appendChild(candBadge);
+
+        header.appendChild(title);
+        header.appendChild(badgeWrap);
+
+        const meta = document.createElement("div");
+        meta.className = "mt-3 grid grid-cols-1 sm:grid-cols-2 gap-2";
+        const strengthStr = (m.strengths && m.strengths.length) ? m.strengths.join(", ") : "—";
+        meta.innerHTML = `
+          <div class="rounded-lg border border-slate-200 bg-slate-50 p-2">
+            <div class="text-[11px] text-slate-600">Category</div>
+            <div class="text-xs font-medium">${escapeHtml(drug.category)}</div>
+          </div>
+          <div class="rounded-lg border border-slate-200 bg-slate-50 p-2">
+            <div class="text-[11px] text-slate-600">Extracted strength</div>
+            <div class="text-xs font-medium mono">${escapeHtml(strengthStr)}</div>
+          </div>
+        `;
+
+        const notes = document.createElement("div");
+        notes.className = "mt-2 text-xs text-slate-600";
+        notes.textContent = drug.notes || "";
+
+        const actions = document.createElement("div");
+        actions.className = "mt-3 flex flex-wrap gap-2";
+
+        const query = makeSearchQuery(drug.name, m.strengths);
+        const links = buildExternalLinks(query);
+
+        const btnMap = document.createElement("button");
+        btnMap.className = "px-3 py-2 text-sm rounded-lg border border-slate-200 hover:bg-slate-50";
+        btnMap.textContent = "Search nearby pharmacies";
+        btnMap.addEventListener("click", () => openPharmacySearch(`${drug.name} ${drug.generic}`));
+
+        const a1 = document.createElement("a");
+        a1.className = "px-3 py-2 text-sm rounded-lg bg-emerald-600 text-white hover:bg-emerald-700";
+        a1.textContent = "1mg";
+        a1.href = links.oneMg;
+        a1.target = "_blank";
+        a1.rel = "noreferrer";
+
+        const a2 = document.createElement("a");
+        a2.className = "px-3 py-2 text-sm rounded-lg border border-slate-200 hover:bg-slate-50";
+        a2.textContent = "Netmeds";
+        a2.href = links.netmeds;
+        a2.target = "_blank";
+        a2.rel = "noreferrer";
+
+        const a3 = document.createElement("a");
+        a3.className = "px-3 py-2 text-sm rounded-lg border border-slate-200 hover:bg-slate-50";
+        a3.textContent = "PharmEasy";
+        a3.href = links.pharmeasy;
+        a3.target = "_blank";
+        a3.rel = "noreferrer";
+
+        const btnInfo = document.createElement("a");
+        btnInfo.className = "px-3 py-2 text-sm rounded-lg bg-slate-900 text-white hover:bg-slate-800";
+        btnInfo.textContent = "Open drug info";
+        btnInfo.href = `https://www.google.com/search?q=${encodeURIComponent(drug.name + " " + drug.generic + " drug")}`;
+        btnInfo.target = "_blank";
+        btnInfo.rel = "noreferrer";
+
+        const btnFix = document.createElement("button");
+        btnFix.className = "px-3 py-2 text-sm rounded-lg border border-slate-200 hover:bg-slate-50";
+        btnFix.textContent = "Fix candidate";
+        btnFix.addEventListener("click", () => openSuggestModal(m.candidateOriginal));
+
+        actions.appendChild(btnFix);
+        actions.appendChild(btnMap);
+        actions.appendChild(a1);
+        actions.appendChild(a2);
+        actions.appendChild(a3);
+        actions.appendChild(btnInfo);
+
+        if (m.alternatives && m.alternatives.length) {
+          const alt = document.createElement("div");
+          alt.className = "mt-3 text-xs text-slate-600";
+          const altList = m.alternatives
+            .filter(a => a.score >= threshold - 0.10)
+            .slice(0, 3)
+            .map(a => `${a.drug.name} (${a.score.toFixed(2)})`)
+            .join(" • ");
+          if (altList) {
+            alt.innerHTML = `Other close matches: <span class="mono">${escapeHtml(altList)}</span>`;
+            card.appendChild(alt);
+          }
+        }
+
+        card.appendChild(header);
+        card.appendChild(meta);
+        if (drug.notes) card.appendChild(notes);
+        card.appendChild(actions);
+
+        wrap.appendChild(card);
+      }
+    }
+
+    function renderAIResults() {
+      const wrap = el("aiResults");
+      wrap.innerHTML = "";
+
+      const meds = state.ai.medicines || [];
+      const count = meds.length;
+
+      el("geminiSummary").textContent = count ? `${count} medicine(s) extracted` : "No AI results yet";
+      el("geminiSummarySub").textContent = count
+        ? "Switch source to “Gemini (AI)” to use these candidates."
+        : "Run “Gemini: Extract…” from the left panel.";
+
+      if (!count) {
+        const empty = document.createElement("div");
+        empty.className = "text-xs text-slate-600";
+        empty.textContent = "(No AI extracted medicines)";
+        wrap.appendChild(empty);
+        return;
+      }
+
+      for (const m of meds.slice(0, 10)) {
+        const row = document.createElement("div");
+        row.className = "rounded-xl border border-slate-200 bg-slate-50 p-2 flex items-start justify-between gap-2";
+
+        const left = document.createElement("div");
+        left.className = "min-w-0";
+        const metaBits = [];
+        if (m.strength) metaBits.push(m.strength);
+        if (m.form) metaBits.push(m.form);
+        if (m.frequency) metaBits.push(m.frequency);
+        if (m.duration) metaBits.push(m.duration);
+        left.innerHTML = `
+          <div class="text-sm font-semibold truncate">${escapeHtml(m.name)}</div>
+          <div class="text-[11px] text-slate-600 truncate">${escapeHtml(metaBits.join(" • ") || "—")}</div>
+        `;
+
+        const right = document.createElement("div");
+        right.className = "shrink-0 flex items-center gap-2";
+
+        const btnUse = document.createElement("button");
+        btnUse.className = "px-3 py-2 text-sm rounded-lg bg-slate-900 text-white hover:bg-slate-800";
+        btnUse.textContent = "Use";
+        btnUse.title = "Use this as a correction for the most similar candidate";
+        btnUse.addEventListener("click", () => applyAIItemAsCorrection(m));
+
+        right.appendChild(btnUse);
+
+        row.appendChild(left);
+        row.appendChild(right);
+        wrap.appendChild(row);
+      }
+
+      if (meds.length > 10) {
+        const more = document.createElement("div");
+        more.className = "text-[11px] text-slate-500";
+        more.textContent = `Showing 10 of ${meds.length} AI medicines.`;
+        wrap.appendChild(more);
+      }
+    }
+
+    function renderGeminiSuggestionList(wrapEl, items) {
+      wrapEl.innerHTML = "";
+      if (!items.length) {
+        const d = document.createElement("div");
+        d.className = "text-[11px] text-slate-500";
+        d.textContent = "No suggestions.";
+        wrapEl.appendChild(d);
+        return;
+      }
+
+      for (const item of items) {
+        const row = document.createElement("div");
+        row.className = "rounded-xl border border-slate-200 bg-slate-50 p-2 flex items-center justify-between gap-2";
+
+        const left = document.createElement("div");
+        left.className = "min-w-0";
+        const conf = item.confidence != null ? ` • ${(item.confidence * 100).toFixed(0)}%` : "";
+        left.innerHTML = `
+          <div class="text-sm font-medium truncate">${escapeHtml(item.name)}</div>
+          <div class="text-[11px] text-slate-600 truncate">${escapeHtml((item.reason || "") + conf)}</div>
+        `;
+
+        const right = document.createElement("div");
+        right.className = "shrink-0";
+
+        const btnUse = document.createElement("button");
+        btnUse.className = "px-3 py-2 text-sm rounded-lg bg-slate-900 text-white hover:bg-slate-800";
+        btnUse.textContent = "Use";
+        btnUse.addEventListener("click", () => {
+          el("suggestInput").value = item.name;
+          applyCorrectionFromModal();
+        });
+
+        right.appendChild(btnUse);
+        row.appendChild(left);
+        row.appendChild(right);
+        wrapEl.appendChild(row);
+      }
+    }
+
+    // -----------------------------
+    // Online suggestions
+    // -----------------------------
+    async function fetchRxTerms(term) {
+      const t = normalizeToken(term);
+      if (!t) return [];
+      const url = `https://clinicaltables.nlm.nih.gov/api/rxterms/v3/search?terms=${encodeURIComponent(t)}&maxList=12`;
+      const res = await fetch(url, { method: "GET" });
+      if (!res.ok) throw new Error(`RxTerms HTTP ${res.status}`);
+      const data = await res.json();
+      const terms = Array.isArray(data) ? (data[1] || []) : [];
+      return terms.filter(Boolean);
+    }
+
+    async function fetchWiki(term) {
+      const t = normalizeToken(term);
+      if (!t) return [];
+      const url = `https://en.wikipedia.org/w/api.php?action=opensearch&search=${encodeURIComponent(t)}&limit=8&namespace=0&format=json&origin=*`;
+      const res = await fetch(url);
+      if (!res.ok) throw new Error(`Wiki HTTP ${res.status}`);
+      const data = await res.json();
+      const titles = (Array.isArray(data) && Array.isArray(data[1])) ? data[1] : [];
+      const links = (Array.isArray(data) && Array.isArray(data[3])) ? data[3] : [];
+      return titles.map((title, i) => ({ title, url: links[i] })).filter(x => x.title);
+    }
+
+    function renderSuggestionList(wrapEl, items, type) {
+      wrapEl.innerHTML = "";
+      if (!items.length) {
+        const d = document.createElement("div");
+        d.className = "text-[11px] text-slate-500";
+        d.textContent = "No suggestions.";
+        wrapEl.appendChild(d);
+        return;
+      }
+      for (const item of items) {
+        const row = document.createElement("div");
+        row.className = "rounded-xl border border-slate-200 bg-slate-50 p-2 flex items-center justify-between gap-2";
+
+        const left = document.createElement("div");
+        left.className = "min-w-0";
+        const label = type === "rx" ? String(item) : item.title;
+        left.innerHTML = `<div class="text-sm font-medium truncate">${escapeHtml(label)}</div>`;
+
+        const btnUse = document.createElement("button");
+        btnUse.className = "shrink-0 px-3 py-2 text-sm rounded-lg bg-slate-900 text-white hover:bg-slate-800";
+        btnUse.textContent = "Use";
+        btnUse.addEventListener("click", () => {
+          el("suggestInput").value = label;
+          applyCorrectionFromModal();
+        });
+
+        const right = document.createElement("div");
+        right.className = "shrink-0 flex items-center gap-2";
+        if (type === "wiki" && item.url) {
+          const a = document.createElement("a");
+          a.className = "text-xs px-2 py-1 rounded-lg border border-slate-200 hover:bg-white";
+          a.textContent = "Open";
+          a.href = item.url;
+          a.target = "_blank";
+          a.rel = "noreferrer";
+          right.appendChild(a);
+        }
+        right.appendChild(btnUse);
+
+        row.appendChild(left);
+        row.appendChild(right);
+        wrapEl.appendChild(row);
+      }
+    }
+
+    // -----------------------------
+    // App state
+    // -----------------------------
+    const LS_OVERRIDES = "rxlens_overrides_v1";
+    const LS_SETTINGS = "rxlens_settings_v2";
+    const LS_GEMINI_KEY = "rxlens_gemini_key_v1";
+    const LS_GEMINI_MODEL = "rxlens_gemini_model_v1";
+    const LS_SOURCE = "rxlens_source_v1";
+
+    const state = {
+      imageDataUrl: null,
+      ocrText: "",
+      candidates: [],
+      matches: [],
+      threshold: parseFloat(el("threshold").value),
+      overrides: new Map(),
+      modalCandidateOriginal: null,
+      sourceMode: "local", // local | gemini
+      ai: {
+        raw: "",
+        medicines: [],
+        candidates: []
+      }
+    };
+
+    function loadFromLocalStorage() {
+      try {
+        const raw = localStorage.getItem(LS_OVERRIDES);
+        if (raw) {
+          const obj = JSON.parse(raw);
+          if (obj && typeof obj === "object") {
+            state.overrides = new Map(Object.entries(obj));
+          }
+        }
+      } catch {}
+
+      try {
+        const raw = localStorage.getItem(LS_SETTINGS);
+        if (raw) {
+          const obj = JSON.parse(raw);
+          if (obj && typeof obj === "object") {
+            if (typeof obj.includeStrengthInSearch === "boolean") {
+              el("includeStrengthInSearch").checked = obj.includeStrengthInSearch;
+            }
+          }
+        }
+      } catch {}
+
+      try {
+        const model = localStorage.getItem(LS_GEMINI_MODEL);
+        if (model) el("geminiModel").value = model;
+      } catch {}
+
+      try {
+        const src = localStorage.getItem(LS_SOURCE);
+        if (src === "local" || src === "gemini") {
+          state.sourceMode = src;
+          el("sourceLocal").checked = src === "local";
+          el("sourceGemini").checked = src === "gemini";
+        }
+      } catch {}
+
+      try {
+        const key = localStorage.getItem(LS_GEMINI_KEY);
+        if (key) {
+          el("geminiKey").value = key;
+          el("rememberGeminiKey").checked = true;
+        }
+      } catch {}
+    }
+
+    function saveOverrides() {
+      const obj = Object.fromEntries(state.overrides.entries());
+      try { localStorage.setItem(LS_OVERRIDES, JSON.stringify(obj)); } catch {}
+    }
+
+    function saveSettings() {
+      const obj = {
+        includeStrengthInSearch: !!el("includeStrengthInSearch").checked
+      };
+      try { localStorage.setItem(LS_SETTINGS, JSON.stringify(obj)); } catch {}
+
+      try { localStorage.setItem(LS_GEMINI_MODEL, getGeminiModel()); } catch {}
+      try { localStorage.setItem(LS_SOURCE, state.sourceMode); } catch {}
+
+      // Key is stored separately only if user opted in.
+      try {
+        if (el("rememberGeminiKey").checked && getGeminiKey()) {
+          localStorage.setItem(LS_GEMINI_KEY, getGeminiKey());
+        } else {
+          localStorage.removeItem(LS_GEMINI_KEY);
+        }
+      } catch {}
+    }
+
+    function updateActionsEnabled() {
+      const hasImage = !!state.imageDataUrl;
+      el("btnRun").disabled = !hasImage;
+      el("btnClearImage").disabled = !hasImage;
+
+      const hasText = (state.ocrText || "").trim().length > 0;
+      el("btnCopy").disabled = !hasText;
+      el("btnExport").disabled = state.matches.length === 0;
+
+      const hasKey = !!getGeminiKey();
+      el("btnGeminiText").disabled = !hasKey || !hasText;
+      el("btnGeminiImage").disabled = !hasKey || !hasImage;
+      el("btnGeminiClear").disabled = (state.ai.candidates || []).length === 0;
+      el("btnUseAiAsCandidates").disabled = (state.ai.candidates || []).length === 0;
+
+      // Modal Gemini button
+      el("btnGeminiSuggest").disabled = !hasKey || !state.modalCandidateOriginal;
+    }
+
+    function getActiveCandidates() {
+      if (state.sourceMode === "gemini" && state.ai.candidates && state.ai.candidates.length) {
+        return state.ai.candidates;
+      }
+      return extractCandidates(state.ocrText);
+    }
+
+    function recompute() {
+      state.threshold = parseFloat(el("threshold").value);
+      el("thresholdLabel").textContent = state.threshold.toFixed(2);
+
+      state.candidates = getActiveCandidates();
+      state.matches = computeMatches(state.candidates, state.threshold, state.overrides);
+
+      renderCandidates(state.candidates);
+      renderMatches(state.matches, state.threshold);
+      renderAIResults();
+      enableGeminiSourceIfAvailable();
+      updateActionsEnabled();
+    }
+
+    function setOCRText(text) {
+      state.ocrText = text || "";
+      el("ocrText").textContent = state.ocrText.trim() ? state.ocrText : "(empty)";
+      recompute();
+    }
+
+    function enableGeminiSourceIfAvailable() {
+      const available = (state.ai.candidates || []).length > 0;
+      el("sourceGemini").disabled = !available;
+
+      if (state.sourceMode === "gemini" && !available) {
+        state.sourceMode = "local";
+        el("sourceLocal").checked = true;
+        el("sourceGemini").checked = false;
+        try { localStorage.setItem(LS_SOURCE, state.sourceMode); } catch {}
+      }
+    }
+
+    function applyAIItemAsCorrection(aiItem) {
+      const name = (aiItem?.name || "").trim();
+      if (!name) return;
+
+      // Find the most similar existing candidate (from current candidate list)
+      const candidates = state.candidates || [];
+      if (!candidates.length) return;
+
+      let best = null;
+      for (const c of candidates) {
+        const score = similarity(c.text, name);
+        if (!best || score > best.score) best = { c, score };
+      }
+
+      if (!best || best.score < 0.60) {
+        // If we can't confidently map it, still allow user by switching to gemini source
+        state.sourceMode = "gemini";
+        el("sourceGemini").checked = true;
+        saveSettings();
+        recompute();
+        return;
+      }
+
+      state.overrides.set(best.c.text, name);
+      saveOverrides();
+      recompute();
+
+      // Feedback
+      setGeminiStatus(`Applied correction: “${best.c.text}” → “${name}”`);
+    }
+
+    async function runOCR() {
+      if (!state.imageDataUrl) return;
+
+      setProgress(0.02, "Loading OCR engine…");
+      el("btnRun").disabled = true;
+      el("btnDemo").disabled = true;
+
+      try {
+        const { data } = await Tesseract.recognize(state.imageDataUrl, "eng", {
+          logger: (m) => {
+            if (m.status === "recognizing text") {
+              setProgress(m.progress || 0, `Recognizing… ${(Math.round((m.progress || 0) * 100))}%`);
+            } else {
+              const pct = m.progress != null ? m.progress : 0.05;
+              setProgress(pct, `${m.status}…`);
+            }
+          }
+        });
+
+        setProgress(1, "Done");
+        const text = (data && data.text) ? data.text : "";
+        setOCRText(text);
+      } catch (err) {
+        console.error(err);
+        setProgress(0, "Error");
+        setOCRText("(OCR failed)\n\nTry a clearer image, or paste text manually.");
+      } finally {
+        el("btnDemo").disabled = false;
+        updateActionsEnabled();
+        setTimeout(() => {
+          if (el("progressLabel").textContent === "Done") {
+            setProgress(1, "Done");
+          }
+        }, 250);
+      }
+    }
+
+    // -----------------------------
+    // Suggest Modal
+    // -----------------------------
+    function openSuggestModal(candidateOriginal) {
+      state.modalCandidateOriginal = candidateOriginal;
+
+      const candObj = state.candidates.find(c => c.text === candidateOriginal);
+      const strengths = candObj?.strengths || [];
+
+      const corrected = state.overrides.get(candidateOriginal) || "";
+      const displayName = corrected || candidateOriginal;
+
+      el("suggestCandidate").textContent = displayName;
+      el("suggestStrengths").textContent = strengths.length ? `Strengths: ${strengths.join(", ")}` : "Strengths: (none detected)";
+      el("suggestInput").value = corrected || displayName;
+
+      const q = makeSearchQuery(displayName, strengths);
+      const links = buildExternalLinks(q);
+      el("link1mg").href = links.oneMg;
+      el("linkNetmeds").href = links.netmeds;
+      el("linkPharmEasy").href = links.pharmeasy;
+      el("linkGoogle").href = links.google;
+
+      el("suggestSavedHint").textContent = state.overrides.has(candidateOriginal)
+        ? "A correction exists for this token (stored locally in your browser)."
+        : "No correction saved yet.";
+
+      el("rxtermsStatus").textContent = "Loading…";
+      el("wikiStatus").textContent = "Loading…";
+      el("rxtermsList").innerHTML = "";
+      el("wikiList").innerHTML = "";
+
+      el("geminiSuggestStatus").textContent = "Idle";
+      el("geminiSuggestList").innerHTML = "";
+
+      el("suggestModal").classList.remove("hidden");
+
+      updateActionsEnabled();
+      loadSuggestionsForCandidate(candidateOriginal);
+    }
+
+    function closeSuggestModal() {
+      state.modalCandidateOriginal = null;
+      el("suggestModal").classList.add("hidden");
+      updateActionsEnabled();
+    }
+
+    async function loadSuggestionsForCandidate(candidateOriginal) {
+      const candObj = state.candidates.find(c => c.text === candidateOriginal);
+      const strengths = candObj?.strengths || [];
+      const corrected = state.overrides.get(candidateOriginal);
+      const base = (corrected || candidateOriginal || "").trim();
+      const term = base;
+      const query = makeSearchQuery(base, strengths);
+
+      // Update quick links
+      const links = buildExternalLinks(query);
+      el("link1mg").href = links.oneMg;
+      el("linkNetmeds").href = links.netmeds;
+      el("linkPharmEasy").href = links.pharmeasy;
+      el("linkGoogle").href = links.google;
+
+      // RxTerms
+      try {
+        el("rxtermsStatus").textContent = "Fetching RxTerms suggestions…";
+        const rx = await fetchRxTerms(term);
+        el("rxtermsStatus").textContent = rx.length ? `Found ${rx.length} suggestion(s).` : "No RxTerms suggestions.";
+        renderSuggestionList(el("rxtermsList"), rx, "rx");
+      } catch (e) {
+        el("rxtermsStatus").textContent = "RxTerms unavailable (network/CORS). If opened via file://, use a local server.";
+        renderSuggestionList(el("rxtermsList"), [], "rx");
+      }
+
+      // Wikipedia fallback
+      try {
+        el("wikiStatus").textContent = "Fetching Wikipedia suggestions…";
+        const wk = await fetchWiki(term);
+        el("wikiStatus").textContent = wk.length ? `Found ${wk.length} suggestion(s).` : "No Wikipedia suggestions.";
+        renderSuggestionList(el("wikiList"), wk, "wiki");
+      } catch (e) {
+        el("wikiStatus").textContent = "Wikipedia unavailable.";
+        renderSuggestionList(el("wikiList"), [], "wiki");
+      }
+    }
+
+    function applyCorrectionFromModal() {
+      const original = state.modalCandidateOriginal;
+      if (!original) return;
+      const v = (el("suggestInput").value || "").trim();
+      if (!v) return;
+
+      // If the correction equals the original, treat it as clearing.
+      if (normalizeToken(v) === normalizeToken(original)) {
+        state.overrides.delete(original);
+      } else {
+        state.overrides.set(original, v);
+      }
+      saveOverrides();
+      recompute();
+
+      el("suggestSavedHint").textContent = state.overrides.has(original)
+        ? "Saved. Matching updated using your corrected name."
+        : "Cleared. Using OCR token again.";
+
+      // Refresh modal header and links
+      openSuggestModal(original);
+    }
+
+    function clearCorrectionFromModal() {
+      const original = state.modalCandidateOriginal;
+      if (!original) return;
+      state.overrides.delete(original);
+      saveOverrides();
+      recompute();
+      openSuggestModal(original);
+    }
+
+    // -----------------------------
+    // Events
+    // -----------------------------
+    el("threshold").addEventListener("input", () => recompute());
+
+    el("includeStrengthInSearch").addEventListener("change", () => {
+      saveSettings();
+      renderCandidates(state.candidates);
+      renderMatches(state.matches, state.threshold);
+    });
+
+    el("sourceLocal").addEventListener("change", () => {
+      if (el("sourceLocal").checked) {
+        state.sourceMode = "local";
+        saveSettings();
+        recompute();
+      }
+    });
+
+    el("sourceGemini").addEventListener("change", () => {
+      if (el("sourceGemini").checked) {
+        state.sourceMode = "gemini";
+        saveSettings();
+        recompute();
+      }
+    });
+
+    el("geminiModel").addEventListener("change", () => {
+      saveSettings();
+    });
+
+    el("rememberGeminiKey").addEventListener("change", () => {
+      saveSettings();
+    });
+
+    el("geminiKey").addEventListener("input", () => {
+      if (el("rememberGeminiKey").checked) {
+        try { localStorage.setItem(LS_GEMINI_KEY, getGeminiKey()); } catch {}
+      }
+      updateActionsEnabled();
+    });
+
+    el("btnClearGeminiKey").addEventListener("click", () => {
+      el("geminiKey").value = "";
+      el("rememberGeminiKey").checked = false;
+      try { localStorage.removeItem(LS_GEMINI_KEY); } catch {}
+      setGeminiStatus("Cleared key.");
+      updateActionsEnabled();
+    });
+
+    el("btnGeminiText").addEventListener("click", async () => {
+      try {
+        await geminiExtractFromOCRText();
+        // Auto-switch to Gemini candidates for convenience
+        if (state.ai.candidates.length) {
+          state.sourceMode = "gemini";
+          el("sourceGemini").checked = true;
+          saveSettings();
+          recompute();
+        }
+      } catch (e) {
+        console.error(e);
+        setGeminiStatus(`Gemini error: ${e.message || e}`);
+      } finally {
+        updateActionsEnabled();
+      }
+    });
+
+    el("btnGeminiImage").addEventListener("click", async () => {
+      try {
+        await geminiExtractFromImage();
+        if (state.ai.candidates.length) {
+          state.sourceMode = "gemini";
+          el("sourceGemini").checked = true;
+          saveSettings();
+          recompute();
+        }
+      } catch (e) {
+        console.error(e);
+        setGeminiStatus(`Gemini error: ${e.message || e}`);
+      } finally {
+        updateActionsEnabled();
+      }
+    });
+
+    el("btnGeminiClear").addEventListener("click", () => {
+      state.ai.raw = "";
+      state.ai.medicines = [];
+      state.ai.candidates = [];
+      setGeminiStatus("Cleared AI results.");
+      enableGeminiSourceIfAvailable();
+      if (state.sourceMode === "gemini") {
+        state.sourceMode = "local";
+        el("sourceLocal").checked = true;
+        el("sourceGemini").checked = false;
+      }
+      saveSettings();
+      recompute();
+    });
+
+    el("btnUseAiAsCandidates").addEventListener("click", () => {
+      if (!(state.ai.candidates || []).length) return;
+      state.sourceMode = "gemini";
+      el("sourceGemini").checked = true;
+      saveSettings();
+      recompute();
+    });
+
+    el("fileInput").addEventListener("change", async (e) => {
+      const file = e.target.files && e.target.files[0];
+      if (!file) return;
+
+      if (!file.type.startsWith("image/")) {
+        alert("Please select an image file.");
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = () => {
+        state.imageDataUrl = reader.result;
+        const img = el("imgPreview");
+        img.src = state.imageDataUrl;
+        img.classList.remove("hidden");
+        el("emptyPreview").classList.add("hidden");
+        setProgress(0, "Ready");
+        updateActionsEnabled();
+      };
+      reader.readAsDataURL(file);
+    });
+
+    el("btnRun").addEventListener("click", runOCR);
+
+    el("btnClearImage").addEventListener("click", () => {
+      state.imageDataUrl = null;
+      el("fileInput").value = "";
+      el("imgPreview").src = "";
+      el("imgPreview").classList.add("hidden");
+      el("emptyPreview").classList.remove("hidden");
+      setProgress(0, "Idle");
+      updateActionsEnabled();
+    });
+
+    el("btnParse").addEventListener("click", () => {
+      const t = el("manualText").value || "";
+      setOCRText(t);
+      setProgress(1, "Manual text parsed");
+    });
+
+    el("btnClearText").addEventListener("click", () => {
+      el("manualText").value = "";
+    });
+
+    el("btnCopy").addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(state.ocrText || "");
+        const old = el("btnCopy").textContent;
+        el("btnCopy").textContent = "Copied";
+        setTimeout(() => (el("btnCopy").textContent = old), 900);
+      } catch {
+        alert("Copy failed. Your browser may block clipboard access.");
+      }
+    });
+
+    el("btnExport").addEventListener("click", () => {
+      const csv = toCSV(state.matches);
+      downloadText(`rxlens_matches_${new Date().toISOString().slice(0,10)}.csv`, csv);
+    });
+
+    el("btnFindPharmacy").addEventListener("click", () => {
+      const names = state.matches.map(m => m.best.drug.name).slice(0, 3).join(", ");
+      const query = names ? `${names}` : "pharmacy";
+
+      if (!navigator.geolocation) {
+        openPharmacySearch(query);
+        return;
+      }
+
+      el("pharmacyHint").textContent = "Requesting location… (optional)";
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          const { latitude, longitude } = pos.coords;
+          el("pharmacyHint").textContent = "Opening map search in a new tab.";
+          const url = `https://www.google.com/maps/search/${encodeURIComponent(query + " pharmacy")}/@${latitude},${longitude},14z`;
+          window.open(url, "_blank", "noreferrer");
+        },
+        () => {
+          el("pharmacyHint").textContent = "Location denied. Opening a general nearby search.";
+          openPharmacySearch(query);
+        },
+        { enableHighAccuracy: false, timeout: 5000, maximumAge: 120000 }
+      );
+    });
+
+    el("btnDemo").addEventListener("click", () => {
+      const demo = [
+        "Rx",
+        "Tab Metformin 500mg BD",
+        "Tab Amlodipin 5mg OD",
+        "Cap Amoxcillin 500 mg TID",
+        "Tab Pantoprazole 40mg before food",
+        "Tab Prednisolon 10mg",
+        "Syp Cetirizine 5 ml HS",
+        "Vitamin D3 60000 IU weekly",
+        "Tab Rosuvastatin 10mg HS"
+      ].join("\n");
+      el("manualText").value = demo;
+      setOCRText(demo);
+      setProgress(1, "Loaded sample text");
+    });
+
+    el("btnReset").addEventListener("click", () => {
+      state.imageDataUrl = null;
+      state.ocrText = "";
+      state.candidates = [];
+      state.matches = [];
+      state.overrides = new Map();
+      state.sourceMode = "local";
+      state.ai.raw = "";
+      state.ai.medicines = [];
+      state.ai.candidates = [];
+      saveOverrides();
+
+      el("fileInput").value = "";
+      el("imgPreview").src = "";
+      el("imgPreview").classList.add("hidden");
+      el("emptyPreview").classList.remove("hidden");
+
+      el("manualText").value = "";
+      el("ocrText").textContent = "(No OCR run yet)";
+
+      el("threshold").value = "0.75";
+      el("includeStrengthInSearch").checked = false;
+
+      el("sourceLocal").checked = true;
+      el("sourceGemini").checked = false;
+
+      setGeminiStatus("Idle");
+      saveSettings();
+
+      setProgress(0, "Idle");
+
+      renderCandidates([]);
+      renderMatches([], parseFloat(el("threshold").value));
+      renderAIResults();
+      enableGeminiSourceIfAvailable();
+      updateActionsEnabled();
+    });
+
+    // Candidates actions (event delegation)
+    el("candidates").addEventListener("click", (e) => {
+      const btn = e.target.closest("button");
+      if (!btn) return;
+      const action = btn.dataset.action;
+      const cand = btn.dataset.cand ? decodeURIComponent(btn.dataset.cand) : null;
+      if (!action || !cand) return;
+
+      const candObj = state.candidates.find(c => c.text === cand);
+      const strengths = candObj?.strengths || [];
+      const corrected = state.overrides.get(cand) || cand;
+      const query = makeSearchQuery(corrected, strengths);
+      const links = buildExternalLinks(query);
+
+      if (action === "suggest") {
+        openSuggestModal(cand);
+      } else if (action === "search1mg") {
+        window.open(links.oneMg, "_blank", "noreferrer");
+      } else if (action === "searchGoogle") {
+        window.open(links.google, "_blank", "noreferrer");
+      }
+    });
+
+    // Modal events
+    el("btnCloseSuggest").addEventListener("click", closeSuggestModal);
+    el("suggestModal").addEventListener("click", (e) => {
+      if (e.target && e.target.dataset && e.target.dataset.close) closeSuggestModal();
+    });
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && !el("suggestModal").classList.contains("hidden")) closeSuggestModal();
+    });
+    el("btnApplyCorrection").addEventListener("click", applyCorrectionFromModal);
+    el("btnClearCorrection").addEventListener("click", clearCorrectionFromModal);
+    el("btnRefreshSuggest").addEventListener("click", () => {
+      if (state.modalCandidateOriginal) loadSuggestionsForCandidate(state.modalCandidateOriginal);
+    });
+    el("suggestInput").addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        applyCorrectionFromModal();
+      }
+    });
+
+    el("btnGeminiSuggest").addEventListener("click", async () => {
+      if (!state.modalCandidateOriginal) return;
+      try {
+        await geminiSuggestForCandidate(state.modalCandidateOriginal);
+      } catch (e) {
+        console.error(e);
+        el("geminiSuggestStatus").textContent = `Gemini error: ${e.message || e}`;
+        el("geminiSuggestList").innerHTML = "";
+      }
+    });
+
+    // Jump button (overview → upload)
+    el("btnJumpToUpload")?.addEventListener("click", () => {
+      const target = el("upload");
+      if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+      setTimeout(() => {
+        try { el("fileInput")?.focus(); } catch {}
+      }, 250);
+    });
+
+    // Initial render
+    loadFromLocalStorage();
+    renderCandidates([]);
+    renderMatches([], state.threshold);
+    renderAIResults();
+    setProgress(0, "Idle");
+    setGeminiStatus("Idle");
+    enableGeminiSourceIfAvailable();
+    updateActionsEnabled();
+  </script>
+</body>
+</html>
