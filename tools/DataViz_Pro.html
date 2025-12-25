@@ -1,0 +1,1705 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DataViz Pro | Multi-Format Data Dashboard Tool</title>
+    <meta name="description" content="Transform CSV, Excel, JSON, SQL, XML files into beautiful dashboards instantly. No coding required. Free, private, works offline.">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { font-family: 'Inter', sans-serif; }
+        .gradient-bg { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .gradient-text { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .card-shadow { box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08); }
+        .card-shadow-lg { box-shadow: 0 25px 60px rgba(0, 0, 0, 0.12); }
+        .upload-zone { border: 3px dashed #cbd5e1; transition: all 0.3s ease; }
+        .upload-zone:hover, .upload-zone.dragover { border-color: #667eea; background: linear-gradient(135deg, #f0f4ff 0%, #faf5ff 100%); transform: scale(1.01); }
+        .fade-in { animation: fadeIn 0.5s ease-out; }
+        .fade-in-up { animation: fadeInUp 0.6s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        .chart-container { position: relative; height: 320px; }
+        .feature-card:hover { transform: translateY(-5px); box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15); }
+        .feature-card { transition: all 0.3s ease; }
+        .blob { position: absolute; border-radius: 50%; filter: blur(60px); opacity: 0.5; animation: blob 7s infinite; }
+        @keyframes blob { 0%, 100% { transform: translate(0, 0) scale(1); } 33% { transform: translate(30px, -50px) scale(1.1); } 66% { transform: translate(-20px, 20px) scale(0.9); } }
+        .stat-card:hover { transform: scale(1.03); }
+        .stat-card { transition: all 0.2s ease; }
+        .btn-primary { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); transition: all 0.3s ease; }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4); }
+        .progress-bar { height: 6px; border-radius: 3px; background: #e5e7eb; overflow: hidden; }
+        .progress-fill { height: 100%; border-radius: 3px; transition: width 0.5s ease; }
+        .data-quality-good { color: #10b981; }
+        .data-quality-warning { color: #f59e0b; }
+        .data-quality-bad { color: #ef4444; }
+        .nav-link { position: relative; }
+        .nav-link::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 0; height: 2px; background: white; transition: width 0.3s ease; }
+        .nav-link:hover::after { width: 100%; }
+        html { scroll-behavior: smooth; }
+        .format-badge { transition: all 0.2s ease; }
+        .format-badge:hover { transform: scale(1.05); }
+        .format-badge.active { ring: 2px solid; }
+        .tab-btn.active { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
+        .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+        .accordion-content.open { max-height: 500px; }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Header -->
+    <header class="gradient-bg text-white py-4 shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <div class="bg-white/20 p-2.5 rounded-xl backdrop-blur-sm">
+                        <i class="fas fa-chart-line text-xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold">DataViz Pro</h1>
+                        <p class="text-white/70 text-xs">Multi-Format Dashboard Tool</p>
+                    </div>
+                </div>
+                <nav class="hidden md:flex items-center gap-6">
+                    <a href="#formats" class="nav-link text-sm text-white/90 hover:text-white">Supported Formats</a>
+                    <a href="#features" class="nav-link text-sm text-white/90 hover:text-white">Features</a>
+                    <a href="#how-it-works" class="nav-link text-sm text-white/90 hover:text-white">How It Works</a>
+                    <a href="#faq" class="nav-link text-sm text-white/90 hover:text-white">FAQ</a>
+                    <a href="#upload" class="nav-link text-sm text-white/90 hover:text-white">Get Started</a>
+                </nav>
+                <div class="flex items-center gap-3">
+                    <span class="hidden sm:inline-flex bg-white/20 px-3 py-1.5 rounded-full text-xs font-medium backdrop-blur-sm">
+                        <i class="fas fa-lock mr-1.5"></i> 100% Private
+                    </span>
+                    <span class="bg-green-400/30 px-3 py-1.5 rounded-full text-xs font-medium">
+                        <i class="fas fa-check-circle mr-1"></i> Free
+                    </span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section id="hero" class="relative overflow-hidden bg-gradient-to-br from-indigo-50 via-white to-purple-50 py-16 md:py-24">
+            <div class="blob w-72 h-72 bg-purple-300 top-0 right-0"></div>
+            <div class="blob w-96 h-96 bg-indigo-300 bottom-0 left-0" style="animation-delay: 2s;"></div>
+            
+            <div class="container mx-auto px-4 relative z-10">
+                <div class="max-w-4xl mx-auto text-center fade-in-up">
+                    <div class="inline-flex items-center gap-2 bg-indigo-100 text-indigo-700 px-4 py-2 rounded-full text-sm font-medium mb-6">
+                        <i class="fas fa-sparkles"></i>
+                        <span>No-Code Data Analytics Platform</span>
+                    </div>
+                    <h2 class="text-4xl md:text-6xl font-extrabold text-gray-900 mb-6 leading-tight">
+                        Transform Any Data into
+                        <span class="gradient-text"> Beautiful Dashboards</span>
+                    </h2>
+                    <p class="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+                        Upload CSV, Excel, JSON, SQL, XML, or TSV files and instantly get interactive charts, statistical insights, and complete data analysis. No signup required.
+                    </p>
+                    
+                    <!-- Supported Format Badges -->
+                    <div class="flex flex-wrap justify-center gap-3 mb-8">
+                        <span class="format-badge bg-green-100 text-green-700 px-4 py-2 rounded-full text-sm font-medium flex items-center gap-2">
+                            <i class="fas fa-file-csv"></i> CSV
+                        </span>
+                        <span class="format-badge bg-emerald-100 text-emerald-700 px-4 py-2 rounded-full text-sm font-medium flex items-center gap-2">
+                            <i class="fas fa-file-excel"></i> Excel
+                        </span>
+                        <span class="format-badge bg-amber-100 text-amber-700 px-4 py-2 rounded-full text-sm font-medium flex items-center gap-2">
+                            <i class="fas fa-code"></i> JSON
+                        </span>
+                        <span class="format-badge bg-blue-100 text-blue-700 px-4 py-2 rounded-full text-sm font-medium flex items-center gap-2">
+                            <i class="fas fa-database"></i> SQL
+                        </span>
+                        <span class="format-badge bg-orange-100 text-orange-700 px-4 py-2 rounded-full text-sm font-medium flex items-center gap-2">
+                            <i class="fas fa-code"></i> XML
+                        </span>
+                        <span class="format-badge bg-purple-100 text-purple-700 px-4 py-2 rounded-full text-sm font-medium flex items-center gap-2">
+                            <i class="fas fa-table"></i> TSV
+                        </span>
+                    </div>
+                    
+                    <div class="flex flex-wrap justify-center gap-4">
+                        <a href="#upload" class="btn-primary text-white px-8 py-4 rounded-xl font-semibold text-lg inline-flex items-center gap-2">
+                            <i class="fas fa-rocket"></i> Start Analyzing Now
+                        </a>
+                        <a href="#how-it-works" class="bg-white text-gray-700 px-8 py-4 rounded-xl font-semibold text-lg inline-flex items-center gap-2 shadow-lg hover:shadow-xl transition">
+                            <i class="fas fa-play-circle text-indigo-600"></i> See How It Works
+                        </a>
+                    </div>
+                    
+                    <!-- Trust Badges -->
+                    <div class="mt-12 flex flex-wrap justify-center gap-8 text-gray-500">
+                        <div class="flex items-center gap-2">
+                            <i class="fas fa-shield-alt text-green-500"></i>
+                            <span class="text-sm">Data Never Leaves Your Browser</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <i class="fas fa-bolt text-yellow-500"></i>
+                            <span class="text-sm">Instant Results</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <i class="fas fa-infinity text-purple-500"></i>
+                            <span class="text-sm">Unlimited Usage</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Supported Formats Section -->
+        <section id="formats" class="py-20 bg-white">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16">
+                    <h3 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Supported Data Formats</h3>
+                    <p class="text-gray-600 max-w-2xl mx-auto">Import data from any popular format. Our smart parser automatically detects and converts your data.</p>
+                </div>
+                
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+                    <!-- CSV -->
+                    <div class="feature-card bg-gradient-to-br from-green-50 to-emerald-50 p-6 rounded-2xl border border-green-100">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="w-14 h-14 bg-green-500 rounded-xl flex items-center justify-center text-white text-2xl">
+                                <i class="fas fa-file-csv"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-900">CSV Files</h4>
+                                <p class="text-sm text-gray-500">.csv</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-4">Comma-separated values. The most common format for data exchange. Supports quoted fields and UTF-8 encoding.</p>
+                        <div class="bg-white/60 rounded-lg p-3 text-xs font-mono text-gray-600">
+                            Name,Age,City<br>
+                            John,25,NYC<br>
+                            Jane,30,LA
+                        </div>
+                    </div>
+                    
+                    <!-- Excel -->
+                    <div class="feature-card bg-gradient-to-br from-emerald-50 to-teal-50 p-6 rounded-2xl border border-emerald-100">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="w-14 h-14 bg-emerald-600 rounded-xl flex items-center justify-center text-white text-2xl">
+                                <i class="fas fa-file-excel"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-900">Excel Files</h4>
+                                <p class="text-sm text-gray-500">.xlsx, .xls</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-4">Microsoft Excel spreadsheets. Reads the first sheet automatically. Supports modern .xlsx and legacy .xls formats.</p>
+                        <div class="flex gap-2 mt-3">
+                            <span class="bg-emerald-100 text-emerald-700 px-2 py-1 rounded text-xs">Multi-sheet</span>
+                            <span class="bg-emerald-100 text-emerald-700 px-2 py-1 rounded text-xs">Formulas</span>
+                            <span class="bg-emerald-100 text-emerald-700 px-2 py-1 rounded text-xs">Dates</span>
+                        </div>
+                    </div>
+                    
+                    <!-- JSON -->
+                    <div class="feature-card bg-gradient-to-br from-amber-50 to-yellow-50 p-6 rounded-2xl border border-amber-100">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="w-14 h-14 bg-amber-500 rounded-xl flex items-center justify-center text-white text-2xl">
+                                <i class="fas fa-code"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-900">JSON Files</h4>
+                                <p class="text-sm text-gray-500">.json</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-4">JavaScript Object Notation. Supports arrays of objects, nested structures are flattened automatically.</p>
+                        <div class="bg-white/60 rounded-lg p-3 text-xs font-mono text-gray-600">
+                            [{"name": "John"},<br>
+                            &nbsp;{"name": "Jane"}]
+                        </div>
+                    </div>
+                    
+                    <!-- SQL -->
+                    <div class="feature-card bg-gradient-to-br from-blue-50 to-indigo-50 p-6 rounded-2xl border border-blue-100">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="w-14 h-14 bg-blue-600 rounded-xl flex items-center justify-center text-white text-2xl">
+                                <i class="fas fa-database"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-900">SQL Files</h4>
+                                <p class="text-sm text-gray-500">.sql</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-4">SQL INSERT statements. Parses table data from database dump files. Supports MySQL and PostgreSQL syntax.</p>
+                        <div class="bg-white/60 rounded-lg p-3 text-xs font-mono text-gray-600">
+                            INSERT INTO users<br>
+                            VALUES (1, 'John');
+                        </div>
+                    </div>
+                    
+                    <!-- XML -->
+                    <div class="feature-card bg-gradient-to-br from-orange-50 to-red-50 p-6 rounded-2xl border border-orange-100">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="w-14 h-14 bg-orange-500 rounded-xl flex items-center justify-center text-white text-2xl">
+                                <i class="fas fa-file-code"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-900">XML Files</h4>
+                                <p class="text-sm text-gray-500">.xml</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-4">Extensible Markup Language. Parses structured XML data into tabular format automatically.</p>
+                        <div class="bg-white/60 rounded-lg p-3 text-xs font-mono text-gray-600">
+                            &lt;users&gt;<br>
+                            &nbsp;&lt;user name="John"/&gt;<br>
+                            &lt;/users&gt;
+                        </div>
+                    </div>
+                    
+                    <!-- TSV -->
+                    <div class="feature-card bg-gradient-to-br from-purple-50 to-pink-50 p-6 rounded-2xl border border-purple-100">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="w-14 h-14 bg-purple-500 rounded-xl flex items-center justify-center text-white text-2xl">
+                                <i class="fas fa-table"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-900">TSV Files</h4>
+                                <p class="text-sm text-gray-500">.tsv, .txt</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-4">Tab-separated values. Common export format from databases and spreadsheet applications.</p>
+                        <div class="bg-white/60 rounded-lg p-3 text-xs font-mono text-gray-600">
+                            Name&nbsp;&nbsp;&nbsp;&nbsp;Age&nbsp;&nbsp;&nbsp;&nbsp;City<br>
+                            John&nbsp;&nbsp;&nbsp;&nbsp;25&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NYC
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section id="features" class="py-20 bg-gradient-to-br from-gray-50 to-indigo-50">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16">
+                    <h3 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Powerful Features</h3>
+                    <p class="text-gray-600 max-w-2xl mx-auto">Everything you need to analyze and visualize your data, completely free and private.</p>
+                </div>
+                
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="feature-card bg-white p-6 rounded-2xl card-shadow">
+                        <div class="w-14 h-14 bg-blue-500 rounded-xl flex items-center justify-center text-white text-2xl mb-4">
+                            <i class="fas fa-chart-bar"></i>
+                        </div>
+                        <h4 class="font-bold text-gray-900 mb-2">6+ Chart Types</h4>
+                        <p class="text-gray-600 text-sm">Bar, Line, Pie, Doughnut, Radar, Polar Area and more visualization options</p>
+                    </div>
+                    
+                    <div class="feature-card bg-white p-6 rounded-2xl card-shadow">
+                        <div class="w-14 h-14 bg-purple-500 rounded-xl flex items-center justify-center text-white text-2xl mb-4">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <h4 class="font-bold text-gray-900 mb-2">Auto Insights</h4>
+                        <p class="text-gray-600 text-sm">Automatic detection of trends, outliers, patterns and key metrics</p>
+                    </div>
+                    
+                    <div class="feature-card bg-white p-6 rounded-2xl card-shadow">
+                        <div class="w-14 h-14 bg-green-500 rounded-xl flex items-center justify-center text-white text-2xl mb-4">
+                            <i class="fas fa-clipboard-check"></i>
+                        </div>
+                        <h4 class="font-bold text-gray-900 mb-2">Data Quality</h4>
+                        <p class="text-gray-600 text-sm">Automatic detection of missing values, duplicates, and data types</p>
+                    </div>
+                    
+                    <div class="feature-card bg-white p-6 rounded-2xl card-shadow">
+                        <div class="w-14 h-14 bg-orange-500 rounded-xl flex items-center justify-center text-white text-2xl mb-4">
+                            <i class="fas fa-calculator"></i>
+                        </div>
+                        <h4 class="font-bold text-gray-900 mb-2">Statistics</h4>
+                        <p class="text-gray-600 text-sm">Mean, median, min, max, standard deviation, and more</p>
+                    </div>
+                    
+                    <div class="feature-card bg-white p-6 rounded-2xl card-shadow">
+                        <div class="w-14 h-14 bg-cyan-500 rounded-xl flex items-center justify-center text-white text-2xl mb-4">
+                            <i class="fas fa-filter"></i>
+                        </div>
+                        <h4 class="font-bold text-gray-900 mb-2">Search & Filter</h4>
+                        <p class="text-gray-600 text-sm">Instantly search and filter your data with real-time results</p>
+                    </div>
+                    
+                    <div class="feature-card bg-white p-6 rounded-2xl card-shadow">
+                        <div class="w-14 h-14 bg-rose-500 rounded-xl flex items-center justify-center text-white text-2xl mb-4">
+                            <i class="fas fa-download"></i>
+                        </div>
+                        <h4 class="font-bold text-gray-900 mb-2">Export Options</h4>
+                        <p class="text-gray-600 text-sm">Download as CSV, charts as PNG, or print your dashboard</p>
+                    </div>
+                    
+                    <div class="feature-card bg-white p-6 rounded-2xl card-shadow">
+                        <div class="w-14 h-14 bg-violet-500 rounded-xl flex items-center justify-center text-white text-2xl mb-4">
+                            <i class="fas fa-layer-group"></i>
+                        </div>
+                        <h4 class="font-bold text-gray-900 mb-2">Aggregations</h4>
+                        <p class="text-gray-600 text-sm">Group by categories with sum, count, and average functions</p>
+                    </div>
+                    
+                    <div class="feature-card bg-white p-6 rounded-2xl card-shadow">
+                        <div class="w-14 h-14 bg-teal-500 rounded-xl flex items-center justify-center text-white text-2xl mb-4">
+                            <i class="fas fa-sync-alt"></i>
+                        </div>
+                        <h4 class="font-bold text-gray-900 mb-2">Format Conversion</h4>
+                        <p class="text-gray-600 text-sm">Import any format, export to CSV. Universal data converter.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- How It Works Section -->
+        <section id="how-it-works" class="py-20 bg-white">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16">
+                    <h3 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">How It Works</h3>
+                    <p class="text-gray-600 max-w-2xl mx-auto">Three simple steps to transform your data into actionable insights</p>
+                </div>
+                
+                <div class="max-w-5xl mx-auto">
+                    <div class="grid md:grid-cols-3 gap-8">
+                        <div class="relative text-center">
+                            <div class="w-20 h-20 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl flex items-center justify-center text-white text-3xl font-bold mx-auto mb-6 shadow-lg">
+                                1
+                            </div>
+                            <h4 class="font-bold text-xl text-gray-900 mb-3">Upload Your File</h4>
+                            <p class="text-gray-600">Drag and drop any supported file (CSV, Excel, JSON, SQL, XML, TSV) or click to browse.</p>
+                            <div class="hidden md:block absolute top-10 -right-4 w-8">
+                                <i class="fas fa-arrow-right text-3xl text-indigo-300"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="relative text-center">
+                            <div class="w-20 h-20 bg-gradient-to-br from-purple-500 to-pink-600 rounded-2xl flex items-center justify-center text-white text-3xl font-bold mx-auto mb-6 shadow-lg">
+                                2
+                            </div>
+                            <h4 class="font-bold text-xl text-gray-900 mb-3">Instant Analysis</h4>
+                            <p class="text-gray-600">Our tool automatically parses, detects data types, generates statistics, and creates visualizations.</p>
+                            <div class="hidden md:block absolute top-10 -right-4 w-8">
+                                <i class="fas fa-arrow-right text-3xl text-purple-300"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="text-center">
+                            <div class="w-20 h-20 bg-gradient-to-br from-pink-500 to-rose-600 rounded-2xl flex items-center justify-center text-white text-3xl font-bold mx-auto mb-6 shadow-lg">
+                                3
+                            </div>
+                            <h4 class="font-bold text-xl text-gray-900 mb-3">Explore & Export</h4>
+                            <p class="text-gray-600">Interact with charts, filter data, discover insights, and export your findings.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Privacy Box -->
+                <div class="max-w-3xl mx-auto mt-16 bg-gradient-to-r from-green-50 to-emerald-50 rounded-2xl p-8 border border-green-200">
+                    <div class="flex items-start gap-4">
+                        <div class="bg-green-500 text-white p-3 rounded-xl">
+                            <i class="fas fa-shield-alt text-2xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-gray-900 mb-2">🔒 Your Privacy is 100% Protected</h4>
+                            <p class="text-gray-600 text-sm leading-relaxed">
+                                <strong>All data processing happens entirely in your browser.</strong> Your files are never uploaded to any server. We don't store, track, or have access to your data. The tool works completely offline once loaded – perfect for confidential business data, financial records, and sensitive information.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section id="faq" class="py-20 bg-gradient-to-br from-gray-50 to-purple-50">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16">
+                    <h3 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Frequently Asked Questions</h3>
+                    <p class="text-gray-600 max-w-2xl mx-auto">Everything you need to know about using DataViz Pro</p>
+                </div>
+                
+                <div class="max-w-3xl mx-auto space-y-4">
+                    <div class="bg-white rounded-xl card-shadow overflow-hidden">
+                        <button class="accordion-btn w-full px-6 py-4 text-left font-semibold text-gray-900 flex items-center justify-between" onclick="toggleAccordion(this)">
+                            <span><i class="fas fa-file-alt text-indigo-500 mr-3"></i>What file formats are supported?</span>
+                            <i class="fas fa-chevron-down text-gray-400 transition-transform"></i>
+                        </button>
+                        <div class="accordion-content px-6 pb-4 text-gray-600">
+                            <p>We support 6 popular data formats:</p>
+                            <ul class="list-disc list-inside mt-2 space-y-1">
+                                <li><strong>CSV</strong> - Comma-separated values (.csv)</li>
+                                <li><strong>Excel</strong> - Microsoft Excel files (.xlsx, .xls)</li>
+                                <li><strong>JSON</strong> - JavaScript Object Notation (.json)</li>
+                                <li><strong>SQL</strong> - SQL INSERT statements (.sql)</li>
+                                <li><strong>XML</strong> - Extensible Markup Language (.xml)</li>
+                                <li><strong>TSV</strong> - Tab-separated values (.tsv, .txt)</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white rounded-xl card-shadow overflow-hidden">
+                        <button class="accordion-btn w-full px-6 py-4 text-left font-semibold text-gray-900 flex items-center justify-between" onclick="toggleAccordion(this)">
+                            <span><i class="fas fa-lock text-green-500 mr-3"></i>Is my data secure and private?</span>
+                            <i class="fas fa-chevron-down text-gray-400 transition-transform"></i>
+                        </button>
+                        <div class="accordion-content px-6 pb-4 text-gray-600">
+                            <p>Yes, 100%! All processing happens directly in your web browser using JavaScript. Your data never leaves your computer and is never uploaded to any server. We don't use cookies, tracking, or analytics. You can even disconnect from the internet after loading the page and it will continue to work perfectly.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white rounded-xl card-shadow overflow-hidden">
+                        <button class="accordion-btn w-full px-6 py-4 text-left font-semibold text-gray-900 flex items-center justify-between" onclick="toggleAccordion(this)">
+                            <span><i class="fas fa-weight-hanging text-purple-500 mr-3"></i>What is the maximum file size?</span>
+                            <i class="fas fa-chevron-down text-gray-400 transition-transform"></i>
+                        </button>
+                        <div class="accordion-content px-6 pb-4 text-gray-600">
+                            <p>We recommend files up to 50MB for optimal performance. Since all processing happens in your browser, larger files may slow down depending on your device's memory and processing power. For very large datasets, consider splitting them into smaller chunks.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white rounded-xl card-shadow overflow-hidden">
+                        <button class="accordion-btn w-full px-6 py-4 text-left font-semibold text-gray-900 flex items-center justify-between" onclick="toggleAccordion(this)">
+                            <span><i class="fas fa-chart-pie text-blue-500 mr-3"></i>What types of charts can I create?</span>
+                            <i class="fas fa-chevron-down text-gray-400 transition-transform"></i>
+                        </button>
+                        <div class="accordion-content px-6 pb-4 text-gray-600">
+                            <p>You can create 6 different chart types:</p>
+                            <ul class="list-disc list-inside mt-2 space-y-1">
+                                <li>📊 Bar Charts - For comparing values</li>
+                                <li>📈 Line Charts - For trends over time</li>
+                                <li>🥧 Pie Charts - For proportions</li>
+                                <li>🍩 Doughnut Charts - Alternative to pie</li>
+                                <li>🕸️ Radar Charts - For multi-variable comparison</li>
+                                <li>🎯 Polar Area Charts - For cyclic data</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white rounded-xl card-shadow overflow-hidden">
+                        <button class="accordion-btn w-full px-6 py-4 text-left font-semibold text-gray-900 flex items-center justify-between" onclick="toggleAccordion(this)">
+                            <span><i class="fas fa-download text-rose-500 mr-3"></i>Can I export my data and charts?</span>
+                            <i class="fas fa-chevron-down text-gray-400 transition-transform"></i>
+                        </button>
+                        <div class="accordion-content px-6 pb-4 text-gray-600">
+                            <p>Yes! You can:</p>
+                            <ul class="list-disc list-inside mt-2 space-y-1">
+                                <li>Export filtered data as CSV (universal format)</li>
+                                <li>Download any chart as a PNG image</li>
+                                <li>Print the entire dashboard</li>
+                                <li>Copy data to clipboard</li>
+                            </ul>
+                            <p class="mt-2">This is especially useful for converting between formats - import Excel, export as CSV!</p>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white rounded-xl card-shadow overflow-hidden">
+                        <button class="accordion-btn w-full px-6 py-4 text-left font-semibold text-gray-900 flex items-center justify-between" onclick="toggleAccordion(this)">
+                            <span><i class="fas fa-dollar-sign text-amber-500 mr-3"></i>Is this tool really free?</span>
+                            <i class="fas fa-chevron-down text-gray-400 transition-transform"></i>
+                        </button>
+                        <div class="accordion-content px-6 pb-4 text-gray-600">
+                            <p>Yes, DataViz Pro is completely free to use with no limitations. There are no premium plans, no signup required, no watermarks, and no usage limits. Use it as much as you need for personal or commercial projects.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Upload Section -->
+        <section id="upload" class="py-20 bg-white">
+            <div class="container mx-auto px-4">
+                <div id="uploadSection" class="max-w-4xl mx-auto">
+                    <div class="text-center mb-10">
+                        <h3 class="text-3xl font-bold text-gray-900 mb-3">Ready to Analyze Your Data?</h3>
+                        <p class="text-gray-600">Upload any supported file format and watch the magic happen</p>
+                    </div>
+                    
+                    <div class="bg-white rounded-3xl card-shadow-lg p-8">
+                        <div class="upload-zone rounded-2xl p-12 text-center cursor-pointer" id="dropZone">
+                            <input type="file" id="fileInput" accept=".csv,.xlsx,.xls,.json,.sql,.xml,.tsv,.txt" class="hidden">
+                            <div class="text-indigo-400 mb-6">
+                                <i class="fas fa-cloud-upload-alt text-7xl"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold text-gray-800 mb-2">Drop your data file here</h3>
+                            <p class="text-gray-500 mb-4">or click anywhere to browse</p>
+                            
+                            <!-- Format icons -->
+                            <div class="flex flex-wrap justify-center gap-3 mb-6">
+                                <span class="bg-green-100 text-green-700 px-3 py-1.5 rounded-lg text-xs font-medium">CSV</span>
+                                <span class="bg-emerald-100 text-emerald-700 px-3 py-1.5 rounded-lg text-xs font-medium">Excel</span>
+                                <span class="bg-amber-100 text-amber-700 px-3 py-1.5 rounded-lg text-xs font-medium">JSON</span>
+                                <span class="bg-blue-100 text-blue-700 px-3 py-1.5 rounded-lg text-xs font-medium">SQL</span>
+                                <span class="bg-orange-100 text-orange-700 px-3 py-1.5 rounded-lg text-xs font-medium">XML</span>
+                                <span class="bg-purple-100 text-purple-700 px-3 py-1.5 rounded-lg text-xs font-medium">TSV</span>
+                            </div>
+                            
+                            <button class="btn-primary text-white px-8 py-4 rounded-xl font-semibold text-lg inline-flex items-center gap-2">
+                                <i class="fas fa-folder-open"></i> Select File
+                            </button>
+                            <p class="text-xs text-gray-400 mt-4">Supports files up to 50MB</p>
+                        </div>
+                        
+                        <!-- Loading State -->
+                        <div id="loadingState" class="hidden text-center py-12">
+                            <div class="inline-block animate-spin rounded-full h-16 w-16 border-4 border-indigo-200 border-t-indigo-600 mb-4"></div>
+                            <p class="text-gray-600 font-medium" id="loadingText">Parsing your data...</p>
+                        </div>
+                        
+                        <!-- Sample Data Options -->
+                        <div class="mt-8 pt-8 border-t border-gray-100">
+                            <p class="text-center text-gray-500 mb-4">Don't have a file? Try with sample data:</p>
+                            <div class="flex flex-wrap justify-center gap-3">
+                                <button id="loadSample1" class="bg-indigo-50 hover:bg-indigo-100 text-indigo-700 px-4 py-2 rounded-lg text-sm font-medium transition flex items-center gap-2">
+                                    <i class="fas fa-shopping-cart"></i> Sales Data (CSV)
+                                </button>
+                                <button id="loadSample2" class="bg-green-50 hover:bg-green-100 text-green-700 px-4 py-2 rounded-lg text-sm font-medium transition flex items-center gap-2">
+                                    <i class="fas fa-users"></i> Employee Data (JSON)
+                                </button>
+                                <button id="loadSample3" class="bg-purple-50 hover:bg-purple-100 text-purple-700 px-4 py-2 rounded-lg text-sm font-medium transition flex items-center gap-2">
+                                    <i class="fas fa-globe"></i> Analytics (SQL)
+                                </button>
+                                <button id="loadSample4" class="bg-orange-50 hover:bg-orange-100 text-orange-700 px-4 py-2 rounded-lg text-sm font-medium transition flex items-center gap-2">
+                                    <i class="fas fa-store"></i> Products (XML)
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dashboard Section (Hidden initially) -->
+                <div id="dashboardSection" class="hidden">
+                    <!-- File Info & Actions Bar -->
+                    <div class="bg-white rounded-2xl card-shadow p-4 mb-6 fade-in">
+                        <div class="flex flex-wrap items-center justify-between gap-4">
+                            <div class="flex items-center gap-4">
+                                <div class="bg-gradient-to-br from-green-400 to-emerald-500 text-white p-3 rounded-xl" id="fileIconContainer">
+                                    <i class="fas fa-file-csv text-xl" id="fileIcon"></i>
+                                </div>
+                                <div>
+                                    <h2 class="font-bold text-gray-800 text-lg" id="fileName">data.csv</h2>
+                                    <p class="text-sm text-gray-500" id="fileInfo">0 rows × 0 columns</p>
+                                </div>
+                                <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-medium" id="formatBadge">
+                                    <i class="fas fa-check-circle mr-1"></i> CSV
+                                </span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <button id="printDashboard" class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-lg transition text-sm" title="Print Dashboard">
+                                    <i class="fas fa-print mr-1"></i> Print
+                                </button>
+                                <button id="newUpload" class="bg-indigo-100 hover:bg-indigo-200 text-indigo-700 px-4 py-2 rounded-lg transition text-sm font-medium">
+                                    <i class="fas fa-upload mr-1"></i> New File
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Data Quality Section -->
+                    <div class="bg-white rounded-2xl card-shadow p-6 mb-6 fade-in">
+                        <h3 class="font-bold text-gray-800 mb-4 flex items-center gap-2">
+                            <i class="fas fa-clipboard-check text-teal-500"></i> Data Quality Report
+                        </h3>
+                        <div class="grid md:grid-cols-4 gap-4" id="dataQualityCards"></div>
+                    </div>
+
+                    <!-- Quick Stats -->
+                    <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 mb-6" id="statsCards"></div>
+
+                    <!-- Column Statistics -->
+                    <div class="bg-white rounded-2xl card-shadow p-6 mb-6 fade-in">
+                        <h3 class="font-bold text-gray-800 mb-4 flex items-center gap-2">
+                            <i class="fas fa-chart-area text-purple-500"></i> Column Statistics
+                        </h3>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-sm" id="columnStatsTable">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th class="px-4 py-3 text-left font-semibold text-gray-700">Column</th>
+                                        <th class="px-4 py-3 text-left font-semibold text-gray-700">Type</th>
+                                        <th class="px-4 py-3 text-left font-semibold text-gray-700">Min</th>
+                                        <th class="px-4 py-3 text-left font-semibold text-gray-700">Max</th>
+                                        <th class="px-4 py-3 text-left font-semibold text-gray-700">Mean</th>
+                                        <th class="px-4 py-3 text-left font-semibold text-gray-700">Median</th>
+                                        <th class="px-4 py-3 text-left font-semibold text-gray-700">Unique</th>
+                                        <th class="px-4 py-3 text-left font-semibold text-gray-700">Missing</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="columnStatsBody" class="divide-y divide-gray-100"></tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Insights Panel -->
+                    <div class="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 rounded-2xl p-6 mb-6 text-white fade-in">
+                        <h3 class="font-bold text-lg mb-4 flex items-center gap-2">
+                            <i class="fas fa-lightbulb"></i> AI-Powered Insights
+                        </h3>
+                        <div id="insightsContainer" class="grid md:grid-cols-2 lg:grid-cols-3 gap-3"></div>
+                    </div>
+
+                    <!-- Chart Controls -->
+                    <div class="bg-white rounded-2xl card-shadow p-6 mb-6 fade-in">
+                        <h3 class="font-bold text-gray-800 mb-4 flex items-center gap-2">
+                            <i class="fas fa-sliders-h text-indigo-500"></i> Chart Configuration
+                        </h3>
+                        <div class="grid md:grid-cols-5 gap-4 items-end">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">X-Axis (Labels)</label>
+                                <select id="xAxisSelect" class="w-full border border-gray-300 rounded-lg px-3 py-2.5 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white"></select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Y-Axis (Values)</label>
+                                <select id="yAxisSelect" class="w-full border border-gray-300 rounded-lg px-3 py-2.5 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white"></select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Chart Type</label>
+                                <select id="chartType" class="w-full border border-gray-300 rounded-lg px-3 py-2.5 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white">
+                                    <option value="bar">📊 Bar Chart</option>
+                                    <option value="line">📈 Line Chart</option>
+                                    <option value="pie">🥧 Pie Chart</option>
+                                    <option value="doughnut">🍩 Doughnut</option>
+                                    <option value="radar">🕸️ Radar Chart</option>
+                                    <option value="polarArea">🎯 Polar Area</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Aggregation</label>
+                                <select id="aggregationType" class="w-full border border-gray-300 rounded-lg px-3 py-2.5 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white">
+                                    <option value="none">None (Raw Data)</option>
+                                    <option value="sum">Sum by Category</option>
+                                    <option value="avg">Average by Category</option>
+                                    <option value="count">Count by Category</option>
+                                </select>
+                            </div>
+                            <div>
+                                <button id="updateChart" class="w-full btn-primary text-white px-6 py-2.5 rounded-lg font-medium">
+                                    <i class="fas fa-sync-alt mr-1"></i> Update
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Charts Grid -->
+                    <div class="grid lg:grid-cols-2 gap-6 mb-6">
+                        <div class="bg-white rounded-2xl card-shadow p-6 fade-in">
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 class="font-bold text-gray-800 flex items-center gap-2">
+                                    <i class="fas fa-chart-bar text-indigo-600"></i> Primary Visualization
+                                </h3>
+                                <button class="download-chart text-gray-400 hover:text-indigo-600 transition" data-chart="mainChart" title="Download Chart">
+                                    <i class="fas fa-download"></i>
+                                </button>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="mainChart"></canvas>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-2xl card-shadow p-6 fade-in">
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 class="font-bold text-gray-800 flex items-center gap-2">
+                                    <i class="fas fa-chart-pie text-purple-600"></i> Distribution View
+                                </h3>
+                                <button class="download-chart text-gray-400 hover:text-purple-600 transition" data-chart="distributionChart" title="Download Chart">
+                                    <i class="fas fa-download"></i>
+                                </button>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="distributionChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Trend Chart -->
+                    <div class="bg-white rounded-2xl card-shadow p-6 mb-6 fade-in">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="font-bold text-gray-800 flex items-center gap-2">
+                                <i class="fas fa-chart-line text-green-600"></i> Trend Analysis
+                            </h3>
+                            <button class="download-chart text-gray-400 hover:text-green-600 transition" data-chart="trendChart" title="Download Chart">
+                                <i class="fas fa-download"></i>
+                            </button>
+                        </div>
+                        <div class="chart-container" style="height: 250px;">
+                            <canvas id="trendChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Data Table -->
+                    <div class="bg-white rounded-2xl card-shadow p-6 fade-in">
+                        <div class="flex flex-wrap items-center justify-between gap-4 mb-4">
+                            <h3 class="font-bold text-gray-800 flex items-center gap-2">
+                                <i class="fas fa-table text-green-600"></i> Data Explorer
+                            </h3>
+                            <div class="flex flex-wrap items-center gap-3">
+                                <div class="relative">
+                                    <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                                    <input type="text" id="searchInput" placeholder="Search data..." class="border border-gray-300 rounded-lg pl-10 pr-4 py-2 text-sm focus:ring-2 focus:ring-indigo-500 w-48 md:w-64">
+                                </div>
+                                <select id="rowsPerPageSelect" class="border border-gray-300 rounded-lg px-3 py-2 text-sm">
+                                    <option value="10">10 rows</option>
+                                    <option value="25">25 rows</option>
+                                    <option value="50">50 rows</option>
+                                    <option value="100">100 rows</option>
+                                </select>
+                                <button id="exportBtn" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition flex items-center gap-2">
+                                    <i class="fas fa-download"></i> Export CSV
+                                </button>
+                            </div>
+                        </div>
+                        <div class="overflow-x-auto rounded-lg border border-gray-200">
+                            <table class="w-full text-sm" id="dataTable">
+                                <thead class="bg-gray-50">
+                                    <tr id="tableHeader"></tr>
+                                </thead>
+                                <tbody id="tableBody" class="divide-y divide-gray-100"></tbody>
+                            </table>
+                        </div>
+                        <div class="flex flex-wrap items-center justify-between gap-4 mt-4">
+                            <p class="text-sm text-gray-500" id="showingInfo">Showing 1-10 of 0 rows</p>
+                            <div class="flex items-center gap-2">
+                                <button id="prevPage" class="px-4 py-2 bg-gray-100 rounded-lg hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed transition text-sm font-medium">
+                                    <i class="fas fa-chevron-left mr-1"></i> Previous
+                                </button>
+                                <span id="pageIndicator" class="text-sm text-gray-600 px-3">Page 1</span>
+                                <button id="nextPage" class="px-4 py-2 bg-gray-100 rounded-lg hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed transition text-sm font-medium">
+                                    Next <i class="fas fa-chevron-right ml-1"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8 mb-8">
+                <div class="md:col-span-2">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="bg-indigo-600 p-2 rounded-lg">
+                            <i class="fas fa-chart-line text-xl"></i>
+                        </div>
+                        <span class="font-bold text-xl">DataViz Pro</span>
+                    </div>
+                    <p class="text-gray-400 mb-4 max-w-md">
+                        A free, privacy-first tool to instantly transform any data format into beautiful, interactive dashboards. No signup required, works offline.
+                    </p>
+                    <div class="flex flex-wrap gap-3">
+                        <span class="bg-gray-800 px-3 py-1 rounded text-xs">🔒 100% Private</span>
+                        <span class="bg-gray-800 px-3 py-1 rounded text-xs">⚡ Instant</span>
+                        <span class="bg-gray-800 px-3 py-1 rounded text-xs">🆓 Free Forever</span>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Supported Formats</h4>
+                    <ul class="space-y-2 text-gray-400 text-sm">
+                        <li><i class="fas fa-file-csv text-green-400 mr-2"></i>CSV Files</li>
+                        <li><i class="fas fa-file-excel text-emerald-400 mr-2"></i>Excel (.xlsx, .xls)</li>
+                        <li><i class="fas fa-code text-amber-400 mr-2"></i>JSON Files</li>
+                        <li><i class="fas fa-database text-blue-400 mr-2"></i>SQL Files</li>
+                        <li><i class="fas fa-file-code text-orange-400 mr-2"></i>XML Files</li>
+                        <li><i class="fas fa-table text-purple-400 mr-2"></i>TSV Files</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Features</h4>
+                    <ul class="space-y-2 text-gray-400 text-sm">
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>Multiple Chart Types</li>
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>Auto Statistics</li>
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>Data Quality Checks</li>
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>Search & Filter</li>
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>Export to CSV</li>
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>Format Conversion</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 pt-8 text-center text-gray-500 text-sm">
+                <p>Made with <i class="fas fa-heart text-red-500"></i> for data enthusiasts everywhere</p>
+                <p class="mt-2">© 2024 DataViz Pro. All processing happens 100% in your browser.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Global state
+        let csvData = [];
+        let headers = [];
+        let mainChart = null;
+        let distributionChart = null;
+        let trendChart = null;
+        let currentPage = 1;
+        let rowsPerPage = 10;
+        let currentFileType = 'csv';
+
+        // DOM Elements
+        const dropZone = document.getElementById('dropZone');
+        const fileInput = document.getElementById('fileInput');
+        const uploadSection = document.getElementById('uploadSection');
+        const dashboardSection = document.getElementById('dashboardSection');
+        const loadingState = document.getElementById('loadingState');
+
+        // Event Listeners
+        dropZone.addEventListener('click', () => fileInput.click());
+        dropZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropZone.classList.add('dragover');
+        });
+        dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.classList.remove('dragover');
+            const file = e.dataTransfer.files[0];
+            if (file) processFile(file);
+        });
+
+        fileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) processFile(file);
+        });
+
+        document.getElementById('loadSample1').addEventListener('click', () => loadSampleData('sales'));
+        document.getElementById('loadSample2').addEventListener('click', () => loadSampleData('employee'));
+        document.getElementById('loadSample3').addEventListener('click', () => loadSampleData('analytics'));
+        document.getElementById('loadSample4').addEventListener('click', () => loadSampleData('products'));
+        document.getElementById('newUpload').addEventListener('click', resetDashboard);
+        document.getElementById('updateChart').addEventListener('click', updateCharts);
+        document.getElementById('searchInput').addEventListener('input', filterTable);
+        document.getElementById('prevPage').addEventListener('click', () => changePage(-1));
+        document.getElementById('nextPage').addEventListener('click', () => changePage(1));
+        document.getElementById('exportBtn').addEventListener('click', exportData);
+        document.getElementById('printDashboard').addEventListener('click', () => window.print());
+        document.getElementById('rowsPerPageSelect').addEventListener('change', (e) => {
+            rowsPerPage = parseInt(e.target.value);
+            currentPage = 1;
+            renderTable();
+        });
+
+        document.querySelectorAll('.download-chart').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const chartId = e.currentTarget.dataset.chart;
+                downloadChart(chartId);
+            });
+        });
+
+        // Accordion toggle
+        function toggleAccordion(btn) {
+            const content = btn.nextElementSibling;
+            const icon = btn.querySelector('.fa-chevron-down');
+            content.classList.toggle('open');
+            icon.style.transform = content.classList.contains('open') ? 'rotate(180deg)' : 'rotate(0)';
+        }
+
+        // Detect file type
+        function detectFileType(filename) {
+            const ext = filename.split('.').pop().toLowerCase();
+            const typeMap = {
+                'csv': 'csv',
+                'xlsx': 'excel',
+                'xls': 'excel',
+                'json': 'json',
+                'sql': 'sql',
+                'xml': 'xml',
+                'tsv': 'tsv',
+                'txt': 'tsv'
+            };
+            return typeMap[ext] || 'csv';
+        }
+
+        // Parse CSV
+        function parseCSV(text, delimiter = ',') {
+            const lines = text.trim().split('\n');
+            const result = [];
+            headers = lines[0].split(delimiter).map(h => h.trim().replace(/"/g, ''));
+            
+            for (let i = 1; i < lines.length; i++) {
+                const values = parseCSVLine(lines[i], delimiter);
+                if (values.length === headers.length) {
+                    const row = {};
+                    headers.forEach((header, index) => {
+                        row[header] = values[index];
+                    });
+                    result.push(row);
+                }
+            }
+            return result;
+        }
+
+        function parseCSVLine(line, delimiter = ',') {
+            const result = [];
+            let current = '';
+            let inQuotes = false;
+            
+            for (let char of line) {
+                if (char === '"') {
+                    inQuotes = !inQuotes;
+                } else if (char === delimiter && !inQuotes) {
+                    result.push(current.trim());
+                    current = '';
+                } else {
+                    current += char;
+                }
+            }
+            result.push(current.trim());
+            return result;
+        }
+
+        // Parse JSON
+        function parseJSON(text) {
+            try {
+                let data = JSON.parse(text);
+                
+                // Handle array of objects
+                if (Array.isArray(data)) {
+                    if (data.length === 0) return [];
+                    
+                    // Flatten nested objects
+                    data = data.map(item => flattenObject(item));
+                    headers = [...new Set(data.flatMap(obj => Object.keys(obj)))];
+                    return data.map(item => {
+                        const row = {};
+                        headers.forEach(h => row[h] = item[h] !== undefined ? String(item[h]) : '');
+                        return row;
+                    });
+                }
+                
+                // Handle object with array property
+                if (typeof data === 'object') {
+                    const arrayKey = Object.keys(data).find(k => Array.isArray(data[k]));
+                    if (arrayKey) {
+                        return parseJSON(JSON.stringify(data[arrayKey]));
+                    }
+                }
+                
+                return [];
+            } catch (e) {
+                console.error('JSON parse error:', e);
+                return [];
+            }
+        }
+
+        function flattenObject(obj, prefix = '') {
+            const result = {};
+            for (const key in obj) {
+                const newKey = prefix ? `${prefix}_${key}` : key;
+                if (typeof obj[key] === 'object' && obj[key] !== null && !Array.isArray(obj[key])) {
+                    Object.assign(result, flattenObject(obj[key], newKey));
+                } else if (Array.isArray(obj[key])) {
+                    result[newKey] = obj[key].join(', ');
+                } else {
+                    result[newKey] = obj[key];
+                }
+            }
+            return result;
+        }
+
+        // Parse SQL INSERT statements
+        function parseSQL(text) {
+            const result = [];
+            const insertRegex = /INSERT\s+INTO\s+[`"']?(\w+)[`"']?\s*\(([^)]+)\)\s*VALUES\s*(.+?);/gi;
+            let match;
+            
+            while ((match = insertRegex.exec(text)) !== null) {
+                const columns = match[2].split(',').map(c => c.trim().replace(/[`"']/g, ''));
+                if (headers.length === 0) headers = columns;
+                
+                const valuesStr = match[3];
+                const valueGroups = valuesStr.match(/\(([^)]+)\)/g);
+                
+                if (valueGroups) {
+                    valueGroups.forEach(group => {
+                        const values = group.slice(1, -1).split(',').map(v => 
+                            v.trim().replace(/^['"]|['"]$/g, '')
+                        );
+                        const row = {};
+                        columns.forEach((col, i) => row[col] = values[i] || '');
+                        result.push(row);
+                    });
+                }
+            }
+            
+            return result;
+        }
+
+        // Parse XML
+        function parseXML(text) {
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(text, 'text/xml');
+            const result = [];
+            
+            // Find repeated elements (likely the data rows)
+            const allElements = doc.querySelectorAll('*');
+            const tagCounts = {};
+            
+            allElements.forEach(el => {
+                const tag = el.tagName;
+                tagCounts[tag] = (tagCounts[tag] || 0) + 1;
+            });
+            
+            // Find the most repeated element (likely our data rows)
+            let dataTag = Object.entries(tagCounts)
+                .filter(([tag, count]) => count > 1)
+                .sort((a, b) => b[1] - a[1])[0];
+            
+            if (dataTag) {
+                const elements = doc.querySelectorAll(dataTag[0]);
+                const tempHeaders = new Set();
+                
+                // Collect all possible headers
+                elements.forEach(el => {
+                    // From attributes
+                    [...el.attributes].forEach(attr => tempHeaders.add(attr.name));
+                    // From child elements
+                    [...el.children].forEach(child => tempHeaders.add(child.tagName));
+                });
+                
+                headers = [...tempHeaders];
+                
+                elements.forEach(el => {
+                    const row = {};
+                    // Get from attributes
+                    [...el.attributes].forEach(attr => {
+                        row[attr.name] = attr.value;
+                    });
+                    // Get from child elements
+                    [...el.children].forEach(child => {
+                        row[child.tagName] = child.textContent;
+                    });
+                    // Fill missing headers
+                    headers.forEach(h => {
+                        if (row[h] === undefined) row[h] = '';
+                    });
+                    result.push(row);
+                });
+            }
+            
+            return result;
+        }
+
+        // Parse Excel
+        async function parseExcel(arrayBuffer) {
+            const workbook = XLSX.read(arrayBuffer, { type: 'array' });
+            const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
+            const jsonData = XLSX.utils.sheet_to_json(firstSheet, { header: 1 });
+            
+            if (jsonData.length === 0) return [];
+            
+            headers = jsonData[0].map(h => String(h || 'Column'));
+            const result = [];
+            
+            for (let i = 1; i < jsonData.length; i++) {
+                const row = {};
+                headers.forEach((header, index) => {
+                    row[header] = jsonData[i][index] !== undefined ? String(jsonData[i][index]) : '';
+                });
+                result.push(row);
+            }
+            
+            return result;
+        }
+
+        // Process file based on type
+        async function processFile(file) {
+            showLoading(true, 'Detecting file format...');
+            currentFileType = detectFileType(file.name);
+            
+            try {
+                if (currentFileType === 'excel') {
+                    showLoading(true, 'Parsing Excel file...');
+                    const arrayBuffer = await file.arrayBuffer();
+                    csvData = await parseExcel(arrayBuffer);
+                } else {
+                    const text = await file.text();
+                    showLoading(true, `Parsing ${currentFileType.toUpperCase()} data...`);
+                    
+                    switch (currentFileType) {
+                        case 'json':
+                            csvData = parseJSON(text);
+                            break;
+                        case 'sql':
+                            csvData = parseSQL(text);
+                            break;
+                        case 'xml':
+                            csvData = parseXML(text);
+                            break;
+                        case 'tsv':
+                            csvData = parseCSV(text, '\t');
+                            break;
+                        default:
+                            csvData = parseCSV(text);
+                    }
+                }
+                
+                if (csvData.length === 0) {
+                    alert('Could not parse any data from the file. Please check the format.');
+                    showLoading(false);
+                    return;
+                }
+                
+                document.getElementById('fileName').textContent = file.name;
+                updateFileIcon(currentFileType);
+                setTimeout(() => {
+                    showLoading(false);
+                    showDashboard();
+                }, 300);
+                
+            } catch (error) {
+                console.error('Error processing file:', error);
+                alert('Error processing file: ' + error.message);
+                showLoading(false);
+            }
+        }
+
+        function updateFileIcon(type) {
+            const iconMap = {
+                'csv': { icon: 'fa-file-csv', color: 'from-green-400 to-emerald-500', label: 'CSV' },
+                'excel': { icon: 'fa-file-excel', color: 'from-emerald-500 to-teal-500', label: 'Excel' },
+                'json': { icon: 'fa-code', color: 'from-amber-400 to-yellow-500', label: 'JSON' },
+                'sql': { icon: 'fa-database', color: 'from-blue-400 to-indigo-500', label: 'SQL' },
+                'xml': { icon: 'fa-file-code', color: 'from-orange-400 to-red-500', label: 'XML' },
+                'tsv': { icon: 'fa-table', color: 'from-purple-400 to-pink-500', label: 'TSV' }
+            };
+            
+            const config = iconMap[type] || iconMap['csv'];
+            document.getElementById('fileIcon').className = `fas ${config.icon} text-xl`;
+            document.getElementById('fileIconContainer').className = `bg-gradient-to-br ${config.color} text-white p-3 rounded-xl`;
+            document.getElementById('formatBadge').innerHTML = `<i class="fas fa-check-circle mr-1"></i> ${config.label}`;
+        }
+
+        function showLoading(show, message = 'Parsing your data...') {
+            if (show) {
+                dropZone.classList.add('hidden');
+                loadingState.classList.remove('hidden');
+                document.getElementById('loadingText').textContent = message;
+            } else {
+                dropZone.classList.remove('hidden');
+                loadingState.classList.add('hidden');
+            }
+        }
+
+        // Load sample data
+        function loadSampleData(type) {
+            let filename, data;
+            
+            if (type === 'sales') {
+                filename = 'sample_sales_data.csv';
+                currentFileType = 'csv';
+                const sampleCSV = `Month,Sales,Expenses,Profit,Region,Products Sold
+January,45000,32000,13000,North,156
+February,52000,35000,17000,South,189
+March,48000,31000,17000,East,167
+April,61000,38000,23000,West,234
+May,55000,36000,19000,North,198
+June,67000,42000,25000,South,267
+July,72000,45000,27000,East,289
+August,69000,43000,26000,West,278
+September,58000,37000,21000,North,212
+October,63000,40000,23000,South,245
+November,71000,44000,27000,East,284
+December,85000,52000,33000,West,342`;
+                csvData = parseCSV(sampleCSV);
+            } else if (type === 'employee') {
+                filename = 'employee_data.json';
+                currentFileType = 'json';
+                const sampleJSON = `[
+                    {"name": "Alice Johnson", "department": "Engineering", "salary": 95000, "years": 5, "performance": 4.5},
+                    {"name": "Bob Smith", "department": "Marketing", "salary": 72000, "years": 3, "performance": 4.2},
+                    {"name": "Carol White", "department": "Engineering", "salary": 102000, "years": 7, "performance": 4.8},
+                    {"name": "David Brown", "department": "Sales", "salary": 68000, "years": 2, "performance": 3.9},
+                    {"name": "Eva Martinez", "department": "Engineering", "salary": 88000, "years": 4, "performance": 4.3},
+                    {"name": "Frank Wilson", "department": "HR", "salary": 65000, "years": 6, "performance": 4.0},
+                    {"name": "Grace Lee", "department": "Marketing", "salary": 78000, "years": 4, "performance": 4.4},
+                    {"name": "Henry Davis", "department": "Sales", "salary": 71000, "years": 3, "performance": 4.1}
+                ]`;
+                csvData = parseJSON(sampleJSON);
+            } else if (type === 'analytics') {
+                filename = 'website_analytics.sql';
+                currentFileType = 'sql';
+                const sampleSQL = `INSERT INTO analytics (page, views, visitors, bounce_rate, conversions) VALUES 
+                ('Homepage', 45000, 32000, 35, 890),
+                ('Products', 28000, 21000, 42, 567),
+                ('About', 12000, 9500, 55, 123),
+                ('Blog', 18000, 14000, 38, 234),
+                ('Contact', 8000, 6500, 48, 456),
+                ('Pricing', 15000, 12000, 40, 678),
+                ('Features', 22000, 17000, 36, 543),
+                ('Documentation', 9500, 7800, 30, 321);`;
+                csvData = parseSQL(sampleSQL);
+            } else if (type === 'products') {
+                filename = 'products.xml';
+                currentFileType = 'xml';
+                const sampleXML = `<?xml version="1.0"?>
+                <products>
+                    <product id="1" name="Laptop" price="999" stock="45" category="Electronics"/>
+                    <product id="2" name="Headphones" price="149" stock="120" category="Electronics"/>
+                    <product id="3" name="Desk Chair" price="299" stock="32" category="Furniture"/>
+                    <product id="4" name="Monitor" price="399" stock="58" category="Electronics"/>
+                    <product id="5" name="Keyboard" price="79" stock="200" category="Accessories"/>
+                    <product id="6" name="Mouse" price="49" stock="180" category="Accessories"/>
+                    <product id="7" name="Desk" price="449" stock="25" category="Furniture"/>
+                    <product id="8" name="Webcam" price="89" stock="95" category="Electronics"/>
+                </products>`;
+                csvData = parseXML(sampleXML);
+            }
+            
+            document.getElementById('fileName').textContent = filename;
+            updateFileIcon(currentFileType);
+            showDashboard();
+        }
+
+        function showDashboard() {
+            uploadSection.classList.add('hidden');
+            dashboardSection.classList.remove('hidden');
+            document.getElementById('fileInfo').textContent = `${csvData.length} rows × ${headers.length} columns`;
+            
+            populateSelects();
+            generateDataQuality();
+            generateStats();
+            generateColumnStats();
+            generateInsights();
+            updateCharts();
+            renderTable();
+            
+            dashboardSection.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function resetDashboard() {
+            dashboardSection.classList.add('hidden');
+            uploadSection.classList.remove('hidden');
+            csvData = [];
+            headers = [];
+            currentPage = 1;
+            fileInput.value = '';
+            document.getElementById('upload').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function populateSelects() {
+            const xSelect = document.getElementById('xAxisSelect');
+            const ySelect = document.getElementById('yAxisSelect');
+            xSelect.innerHTML = '';
+            ySelect.innerHTML = '';
+            
+            const numericCols = headers.filter(h => csvData.some(row => !isNaN(parseFloat(row[h]))));
+            
+            headers.forEach((header, index) => {
+                xSelect.innerHTML += `<option value="${header}" ${index === 0 ? 'selected' : ''}>${header}</option>`;
+                ySelect.innerHTML += `<option value="${header}">${header}</option>`;
+            });
+            
+            if (numericCols.length > 0) {
+                ySelect.value = numericCols[0];
+            }
+        }
+
+        function generateDataQuality() {
+            const container = document.getElementById('dataQualityCards');
+            let totalCells = csvData.length * headers.length;
+            let missingCount = 0;
+            let duplicateRows = 0;
+            
+            csvData.forEach(row => {
+                headers.forEach(h => {
+                    if (!row[h] || row[h].toString().trim() === '') missingCount++;
+                });
+            });
+            
+            const seen = new Set();
+            csvData.forEach(row => {
+                const key = JSON.stringify(row);
+                if (seen.has(key)) duplicateRows++;
+                seen.add(key);
+            });
+            
+            const completeness = ((totalCells - missingCount) / totalCells * 100).toFixed(1);
+            const numericCols = headers.filter(h => csvData.every(row => !isNaN(parseFloat(row[h])))).length;
+            
+            let qualityClass = 'data-quality-good';
+            if (completeness < 90) qualityClass = 'data-quality-warning';
+            if (completeness < 70) qualityClass = 'data-quality-bad';
+            
+            container.innerHTML = `
+                <div class="bg-gray-50 rounded-xl p-4 text-center">
+                    <div class="text-3xl font-bold ${qualityClass} mb-1">${completeness}%</div>
+                    <div class="text-sm text-gray-600">Data Completeness</div>
+                    <div class="progress-bar mt-2">
+                        <div class="progress-fill bg-gradient-to-r from-green-400 to-emerald-500" style="width: ${completeness}%"></div>
+                    </div>
+                </div>
+                <div class="bg-gray-50 rounded-xl p-4 text-center">
+                    <div class="text-3xl font-bold text-blue-600 mb-1">${missingCount}</div>
+                    <div class="text-sm text-gray-600">Missing Values</div>
+                    <div class="text-xs text-gray-400 mt-1">${(missingCount/totalCells*100).toFixed(1)}% of total</div>
+                </div>
+                <div class="bg-gray-50 rounded-xl p-4 text-center">
+                    <div class="text-3xl font-bold text-purple-600 mb-1">${duplicateRows}</div>
+                    <div class="text-sm text-gray-600">Duplicate Rows</div>
+                    <div class="text-xs text-gray-400 mt-1">${(duplicateRows/csvData.length*100).toFixed(1)}% of rows</div>
+                </div>
+                <div class="bg-gray-50 rounded-xl p-4 text-center">
+                    <div class="text-3xl font-bold text-teal-600 mb-1">${numericCols}/${headers.length}</div>
+                    <div class="text-sm text-gray-600">Numeric Columns</div>
+                    <div class="text-xs text-gray-400 mt-1">${headers.length - numericCols} text columns</div>
+                </div>
+            `;
+        }
+
+        function generateColumnStats() {
+            const tbody = document.getElementById('columnStatsBody');
+            let html = '';
+            
+            headers.forEach(header => {
+                const values = csvData.map(row => row[header]);
+                const numericValues = values.filter(v => !isNaN(parseFloat(v))).map(v => parseFloat(v));
+                const isNumeric = numericValues.length === values.length && numericValues.length > 0;
+                const uniqueCount = new Set(values).size;
+                const missingCount = values.filter(v => !v || v.toString().trim() === '').length;
+                
+                let min = '-', max = '-', mean = '-', median = '-';
+                
+                if (isNumeric && numericValues.length > 0) {
+                    min = formatNumber(Math.min(...numericValues));
+                    max = formatNumber(Math.max(...numericValues));
+                    mean = formatNumber(numericValues.reduce((a, b) => a + b, 0) / numericValues.length);
+                    const sorted = [...numericValues].sort((a, b) => a - b);
+                    median = formatNumber(sorted[Math.floor(sorted.length / 2)]);
+                }
+                
+                html += `
+                    <tr class="hover:bg-gray-50">
+                        <td class="px-4 py-3 font-medium text-gray-800">${header}</td>
+                        <td class="px-4 py-3">
+                            <span class="px-2 py-1 rounded text-xs font-medium ${isNumeric ? 'bg-blue-100 text-blue-700' : 'bg-green-100 text-green-700'}">
+                                ${isNumeric ? 'Numeric' : 'Text'}
+                            </span>
+                        </td>
+                        <td class="px-4 py-3 text-gray-600">${min}</td>
+                        <td class="px-4 py-3 text-gray-600">${max}</td>
+                        <td class="px-4 py-3 text-gray-600">${mean}</td>
+                        <td class="px-4 py-3 text-gray-600">${median}</td>
+                        <td class="px-4 py-3 text-gray-600">${uniqueCount}</td>
+                        <td class="px-4 py-3">
+                            <span class="${missingCount > 0 ? 'text-orange-600' : 'text-green-600'}">${missingCount}</span>
+                        </td>
+                    </tr>
+                `;
+            });
+            
+            tbody.innerHTML = html;
+        }
+
+        function generateStats() {
+            const statsContainer = document.getElementById('statsCards');
+            const numericColumns = headers.filter(h => csvData.every(row => !isNaN(parseFloat(row[h]))));
+            
+            let statsHTML = '';
+            statsHTML += createStatCard('Total Records', csvData.length.toLocaleString(), 'fas fa-database', 'from-blue-400 to-blue-600');
+            statsHTML += createStatCard('Total Columns', headers.length, 'fas fa-columns', 'from-green-400 to-green-600');
+            
+            if (numericColumns.length > 0) {
+                const firstNumeric = numericColumns[0];
+                const values = csvData.map(row => parseFloat(row[firstNumeric]));
+                const sum = values.reduce((a, b) => a + b, 0);
+                const avg = sum / values.length;
+                const max = Math.max(...values);
+                const min = Math.min(...values);
+                
+                statsHTML += createStatCard(`Total ${firstNumeric}`, formatNumber(sum), 'fas fa-calculator', 'from-purple-400 to-purple-600');
+                statsHTML += createStatCard(`Avg ${firstNumeric}`, formatNumber(avg), 'fas fa-chart-line', 'from-orange-400 to-orange-600');
+                statsHTML += createStatCard(`Max ${firstNumeric}`, formatNumber(max), 'fas fa-arrow-up', 'from-emerald-400 to-emerald-600');
+                statsHTML += createStatCard(`Min ${firstNumeric}`, formatNumber(min), 'fas fa-arrow-down', 'from-rose-400 to-rose-600');
+            }
+            
+            statsContainer.innerHTML = statsHTML;
+        }
+
+        function createStatCard(label, value, icon, gradientClass) {
+            return `
+                <div class="stat-card bg-white rounded-xl card-shadow p-4 fade-in cursor-default">
+                    <div class="flex items-center gap-3">
+                        <div class="bg-gradient-to-br ${gradientClass} text-white p-3 rounded-xl shadow-lg">
+                            <i class="${icon}"></i>
+                        </div>
+                        <div>
+                            <p class="text-xl font-bold text-gray-800">${value}</p>
+                            <p class="text-xs text-gray-500">${label}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function generateInsights() {
+            const container = document.getElementById('insightsContainer');
+            const insights = [];
+            const numericColumns = headers.filter(h => csvData.every(row => !isNaN(parseFloat(row[h]))));
+            
+            numericColumns.slice(0, 3).forEach(col => {
+                const values = csvData.map(row => parseFloat(row[col]));
+                const max = Math.max(...values);
+                const maxIndex = values.indexOf(max);
+                
+                insights.push({
+                    icon: 'fa-trophy',
+                    color: 'text-yellow-300',
+                    text: `Highest <strong>${col}</strong>: ${formatNumber(max)} at row ${maxIndex + 1}`
+                });
+            });
+            
+            const textColumns = headers.filter(h => !numericColumns.includes(h));
+            if (textColumns.length > 0) {
+                const firstText = textColumns[0];
+                const categoryCounts = {};
+                csvData.forEach(row => {
+                    const val = row[firstText];
+                    categoryCounts[val] = (categoryCounts[val] || 0) + 1;
+                });
+                const topCategory = Object.entries(categoryCounts).sort((a, b) => b[1] - a[1])[0];
+                if (topCategory) {
+                    insights.push({
+                        icon: 'fa-star',
+                        color: 'text-pink-300',
+                        text: `Most common <strong>${firstText}</strong>: "${topCategory[0]}" (${topCategory[1]} records)`
+                    });
+                }
+            }
+            
+            insights.push({
+                icon: 'fa-database',
+                color: 'text-blue-300',
+                text: `Dataset: <strong>${csvData.length}</strong> records across <strong>${headers.length}</strong> fields`
+            });
+            
+            insights.push({
+                icon: 'fa-file-import',
+                color: 'text-green-300',
+                text: `Imported from <strong>${currentFileType.toUpperCase()}</strong> format successfully`
+            });
+            
+            container.innerHTML = insights.slice(0, 6).map(i => `
+                <div class="bg-white/15 backdrop-blur-sm rounded-xl px-4 py-3 text-sm flex items-start gap-3">
+                    <i class="fas ${i.icon} ${i.color} mt-0.5"></i>
+                    <span>${i.text}</span>
+                </div>
+            `).join('');
+        }
+
+        function updateCharts() {
+            const xCol = document.getElementById('xAxisSelect').value;
+            const yCol = document.getElementById('yAxisSelect').value;
+            const chartType = document.getElementById('chartType').value;
+            const aggregation = document.getElementById('aggregationType').value;
+            
+            let labels, data;
+            
+            if (aggregation !== 'none') {
+                const aggregated = {};
+                csvData.forEach(row => {
+                    const key = row[xCol];
+                    const val = parseFloat(row[yCol]) || 0;
+                    if (!aggregated[key]) aggregated[key] = { sum: 0, count: 0 };
+                    aggregated[key].sum += val;
+                    aggregated[key].count++;
+                });
+                
+                labels = Object.keys(aggregated);
+                if (aggregation === 'sum') data = labels.map(k => aggregated[k].sum);
+                else if (aggregation === 'avg') data = labels.map(k => aggregated[k].sum / aggregated[k].count);
+                else data = labels.map(k => aggregated[k].count);
+            } else {
+                labels = csvData.map(row => row[xCol]);
+                data = csvData.map(row => parseFloat(row[yCol]) || 0);
+            }
+            
+            const colors = generateColors(data.length);
+            
+            if (mainChart) mainChart.destroy();
+            if (distributionChart) distributionChart.destroy();
+            if (trendChart) trendChart.destroy();
+            
+            const mainCtx = document.getElementById('mainChart').getContext('2d');
+            const mainType = ['pie', 'doughnut', 'polarArea'].includes(chartType) ? 'bar' : chartType;
+            mainChart = new Chart(mainCtx, {
+                type: mainType,
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: yCol,
+                        data: data,
+                        backgroundColor: mainType === 'line' ? 'rgba(102, 126, 234, 0.1)' : colors.backgrounds,
+                        borderColor: mainType === 'line' ? 'rgb(102, 126, 234)' : colors.borders,
+                        borderWidth: mainType === 'line' ? 3 : 1,
+                        fill: mainType === 'line',
+                        tension: 0.4,
+                        pointBackgroundColor: 'rgb(102, 126, 234)',
+                        pointRadius: mainType === 'line' ? 4 : 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: mainType === 'radar' ? {} : {
+                        y: { beginAtZero: true, grid: { color: 'rgba(0,0,0,0.05)' } },
+                        x: { grid: { display: false } }
+                    }
+                }
+            });
+            
+            const distCtx = document.getElementById('distributionChart').getContext('2d');
+            const distType = ['pie', 'doughnut', 'polarArea'].includes(chartType) ? chartType : 'doughnut';
+            distributionChart = new Chart(distCtx, {
+                type: distType,
+                data: {
+                    labels: labels.slice(0, 10),
+                    datasets: [{ data: data.slice(0, 10), backgroundColor: colors.backgrounds.slice(0, 10), borderColor: '#fff', borderWidth: 2 }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { position: 'right', labels: { boxWidth: 12, font: { size: 11 }, padding: 10 } } }
+                }
+            });
+            
+            const trendCtx = document.getElementById('trendChart').getContext('2d');
+            trendChart = new Chart(trendCtx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: yCol,
+                        data: data,
+                        backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                        borderColor: 'rgb(16, 185, 129)',
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.4,
+                        pointRadius: 3,
+                        pointBackgroundColor: 'rgb(16, 185, 129)'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { beginAtZero: true, grid: { color: 'rgba(0,0,0,0.05)' } },
+                        x: { grid: { display: false } }
+                    }
+                }
+            });
+        }
+
+        function generateColors(count) {
+            const baseColors = [
+                'rgba(102, 126, 234, 0.8)', 'rgba(118, 75, 162, 0.8)', 'rgba(237, 100, 166, 0.8)',
+                'rgba(16, 185, 129, 0.8)', 'rgba(245, 158, 11, 0.8)', 'rgba(239, 68, 68, 0.8)',
+                'rgba(14, 165, 233, 0.8)', 'rgba(168, 85, 247, 0.8)', 'rgba(20, 184, 166, 0.8)', 'rgba(251, 146, 60, 0.8)'
+            ];
+            const backgrounds = [], borders = [];
+            for (let i = 0; i < count; i++) {
+                backgrounds.push(baseColors[i % baseColors.length]);
+                borders.push(baseColors[i % baseColors.length].replace('0.8', '1'));
+            }
+            return { backgrounds, borders };
+        }
+
+        function downloadChart(chartId) {
+            const canvas = document.getElementById(chartId);
+            const link = document.createElement('a');
+            link.download = `${chartId}_${Date.now()}.png`;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        }
+
+        function renderTable(filter = '') {
+            const headerRow = document.getElementById('tableHeader');
+            const tbody = document.getElementById('tableBody');
+            
+            headerRow.innerHTML = headers.map((h, i) => `
+                <th class="px-4 py-3 text-left font-semibold text-gray-700 bg-gray-50 sticky top-0 cursor-pointer hover:bg-gray-100" onclick="sortTable(${i})">
+                    ${h} <i class="fas fa-sort text-gray-400 ml-1 text-xs"></i>
+                </th>
+            `).join('');
+            
+            let filteredData = csvData;
+            if (filter) {
+                filteredData = csvData.filter(row => 
+                    Object.values(row).some(val => val.toString().toLowerCase().includes(filter.toLowerCase()))
+                );
+            }
+            
+            const start = (currentPage - 1) * rowsPerPage;
+            const end = start + rowsPerPage;
+            const pageData = filteredData.slice(start, end);
+            const totalPages = Math.ceil(filteredData.length / rowsPerPage);
+            
+            tbody.innerHTML = pageData.map(row => `
+                <tr class="hover:bg-indigo-50 transition">
+                    ${headers.map(h => `<td class="px-4 py-3 text-gray-600">${row[h] || '<span class="text-gray-300">-</span>'}</td>`).join('')}
+                </tr>
+            `).join('');
+            
+            document.getElementById('showingInfo').textContent = 
+                `Showing ${filteredData.length > 0 ? start + 1 : 0}-${Math.min(end, filteredData.length)} of ${filteredData.length} rows`;
+            document.getElementById('pageIndicator').textContent = `Page ${currentPage} of ${totalPages || 1}`;
+            document.getElementById('prevPage').disabled = currentPage === 1;
+            document.getElementById('nextPage').disabled = end >= filteredData.length;
+        }
+
+        let sortColumn = -1, sortAsc = true;
+        function sortTable(colIndex) {
+            if (sortColumn === colIndex) sortAsc = !sortAsc;
+            else { sortColumn = colIndex; sortAsc = true; }
+            
+            const header = headers[colIndex];
+            csvData.sort((a, b) => {
+                let valA = a[header], valB = b[header];
+                if (!isNaN(parseFloat(valA)) && !isNaN(parseFloat(valB))) {
+                    valA = parseFloat(valA);
+                    valB = parseFloat(valB);
+                }
+                if (valA < valB) return sortAsc ? -1 : 1;
+                if (valA > valB) return sortAsc ? 1 : -1;
+                return 0;
+            });
+            currentPage = 1;
+            renderTable(document.getElementById('searchInput').value);
+        }
+
+        function filterTable(e) { currentPage = 1; renderTable(e.target.value); }
+        function changePage(delta) { currentPage += delta; renderTable(document.getElementById('searchInput').value); }
+
+        function formatNumber(num) {
+            if (isNaN(num)) return '-';
+            if (Math.abs(num) >= 1000000) return (num / 1000000).toFixed(1) + 'M';
+            if (Math.abs(num) >= 1000) return (num / 1000).toFixed(1) + 'K';
+            return num.toFixed(num % 1 === 0 ? 0 : 2);
+        }
+
+        function exportData() {
+            const filter = document.getElementById('searchInput').value;
+            let dataToExport = csvData;
+            if (filter) {
+                dataToExport = csvData.filter(row => 
+                    Object.values(row).some(val => val.toString().toLowerCase().includes(filter.toLowerCase()))
+                );
+            }
+            
+            const csvContent = [
+                headers.join(','),
+                ...dataToExport.map(row => headers.map(h => `"${row[h] || ''}"`).join(','))
+            ].join('\n');
+            
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `exported_data_${Date.now()}.csv`;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+    </script>
+</body>
+</html>
