@@ -1,0 +1,1416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Bheem Tracker</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { 
+            font-family: 'Noto Sans', sans-serif; 
+            -webkit-tap-highlight-color: transparent;
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        :root {
+            --cream-lighter: #FFFDF8;
+            --cream-light: #FDF8EF;
+            --cream: #F8F0E3;
+            --cream-dark: #EDE4D3;
+            --brown-lighter: #C4A882;
+            --brown-light: #A08060;
+            --brown: #7D5A3C;
+            --brown-dark: #5C4330;
+            --text-dark: #4A3728;
+            --text-light: #9B8B7A;
+        }
+        
+        html, body {
+            height: 100%;
+            background: var(--cream-light);
+            color: var(--text-dark);
+        }
+        
+        .status-completed { background: var(--cream-dark); color: var(--brown); }
+        .status-pending { background: var(--cream); color: var(--brown-dark); }
+        .status-not-required { background: var(--cream); color: var(--text-light); }
+        
+        .card { 
+            background: var(--cream-lighter); 
+            border-radius: 12px; 
+            box-shadow: 0 1px 4px rgba(74, 47, 23, 0.06);
+            border: 1px solid var(--cream-dark);
+        }
+        
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button { 
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
+        
+        .btn-adjust {
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            font-weight: bold;
+            border-radius: 10px;
+            user-select: none;
+            touch-action: manipulation;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn-minus {
+            background: var(--cream-dark);
+            color: var(--brown);
+        }
+        
+        .btn-plus {
+            background: var(--brown-light);
+            color: var(--cream-lighter);
+        }
+        
+        .btn-adjust:active {
+            transform: scale(0.95);
+            opacity: 0.9;
+        }
+        
+        .value-display {
+            font-size: 26px;
+            font-weight: bold;
+            min-width: 60px;
+            text-align: center;
+            background: var(--cream-lighter);
+            border: 1px solid var(--cream-dark);
+            border-radius: 8px;
+            padding: 4px 12px;
+            color: var(--brown-dark);
+        }
+        
+        .khata-btn {
+            min-width: 48px;
+            height: 36px;
+            padding: 6px 12px;
+            font-size: 13px;
+            font-weight: bold;
+            border-radius: 8px;
+            border: 1px solid var(--cream-dark);
+            background: var(--cream-lighter);
+            color: var(--brown);
+            touch-action: manipulation;
+            cursor: pointer;
+        }
+        
+        .khata-btn.selected {
+            border-color: var(--brown-light);
+            background: var(--cream);
+            color: var(--brown-dark);
+        }
+        
+        /* Toggle Switch */
+        .toggle-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .toggle-switch {
+            position: relative;
+            width: 46px;
+            height: 26px;
+            background: var(--cream-dark);
+            border-radius: 13px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .toggle-switch.active {
+            background: var(--brown-light);
+        }
+        
+        .toggle-switch::after {
+            content: '';
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 20px;
+            height: 20px;
+            background: var(--cream-lighter);
+            border-radius: 50%;
+            transition: transform 0.3s;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+        }
+        
+        .toggle-switch.active::after {
+            transform: translateX(20px);
+        }
+        
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--cream-lighter);
+            border-top: 1px solid var(--cream-dark);
+            z-index: 40;
+            padding-bottom: env(safe-area-inset-bottom);
+        }
+        
+        .nav-item {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 8px 4px 10px;
+            font-size: 10px;
+            font-weight: 500;
+            color: var(--text-light);
+            gap: 2px;
+            cursor: pointer;
+            border: none;
+            background: none;
+        }
+        
+        .nav-item.active {
+            color: var(--brown-dark);
+        }
+        
+        .nav-item .icon {
+            font-size: 20px;
+        }
+        
+        input, select {
+            font-size: 16px !important;
+        }
+        
+        .btn-primary {
+            background: var(--brown-light);
+            color: var(--cream-lighter);
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn-primary:active {
+            background: var(--brown);
+            transform: scale(0.98);
+        }
+        
+        .btn-secondary {
+            background: var(--cream-dark);
+            color: var(--brown);
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn-danger {
+            background: var(--cream);
+            color: var(--brown);
+            border: 1px solid var(--cream-dark);
+            cursor: pointer;
+        }
+        
+        .input-field {
+            width: 100%;
+            border: 1px solid var(--cream-dark);
+            border-radius: 8px;
+            padding: 10px 12px;
+            background: var(--cream);
+            color: var(--text-dark);
+            outline: none;
+        }
+        
+        .input-field:focus {
+            border-color: var(--brown-light);
+        }
+        
+        .section-box {
+            background: var(--cream);
+            border-radius: 10px;
+            padding: 12px;
+            border: 1px solid var(--cream-dark);
+        }
+        
+        .stat-box {
+            background: var(--cream-lighter);
+            border-radius: 6px;
+            padding: 6px 4px;
+            border: 1px solid var(--cream-dark);
+            text-align: center;
+        }
+        
+        .stat-label {
+            font-size: 10px;
+            color: var(--text-light);
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 2px;
+        }
+        
+        .stat-value {
+            font-size: 15px;
+            font-weight: bold;
+            color: var(--brown-dark);
+        }
+        
+        main {
+            padding: 12px;
+            padding-bottom: 75px;
+        }
+        
+        .page-title {
+            font-size: 15px;
+            font-weight: bold;
+            color: var(--brown-dark);
+            margin-bottom: 12px;
+        }
+        
+        .label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--brown);
+            margin-bottom: 6px;
+        }
+        
+        /* Calendar Navigation - Compact Single Line */
+        .calendar-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 6px 8px;
+            background: var(--cream);
+            border-radius: 10px;
+            border: 1px solid var(--cream-dark);
+        }
+        
+        .calendar-arrow {
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--cream);
+            color: var(--brown);
+            border: 1px solid var(--cream-dark);
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            touch-action: manipulation;
+            flex-shrink: 0;
+        }
+        
+        .calendar-arrow:active {
+            background: var(--brown-light);
+            color: var(--cream-lighter);
+            border-color: var(--brown-light);
+        }
+        
+        .calendar-center {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            flex: 1;
+        }
+        
+        .calendar-date-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 4px 10px;
+            background: var(--cream-lighter);
+            border: 1px solid var(--cream-dark);
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        
+        .calendar-date-btn:active {
+            background: var(--cream);
+        }
+        
+        .calendar-icon {
+            font-size: 14px;
+        }
+        
+        .calendar-date-text {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--brown-dark);
+            white-space: nowrap;
+        }
+        
+        .today-btn {
+            display: none;
+            padding: 4px 10px;
+            background: var(--cream-lighter);
+            color: var(--brown);
+            border: 1px solid var(--cream-dark);
+            border-radius: 14px;
+            font-size: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            flex-shrink: 0;
+            white-space: nowrap;
+        }
+        
+        .today-btn.visible {
+            display: inline-block;
+        }
+        
+        .today-btn:active {
+            transform: scale(0.95);
+            background: var(--brown-light);
+            color: var(--cream-lighter);
+            border-color: var(--brown-light);
+        }
+        
+        /* Hidden date input */
+        .hidden-date-input {
+            position: absolute;
+            opacity: 0;
+            width: 0;
+            height: 0;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header style="padding: 14px 16px; position: sticky; top: 0; z-index: 50; background: var(--cream); border-bottom: 1px solid var(--cream-dark);">
+        <h1 style="font-size: 20px; font-weight: bold; color: var(--brown-dark); display: flex; align-items: center; gap: 8px;">
+            📒 Bheem Tracker
+        </h1>
+        <p style="font-size: 12px; color: var(--text-light); margin-top: 3px;">Daily distribution management</p>
+    </header>
+
+    <main>
+        <!-- Daily Summary View -->
+        <section id="view-summary" style="display: flex; flex-direction: column; gap: 10px;">
+            <div class="card" style="padding: 12px;">
+                <h2 class="page-title" style="text-align: center; margin-bottom: 10px;">Daily Summary</h2>
+                
+                <div class="calendar-container" style="position: relative;">
+                    <button class="calendar-arrow" onclick="changeDate('summary', -1)">&lt;</button>
+                    <div class="calendar-center">
+                        <button id="summary-today-btn" class="today-btn" onclick="goToToday('summary')">Today</button>
+                        <div class="calendar-date-btn" onclick="openDatePicker('summary')">
+                            <span class="calendar-icon">📅</span>
+                            <span id="summary-date-text" class="calendar-date-text">01 Jan 2024</span>
+                        </div>
+                    </div>
+                    <button class="calendar-arrow" onclick="changeDate('summary', 1)">&gt;</button>
+                    <input type="date" id="summary-date" class="hidden-date-input" onchange="onDatePickerChange('summary')">
+                </div>
+            </div>
+            
+            <div id="summary-cards" style="display: flex; flex-direction: column; gap: 10px;">
+                <!-- Cards rendered here -->
+            </div>
+
+            <div id="summary-totals" class="card" style="padding: 12px; background: var(--cream);">
+                <!-- Totals rendered here -->
+            </div>
+        </section>
+
+        <!-- Entry View -->
+        <section id="view-entry" style="display: none; flex-direction: column; gap: 10px;">
+            <div class="card" style="padding: 12px;">
+                <h2 class="page-title" style="text-align: center; margin-bottom: 10px;">Record Entry</h2>
+                
+                <div class="calendar-container" style="margin-bottom: 10px; position: relative;">
+                    <button class="calendar-arrow" onclick="changeDate('entry', -1)">&lt;</button>
+                    <div class="calendar-center">
+                        <button id="entry-today-btn" class="today-btn" onclick="goToToday('entry')">Today</button>
+                        <div class="calendar-date-btn" onclick="openDatePicker('entry')">
+                            <span class="calendar-icon">📅</span>
+                            <span id="entry-date-text" class="calendar-date-text">01 Jan 2024</span>
+                        </div>
+                    </div>
+                    <button class="calendar-arrow" onclick="changeDate('entry', 1)">&gt;</button>
+                    <input type="date" id="entry-date" class="hidden-date-input" onchange="onDatePickerChange('entry')">
+                </div>
+
+                <div style="display: flex; flex-direction: column; gap: 8px;">
+                    <div>
+                        <label class="label">Select Khata</label>
+                        <div id="khata-buttons" style="display: flex; flex-wrap: wrap; gap: 5px;">
+                            <!-- Khata buttons rendered here -->
+                        </div>
+                    </div>
+
+                    <div id="entry-form-fields" style="display: none; flex-direction: column; gap: 8px; padding-top: 10px; border-top: 1px solid var(--cream-dark);">
+                        <div class="section-box" style="padding: 8px 10px;">
+                            <p style="font-size: 11px; color: var(--text-light);">Selected: <span id="selected-khata-name" style="font-weight: bold; color: var(--brown-dark);"></span></p>
+                            <p style="font-size: 11px; color: var(--text-light); margin-top: 2px;">Previous Pending: <span id="previous-pending" style="font-weight: bold; color: var(--brown);">0</span></p>
+                        </div>
+
+                        <!-- Required Entry -->
+                        <div class="section-box" style="padding: 10px;">
+                            <p style="font-size: 12px; font-weight: 600; color: var(--brown-dark); text-align: center; margin-bottom: 8px;">Bheem Required Today</p>
+                            <div style="display: flex; align-items: center; justify-content: center; gap: 10px;">
+                                <button onclick="adjustValue('entry-required', -1)" class="btn-adjust btn-minus">−</button>
+                                <span id="entry-required-display" class="value-display">0</span>
+                                <button onclick="adjustValue('entry-required', 1)" class="btn-adjust btn-plus">+</button>
+                            </div>
+                            <input type="number" id="entry-required" min="0" value="0" style="display: none;">
+                        </div>
+
+                        <!-- Given Entry -->
+                        <div class="section-box" style="padding: 10px;">
+                            <p style="font-size: 12px; font-weight: 600; color: var(--brown-dark); text-align: center; margin-bottom: 8px;">Bheem Given Today</p>
+                            <div style="display: flex; align-items: center; justify-content: center; gap: 10px;">
+                                <button onclick="adjustValue('entry-given', -1)" class="btn-adjust btn-minus">−</button>
+                                <span id="entry-given-display" class="value-display">0</span>
+                                <button onclick="adjustValue('entry-given', 1)" class="btn-adjust btn-plus">+</button>
+                            </div>
+                            <input type="number" id="entry-given" min="0" value="0" style="display: none;">
+                        </div>
+
+                        <!-- Calculated Pending -->
+                        <div class="section-box" style="text-align: center; padding: 10px;">
+                            <p style="font-size: 10px; color: var(--text-light);">New Pending</p>
+                            <p id="calculated-pending" style="font-size: 28px; font-weight: bold; color: var(--brown-dark); margin-top: 2px;">0</p>
+                            <p style="font-size: 9px; color: var(--text-light); margin-top: 2px;">(Previous + Required − Given)</p>
+                        </div>
+
+                        <button onclick="saveEntry()" class="btn-primary" style="width: 100%; padding: 10px; border-radius: 8px; font-weight: bold; font-size: 13px;">
+                            Save Entry
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Today's Entries -->
+            <div class="card" style="padding: 12px;">
+                <h3 style="font-size: 13px; font-weight: bold; color: var(--brown); margin-bottom: 10px;">Today's Entries</h3>
+                <div id="today-entries-list" style="display: flex; flex-direction: column; gap: 6px;">
+                    <!-- Entries list -->
+                </div>
+            </div>
+        </section>
+
+        <!-- History View -->
+        <section id="view-history" style="display: none; flex-direction: column; gap: 10px;">
+            <div class="card" style="padding: 12px;">
+                <h2 class="page-title">View History</h2>
+                
+                <div style="display: flex; gap: 8px; margin-bottom: 12px;">
+                    <button onclick="setHistoryView('khata')" id="history-by-khata" class="btn-primary" style="flex: 1; padding: 10px; border-radius: 8px; font-weight: 600; font-size: 13px;">
+                        By Khata
+                    </button>
+                    <button onclick="setHistoryView('date')" id="history-by-date" class="btn-secondary" style="flex: 1; padding: 10px; border-radius: 8px; font-weight: 600; font-size: 13px;">
+                        By Date
+                    </button>
+                </div>
+
+                <div id="history-khata-select">
+                    <label class="label">Select Khata</label>
+                    <select id="history-khata" onchange="renderHistory()" class="input-field">
+                        <option value="">-- Select Khata --</option>
+                    </select>
+                </div>
+
+                <div id="history-date-range" style="display: none; flex-direction: column; gap: 8px;">
+                    <div>
+                        <label class="label">From</label>
+                        <input type="date" id="history-from" onchange="renderHistory()" class="input-field">
+                    </div>
+                    <div>
+                        <label class="label">To</label>
+                        <input type="date" id="history-to" onchange="renderHistory()" class="input-field">
+                    </div>
+                </div>
+            </div>
+
+            <div id="history-stats" class="card" style="padding: 12px; display: none;">
+                <!-- Weekly stats -->
+            </div>
+
+            <div id="history-list" style="display: flex; flex-direction: column; gap: 6px;">
+                <!-- History entries -->
+            </div>
+        </section>
+
+        <!-- Khata Management View -->
+        <section id="view-khata" style="display: none; flex-direction: column; gap: 8px;">
+            <div class="card" style="padding: 12px;">
+                <h2 class="page-title">Add New Khata</h2>
+                
+                <div style="display: flex; flex-direction: column; gap: 10px;">
+                    <div>
+                        <label class="label">Short Code *</label>
+                        <input type="text" id="khata-code" placeholder="e.g., MH, ZH, BB" maxlength="5" class="input-field" style="text-transform: uppercase;">
+                    </div>
+                    <div>
+                        <label class="label">Name / Area (Optional)</label>
+                        <input type="text" id="khata-name" placeholder="e.g., Mohalla House" class="input-field">
+                    </div>
+                    <button onclick="addKhata()" class="btn-primary" style="width: 100%; padding: 12px; border-radius: 10px; font-weight: bold; font-size: 13px;">
+                        Add Khata
+                    </button>
+                </div>
+            </div>
+
+            <div class="card" style="padding: 12px;">
+                <h3 style="font-size: 14px; font-weight: bold; color: var(--brown-dark); margin-bottom: 10px;">Khata List</h3>
+                <div id="khata-list" style="display: flex; flex-direction: column; gap: 8px;">
+                    <!-- Khata list items -->
+                </div>
+            </div>
+
+            <!-- Backup Section -->
+            <div class="card" style="padding: 12px;">
+                <h3 style="font-size: 14px; font-weight: bold; color: var(--brown-dark); margin-bottom: 10px;">Backup & Restore</h3>
+                <div style="display: flex; flex-direction: column; gap: 8px;">
+                    <button onclick="downloadBackup()" class="btn-primary" style="width: 100%; padding: 10px; border-radius: 8px; font-weight: 600; font-size: 12px;">
+                        Download Backup (JSON)
+                    </button>
+                    <div>
+                        <input type="file" id="restore-file" accept=".json,application/json" onchange="importBackup(event)" style="display: none;">
+                        <button onclick="document.getElementById('restore-file').click()" class="btn-secondary" style="width: 100%; padding: 10px; border-radius: 8px; font-weight: 600; font-size: 12px; border: 1px solid var(--cream-dark);">
+                            Import Backup (JSON)
+                        </button>
+                    </div>
+                    <div id="last-backup-info" style="font-size: 10px; color: var(--text-light); text-align: center; padding: 6px; background: var(--cream); border-radius: 6px;">
+                        No backup yet
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav">
+        <div style="display: flex;">
+            <button onclick="showTab('summary')" id="tab-summary" class="nav-item active">
+                <span class="icon">📊</span>
+                <span>Today</span>
+            </button>
+            <button onclick="showTab('entry')" id="tab-entry" class="nav-item">
+                <span class="icon">✏️</span>
+                <span>Entry</span>
+            </button>
+            <button onclick="showTab('history')" id="tab-history" class="nav-item">
+                <span class="icon">📅</span>
+                <span>History</span>
+            </button>
+            <button onclick="showTab('khata')" id="tab-khata" class="nav-item">
+                <span class="icon">📋</span>
+                <span>Khata</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Toast Notification -->
+    <div id="toast" style="display: none; position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%); background: var(--brown-dark); color: var(--cream-lighter); padding: 10px 18px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); z-index: 50; font-size: 12px;">
+        <span id="toast-message"></span>
+    </div>
+
+    <script>
+        // ==================== DATA MANAGEMENT ====================
+        const STORAGE_KEYS = {
+            KHATAS: 'bheem_khatas',
+            ENTRIES: 'bheem_entries'
+        };
+
+        function loadData(key) {
+            const data = localStorage.getItem(key);
+            return data ? JSON.parse(data) : [];
+        }
+
+        function saveData(key, data) {
+            localStorage.setItem(key, JSON.stringify(data));
+        }
+
+        function getKhatas() {
+            return loadData(STORAGE_KEYS.KHATAS);
+        }
+
+        function getEntries() {
+            return loadData(STORAGE_KEYS.ENTRIES);
+        }
+
+        function saveKhatas(khatas) {
+            saveData(STORAGE_KEYS.KHATAS, khatas);
+        }
+
+        function saveEntries(entries) {
+            saveData(STORAGE_KEYS.ENTRIES, entries);
+        }
+
+        // ==================== BACKUP & RESTORE ====================
+        const BACKUP_DATE_KEY = 'bheem_last_backup';
+
+        function downloadBackup() {
+            const khatas = getKhatas();
+            const entries = getEntries();
+            
+            if (khatas.length === 0 && entries.length === 0) {
+                showToast('No data to backup');
+                return;
+            }
+
+            const backup = {
+                appName: 'Bheem Tracker',
+                version: 1,
+                createdAt: new Date().toISOString(),
+                khatas: khatas,
+                entries: entries,
+                totalKhatas: khatas.length,
+                totalEntries: entries.length
+            };
+            
+            const dataStr = JSON.stringify(backup, null, 2);
+            const blob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            
+            const fileName = `bheem-backup-${getToday()}.json`;
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = fileName;
+            a.style.display = 'none';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            localStorage.setItem(BACKUP_DATE_KEY, new Date().toISOString());
+            updateBackupInfo();
+            
+            showToast('Backup saved: ' + fileName);
+        }
+
+        function importBackup(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            if (!file.name.endsWith('.json')) {
+                showToast('Please select a JSON file');
+                event.target.value = '';
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const backup = JSON.parse(e.target.result);
+                    
+                    if (!backup.khatas || !Array.isArray(backup.khatas) || 
+                        !backup.entries || !Array.isArray(backup.entries)) {
+                        showToast('Invalid backup format');
+                        return;
+                    }
+
+                    if (backup.appName && backup.appName !== 'Bheem Tracker') {
+                        showToast('Not a Bheem Tracker backup');
+                        return;
+                    }
+
+                    const khataCount = backup.khatas.length;
+                    const entryCount = backup.entries.length;
+                    const backupDate = backup.createdAt ? formatDateTime(backup.createdAt) : 'Unknown date';
+
+                    const confirmMsg = 'Import backup from ' + backupDate + '?\n\nThis will replace:\n• ' + khataCount + ' Khata(s)\n• ' + entryCount + ' Entry(ies)\n\nYour current data will be lost!';
+                    
+                    if (!confirm(confirmMsg)) {
+                        event.target.value = '';
+                        return;
+                    }
+
+                    saveKhatas(backup.khatas);
+                    saveEntries(backup.entries);
+                    
+                    showToast('Imported: ' + khataCount + ' khatas, ' + entryCount + ' entries');
+                    
+                    renderKhataList();
+                    renderSummary();
+                    renderHistory();
+                    
+                } catch (err) {
+                    showToast('Error reading backup file');
+                    console.error('Import error:', err);
+                }
+            };
+            
+            reader.onerror = function() {
+                showToast('Failed to read file');
+            };
+            
+            reader.readAsText(file);
+            event.target.value = '';
+        }
+
+        function formatDateTime(isoString) {
+            const date = new Date(isoString);
+            return date.toLocaleDateString('en-IN', { 
+                day: '2-digit', 
+                month: 'short', 
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+
+        function updateBackupInfo() {
+            const lastBackup = localStorage.getItem(BACKUP_DATE_KEY);
+            const infoEl = document.getElementById('last-backup-info');
+            
+            if (lastBackup) {
+                infoEl.innerHTML = 'Last backup: <strong>' + formatDateTime(lastBackup) + '</strong>';
+            } else {
+                infoEl.textContent = 'No backup yet';
+            }
+        }
+
+        // ==================== UTILITY FUNCTIONS ====================
+        const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        
+        function formatDate(dateStr) {
+            const date = new Date(dateStr + 'T00:00:00');
+            return date.getDate() + ' ' + MONTHS[date.getMonth()];
+        }
+        
+        function formatDateFull(dateStr) {
+            const date = new Date(dateStr + 'T00:00:00');
+            return date.getDate() + ' ' + MONTHS[date.getMonth()] + ' ' + date.getFullYear();
+        }
+
+        function getToday() {
+            return new Date().toISOString().split('T')[0];
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-message').textContent = message;
+            toast.style.display = 'block';
+            setTimeout(() => toast.style.display = 'none', 2000);
+        }
+
+        function generateId() {
+            return Date.now().toString(36) + Math.random().toString(36).substr(2);
+        }
+
+        // ==================== CALENDAR NAVIGATION ====================
+        function updateCalendarDisplay(section) {
+            const dateInput = document.getElementById(section + '-date');
+            const dateStr = dateInput.value || getToday();
+            
+            document.getElementById(section + '-date-text').textContent = formatDateFull(dateStr);
+            
+            const todayBtn = document.getElementById(section + '-today-btn');
+            if (dateStr === getToday()) {
+                todayBtn.classList.remove('visible');
+            } else {
+                todayBtn.classList.add('visible');
+            }
+        }
+        
+        function changeDate(section, delta) {
+            const dateInput = document.getElementById(section + '-date');
+            const currentDateStr = dateInput.value || getToday();
+            const parts = currentDateStr.split('-');
+            const currentDate = new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
+            currentDate.setDate(currentDate.getDate() + delta);
+            
+            const year = currentDate.getFullYear();
+            const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+            const day = String(currentDate.getDate()).padStart(2, '0');
+            dateInput.value = year + '-' + month + '-' + day;
+            
+            updateCalendarDisplay(section);
+            
+            if (section === 'summary') {
+                renderSummary();
+            } else if (section === 'entry') {
+                renderTodayEntries();
+                if (selectedKhataId) selectKhata(selectedKhataId);
+            }
+        }
+        
+        function openDatePicker(section) {
+            const dateInput = document.getElementById(section + '-date');
+            dateInput.showPicker();
+        }
+        
+        function onDatePickerChange(section) {
+            updateCalendarDisplay(section);
+            
+            if (section === 'summary') {
+                renderSummary();
+            } else if (section === 'entry') {
+                renderTodayEntries();
+                if (selectedKhataId) selectKhata(selectedKhataId);
+            }
+        }
+        
+        function goToToday(section) {
+            const dateInput = document.getElementById(section + '-date');
+            dateInput.value = getToday();
+            
+            updateCalendarDisplay(section);
+            
+            if (section === 'summary') {
+                renderSummary();
+            } else if (section === 'entry') {
+                renderTodayEntries();
+                if (selectedKhataId) selectKhata(selectedKhataId);
+            }
+            
+            showToast('Jumped to today');
+        }
+
+        // ==================== PENDING CALCULATION ====================
+        function getPreviousPending(khataId, beforeDate) {
+            const entries = getEntries()
+                .filter(e => e.khataId === khataId && e.date < beforeDate)
+                .sort((a, b) => a.date.localeCompare(b.date));
+            
+            let pending = 0;
+            for (const entry of entries) {
+                pending = pending + (entry.required || 0) - (entry.given || 0);
+            }
+            return Math.max(0, pending);
+        }
+
+        function getEntryForDate(khataId, date) {
+            return getEntries().find(e => e.khataId === khataId && e.date === date);
+        }
+
+        // ==================== TAB NAVIGATION ====================
+        function showTab(tabName) {
+            document.querySelectorAll('[id^="view-"]').forEach(v => v.style.display = 'none');
+            document.querySelectorAll('.nav-item').forEach(t => t.classList.remove('active'));
+            
+            document.getElementById('view-' + tabName).style.display = 'flex';
+            document.getElementById('tab-' + tabName).classList.add('active');
+
+            if (tabName === 'summary') renderSummary();
+            if (tabName === 'entry') renderEntryView();
+            if (tabName === 'history') renderHistory();
+            if (tabName === 'khata') renderKhataList();
+        }
+
+        // ==================== KHATA MANAGEMENT ====================
+        function addKhata() {
+            const code = document.getElementById('khata-code').value.trim().toUpperCase();
+            const name = document.getElementById('khata-name').value.trim();
+
+            if (!code) {
+                showToast('Enter short code');
+                return;
+            }
+
+            const khatas = getKhatas();
+            if (khatas.some(k => k.code === code)) {
+                showToast('Code exists');
+                return;
+            }
+
+            khatas.push({
+                id: generateId(),
+                code: code,
+                name: name,
+                active: true,
+                createdAt: new Date().toISOString()
+            });
+
+            saveKhatas(khatas);
+            document.getElementById('khata-code').value = '';
+            document.getElementById('khata-name').value = '';
+            renderKhataList();
+            showToast('Khata added');
+        }
+
+        function toggleKhataStatus(id) {
+            const khatas = getKhatas();
+            const khata = khatas.find(k => k.id === id);
+            if (khata) {
+                khata.active = !khata.active;
+                saveKhatas(khatas);
+                renderKhataList();
+            }
+        }
+
+        function deleteKhata(id) {
+            if (!confirm('Delete khata and all entries?')) return;
+            
+            let khatas = getKhatas().filter(k => k.id !== id);
+            let entries = getEntries().filter(e => e.khataId !== id);
+            
+            saveKhatas(khatas);
+            saveEntries(entries);
+            renderKhataList();
+            showToast('Deleted');
+        }
+
+        function renderKhataList() {
+            const khatas = getKhatas();
+            const container = document.getElementById('khata-list');
+
+            if (khatas.length === 0) {
+                container.innerHTML = '<p style="color: var(--text-light); text-align: center; padding: 16px; font-size: 12px;">No khata added yet</p>';
+                return;
+            }
+
+            container.innerHTML = khatas.map(k => `
+                <div style="padding: 10px; border-radius: 8px; border: 1px solid ${k.active ? 'var(--brown-lighter)' : 'var(--cream-dark)'}; background: ${k.active ? 'var(--cream)' : 'var(--cream-lighter)'};">
+                    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <span style="font-size: 15px; font-weight: bold; color: ${k.active ? 'var(--brown-dark)' : 'var(--text-light)'};">${k.code}</span>
+                            <span style="font-size: 12px; color: ${k.active ? 'var(--text-dark)' : 'var(--text-light)'};">${k.name || ''}</span>
+                        </div>
+                        <div class="toggle-container">
+                            <div class="toggle-switch ${k.active ? 'active' : ''}" onclick="toggleKhataStatus('${k.id}')"></div>
+                        </div>
+                    </div>
+                    <button onclick="deleteKhata('${k.id}')" class="btn-danger" style="width: 100%; padding: 6px; border-radius: 6px; font-size: 11px; font-weight: 600;">
+                        Delete
+                    </button>
+                </div>
+            `).join('');
+            
+            updateBackupInfo();
+        }
+
+        // ==================== ENTRY MANAGEMENT ====================
+        let selectedKhataId = null;
+
+        function renderEntryView() {
+            const today = getToday();
+            document.getElementById('entry-date').value = today;
+            updateCalendarDisplay('entry');
+            renderKhataButtons();
+            renderTodayEntries();
+            selectedKhataId = null;
+            document.getElementById('entry-form-fields').style.display = 'none';
+        }
+
+        function renderKhataButtons() {
+            const khatas = getKhatas().filter(k => k.active);
+            const container = document.getElementById('khata-buttons');
+
+            if (khatas.length === 0) {
+                container.innerHTML = '<p style="color: var(--text-light); font-size: 11px;">No active khata</p>';
+                return;
+            }
+
+            container.innerHTML = khatas.map(k => `
+                <button onclick="selectKhata('${k.id}')" id="khata-btn-${k.id}" class="khata-btn">${k.code}</button>
+            `).join('');
+        }
+
+        function selectKhata(khataId) {
+            selectedKhataId = khataId;
+            const khatas = getKhatas();
+            const khata = khatas.find(k => k.id === khataId);
+            const date = document.getElementById('entry-date').value;
+
+            document.querySelectorAll('.khata-btn').forEach(btn => btn.classList.remove('selected'));
+            document.getElementById('khata-btn-' + khataId).classList.add('selected');
+
+            document.getElementById('entry-form-fields').style.display = 'flex';
+            document.getElementById('selected-khata-name').textContent = khata.code + (khata.name ? ' - ' + khata.name : '');
+
+            const existingEntry = getEntryForDate(khataId, date);
+            const prevPending = getPreviousPending(khataId, date);
+            
+            document.getElementById('previous-pending').textContent = prevPending;
+            
+            const requiredVal = existingEntry ? existingEntry.required : 0;
+            const givenVal = existingEntry ? existingEntry.given : 0;
+            
+            document.getElementById('entry-required').value = requiredVal;
+            document.getElementById('entry-given').value = givenVal;
+            document.getElementById('entry-required-display').textContent = requiredVal;
+            document.getElementById('entry-given-display').textContent = givenVal;
+            
+            updateCalculatedPending();
+            
+            setTimeout(() => {
+                document.getElementById('entry-form-fields').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
+        }
+
+        function adjustValue(inputId, delta) {
+            const input = document.getElementById(inputId);
+            const display = document.getElementById(inputId + '-display');
+            const newValue = Math.max(0, parseInt(input.value || 0) + delta);
+            input.value = newValue;
+            display.textContent = newValue;
+            updateCalculatedPending();
+        }
+
+        function updateCalculatedPending() {
+            const prevPending = parseInt(document.getElementById('previous-pending').textContent) || 0;
+            const required = parseInt(document.getElementById('entry-required').value) || 0;
+            const given = parseInt(document.getElementById('entry-given').value) || 0;
+            const newPending = Math.max(0, prevPending + required - given);
+            document.getElementById('calculated-pending').textContent = newPending;
+        }
+
+        function saveEntry() {
+            if (!selectedKhataId) {
+                showToast('Select a khata');
+                return;
+            }
+
+            const date = document.getElementById('entry-date').value;
+            const required = parseInt(document.getElementById('entry-required').value) || 0;
+            const given = parseInt(document.getElementById('entry-given').value) || 0;
+
+            let entries = getEntries();
+            const existingIndex = entries.findIndex(e => e.khataId === selectedKhataId && e.date === date);
+
+            const entryData = {
+                id: existingIndex >= 0 ? entries[existingIndex].id : generateId(),
+                khataId: selectedKhataId,
+                date: date,
+                required: required,
+                given: given,
+                updatedAt: new Date().toISOString()
+            };
+
+            if (existingIndex >= 0) {
+                entries[existingIndex] = entryData;
+            } else {
+                entries.push(entryData);
+            }
+
+            saveEntries(entries);
+            showToast('Saved');
+            renderTodayEntries();
+            
+            selectedKhataId = null;
+            document.getElementById('entry-form-fields').style.display = 'none';
+            document.querySelectorAll('.khata-btn').forEach(btn => btn.classList.remove('selected'));
+        }
+
+        function renderTodayEntries() {
+            const date = document.getElementById('entry-date').value;
+            const entries = getEntries().filter(e => e.date === date);
+            const khatas = getKhatas();
+            const container = document.getElementById('today-entries-list');
+
+            if (entries.length === 0) {
+                container.innerHTML = '<p style="color: var(--text-light); text-align: center; padding: 10px; font-size: 11px;">No entries</p>';
+                return;
+            }
+
+            container.innerHTML = entries.map(e => {
+                const khata = khatas.find(k => k.id === e.khataId);
+                if (!khata) return '';
+                const prevPending = getPreviousPending(e.khataId, e.date);
+                const newPending = Math.max(0, prevPending + e.required - e.given);
+                return `
+                    <div class="card" style="padding: 8px; display: flex; align-items: center; justify-content: space-between;">
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <span style="font-size: 14px; font-weight: bold; color: var(--brown);">${khata.code}</span>
+                            <div style="font-size: 11px;">
+                                <span style="color: var(--text-dark);">R:${e.required} G:${e.given}</span>
+                                <span style="color: var(--brown); margin-left: 4px;">P:${newPending}</span>
+                            </div>
+                        </div>
+                        <button onclick="selectKhata('${e.khataId}')" style="color: var(--brown-dark); font-size: 11px; font-weight: bold; padding: 6px 10px; background: var(--cream); border-radius: 6px; border: none; cursor: pointer;">
+                            Edit
+                        </button>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // ==================== DAILY SUMMARY ====================
+        function renderSummary() {
+            const date = document.getElementById('summary-date').value || getToday();
+            document.getElementById('summary-date').value = date;
+            updateCalendarDisplay('summary');
+
+            const khatas = getKhatas().filter(k => k.active);
+            const entries = getEntries();
+            const container = document.getElementById('summary-cards');
+
+            let totalRequired = 0;
+            let totalGiven = 0;
+            let totalPending = 0;
+
+            if (khatas.length === 0) {
+                container.innerHTML = '<p style="color: var(--text-light); text-align: center; padding: 20px; font-size: 12px;">No active khata</p>';
+                document.getElementById('summary-totals').style.display = 'none';
+                return;
+            }
+
+            const summaryData = khatas.map(k => {
+                const entry = entries.find(e => e.khataId === k.id && e.date === date);
+                const prevPending = getPreviousPending(k.id, date);
+                const required = entry ? entry.required : 0;
+                const given = entry ? entry.given : 0;
+                const currentPending = Math.max(0, prevPending + required - given);
+
+                let status, statusClass;
+                if (given >= required && required > 0) {
+                    status = 'Done';
+                    statusClass = 'status-completed';
+                } else if (required === 0 && prevPending === 0) {
+                    status = 'N/A';
+                    statusClass = 'status-not-required';
+                } else if (currentPending > 0) {
+                    status = 'Pending';
+                    statusClass = 'status-pending';
+                } else {
+                    status = 'Done';
+                    statusClass = 'status-completed';
+                }
+
+                totalRequired += required;
+                totalGiven += given;
+                totalPending += currentPending;
+
+                return { khata: k, prevPending, required, given, currentPending, status, statusClass };
+            });
+
+            container.innerHTML = summaryData.map(s => `
+                <div class="card" style="padding: 12px;">
+                    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <span style="font-size: 15px; font-weight: bold; color: var(--brown-dark);">${s.khata.code}</span>
+                            ${s.khata.name ? '<span style="color: var(--text-light); font-size: 12px;">' + s.khata.name + '</span>' : ''}
+                        </div>
+                        <span class="${s.statusClass}" style="padding: 4px 10px; border-radius: 10px; font-size: 11px; font-weight: bold;">${s.status}</span>
+                    </div>
+                    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px;">
+                        <div class="stat-box">
+                            <p class="stat-label">Prev</p>
+                            <p class="stat-value">${s.prevPending}</p>
+                        </div>
+                        <div class="stat-box">
+                            <p class="stat-label">Req</p>
+                            <p class="stat-value">${s.required}</p>
+                        </div>
+                        <div class="stat-box">
+                            <p class="stat-label">Given</p>
+                            <p class="stat-value">${s.given}</p>
+                        </div>
+                        <div class="stat-box">
+                            <p class="stat-label">Now</p>
+                            <p class="stat-value">${s.currentPending}</p>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            document.getElementById('summary-totals').style.display = 'block';
+            document.getElementById('summary-totals').innerHTML = `
+                <h3 style="font-size: 14px; font-weight: bold; color: var(--brown-dark); margin-bottom: 10px;">Total</h3>
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;">
+                    <div class="stat-box" style="background: var(--cream-lighter);">
+                        <p class="stat-label">Required</p>
+                        <p class="stat-value" style="font-size: 18px;">${totalRequired}</p>
+                    </div>
+                    <div class="stat-box" style="background: var(--cream-lighter);">
+                        <p class="stat-label">Given</p>
+                        <p class="stat-value" style="font-size: 18px;">${totalGiven}</p>
+                    </div>
+                    <div class="stat-box" style="background: var(--cream-lighter);">
+                        <p class="stat-label">Pending</p>
+                        <p class="stat-value" style="font-size: 18px;">${totalPending}</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        // ==================== HISTORY VIEW ====================
+        let historyViewType = 'khata';
+
+        function setHistoryView(type) {
+            historyViewType = type;
+            
+            const khataBtn = document.getElementById('history-by-khata');
+            const dateBtn = document.getElementById('history-by-date');
+            
+            if (type === 'khata') {
+                khataBtn.className = 'btn-primary';
+                khataBtn.style.cssText = 'flex: 1; padding: 10px; border-radius: 8px; font-weight: 600; font-size: 12px;';
+                dateBtn.className = 'btn-secondary';
+                dateBtn.style.cssText = 'flex: 1; padding: 10px; border-radius: 8px; font-weight: 600; font-size: 12px;';
+            } else {
+                khataBtn.className = 'btn-secondary';
+                khataBtn.style.cssText = 'flex: 1; padding: 10px; border-radius: 8px; font-weight: 600; font-size: 12px;';
+                dateBtn.className = 'btn-primary';
+                dateBtn.style.cssText = 'flex: 1; padding: 10px; border-radius: 8px; font-weight: 600; font-size: 12px;';
+            }
+
+            document.getElementById('history-khata-select').style.display = type === 'khata' ? 'block' : 'none';
+            document.getElementById('history-date-range').style.display = type === 'date' ? 'flex' : 'none';
+
+            renderHistory();
+        }
+
+        function renderHistory() {
+            const khatas = getKhatas();
+            const entries = getEntries();
+            
+            const khataSelect = document.getElementById('history-khata');
+            if (khataSelect.options.length <= 1) {
+                khatas.forEach(k => {
+                    const option = document.createElement('option');
+                    option.value = k.id;
+                    option.textContent = k.code + (k.name ? ' - ' + k.name : '');
+                    khataSelect.appendChild(option);
+                });
+            }
+
+            const container = document.getElementById('history-list');
+            const statsContainer = document.getElementById('history-stats');
+
+            if (historyViewType === 'khata') {
+                const selectedKhata = khataSelect.value;
+                if (!selectedKhata) {
+                    container.innerHTML = '<p style="color: var(--text-light); text-align: center; padding: 20px; font-size: 11px;">Select khata</p>';
+                    statsContainer.style.display = 'none';
+                    return;
+                }
+
+                const khataEntries = entries
+                    .filter(e => e.khataId === selectedKhata)
+                    .sort((a, b) => b.date.localeCompare(a.date));
+
+                if (khataEntries.length === 0) {
+                    container.innerHTML = '<p style="color: var(--text-light); text-align: center; padding: 20px; font-size: 11px;">No entries</p>';
+                    statsContainer.style.display = 'none';
+                    return;
+                }
+
+                const last7Days = khataEntries.slice(0, 7);
+                const avgRequired = last7Days.length > 0 
+                    ? (last7Days.reduce((sum, e) => sum + e.required, 0) / last7Days.length).toFixed(1) 
+                    : 0;
+                const avgGiven = last7Days.length > 0 
+                    ? (last7Days.reduce((sum, e) => sum + e.given, 0) / last7Days.length).toFixed(1) 
+                    : 0;
+
+                statsContainer.style.display = 'block';
+                statsContainer.innerHTML = `
+                    <h3 style="font-size: 12px; font-weight: bold; color: var(--brown-dark); margin-bottom: 8px;">Weekly Avg</h3>
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px;">
+                        <div class="stat-box">
+                            <p class="stat-label">Req</p>
+                            <p class="stat-value">${avgRequired}</p>
+                        </div>
+                        <div class="stat-box">
+                            <p class="stat-label">Given</p>
+                            <p class="stat-value">${avgGiven}</p>
+                        </div>
+                    </div>
+                `;
+
+                container.innerHTML = khataEntries.map(e => {
+                    const prevPending = getPreviousPending(e.khataId, e.date);
+                    const newPending = Math.max(0, prevPending + e.required - e.given);
+                    return `
+                        <div class="card" style="padding: 8px;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                                <span style="font-weight: bold; color: var(--brown-dark); font-size: 12px;">${formatDate(e.date)}</span>
+                                <span style="font-size: 11px; padding: 3px 8px; border-radius: 6px; font-weight: 600; background: var(--cream); color: var(--brown);">
+                                    P: ${newPending}
+                                </span>
+                            </div>
+                            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px;">
+                                <div class="stat-box">
+                                    <p class="stat-label">Prev</p>
+                                    <p style="font-weight: bold; color: var(--text-dark); font-size: 13px;">${prevPending}</p>
+                                </div>
+                                <div class="stat-box">
+                                    <p class="stat-label">Req</p>
+                                    <p style="font-weight: bold; color: var(--text-dark); font-size: 13px;">${e.required}</p>
+                                </div>
+                                <div class="stat-box">
+                                    <p class="stat-label">Given</p>
+                                    <p style="font-weight: bold; color: var(--text-dark); font-size: 13px;">${e.given}</p>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+
+            } else {
+                const fromDate = document.getElementById('history-from').value;
+                const toDate = document.getElementById('history-to').value;
+
+                if (!fromDate || !toDate) {
+                    container.innerHTML = '<p style="color: var(--text-light); text-align: center; padding: 20px; font-size: 11px;">Select dates</p>';
+                    statsContainer.style.display = 'none';
+                    return;
+                }
+
+                const rangeEntries = entries
+                    .filter(e => e.date >= fromDate && e.date <= toDate)
+                    .sort((a, b) => b.date.localeCompare(a.date));
+
+                if (rangeEntries.length === 0) {
+                    container.innerHTML = '<p style="color: var(--text-light); text-align: center; padding: 20px; font-size: 11px;">No entries</p>';
+                    statsContainer.style.display = 'none';
+                    return;
+                }
+
+                const groupedByDate = {};
+                rangeEntries.forEach(e => {
+                    if (!groupedByDate[e.date]) groupedByDate[e.date] = [];
+                    groupedByDate[e.date].push(e);
+                });
+
+                statsContainer.style.display = 'none';
+                container.innerHTML = Object.entries(groupedByDate).map(([date, dayEntries]) => `
+                    <div class="card" style="padding: 8px;">
+                        <h4 style="font-weight: bold; color: var(--brown-dark); margin-bottom: 6px; padding-bottom: 6px; border-bottom: 1px solid var(--cream-dark); font-size: 12px;">${formatDate(date)}</h4>
+                        <div style="display: flex; flex-direction: column; gap: 4px;">
+                            ${dayEntries.map(e => {
+                                const khata = khatas.find(k => k.id === e.khataId);
+                                if (!khata) return '';
+                                return `
+                                    <div style="display: flex; justify-content: space-between; align-items: center; background: var(--cream); border-radius: 6px; padding: 6px 8px;">
+                                        <span style="font-weight: bold; color: var(--brown-dark); font-size: 12px;">${khata.code}</span>
+                                        <span style="font-size: 11px; color: var(--text-dark);">R:${e.required} G:${e.given}</span>
+                                    </div>
+                                `;
+                            }).join('')}
+                        </div>
+                    </div>
+                `).join('');
+            }
+        }
+
+        // ==================== INITIALIZATION ====================
+        function init() {
+            document.getElementById('summary-date').value = getToday();
+            document.getElementById('entry-date').value = getToday();
+            
+            updateCalendarDisplay('summary');
+            updateCalendarDisplay('entry');
+            
+            const today = new Date();
+            const weekAgo = new Date(today);
+            weekAgo.setDate(weekAgo.getDate() - 7);
+            document.getElementById('history-to').value = getToday();
+            document.getElementById('history-from').value = weekAgo.toISOString().split('T')[0];
+
+            renderSummary();
+            updateBackupInfo();
+
+            if (getKhatas().length === 0) {
+                showToast('Add Khata first');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
