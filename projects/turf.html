@@ -1,0 +1,1121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>🏏 Malegaon Turf Booking</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { 
+            font-family: 'Poppins', sans-serif; 
+            -webkit-tap-highlight-color: transparent;
+            box-sizing: border-box;
+        }
+        
+        body {
+            padding-bottom: 90px;
+        }
+        
+        .cricket-bg {
+            background: linear-gradient(135deg, #0f2d1a 0%, #1a472a 50%, #0f2d1a 100%);
+            min-height: 100vh;
+        }
+        
+        .grass-pattern {
+            background: repeating-linear-gradient(
+                90deg,
+                #2d5a3f 0px,
+                #2d5a3f 20px,
+                #3a6b4a 20px,
+                #3a6b4a 40px
+            );
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+        
+        .bounce { animation: bounce 2s ease-in-out infinite; }
+        
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 15px rgba(234, 179, 8, 0.5); }
+            50% { box-shadow: 0 0 30px rgba(234, 179, 8, 0.8); }
+        }
+        
+        .glow { animation: pulse-glow 2s ease-in-out infinite; }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .card-hover:active {
+            transform: scale(0.98);
+        }
+        
+        @media (hover: hover) {
+            .card-hover:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 15px 30px rgba(0,0,0,0.4);
+            }
+        }
+        
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            background: linear-gradient(to top, #0f2d1a, #1a472a);
+            border-top: 3px solid #fbbf24;
+            padding: 10px 0;
+            padding-bottom: max(10px, env(safe-area-inset-bottom));
+        }
+        
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            padding: 8px 16px;
+            border-radius: 12px;
+            transition: all 0.2s;
+            color: #86efac;
+            cursor: pointer;
+            border: none;
+            background: transparent;
+        }
+        
+        .nav-item.active {
+            background: rgba(251, 191, 36, 0.2);
+            color: #fbbf24;
+        }
+        
+        .nav-item:active {
+            transform: scale(0.95);
+        }
+        
+        .modal {
+            backdrop-filter: blur(8px);
+        }
+        
+        .modal-content {
+            max-height: 90vh;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        input, select, textarea {
+            font-size: 16px !important;
+        }
+        
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #fbbf24 !important;
+            box-shadow: 0 0 0 3px rgba(251, 191, 36, 0.3);
+        }
+        
+        .btn {
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s ease;
+        }
+        
+        .btn:active {
+            transform: scale(0.97);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            color: #0f2d1a;
+            font-weight: 700;
+        }
+        
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+        }
+        
+        .btn-primary:disabled {
+            background: #4b5563;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .owner-card {
+            background: linear-gradient(135deg, #166534, #15803d);
+            border: 2px solid #22c55e;
+        }
+        
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="cricket-bg">
+    <!-- Header -->
+    <header class="sticky top-0 z-50 bg-gradient-to-r from-green-900 via-green-800 to-green-900 shadow-xl border-b-4 border-yellow-500">
+        <div class="px-4 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <div class="text-4xl bounce">🏏</div>
+                    <div>
+                        <h1 class="text-xl font-extrabold text-white leading-tight">Malegaon Turf</h1>
+                        <p class="text-yellow-400 text-xs font-semibold">Book Your Cricket Ground</p>
+                    </div>
+                </div>
+                <div class="bg-yellow-500 text-green-900 px-3 py-1.5 rounded-full font-bold text-sm">
+                    ₹/Hour
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <div id="hero" class="px-4 py-8 text-center">
+        <div class="max-w-lg mx-auto">
+            <h2 class="text-3xl font-extrabold text-white mb-3 drop-shadow-lg">
+                ⚡ Book Your <span class="text-yellow-400">Turf</span>
+            </h2>
+            <p class="text-base text-green-200 mb-5">Best cricket turfs in Malegaon • 1 Hour Slots</p>
+            
+            <!-- Stats Cards -->
+            <div class="grid grid-cols-2 gap-4">
+                <div class="bg-white/10 backdrop-blur-sm rounded-xl px-4 py-4">
+                    <div class="text-3xl font-bold text-yellow-400" id="turfCount">0</div>
+                    <div class="text-green-200 text-sm">Turfs Available</div>
+                </div>
+                <div class="bg-white/10 backdrop-blur-sm rounded-xl px-4 py-4">
+                    <div class="text-3xl font-bold text-yellow-400" id="bookingCount">0</div>
+                    <div class="text-green-200 text-sm">Total Bookings</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="px-4 pb-6">
+        
+        <!-- Home Section - Turf Listings -->
+        <section id="homeSection" class="section">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-xl font-bold text-white flex items-center gap-2">
+                    🏟️ Available Turfs
+                </h3>
+                <select id="priceFilter" class="px-4 py-2.5 text-sm rounded-xl bg-green-800 text-white border-2 border-green-600">
+                    <option value="">All Prices</option>
+                    <option value="0-500">Under ₹500/hr</option>
+                    <option value="500-800">₹500-₹800/hr</option>
+                    <option value="800+">Above ₹800/hr</option>
+                </select>
+            </div>
+            
+            <div id="turfList" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <!-- Turfs will be loaded here -->
+            </div>
+            
+            <div id="noTurfs" class="hidden text-center py-12">
+                <div class="text-6xl mb-4">🏏</div>
+                <h4 class="text-2xl font-bold text-white mb-2">No Turfs Available</h4>
+                <p class="text-green-200 text-base mb-5">Be the first to register your turf!</p>
+                <button type="button" class="btn btn-primary px-6 py-3 rounded-xl text-lg glow" id="registerFirstBtn">
+                    ➕ Register Turf
+                </button>
+            </div>
+        </section>
+
+        <!-- Register Turf Section -->
+        <section id="registerSection" class="section hidden">
+            <div class="max-w-lg mx-auto">
+                <div class="bg-gradient-to-br from-green-800 to-green-900 rounded-2xl p-6 shadow-2xl border-2 border-green-600">
+                    <div class="text-center mb-6">
+                        <div class="text-5xl mb-3">🏟️</div>
+                        <h3 class="text-2xl font-bold text-white">Register Your Turf</h3>
+                        <p class="text-green-200">List your cricket ground in Malegaon</p>
+                    </div>
+                    
+                    <form id="registerForm" class="space-y-5">
+                        <div>
+                            <label class="block text-yellow-400 font-semibold mb-2">🏟️ Turf Name</label>
+                            <input type="text" id="turfName" required placeholder="e.g., Champions Arena" 
+                                class="w-full px-4 py-3.5 rounded-xl bg-green-700 text-white placeholder-green-300 border-2 border-green-600 text-base">
+                        </div>
+                        
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-yellow-400 font-semibold mb-2">👤 Owner Name</label>
+                                <input type="text" id="ownerName" required placeholder="Your name"
+                                    class="w-full px-4 py-3.5 rounded-xl bg-green-700 text-white placeholder-green-300 border-2 border-green-600">
+                            </div>
+                            <div>
+                                <label class="block text-yellow-400 font-semibold mb-2">📞 Contact No.</label>
+                                <input type="tel" id="contact" required placeholder="Mobile number"
+                                    class="w-full px-4 py-3.5 rounded-xl bg-green-700 text-white placeholder-green-300 border-2 border-green-600">
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-yellow-400 font-semibold mb-2">📍 Address (Malegaon)</label>
+                            <input type="text" id="address" required placeholder="Area/Locality in Malegaon"
+                                class="w-full px-4 py-3.5 rounded-xl bg-green-700 text-white placeholder-green-300 border-2 border-green-600">
+                        </div>
+                        
+                        <div class="grid grid-cols-3 gap-3">
+                            <div>
+                                <label class="block text-yellow-400 font-semibold mb-2">💰 ₹/Hour</label>
+                                <input type="number" id="price" required min="100" placeholder="500"
+                                    class="w-full px-4 py-3.5 rounded-xl bg-green-700 text-white placeholder-green-300 border-2 border-green-600">
+                            </div>
+                            <div>
+                                <label class="block text-yellow-400 font-semibold mb-2">🌅 Open</label>
+                                <input type="time" id="openTime" required value="06:00"
+                                    class="w-full px-3 py-3.5 rounded-xl bg-green-700 text-white border-2 border-green-600">
+                            </div>
+                            <div>
+                                <label class="block text-yellow-400 font-semibold mb-2">🌙 Close</label>
+                                <input type="time" id="closeTime" required value="23:00"
+                                    class="w-full px-3 py-3.5 rounded-xl bg-green-700 text-white border-2 border-green-600">
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-yellow-400 font-semibold mb-3">✨ Amenities</label>
+                            <div class="grid grid-cols-2 gap-3">
+                                <label class="flex items-center gap-3 text-white cursor-pointer bg-green-700/50 rounded-xl py-3 px-4">
+                                    <input type="checkbox" value="Floodlights" class="amenity w-5 h-5 accent-yellow-400"> 
+                                    <span>💡 Floodlights</span>
+                                </label>
+                                <label class="flex items-center gap-3 text-white cursor-pointer bg-green-700/50 rounded-xl py-3 px-4">
+                                    <input type="checkbox" value="Parking" class="amenity w-5 h-5 accent-yellow-400"> 
+                                    <span>🅿️ Parking</span>
+                                </label>
+                                <label class="flex items-center gap-3 text-white cursor-pointer bg-green-700/50 rounded-xl py-3 px-4">
+                                    <input type="checkbox" value="Changing Room" class="amenity w-5 h-5 accent-yellow-400"> 
+                                    <span>🚿 Changing Room</span>
+                                </label>
+                                <label class="flex items-center gap-3 text-white cursor-pointer bg-green-700/50 rounded-xl py-3 px-4">
+                                    <input type="checkbox" value="Drinking Water" class="amenity w-5 h-5 accent-yellow-400"> 
+                                    <span>💧 Water</span>
+                                </label>
+                                <label class="flex items-center gap-3 text-white cursor-pointer bg-green-700/50 rounded-xl py-3 px-4">
+                                    <input type="checkbox" value="First Aid" class="amenity w-5 h-5 accent-yellow-400"> 
+                                    <span>🏥 First Aid</span>
+                                </label>
+                                <label class="flex items-center gap-3 text-white cursor-pointer bg-green-700/50 rounded-xl py-3 px-4">
+                                    <input type="checkbox" value="Equipment" class="amenity w-5 h-5 accent-yellow-400"> 
+                                    <span>🏏 Equipment</span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary w-full py-4 rounded-xl text-lg">
+                            🏏 Register My Turf
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- My Bookings Section -->
+        <section id="bookingsSection" class="section hidden">
+            <h3 class="text-xl font-bold text-white flex items-center gap-2 mb-4">
+                📋 My Bookings
+            </h3>
+            
+            <div id="bookingsList" class="space-y-4">
+                <!-- Bookings will be loaded here -->
+            </div>
+            
+            <div id="noBookings" class="hidden text-center py-12">
+                <div class="text-6xl mb-4">📋</div>
+                <h4 class="text-2xl font-bold text-white mb-2">No Bookings Yet</h4>
+                <p class="text-green-200 text-base mb-5">Book a turf to see your bookings here!</p>
+                <button type="button" class="btn btn-primary px-6 py-3 rounded-xl text-lg" id="browseFromBookingsBtn">
+                    🏟️ Browse Turfs
+                </button>
+            </div>
+        </section>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav">
+        <div class="flex justify-around items-center max-w-md mx-auto">
+            <button type="button" class="nav-item active" id="navHome">
+                <span class="text-2xl">🏠</span>
+                <span class="text-xs font-semibold">Home</span>
+            </button>
+            <button type="button" class="nav-item" id="navRegister">
+                <span class="text-2xl">➕</span>
+                <span class="text-xs font-semibold">Register</span>
+            </button>
+            <button type="button" class="nav-item" id="navBookings">
+                <span class="text-2xl">📋</span>
+                <span class="text-xs font-semibold">Bookings</span>
+            </button>
+            <button type="button" class="nav-item" id="navContact">
+                <span class="text-2xl">📞</span>
+                <span class="text-xs font-semibold">Contact</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Booking Modal -->
+    <div id="bookingModal" class="modal fixed inset-0 bg-black/80 z-[200] hidden items-center justify-center p-4">
+        <div class="modal-content bg-gradient-to-br from-green-800 to-green-900 rounded-2xl w-full max-w-md shadow-2xl border-2 border-green-600">
+            <div class="p-5">
+                <!-- Modal Header -->
+                <div class="flex justify-between items-start mb-4">
+                    <div class="flex-1">
+                        <h3 id="modalTurfName" class="text-xl font-bold text-white">Turf Name</h3>
+                        <p id="modalTurfLocation" class="text-green-200 text-sm">📍 Location</p>
+                    </div>
+                    <button type="button" id="closeModalBtn" class="text-4xl text-green-300 hover:text-white transition-colors ml-2 leading-none">&times;</button>
+                </div>
+                
+                <!-- Owner Details Card -->
+                <div class="owner-card rounded-xl p-4 mb-4">
+                    <p class="text-yellow-400 text-xs font-semibold mb-2">👤 TURF OWNER DETAILS</p>
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p id="modalOwnerName" class="text-white font-bold text-lg">Owner Name</p>
+                            <p class="text-green-200 text-sm">Owner</p>
+                        </div>
+                        <div class="text-right">
+                            <p id="modalOwnerContact" class="text-yellow-400 font-bold text-lg">📞 9876543210</p>
+                            <p class="text-green-200 text-sm">Contact</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Price & Timing -->
+                <div class="grid grid-cols-2 gap-3 mb-4">
+                    <div class="bg-green-700/50 rounded-xl p-3 text-center">
+                        <p class="text-yellow-400 text-xs font-semibold mb-1">💰 Price</p>
+                        <p id="modalPrice" class="text-xl font-bold text-white">₹500/hr</p>
+                    </div>
+                    <div class="bg-green-700/50 rounded-xl p-3 text-center">
+                        <p class="text-yellow-400 text-xs font-semibold mb-1">⏰ Timing</p>
+                        <p id="modalTiming" class="text-xl font-bold text-white">6AM-11PM</p>
+                    </div>
+                </div>
+                
+                <!-- Amenities -->
+                <div class="mb-4">
+                    <p class="text-yellow-400 text-xs font-semibold mb-2">✨ Amenities</p>
+                    <div id="modalAmenities" class="flex flex-wrap gap-2">
+                    </div>
+                </div>
+                
+                <!-- Date Selection -->
+                <div class="mb-4">
+                    <p class="text-yellow-400 text-xs font-semibold mb-2">📅 Select Date</p>
+                    <input type="date" id="bookingDate" 
+                        class="w-full px-4 py-3 rounded-xl bg-green-700 text-white border-2 border-green-600 text-base">
+                </div>
+                
+                <!-- Time Selection - FROM and TO -->
+                <div class="mb-4">
+                    <p class="text-yellow-400 text-xs font-semibold mb-2">⏰ Select Time (1 Hour Slots)</p>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="text-green-200 text-xs mb-1 block">From</label>
+                            <select id="fromTime" class="w-full px-4 py-3 rounded-xl bg-green-700 text-white border-2 border-green-600 text-base">
+                                <option value="">Select Start</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="text-green-200 text-xs mb-1 block">To</label>
+                            <select id="toTime" class="w-full px-4 py-3 rounded-xl bg-green-700 text-white border-2 border-green-600 text-base">
+                                <option value="">Select End</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div id="timeError" class="text-red-400 text-sm mt-2 hidden">
+                        ⚠️ This time slot is already booked!
+                    </div>
+                </div>
+                
+                <!-- User Details -->
+                <div class="mb-4">
+                    <p class="text-yellow-400 text-xs font-semibold mb-2">👤 Your Details (Booking Person)</p>
+                    <div class="grid grid-cols-2 gap-3">
+                        <input type="text" id="userName" required placeholder="Your Name"
+                            class="px-4 py-3 rounded-xl bg-green-700 text-white placeholder-green-300 border-2 border-green-600">
+                        <input type="tel" id="userPhone" required placeholder="Mobile No."
+                            class="px-4 py-3 rounded-xl bg-green-700 text-white placeholder-green-300 border-2 border-green-600">
+                    </div>
+                </div>
+                
+                <!-- Summary -->
+                <div class="bg-yellow-500/20 rounded-xl p-4 mb-4">
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <p class="text-green-200 text-xs">Duration</p>
+                            <p id="selectedDuration" class="text-xl font-bold text-white">0 Hours</p>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-green-200 text-xs">Total Amount</p>
+                            <p id="totalAmount" class="text-3xl font-bold text-yellow-400">₹0</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <button type="button" id="confirmBtn" disabled
+                    class="btn btn-primary w-full py-4 rounded-xl text-lg">
+                    🏏 Confirm Booking
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Modal -->
+    <div id="contactModal" class="modal fixed inset-0 bg-black/80 z-[200] hidden items-center justify-center p-4">
+        <div class="bg-gradient-to-br from-green-800 to-green-900 rounded-2xl w-full max-w-sm shadow-2xl border-2 border-green-600 p-6">
+            <div class="text-center">
+                <div class="text-6xl mb-4">📞</div>
+                <h3 class="text-2xl font-bold text-white mb-2">Contact Us</h3>
+                <p class="text-green-200 mb-5">For any queries or support</p>
+                <div class="bg-green-700/50 rounded-xl p-5 mb-5">
+                    <p class="text-yellow-400 font-semibold text-lg">Malegaon Turf Booking</p>
+                    <p class="text-white text-2xl font-bold mt-2">📱 +91 98765 43210</p>
+                    <p class="text-green-200 mt-2">📍 Malegaon, Maharashtra</p>
+                </div>
+                <button type="button" id="closeContactBtn" class="btn btn-primary w-full py-3 rounded-xl text-lg">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div id="toast" class="fixed bottom-28 left-4 right-4 bg-green-600 text-white px-5 py-4 rounded-xl shadow-2xl transform translate-y-20 opacity-0 transition-all duration-300 z-[300]">
+        <div class="flex items-center gap-3 justify-center">
+            <span class="text-2xl">✅</span>
+            <span id="toastMessage" class="font-semibold">Success!</span>
+        </div>
+    </div>
+
+    <script>
+        // Data Storage
+        let turfs = JSON.parse(localStorage.getItem('malegaonTurfs')) || [];
+        let bookings = JSON.parse(localStorage.getItem('malegaonBookings')) || [];
+        let currentTurf = null;
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeApp();
+        });
+
+        function initializeApp() {
+            // Add sample turfs if empty
+            if (turfs.length === 0) {
+                addSampleTurfs();
+            }
+            
+            setMinDate();
+            loadTurfs();
+            updateStats();
+            attachEventListeners();
+        }
+
+        // Attach all event listeners
+        function attachEventListeners() {
+            // Navigation buttons
+            document.getElementById('navHome').addEventListener('click', function() { showSection('home'); });
+            document.getElementById('navRegister').addEventListener('click', function() { showSection('register'); });
+            document.getElementById('navBookings').addEventListener('click', function() { showSection('bookings'); });
+            document.getElementById('navContact').addEventListener('click', function() { showContactModal(); });
+            
+            // Other buttons
+            document.getElementById('registerFirstBtn').addEventListener('click', function() { showSection('register'); });
+            document.getElementById('browseFromBookingsBtn').addEventListener('click', function() { showSection('home'); });
+            document.getElementById('closeModalBtn').addEventListener('click', function() { closeBookingModal(); });
+            document.getElementById('closeContactBtn').addEventListener('click', function() { closeContactModal(); });
+            document.getElementById('confirmBtn').addEventListener('click', function() { confirmBooking(); });
+            
+            // Form submit
+            document.getElementById('registerForm').addEventListener('submit', function(e) { registerTurf(e); });
+            
+            // Filter change
+            document.getElementById('priceFilter').addEventListener('change', function() { filterTurfs(); });
+            
+            // Booking date change
+            document.getElementById('bookingDate').addEventListener('change', function() { loadTimeOptions(); });
+            
+            // Time selection change
+            document.getElementById('fromTime').addEventListener('change', function() { updateToTimeOptions(); });
+            document.getElementById('toTime').addEventListener('change', function() { updateBookingSummary(); });
+            
+            // Close modals on outside click
+            document.getElementById('bookingModal').addEventListener('click', function(e) {
+                if (e.target.id === 'bookingModal') closeBookingModal();
+            });
+            document.getElementById('contactModal').addEventListener('click', function(e) {
+                if (e.target.id === 'contactModal') closeContactModal();
+            });
+        }
+
+        // Add sample turfs for Malegaon
+        function addSampleTurfs() {
+            const sampleTurfs = [
+                {
+                    id: Date.now(),
+                    name: "Malegaon Sports Arena",
+                    owner: "Ahmed Khan",
+                    address: "Near Camp Area, Malegaon",
+                    contact: "9876543210",
+                    price: 500,
+                    openTime: "05:00",
+                    closeTime: "23:00",
+                    amenities: ["Floodlights", "Parking", "Drinking Water"]
+                },
+                {
+                    id: Date.now() + 1,
+                    name: "Champions Cricket Turf",
+                    owner: "Rahul Patil",
+                    address: "Satana Road, Malegaon",
+                    contact: "9876543211",
+                    price: 600,
+                    openTime: "06:00",
+                    closeTime: "22:00",
+                    amenities: ["Floodlights", "Parking", "Changing Room", "First Aid"]
+                },
+                {
+                    id: Date.now() + 2,
+                    name: "Victory Box Cricket",
+                    owner: "Imran Sheikh",
+                    address: "Chavani Galli, Malegaon",
+                    contact: "9876543212",
+                    price: 450,
+                    openTime: "06:00",
+                    closeTime: "21:00",
+                    amenities: ["Floodlights", "Equipment", "Drinking Water"]
+                },
+                {
+                    id: Date.now() + 3,
+                    name: "Power Play Turf",
+                    owner: "Sachin More",
+                    address: "Shivaji Nagar, Malegaon",
+                    contact: "9876543213",
+                    price: 550,
+                    openTime: "05:00",
+                    closeTime: "00:00",
+                    amenities: ["Floodlights", "Parking", "Changing Room", "Equipment"]
+                }
+            ];
+            
+            turfs = sampleTurfs;
+            saveTurfs();
+        }
+
+        // Format time for display
+        function formatTime(time) {
+            const [hours, minutes] = time.split(':');
+            const h = parseInt(hours);
+            const m = minutes || '00';
+            const ampm = h >= 12 ? 'PM' : 'AM';
+            const displayHour = h === 0 ? 12 : h > 12 ? h - 12 : h;
+            return `${displayHour}:${m} ${ampm}`;
+        }
+
+        // Set minimum date to today
+        function setMinDate() {
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('bookingDate').min = today;
+            document.getElementById('bookingDate').value = today;
+        }
+
+        // Show section
+        function showSection(section) {
+            document.querySelectorAll('.section').forEach(function(s) { s.classList.add('hidden'); });
+            document.querySelectorAll('.nav-item').forEach(function(n) { n.classList.remove('active'); });
+            
+            if (section === 'home') {
+                document.getElementById('homeSection').classList.remove('hidden');
+                document.getElementById('hero').classList.remove('hidden');
+                document.getElementById('navHome').classList.add('active');
+            } else if (section === 'register') {
+                document.getElementById('registerSection').classList.remove('hidden');
+                document.getElementById('hero').classList.add('hidden');
+                document.getElementById('navRegister').classList.add('active');
+            } else if (section === 'bookings') {
+                document.getElementById('bookingsSection').classList.remove('hidden');
+                document.getElementById('hero').classList.add('hidden');
+                document.getElementById('navBookings').classList.add('active');
+                loadBookings();
+            }
+        }
+
+        // Register turf
+        function registerTurf(e) {
+            e.preventDefault();
+            
+            const amenities = [];
+            document.querySelectorAll('.amenity:checked').forEach(function(cb) { amenities.push(cb.value); });
+            
+            const turf = {
+                id: Date.now(),
+                name: document.getElementById('turfName').value,
+                owner: document.getElementById('ownerName').value,
+                address: document.getElementById('address').value,
+                contact: document.getElementById('contact').value,
+                price: parseInt(document.getElementById('price').value),
+                openTime: document.getElementById('openTime').value,
+                closeTime: document.getElementById('closeTime').value,
+                amenities: amenities
+            };
+            
+            turfs.push(turf);
+            saveTurfs();
+            loadTurfs();
+            updateStats();
+            
+            document.getElementById('registerForm').reset();
+            showToast('🎉 Turf registered successfully!');
+            showSection('home');
+        }
+
+        // Save turfs to localStorage
+        function saveTurfs() {
+            localStorage.setItem('malegaonTurfs', JSON.stringify(turfs));
+        }
+
+        // Load and display turfs
+        function loadTurfs() {
+            filterTurfs();
+        }
+
+        // Filter turfs
+        function filterTurfs() {
+            const priceFilter = document.getElementById('priceFilter').value;
+            const container = document.getElementById('turfList');
+            const noTurfs = document.getElementById('noTurfs');
+            
+            let filteredTurfs = turfs.slice();
+            
+            if (priceFilter) {
+                if (priceFilter === '0-500') {
+                    filteredTurfs = filteredTurfs.filter(function(t) { return t.price < 500; });
+                } else if (priceFilter === '500-800') {
+                    filteredTurfs = filteredTurfs.filter(function(t) { return t.price >= 500 && t.price <= 800; });
+                } else if (priceFilter === '800+') {
+                    filteredTurfs = filteredTurfs.filter(function(t) { return t.price > 800; });
+                }
+            }
+            
+            if (filteredTurfs.length === 0) {
+                container.innerHTML = '';
+                noTurfs.classList.remove('hidden');
+            } else {
+                noTurfs.classList.add('hidden');
+                container.innerHTML = filteredTurfs.map(function(turf) {
+                    return '<div class="card-hover bg-gradient-to-br from-green-800 to-green-900 rounded-xl overflow-hidden shadow-xl border-2 border-green-600" data-turf-id="' + turf.id + '">' +
+                        '<div class="grass-pattern h-24 flex items-center justify-center relative">' +
+                            '<div class="text-5xl">🏏</div>' +
+                            '<div class="absolute top-2 right-2 bg-yellow-500 text-green-900 px-3 py-1 rounded-full font-bold text-sm">' +
+                                '₹' + turf.price + '/hr' +
+                            '</div>' +
+                        '</div>' +
+                        '<div class="p-4">' +
+                            '<h4 class="text-lg font-bold text-white mb-1">' + turf.name + '</h4>' +
+                            '<p class="text-green-200 text-sm mb-1">📍 ' + turf.address + '</p>' +
+                            '<p class="text-green-300 text-sm mb-3">👤 ' + turf.owner + ' • 📞 ' + turf.contact + '</p>' +
+                            '<div class="flex gap-2 mb-3 flex-wrap">' +
+                                turf.amenities.slice(0, 3).map(function(a) {
+                                    return '<span class="bg-green-700 text-green-100 px-2 py-1 rounded-full text-xs">' + getAmenityIcon(a) + ' ' + a + '</span>';
+                                }).join('') +
+                                (turf.amenities.length > 3 ? '<span class="bg-green-700 text-green-100 px-2 py-1 rounded-full text-xs">+' + (turf.amenities.length - 3) + '</span>' : '') +
+                            '</div>' +
+                            '<div class="flex items-center justify-between">' +
+                                '<div class="text-green-200 text-sm">' +
+                                    '⏰ ' + formatTime(turf.openTime) + ' - ' + formatTime(turf.closeTime) +
+                                '</div>' +
+                                '<button type="button" class="btn btn-primary px-5 py-2 rounded-lg font-semibold book-btn">' +
+                                    'Book Now' +
+                                '</button>' +
+                            '</div>' +
+                        '</div>' +
+                    '</div>';
+                }).join('');
+                
+                // Attach click handlers to turf cards
+                document.querySelectorAll('[data-turf-id]').forEach(function(card) {
+                    card.addEventListener('click', function(e) {
+                        const turfId = parseInt(this.getAttribute('data-turf-id'));
+                        openBookingModal(turfId);
+                    });
+                });
+            }
+        }
+
+        // Get amenity icon
+        function getAmenityIcon(amenity) {
+            const icons = {
+                'Floodlights': '💡',
+                'Parking': '🅿️',
+                'Changing Room': '🚿',
+                'Cafeteria': '☕',
+                'First Aid': '🏥',
+                'Seating': '💺',
+                'Drinking Water': '💧',
+                'Equipment': '🏏'
+            };
+            return icons[amenity] || '✨';
+        }
+
+        // Open booking modal
+        function openBookingModal(turfId) {
+            currentTurf = turfs.find(function(t) { return t.id === turfId; });
+            if (!currentTurf) return;
+            
+            document.getElementById('modalTurfName').textContent = currentTurf.name;
+            document.getElementById('modalTurfLocation').textContent = '📍 ' + currentTurf.address + ', Malegaon';
+            document.getElementById('modalOwnerName').textContent = currentTurf.owner;
+            document.getElementById('modalOwnerContact').textContent = '📞 ' + currentTurf.contact;
+            document.getElementById('modalPrice').textContent = '₹' + currentTurf.price + '/hr';
+            document.getElementById('modalTiming').textContent = formatTime(currentTurf.openTime) + ' - ' + formatTime(currentTurf.closeTime);
+            
+            document.getElementById('modalAmenities').innerHTML = currentTurf.amenities.map(function(a) {
+                return '<span class="bg-green-700 text-green-100 px-3 py-1 rounded-full text-sm">' + getAmenityIcon(a) + ' ' + a + '</span>';
+            }).join('');
+            
+            setMinDate();
+            loadTimeOptions();
+            updateBookingSummary();
+            
+            document.getElementById('bookingModal').classList.remove('hidden');
+            document.getElementById('bookingModal').classList.add('flex');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Close booking modal
+        function closeBookingModal() {
+            document.getElementById('bookingModal').classList.add('hidden');
+            document.getElementById('bookingModal').classList.remove('flex');
+            document.body.style.overflow = '';
+            currentTurf = null;
+            document.getElementById('userName').value = '';
+            document.getElementById('userPhone').value = '';
+            document.getElementById('timeError').classList.add('hidden');
+        }
+
+        // Load time options based on turf timing
+        function loadTimeOptions() {
+            if (!currentTurf) return;
+            
+            const fromSelect = document.getElementById('fromTime');
+            const toSelect = document.getElementById('toTime');
+            const date = document.getElementById('bookingDate').value;
+            
+            // Get booked time ranges for this turf and date
+            const bookedRanges = bookings
+                .filter(function(b) { return b.turfId === currentTurf.id && b.date === date; })
+                .map(function(b) { return { from: b.fromTime, to: b.toTime }; });
+            
+            // Parse open and close times
+            const openHour = parseInt(currentTurf.openTime.split(':')[0]);
+            const openMin = parseInt(currentTurf.openTime.split(':')[1]) || 0;
+            let closeHour = parseInt(currentTurf.closeTime.split(':')[0]);
+            const closeMin = parseInt(currentTurf.closeTime.split(':')[1]) || 0;
+            
+            // Handle midnight (00:00)
+            if (closeHour === 0) closeHour = 24;
+            
+            // Generate time options (every 30 minutes)
+            let fromOptions = '<option value="">Select Start Time</option>';
+            
+            for (let h = openHour; h < closeHour; h++) {
+                for (let m = 0; m < 60; m += 30) {
+                    // Skip if before opening time
+                    if (h === openHour && m < openMin) continue;
+                    
+                    const timeStr = (h < 10 ? '0' : '') + h + ':' + (m === 0 ? '00' : m);
+                    const displayTime = formatTime(timeStr);
+                    
+                    fromOptions += '<option value="' + timeStr + '">' + displayTime + '</option>';
+                }
+            }
+            
+            fromSelect.innerHTML = fromOptions;
+            toSelect.innerHTML = '<option value="">Select End Time</option>';
+            
+            updateBookingSummary();
+        }
+
+        // Update TO time options based on FROM time
+        function updateToTimeOptions() {
+            if (!currentTurf) return;
+            
+            const fromTime = document.getElementById('fromTime').value;
+            const toSelect = document.getElementById('toTime');
+            const date = document.getElementById('bookingDate').value;
+            
+            if (!fromTime) {
+                toSelect.innerHTML = '<option value="">Select End Time</option>';
+                updateBookingSummary();
+                return;
+            }
+            
+            const fromHour = parseInt(fromTime.split(':')[0]);
+            const fromMin = parseInt(fromTime.split(':')[1]) || 0;
+            
+            let closeHour = parseInt(currentTurf.closeTime.split(':')[0]);
+            if (closeHour === 0) closeHour = 24;
+            
+            // Generate TO time options (at least 1 hour after FROM, max 4 hours)
+            let toOptions = '<option value="">Select End Time</option>';
+            
+            // Start from 1 hour after fromTime
+            let startH = fromHour + 1;
+            let startM = fromMin;
+            
+            for (let h = startH; h <= Math.min(fromHour + 4, closeHour); h++) {
+                for (let m = 0; m < 60; m += 30) {
+                    if (h === startH && m < startM) continue;
+                    if (h === closeHour && m > 0) break;
+                    
+                    const timeStr = (h < 10 ? '0' : '') + (h > 23 ? h - 24 : h) + ':' + (m === 0 ? '00' : m);
+                    const displayTime = formatTime(timeStr);
+                    const hours = h - fromHour + (m - fromMin) / 60;
+                    
+                    toOptions += '<option value="' + timeStr + '">' + displayTime + ' (' + hours + ' hr)</option>';
+                }
+            }
+            
+            toSelect.innerHTML = toOptions;
+            updateBookingSummary();
+        }
+
+        // Check if time range overlaps with booked slots
+        function isTimeRangeAvailable(fromTime, toTime, date) {
+            if (!currentTurf || !fromTime || !toTime) return true;
+            
+            const fromMins = timeToMinutes(fromTime);
+            const toMins = timeToMinutes(toTime);
+            
+            const bookedRanges = bookings
+                .filter(function(b) { return b.turfId === currentTurf.id && b.date === date; });
+            
+            for (let i = 0; i < bookedRanges.length; i++) {
+                const bookedFrom = timeToMinutes(bookedRanges[i].fromTime);
+                const bookedTo = timeToMinutes(bookedRanges[i].toTime);
+                
+                // Check for overlap
+                if (fromMins < bookedTo && toMins > bookedFrom) {
+                    return false;
+                }
+            }
+            
+            return true;
+        }
+
+        // Convert time to minutes
+        function timeToMinutes(time) {
+            const parts = time.split(':');
+            let hours = parseInt(parts[0]);
+            const mins = parseInt(parts[1]) || 0;
+            if (hours === 0) hours = 24; // Handle midnight
+            return hours * 60 + mins;
+        }
+
+        // Update booking summary
+        function updateBookingSummary() {
+            const fromTime = document.getElementById('fromTime').value;
+            const toTime = document.getElementById('toTime').value;
+            const date = document.getElementById('bookingDate').value;
+            const confirmBtn = document.getElementById('confirmBtn');
+            const timeError = document.getElementById('timeError');
+            
+            if (!fromTime || !toTime || !currentTurf) {
+                document.getElementById('selectedDuration').textContent = '0 Hours';
+                document.getElementById('totalAmount').textContent = '₹0';
+                confirmBtn.disabled = true;
+                timeError.classList.add('hidden');
+                return;
+            }
+            
+            // Check availability
+            const isAvailable = isTimeRangeAvailable(fromTime, toTime, date);
+            
+            if (!isAvailable) {
+                timeError.classList.remove('hidden');
+                confirmBtn.disabled = true;
+                document.getElementById('selectedDuration').textContent = '0 Hours';
+                document.getElementById('totalAmount').textContent = '₹0';
+                return;
+            }
+            
+            timeError.classList.add('hidden');
+            
+            // Calculate duration and price
+            const fromMins = timeToMinutes(fromTime);
+            const toMins = timeToMinutes(toTime);
+            const durationMins = toMins - fromMins;
+            const durationHours = durationMins / 60;
+            const total = Math.round(durationHours * currentTurf.price);
+            
+            document.getElementById('selectedDuration').textContent = durationHours + ' Hour' + (durationHours > 1 ? 's' : '');
+            document.getElementById('totalAmount').textContent = '₹' + total;
+            
+            confirmBtn.disabled = false;
+        }
+
+        // Confirm booking
+        function confirmBooking() {
+            const userName = document.getElementById('userName').value.trim();
+            const userPhone = document.getElementById('userPhone').value.trim();
+            const date = document.getElementById('bookingDate').value;
+            const fromTime = document.getElementById('fromTime').value;
+            const toTime = document.getElementById('toTime').value;
+            
+            if (!userName || !userPhone) {
+                showToast('⚠️ Please fill in your details!');
+                return;
+            }
+            
+            if (!fromTime || !toTime) {
+                showToast('⚠️ Please select time slot!');
+                return;
+            }
+            
+            // Double check availability
+            if (!isTimeRangeAvailable(fromTime, toTime, date)) {
+                showToast('⚠️ This slot is already booked!');
+                return;
+            }
+            
+            const fromMins = timeToMinutes(fromTime);
+            const toMins = timeToMinutes(toTime);
+            const durationHours = (toMins - fromMins) / 60;
+            const total = Math.round(durationHours * currentTurf.price);
+            
+            const booking = {
+                id: Date.now(),
+                turfId: currentTurf.id,
+                turfName: currentTurf.name,
+                turfLocation: currentTurf.address + ', Malegaon',
+                turfOwner: currentTurf.owner,
+                ownerContact: currentTurf.contact,
+                date: date,
+                fromTime: fromTime,
+                toTime: toTime,
+                duration: durationHours,
+                total: total,
+                userName: userName,
+                userPhone: userPhone,
+                bookedAt: new Date().toISOString()
+            };
+            
+            bookings.push(booking);
+            saveBookings();
+            updateStats();
+            
+            closeBookingModal();
+            showToast('🎉 Booking confirmed! Call ' + currentTurf.contact + ' for confirmation.');
+        }
+
+        // Save bookings
+        function saveBookings() {
+            localStorage.setItem('malegaonBookings', JSON.stringify(bookings));
+        }
+
+        // Load bookings
+        function loadBookings() {
+            const container = document.getElementById('bookingsList');
+            const noBookings = document.getElementById('noBookings');
+            
+            if (bookings.length === 0) {
+                container.innerHTML = '';
+                noBookings.classList.remove('hidden');
+            } else {
+                noBookings.classList.add('hidden');
+                const sortedBookings = bookings.slice().sort(function(a, b) { 
+                    return new Date(b.bookedAt) - new Date(a.bookedAt); 
+                });
+                
+                container.innerHTML = sortedBookings.map(function(booking) {
+                    return '<div class="bg-gradient-to-r from-green-800 to-green-900 rounded-xl overflow-hidden border-2 border-green-600 shadow-lg">' +
+                        '<div class="p-4">' +
+                            '<div class="flex items-start justify-between gap-3 mb-3">' +
+                                '<div class="flex-1">' +
+                                    '<div class="flex items-center gap-2 mb-1">' +
+                                        '<span class="text-2xl">🏏</span>' +
+                                        '<h4 class="text-lg font-bold text-white">' + booking.turfName + '</h4>' +
+                                    '</div>' +
+                                    '<p class="text-green-200 text-sm">📍 ' + booking.turfLocation + '</p>' +
+                                '</div>' +
+                                '<div class="text-right">' +
+                                    '<p class="text-2xl font-bold text-yellow-400">₹' + booking.total + '</p>' +
+                                    '<p class="text-green-200 text-sm">' + booking.duration + ' Hour' + (booking.duration > 1 ? 's' : '') + '</p>' +
+                                '</div>' +
+                            '</div>' +
+                            '<div class="grid grid-cols-2 gap-3 mb-3">' +
+                                '<div class="bg-yellow-500/20 rounded-lg p-3">' +
+                                    '<p class="text-yellow-400 text-xs font-semibold">📅 Date</p>' +
+                                    '<p class="text-white font-bold">' + formatDate(booking.date) + '</p>' +
+                                '</div>' +
+                                '<div class="bg-green-700/50 rounded-lg p-3">' +
+                                    '<p class="text-green-300 text-xs font-semibold">⏰ Time</p>' +
+                                    '<p class="text-white font-bold">' + formatTime(booking.fromTime) + ' - ' + formatTime(booking.toTime) + '</p>' +
+                                '</div>' +
+                            '</div>' +
+                            '<div class="owner-card rounded-lg p-3">' +
+                                '<p class="text-yellow-400 text-xs font-semibold mb-2">👤 TURF OWNER - Contact for Confirmation</p>' +
+                                '<div class="flex justify-between items-center">' +
+                                    '<span class="text-white font-semibold">' + booking.turfOwner + '</span>' +
+                                    '<a href="tel:' + booking.ownerContact + '" class="bg-yellow-500 text-green-900 px-4 py-2 rounded-lg font-bold text-sm">📞 ' + booking.ownerContact + '</a>' +
+                                '</div>' +
+                            '</div>' +
+                            '<div class="mt-3 pt-3 border-t border-green-600">' +
+                                '<p class="text-green-300 text-xs">🎫 Booked by: <span class="text-white font-semibold">' + booking.userName + '</span> • 📱 ' + booking.userPhone + '</p>' +
+                            '</div>' +
+                        '</div>' +
+                    '</div>';
+                }).join('');
+            }
+        }
+
+        // Format date
+        function formatDate(dateStr) {
+            const date = new Date(dateStr);
+            return date.toLocaleDateString('en-IN', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' });
+        }
+
+        // Update stats
+        function updateStats() {
+            document.getElementById('turfCount').textContent = turfs.length;
+            document.getElementById('bookingCount').textContent = bookings.length;
+        }
+
+        // Show toast notification
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMessage').textContent = message;
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+            
+            setTimeout(function() {
+                toast.classList.add('translate-y-20', 'opacity-0');
+                toast.classList.remove('translate-y-0', 'opacity-100');
+            }, 4000);
+        }
+
+        // Contact modal
+        function showContactModal() {
+            document.getElementById('contactModal').classList.remove('hidden');
+            document.getElementById('contactModal').classList.add('flex');
+        }
+
+        function closeContactModal() {
+            document.getElementById('contactModal').classList.add('hidden');
+            document.getElementById('contactModal').classList.remove('flex');
+        }
+    </script>
+</body>
+</html>
