@@ -1,0 +1,1297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- ═══════════════════════════════════════
+       META & SEO
+  ═══════════════════════════════════════ -->
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Contact Bella Cucina — downtown Chicago's authentic Southern Italian restaurant. Find our address, hours, phone number, and send us a message. Open every day 8AM–12AM."/>
+  <meta name="keywords" content="Bella Cucina contact, Italian restaurant Chicago contact, Chicago restaurant address, downtown Chicago Italian dining"/>
+  <meta name="robots" content="index, follow"/>
+  <meta property="og:type"        content="website"/>
+  <meta property="og:title"       content="Contact — Bella Cucina · Downtown Chicago"/>
+  <meta property="og:description" content="Get in touch with Bella Cucina. Find us in downtown Chicago, call us, or send a message. Open every day 8AM to midnight."/>
+  <meta property="og:url"         content="https://www.bellacucinachicago.com/contact"/>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Restaurant",
+    "name": "Bella Cucina",
+    "url": "https://www.bellacucinachicago.com",
+    "telephone": "[PHONE NUMBER]",
+    "email": "[EMAIL ADDRESS]",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "[STREET ADDRESS]",
+      "addressLocality": "Chicago",
+      "addressRegion": "IL",
+      "postalCode": "[ZIP]",
+      "addressCountry": "US"
+    },
+    "openingHoursSpecification": [
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+        "opens": "08:00",
+        "closes": "00:00"
+      }
+    ],
+    "hasMap": "https://maps.google.com/?q=Bella+Cucina+Chicago",
+    "servesCuisine": ["Italian","Southern Italian","Calabrian"],
+    "priceRange": "$$"
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+
+  <title>Contact — Bella Cucina · Authentic Southern Italian · Downtown Chicago</title>
+
+  <style>
+    /* ═══════════════════════════════════════
+       DESIGN TOKENS
+    ═══════════════════════════════════════ */
+    :root {
+      --bg:          #0E0C0A;
+      --bg-2:        #141210;
+      --bg-3:        #1A1714;
+      --bg-card:     #1E1A16;
+      --gold:        #C9A96E;
+      --gold-light:  #E2C98A;
+      --gold-dim:    #8A6D40;
+      --cream:       #F5EDD9;
+      --cream-dim:   #B5A88A;
+      --white:       #FDFAF4;
+      --text:        #D4C9B4;
+      --text-dim:    #7A7060;
+      --border:      rgba(201,169,110,0.18);
+      --border-soft: rgba(201,169,110,0.08);
+      --radius:      4px;
+      --radius-lg:   8px;
+      --transition:  0.35s cubic-bezier(0.4,0,0.2,1);
+      --nav-h:       80px;
+    }
+
+    /* ═══════════════════════════════════════
+       RESET & BASE
+    ═══════════════════════════════════════ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Jost', sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+    img { display: block; width: 100%; object-fit: cover; }
+    a { text-decoration: none; color: inherit; }
+    button { font-family: inherit; cursor: pointer; border: none; background: none; }
+    ul { list-style: none; }
+
+    .skip-nav { position: absolute; top: -100%; left: 16px; background: var(--gold); color: var(--bg); padding: 10px 18px; border-radius: var(--radius); font-weight: 600; font-size: 14px; z-index: 9999; transition: top 0.2s; }
+    .skip-nav:focus { top: 16px; }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+    }
+
+    /* ═══════════════════════════════════════
+       TYPOGRAPHY
+    ═══════════════════════════════════════ */
+    .display { font-family: 'Cormorant Garamond', serif; font-weight: 300; line-height: 1.1; letter-spacing: -0.01em; }
+    h1 { font-size: clamp(48px, 6.5vw, 86px); }
+    h2 { font-size: clamp(30px, 4vw, 52px); }
+    h3 { font-size: clamp(18px, 2vw, 22px); }
+    .eyebrow { font-family: 'Jost', sans-serif; font-size: 11px; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); }
+
+    /* ═══════════════════════════════════════
+       LAYOUT
+    ═══════════════════════════════════════ */
+    .container { max-width: 1280px; margin: 0 auto; padding: 0 40px; }
+    .section    { padding: 110px 0; }
+    .section-sm { padding: 72px 0; }
+    .gold-line        { display: block; width: 48px; height: 1px; background: var(--gold); margin: 20px 0; }
+    .gold-line-center { display: block; width: 48px; height: 1px; background: var(--gold); margin: 20px auto; }
+
+    /* ═══════════════════════════════════════
+       BUTTONS
+    ═══════════════════════════════════════ */
+    .btn { display: inline-flex; align-items: center; gap: 10px; font-size: 12px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; padding: 16px 36px; border-radius: var(--radius); cursor: pointer; transition: var(--transition); font-family: 'Jost', sans-serif; border: none; }
+    .btn:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+    .btn-primary { background: var(--gold); color: var(--bg); }
+    .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 12px 40px rgba(201,169,110,0.28); }
+    .btn-outline { background: transparent; color: var(--cream); border: 1px solid rgba(245,237,217,0.3); }
+    .btn-outline:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-2px); }
+
+    /* ═══════════════════════════════════════
+       NAVBAR
+    ═══════════════════════════════════════ */
+    .navbar { position: fixed; top: 0; left: 0; right: 0; z-index: 999; height: var(--nav-h); display: flex; align-items: center; background: rgba(14,12,10,0.97); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); box-shadow: 0 4px 30px rgba(0,0,0,0.4); }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; width: 100%; }
+    .nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 600; color: var(--cream); letter-spacing: 0.04em; transition: color 0.25s; }
+    .nav-logo span { color: var(--gold); }
+    .nav-logo:hover { color: var(--white); }
+    .nav-logo:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; border-radius: 2px; }
+    .nav-links { display: flex; align-items: center; gap: 44px; }
+    .nav-link { font-size: 12px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream-dim); transition: color 0.25s; position: relative; padding-bottom: 2px; }
+    .nav-link::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 0; height: 1px; background: var(--gold); transition: width 0.3s; }
+    .nav-link:hover { color: var(--gold); }
+    .nav-link:hover::after { width: 100%; }
+    .nav-link.active { color: var(--gold); }
+    .nav-link.active::after { width: 100%; }
+    .nav-link:focus-visible { outline: 2px solid var(--gold); outline-offset: 4px; border-radius: 2px; }
+    .nav-cta { font-size: 11px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; padding: 12px 26px; background: var(--gold); color: var(--bg); border-radius: var(--radius); transition: var(--transition); font-family: 'Jost', sans-serif; }
+    .nav-cta:hover { background: var(--gold-light); box-shadow: 0 8px 28px rgba(201,169,110,0.3); }
+    .hamburger { display: none; flex-direction: column; justify-content: center; gap: 5px; width: 36px; height: 36px; padding: 4px; border-radius: var(--radius); }
+    .hamburger span { display: block; height: 1.5px; background: var(--cream); border-radius: 2px; transition: var(--transition); }
+    .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+    .hamburger:focus-visible { outline: 2px solid var(--gold); }
+    .mobile-nav { display: none; position: fixed; top: var(--nav-h); left: 0; right: 0; bottom: 0; background: rgba(14,12,10,0.98); backdrop-filter: blur(20px); flex-direction: column; align-items: center; justify-content: center; gap: 40px; z-index: 998; opacity: 0; transition: opacity 0.3s; pointer-events: none; }
+    .mobile-nav.open { display: flex; opacity: 1; pointer-events: all; }
+    .mobile-nav-link { font-family: 'Cormorant Garamond', serif; font-size: 36px; font-weight: 300; color: var(--cream-dim); letter-spacing: 0.04em; transition: color 0.25s; }
+    .mobile-nav-link:hover { color: var(--gold); }
+
+    /* ═══════════════════════════════════════
+       PAGE HERO
+    ═══════════════════════════════════════ */
+    .page-hero {
+      padding-top: var(--nav-h);
+      min-height: 52vh;
+      display: flex; align-items: flex-end;
+      position: relative; overflow: hidden;
+    }
+    .page-hero-bg {
+      position: absolute; inset: 0;
+      background:
+        linear-gradient(to bottom, rgba(14,12,10,0.55) 0%, rgba(14,12,10,0.97) 100%),
+        url('https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1600&q=80') center/cover no-repeat;
+    }
+    .hero-content {
+      position: relative; z-index: 2;
+      padding: 60px 0 60px;
+    }
+    .breadcrumb { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--text-dim); letter-spacing: 0.08em; margin-bottom: 20px; }
+    .breadcrumb a { color: var(--text-dim); transition: color 0.25s; }
+    .breadcrumb a:hover { color: var(--gold); }
+    .hero-content h1 { color: var(--white); margin: 12px 0 18px; opacity: 0; animation: fadeUp 0.9s 0.25s forwards; }
+    .hero-content h1 em { font-style: italic; color: var(--gold); }
+    .hero-meta {
+      display: flex; align-items: center; gap: 32px; flex-wrap: wrap;
+      opacity: 0; animation: fadeUp 0.9s 0.45s forwards;
+    }
+    .hero-meta-item { display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--cream-dim); }
+    .hero-meta-sep { width: 1px; height: 18px; background: var(--border); }
+    .open-dot { width: 7px; height: 7px; border-radius: 50%; background: #4ADE80; animation: pulse 2.5s infinite; flex-shrink: 0; }
+
+    /* ═══════════════════════════════════════
+       CONTACT CARDS STRIP
+    ═══════════════════════════════════════ */
+    .contact-cards {
+      background: var(--bg-2);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 0;
+    }
+    .contact-cards-grid { display: grid; grid-template-columns: repeat(4, 1fr); }
+    .contact-card {
+      padding: 44px 36px;
+      border-right: 1px solid var(--border-soft);
+      transition: var(--transition);
+      display: flex; flex-direction: column; gap: 14px;
+    }
+    .contact-card:last-child { border-right: none; }
+    .contact-card:hover { background: rgba(201,169,110,0.03); }
+    .contact-card-icon {
+      width: 48px; height: 48px;
+      border: 1px solid var(--border); border-radius: var(--radius-lg);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px; background: rgba(201,169,110,0.04);
+      transition: var(--transition);
+    }
+    .contact-card:hover .contact-card-icon { background: rgba(201,169,110,0.1); border-color: var(--gold-dim); }
+    .contact-card-label { font-size: 10px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold-dim); }
+    .contact-card-value { font-size: 15px; color: var(--cream-dim); line-height: 1.55; }
+    .contact-card-value a { transition: color 0.25s; }
+    .contact-card-value a:hover { color: var(--gold); }
+    .contact-card-note { font-size: 12px; color: var(--text-dim); line-height: 1.65; }
+
+    /* ═══════════════════════════════════════
+       MAIN CONTENT — MAP + FORM
+    ═══════════════════════════════════════ */
+    .main-section { background: var(--bg); }
+    .main-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 80px; align-items: start;
+    }
+
+    /* ── Map Column ─ */
+    .map-column {}
+    .map-heading { margin-bottom: 32px; }
+    .map-heading h2 { color: var(--white); margin: 10px 0 16px; }
+    .map-heading p { font-size: 15px; color: var(--text-dim); line-height: 1.85; max-width: 420px; }
+
+    .map-embed {
+      width: 100%; height: 400px;
+      border-radius: var(--radius-lg); overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      position: relative; margin-bottom: 32px;
+    }
+    .map-embed iframe { width: 100%; height: 100%; border: none; display: block; }
+    /* Placeholder map (replace iframe above when you have your real embed) */
+    .map-placeholder {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      background: var(--bg-card);
+    }
+    .map-grid-lines {
+      position: absolute; inset: 0; opacity: 0.04;
+      background-image:
+        linear-gradient(var(--gold) 1px, transparent 1px),
+        linear-gradient(90deg, var(--gold) 1px, transparent 1px);
+      background-size: 48px 48px;
+    }
+    /* Road lines on the fake map */
+    .map-roads {
+      position: absolute; inset: 0; opacity: 0.07;
+      background-image:
+        linear-gradient(var(--gold) 2px, transparent 2px),
+        linear-gradient(90deg, var(--gold) 2px, transparent 2px);
+      background-size: 144px 144px;
+    }
+    .map-pin-wrap { position: relative; z-index: 2; text-align: center; }
+    .map-pin { font-size: 48px; display: block; margin-bottom: 8px; filter: drop-shadow(0 6px 20px rgba(201,169,110,0.4)); }
+    .map-pin-label { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 600; color: var(--gold); letter-spacing: 0.04em; }
+    .map-pin-addr { font-size: 12px; color: var(--text-dim); margin-top: 4px; }
+
+    .map-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+
+    /* Directions grid */
+    .directions-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 36px; }
+    .direction-card {
+      background: var(--bg-card); border: 1px solid var(--border-soft);
+      border-radius: var(--radius-lg); padding: 20px 22px;
+      transition: var(--transition);
+    }
+    .direction-card:hover { border-color: var(--border); }
+    .direction-icon { font-size: 22px; margin-bottom: 10px; }
+    .direction-title { font-size: 13px; font-weight: 500; color: var(--cream); margin-bottom: 6px; }
+    .direction-desc { font-size: 12px; color: var(--text-dim); line-height: 1.7; }
+
+    /* ── Form Column ─ */
+    .form-column {}
+    .form-wrap {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); padding: 48px 44px;
+      position: sticky; top: calc(var(--nav-h) + 24px);
+    }
+    .form-wrap h2 { color: var(--white); margin: 10px 0 6px; }
+    .form-subtitle { font-size: 14px; color: var(--text-dim); margin-bottom: 36px; line-height: 1.7; }
+
+    /* Tabs — reservation / general / private */
+    .form-tabs { display: flex; gap: 0; margin-bottom: 32px; border: 1px solid var(--border-soft); border-radius: var(--radius); overflow: hidden; }
+    .form-tab-btn {
+      flex: 1; padding: 11px 8px;
+      font-size: 11px; font-weight: 500; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--text-dim);
+      background: transparent; border: none; cursor: pointer;
+      transition: var(--transition); font-family: 'Jost', sans-serif;
+      border-right: 1px solid var(--border-soft);
+    }
+    .form-tab-btn:last-child { border-right: none; }
+    .form-tab-btn.active { background: var(--gold); color: var(--bg); font-weight: 600; }
+    .form-tab-btn:hover:not(.active) { color: var(--gold); background: rgba(201,169,110,0.05); }
+    .form-tab-btn:focus-visible { outline: 2px solid var(--gold); outline-offset: -2px; }
+
+    .form-panel { display: none; }
+    .form-panel.active { display: block; }
+
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-group { display: flex; flex-direction: column; gap: 8px; }
+    .form-group.full { grid-column: 1 / -1; }
+    .form-label { font-size: 10px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold-dim); }
+    .form-input { background: rgba(255,255,255,0.03); border: 1px solid var(--border-soft); border-radius: var(--radius); padding: 13px 16px; font-size: 14px; color: var(--cream); outline: none; transition: border-color 0.25s, background 0.25s; width: 100%; appearance: none; -webkit-appearance: none; font-family: 'Jost', sans-serif; }
+    .form-input::placeholder { color: var(--text-dim); }
+    .form-input:focus { border-color: var(--gold-dim); background: rgba(201,169,110,0.03); }
+    .form-input.error { border-color: #F87171; }
+    .form-input option { background: #1E1A16; color: var(--cream); }
+    .form-textarea { resize: vertical; min-height: 110px; }
+    .select-wrap { position: relative; }
+    .select-wrap::after { content: '▾'; position: absolute; right: 14px; top: 50%; transform: translateY(-50%); color: var(--text-dim); font-size: 12px; pointer-events: none; }
+    .form-error { font-size: 11px; color: #F87171; margin-top: 4px; display: none; }
+    .form-error.show { display: block; }
+    .form-submit { width: 100%; margin-top: 12px; padding: 17px; font-size: 12px; letter-spacing: 0.2em; }
+    .form-note { font-size: 11px; color: var(--text-dim); text-align: center; margin-top: 14px; line-height: 1.65; }
+
+    .form-success {
+      display: none; text-align: center; padding: 48px 20px;
+    }
+    .form-success.show { display: block; }
+    .form-success-icon { font-size: 52px; display: block; margin-bottom: 16px; }
+    .form-success-title { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 600; color: var(--gold); margin-bottom: 12px; }
+    .form-success-msg { font-size: 14px; color: var(--text-dim); line-height: 1.8; margin-bottom: 24px; }
+
+    /* ═══════════════════════════════════════
+       HOURS & INFO
+    ═══════════════════════════════════════ */
+    .hours-section { background: var(--bg-2); }
+    .hours-inner {
+      display: grid; grid-template-columns: 1.2fr 1fr 1fr;
+      gap: 60px; align-items: start;
+    }
+
+    /* Hours table */
+    .hours-block h3 { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 600; color: var(--white); margin: 10px 0 28px; }
+    .hours-table { width: 100%; border-collapse: collapse; }
+    .hours-table tr { border-bottom: 1px solid var(--border-soft); }
+    .hours-table tr:last-child { border-bottom: none; }
+    .hours-table td { padding: 14px 0; font-size: 14px; }
+    .hours-table td:first-child { color: var(--cream-dim); }
+    .hours-table td:last-child { color: var(--text); text-align: right; font-weight: 400; }
+    .hours-table tr.today td { color: var(--gold); font-weight: 500; }
+    .hours-note { font-size: 12px; color: var(--text-dim); line-height: 1.7; margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--border-soft); }
+
+    /* Parking / Transport */
+    .info-block h3 { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 600; color: var(--white); margin: 10px 0 24px; }
+    .info-list { display: flex; flex-direction: column; gap: 16px; }
+    .info-item { display: flex; gap: 14px; align-items: flex-start; }
+    .info-icon { font-size: 18px; flex-shrink: 0; margin-top: 2px; }
+    .info-item-title { font-size: 13px; font-weight: 500; color: var(--cream-dim); margin-bottom: 3px; }
+    .info-item-desc { font-size: 12px; color: var(--text-dim); line-height: 1.65; }
+
+    /* ═══════════════════════════════════════
+       SOCIAL PROOF STRIP
+    ═══════════════════════════════════════ */
+    .social-strip {
+      background: var(--bg-3);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 52px 0;
+    }
+    .social-inner {
+      display: flex; align-items: center;
+      justify-content: space-between; gap: 48px; flex-wrap: wrap;
+    }
+    .social-platform { display: flex; align-items: center; gap: 20px; }
+    .platform-icon { font-size: 32px; }
+    .platform-rating {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 36px; font-weight: 600; color: var(--gold);
+      line-height: 1;
+    }
+    .platform-stars { color: var(--gold); font-size: 14px; letter-spacing: 2px; display: block; margin-bottom: 2px; }
+    .platform-count { font-size: 12px; color: var(--text-dim); }
+    .platform-name { font-size: 11px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-dim); margin-top: 2px; }
+    .social-divider { width: 1px; height: 52px; background: var(--border-soft); }
+    .social-cta-text { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-style: italic; color: var(--cream-dim); max-width: 280px; line-height: 1.5; }
+
+    /* ═══════════════════════════════════════
+       NEWSLETTER
+    ═══════════════════════════════════════ */
+    .newsletter-section { background: var(--bg); text-align: center; padding: 100px 0; position: relative; overflow: hidden; }
+    .newsletter-section::before {
+      content: ''; position: absolute;
+      top: -120px; left: 50%; transform: translateX(-50%);
+      width: 600px; height: 600px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(201,169,110,0.05) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .newsletter-content { position: relative; z-index: 2; max-width: 560px; margin: 0 auto; }
+    .newsletter-content h2 { color: var(--white); margin: 12px 0 18px; }
+    .newsletter-content p { font-size: 15px; color: var(--text-dim); line-height: 1.8; margin-bottom: 40px; }
+    .newsletter-form-big { display: flex; max-width: 480px; margin: 0 auto; }
+    .newsletter-input-big { flex: 1; background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-right: none; border-radius: var(--radius) 0 0 var(--radius); padding: 16px 20px; font-size: 14px; color: var(--cream); outline: none; font-family: 'Jost', sans-serif; transition: border-color 0.25s; }
+    .newsletter-input-big::placeholder { color: var(--text-dim); }
+    .newsletter-input-big:focus { border-color: var(--gold-dim); }
+    .newsletter-btn-big { background: var(--gold); color: var(--bg); padding: 16px 28px; font-size: 12px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; border-radius: 0 var(--radius) var(--radius) 0; font-family: 'Jost', sans-serif; border: none; cursor: pointer; transition: background 0.25s; white-space: nowrap; }
+    .newsletter-btn-big:hover { background: var(--gold-light); }
+    .newsletter-small-print { font-size: 11px; color: var(--text-dim); margin-top: 14px; }
+
+    /* ═══════════════════════════════════════
+       FOOTER
+    ═══════════════════════════════════════ */
+    .footer { background: var(--bg-2); border-top: 1px solid var(--border); padding: 80px 0 0; }
+    .footer-inner { display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: 60px; padding-bottom: 60px; border-bottom: 1px solid var(--border-soft); }
+    .footer-brand-name { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 600; color: var(--cream); margin-bottom: 16px; }
+    .footer-brand-name span { color: var(--gold); }
+    .footer-tagline { font-size: 14px; color: var(--text-dim); line-height: 1.8; margin-bottom: 28px; }
+    .footer-social { display: flex; gap: 10px; }
+    .social-btn { width: 36px; height: 36px; border: 1px solid var(--border); border-radius: var(--radius); display: flex; align-items: center; justify-content: center; font-size: 14px; color: var(--text-dim); transition: var(--transition); }
+    .social-btn:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-2px); }
+    .footer-col-title { font-size: 11px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--cream-dim); margin-bottom: 24px; }
+    .footer-links { display: flex; flex-direction: column; gap: 12px; }
+    .footer-link { font-size: 14px; color: var(--text-dim); transition: color 0.25s; }
+    .footer-link:hover { color: var(--gold); }
+    .footer-hours-row { display: flex; justify-content: space-between; font-size: 13px; color: var(--text-dim); margin-bottom: 8px; gap: 8px; }
+    .footer-hours-row strong { color: var(--cream-dim); font-weight: 400; }
+    .footer-contact-item { font-size: 13px; color: var(--text-dim); margin-bottom: 8px; }
+    .footer-contact-item a { transition: color 0.25s; }
+    .footer-contact-item a:hover { color: var(--gold); }
+    .newsletter-label { font-size: 12px; color: var(--text-dim); margin-bottom: 12px; line-height: 1.7; }
+    .newsletter-wrap { display: flex; }
+    .newsletter-input { flex: 1; background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-right: none; border-radius: var(--radius) 0 0 var(--radius); padding: 12px 16px; font-size: 13px; color: var(--cream); outline: none; }
+    .newsletter-input::placeholder { color: var(--text-dim); }
+    .newsletter-btn { background: var(--gold); color: var(--bg); padding: 12px 20px; font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; border-radius: 0 var(--radius) var(--radius) 0; font-family: 'Jost', sans-serif; border: none; cursor: pointer; transition: background 0.25s; }
+    .newsletter-btn:hover { background: var(--gold-light); }
+    .footer-bottom { padding: 24px 0; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+    .footer-copy { font-size: 12px; color: var(--text-dim); }
+    .footer-legal { display: flex; gap: 24px; }
+    .footer-legal a { font-size: 12px; color: var(--text-dim); transition: color 0.25s; }
+    .footer-legal a:hover { color: var(--gold); }
+
+    .back-to-top { position: fixed; bottom: 32px; right: 32px; z-index: 500; width: 44px; height: 44px; background: var(--gold); color: var(--bg); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; cursor: pointer; opacity: 0; pointer-events: none; transform: translateY(12px); transition: opacity 0.35s, transform 0.35s, background 0.25s; border: none; }
+    .back-to-top.show { opacity: 1; pointer-events: all; transform: translateY(0); }
+    .back-to-top:hover { background: var(--gold-light); }
+
+    /* ═══════════════════════════════════════
+       ANIMATIONS
+    ═══════════════════════════════════════ */
+    .fade-up { opacity: 0; transform: translateY(26px); transition: opacity 0.65s ease, transform 0.65s ease; }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+    .fade-up-d1 { transition-delay: 0.1s; }
+    .fade-up-d2 { transition-delay: 0.2s; }
+    .fade-up-d3 { transition-delay: 0.3s; }
+
+    @keyframes fadeUp { from { opacity:0; transform:translateY(28px); } to { opacity:1; transform:translateY(0); } }
+    @keyframes pulse  { 0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(74,222,128,0.4);} 50%{opacity:.7;box-shadow:0 0 0 6px rgba(74,222,128,0);} }
+
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--gold-dim); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--gold); }
+
+    /* ═══════════════════════════════════════
+       RESPONSIVE
+    ═══════════════════════════════════════ */
+    @media (max-width: 1100px) {
+      .container { padding: 0 28px; }
+      .main-grid { grid-template-columns: 1fr; gap: 52px; }
+      .form-wrap { position: static; }
+      .hours-inner { grid-template-columns: 1fr 1fr; gap: 40px; }
+      .footer-inner { grid-template-columns: 1fr 1fr; gap: 40px; }
+    }
+    @media (max-width: 820px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .contact-cards-grid { grid-template-columns: 1fr 1fr; }
+      .contact-card { border-right: none; border-bottom: 1px solid var(--border-soft); }
+      .contact-card:nth-child(odd) { border-right: 1px solid var(--border-soft); }
+      .contact-card:last-child, .contact-card:nth-last-child(2):nth-child(odd) { border-bottom: none; }
+      .directions-grid { grid-template-columns: 1fr; }
+      .hours-inner { grid-template-columns: 1fr; }
+      .social-inner { flex-direction: column; align-items: flex-start; gap: 28px; }
+      .social-divider { display: none; }
+      .footer-inner { grid-template-columns: 1fr; gap: 32px; }
+    }
+    @media (max-width: 540px) {
+      .container { padding: 0 16px; }
+      .section { padding: 72px 0; }
+      h1 { font-size: 44px; }
+      h2 { font-size: 30px; }
+      .hero-meta { flex-direction: column; align-items: flex-start; gap: 8px; }
+      .hero-meta-sep { display: none; }
+      .form-wrap { padding: 28px 20px; }
+      .form-grid { grid-template-columns: 1fr; }
+      .form-tabs { flex-direction: column; }
+      .form-tab-btn { border-right: none; border-bottom: 1px solid var(--border-soft); }
+      .form-tab-btn:last-child { border-bottom: none; }
+      .newsletter-form-big { flex-direction: column; }
+      .newsletter-input-big { border-right: 1px solid var(--border); border-bottom: none; border-radius: var(--radius) var(--radius) 0 0; }
+      .newsletter-btn-big { border-radius: 0 0 var(--radius) var(--radius); }
+      .map-actions { flex-direction: column; }
+      .footer-bottom { flex-direction: column; text-align: center; }
+      .footer-legal { justify-content: center; }
+      .back-to-top { bottom: 20px; right: 20px; }
+    }
+
+    @media print {
+      .navbar, .back-to-top, .form-wrap { display: none !important; }
+      body { background: white; color: black; }
+    }
+  </style>
+</head>
+
+<body>
+  <a href="#main-content" class="skip-nav">Skip to main content</a>
+
+  <!-- ══════════════════════════════════════
+       NAVBAR
+  ══════════════════════════════════════ -->
+  <header>
+    <nav class="navbar" id="navbar" aria-label="Main navigation">
+      <div class="container">
+        <div class="nav-inner">
+          <a href="index.html" class="nav-logo" aria-label="Bella Cucina Home">Bella <span>Cucina</span></a>
+          <ul class="nav-links" role="menubar">
+            <li role="none"><a href="menu.html"              class="nav-link" role="menuitem">Menu</a></li>
+            <li role="none"><a href="story.html"             class="nav-link" role="menuitem">Our Story</a></li>
+            <li role="none"><a href="catering.html"          class="nav-link" role="menuitem">Catering</a></li>
+            <li role="none"><a href="contact.html"           class="nav-link active" role="menuitem" aria-current="page">Contact</a></li>
+            <li role="none"><a href="index.html#reservation" class="nav-cta"  role="menuitem">Reserve a Table</a></li>
+          </ul>
+          <button class="hamburger" id="hamburger" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobile-nav">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+          </button>
+        </div>
+      </div>
+    </nav>
+    <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation" aria-hidden="true">
+      <a href="menu.html"              class="mobile-nav-link" tabindex="-1">Menu</a>
+      <a href="story.html"             class="mobile-nav-link" tabindex="-1">Our Story</a>
+      <a href="catering.html"          class="mobile-nav-link" tabindex="-1">Catering</a>
+      <a href="contact.html"           class="mobile-nav-link" tabindex="-1">Contact</a>
+      <a href="index.html#reservation" class="btn btn-primary" style="margin-top:16px;" tabindex="-1">Reserve a Table</a>
+    </nav>
+  </header>
+
+  <main id="main-content">
+
+    <!-- ══════════════════════════════════════
+         PAGE HERO
+    ══════════════════════════════════════ -->
+    <section class="page-hero" aria-label="Contact page hero">
+      <div class="page-hero-bg" role="img" aria-label="Bella Cucina restaurant dining room"></div>
+      <div class="container">
+        <div class="hero-content">
+          <nav class="breadcrumb" style="opacity:0;animation:fadeUp 0.8s 0.1s forwards;" aria-label="Breadcrumb">
+            <a href="index.html">Home</a>
+            <span aria-hidden="true">›</span>
+            <span aria-current="page">Contact</span>
+          </nav>
+          <span class="eyebrow" style="opacity:0;animation:fadeUp 0.8s 0.2s forwards;">Find Us</span>
+          <h1 class="display">We'd Love to <em>Hear</em><br/>From You</h1>
+          <div class="hero-meta">
+            <div class="hero-meta-item">
+              <div class="open-dot" aria-hidden="true"></div>
+              <span>Open Today · <strong>8:00 AM – 12:00 AM</strong></span>
+            </div>
+            <div class="hero-meta-sep" aria-hidden="true"></div>
+            <div class="hero-meta-item">📍 Downtown Chicago, IL</div>
+            <div class="hero-meta-sep" aria-hidden="true"></div>
+            <div class="hero-meta-item">📞 <a href="tel:[PHONE]" style="color:inherit;">[Phone Number]</a></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════
+         CONTACT CARDS
+    ══════════════════════════════════════ -->
+    <div class="contact-cards" aria-label="Contact information">
+      <div class="container">
+        <ul class="contact-cards-grid" role="list">
+          <li class="contact-card fade-up" role="listitem">
+            <div class="contact-card-icon" aria-hidden="true">📍</div>
+            <div class="contact-card-label">Address</div>
+            <div class="contact-card-value">
+              [Street Address]<br/>Downtown Chicago, IL [ZIP]
+            </div>
+            <div class="contact-card-note">Valet parking available Thu–Sun evenings. Free street parking nearby.</div>
+          </li>
+          <li class="contact-card fade-up fade-up-d1" role="listitem">
+            <div class="contact-card-icon" aria-hidden="true">📞</div>
+            <div class="contact-card-label">Phone</div>
+            <div class="contact-card-value">
+              <a href="tel:[PHONE]">[Phone Number]</a>
+            </div>
+            <div class="contact-card-note">For reservations, general enquiries and large group bookings (8+ guests).</div>
+          </li>
+          <li class="contact-card fade-up fade-up-d2" role="listitem">
+            <div class="contact-card-icon" aria-hidden="true">✉️</div>
+            <div class="contact-card-label">Email</div>
+            <div class="contact-card-value">
+              <a href="mailto:[EMAIL]">[Email Address]</a><br/>
+              <a href="mailto:catering@bellacucinachicago.com" style="font-size:13px;">catering@bellacucinachicago.com</a>
+            </div>
+            <div class="contact-card-note">We respond to all emails within 24 hours, Monday–Friday.</div>
+          </li>
+          <li class="contact-card fade-up fade-up-d3" role="listitem">
+            <div class="contact-card-icon" aria-hidden="true">🕐</div>
+            <div class="contact-card-label">Hours</div>
+            <div class="contact-card-value">
+              Every Day<br/>8:00 AM – 12:00 AM
+            </div>
+            <div class="contact-card-note">Kitchen closes 11:00 PM · Bar open until midnight · Walk-ins welcome.</div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════
+         MAP + CONTACT FORM
+    ══════════════════════════════════════ -->
+    <section class="main-section section" id="contact" aria-labelledby="contact-heading">
+      <div class="container">
+        <div class="main-grid">
+
+          <!-- Map Column -->
+          <div class="map-column fade-up">
+            <div class="map-heading">
+              <span class="eyebrow">Location</span>
+              <h2 class="display" id="contact-heading">Find Us in<br/>Downtown Chicago</h2>
+              <span class="gold-line" aria-hidden="true"></span>
+              <p>We're located in the heart of downtown Chicago, easily accessible by public transit, with parking options nearby for those driving in.</p>
+            </div>
+
+            <!-- Map embed — replace the placeholder div with an actual iframe when ready -->
+            <div class="map-embed" aria-label="Map of Bella Cucina location">
+              <!--
+              REPLACE THIS PLACEHOLDER with your actual Google Maps embed:
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!YOUR_EMBED_CODE_HERE"
+                width="100%" height="400" style="border:0;" allowfullscreen
+                loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+                title="Bella Cucina on Google Maps">
+              </iframe>
+              -->
+              <div class="map-placeholder">
+                <div class="map-grid-lines" aria-hidden="true"></div>
+                <div class="map-roads" aria-hidden="true"></div>
+                <div class="map-pin-wrap">
+                  <span class="map-pin" aria-hidden="true">📍</span>
+                  <div class="map-pin-label">Bella Cucina</div>
+                  <div class="map-pin-addr">Downtown Chicago, IL</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="map-actions">
+              <a href="https://maps.google.com" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="font-size:11px;padding:13px 28px;">🗺 Get Directions</a>
+              <a href="tel:[PHONE]" class="btn btn-outline" style="font-size:11px;padding:13px 28px;">📞 Call Us</a>
+            </div>
+
+            <!-- Getting here cards -->
+            <div class="directions-grid fade-up" aria-label="How to get here">
+              <div class="direction-card">
+                <div class="direction-icon" aria-hidden="true">🚇</div>
+                <div class="direction-title">By Train (CTA)</div>
+                <p class="direction-desc">Red, Blue, and Brown lines all stop within a 5-minute walk. Take the [LINE] to [STOP] station and walk [DIRECTION].</p>
+              </div>
+              <div class="direction-card">
+                <div class="direction-icon" aria-hidden="true">🚌</div>
+                <div class="direction-title">By Bus</div>
+                <p class="direction-desc">Routes [BUS NUMBERS] stop directly outside. Check the CTA Trip Planner for real-time arrivals.</p>
+              </div>
+              <div class="direction-card">
+                <div class="direction-icon" aria-hidden="true">🚗</div>
+                <div class="direction-title">By Car</div>
+                <p class="direction-desc">Valet parking available Thursday–Sunday from 5PM. Paid parking garage on [STREET] — approximately 2 min walk.</p>
+              </div>
+              <div class="direction-card">
+                <div class="direction-icon" aria-hidden="true">🚴</div>
+                <div class="direction-title">Cycling &amp; Divvy</div>
+                <p class="direction-desc">Divvy bike-share station directly outside. Secure bike parking available on the side of the building.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Form Column -->
+          <div class="form-column fade-up fade-up-d2" id="send-message">
+            <div class="form-wrap">
+              <span class="eyebrow">Get in Touch</span>
+              <h2 class="display" style="font-size:clamp(26px,3vw,40px);margin:10px 0 6px;color:var(--white);">Send Us a Message</h2>
+              <p class="form-subtitle">Choose the nature of your enquiry below, fill in the details, and we'll get back to you within 24 hours.</p>
+
+              <!-- Tabs -->
+              <div class="form-tabs" role="tablist" aria-label="Message type">
+                <button class="form-tab-btn active" role="tab" aria-selected="true"  data-tab="reservation" aria-controls="panel-reservation">🍽 Reservation</button>
+                <button class="form-tab-btn"        role="tab" aria-selected="false" data-tab="general"     aria-controls="panel-general">💬 General</button>
+                <button class="form-tab-btn"        role="tab" aria-selected="false" data-tab="private"     aria-controls="panel-private">🎉 Private Event</button>
+              </div>
+
+              <!-- ─── Panel: Reservation ─── -->
+              <div class="form-panel active" id="panel-reservation" role="tabpanel">
+                <form id="form-reservation" novalidate aria-label="Reservation request">
+                  <div class="form-grid">
+                    <div class="form-group">
+                      <label class="form-label" for="r-name">Full Name *</label>
+                      <input type="text" id="r-name" name="name" class="form-input" placeholder="Your name" required aria-required="true" autocomplete="name"/>
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label" for="r-phone">Phone *</label>
+                      <input type="tel" id="r-phone" name="phone" class="form-input" placeholder="+1 (___) ___-____" required aria-required="true" autocomplete="tel"/>
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label" for="r-email">Email *</label>
+                      <input type="email" id="r-email" name="email" class="form-input" placeholder="your@email.com" required aria-required="true" autocomplete="email"/>
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label" for="r-guests">Guests *</label>
+                      <div class="select-wrap">
+                        <select id="r-guests" name="guests" class="form-input" required aria-required="true">
+                          <option value="">Select</option>
+                          <option>1</option><option>2</option><option>3</option><option>4</option>
+                          <option>5</option><option>6</option><option>7</option><option>8+</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label" for="r-date">Date *</label>
+                      <input type="date" id="r-date" name="date" class="form-input" required aria-required="true"/>
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label" for="r-time">Preferred Time *</label>
+                      <div class="select-wrap">
+                        <select id="r-time" name="time" class="form-input" required aria-required="true">
+                          <option value="">Select time</option>
+                          <option>8:00 AM</option><option>9:00 AM</option><option>10:00 AM</option><option>11:00 AM</option>
+                          <option>12:00 PM</option><option>1:00 PM</option><option>2:00 PM</option><option>5:00 PM</option>
+                          <option>6:00 PM</option><option>7:00 PM</option><option>8:00 PM</option><option>9:00 PM</option><option>10:00 PM</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="form-group full">
+                      <label class="form-label" for="r-notes">Special Requests</label>
+                      <input type="text" id="r-notes" name="notes" class="form-input" placeholder="Allergies, occasion, seating preference…"/>
+                    </div>
+                  </div>
+                  <button type="submit" class="btn btn-primary form-submit">Confirm Reservation Request</button>
+                  <p class="form-note">We'll confirm your booking via email within 2 hours. For immediate assistance, please call us directly.</p>
+                  <div class="form-success" id="success-reservation" role="status" aria-live="polite">
+                    <span class="form-success-icon" aria-hidden="true">🍝</span>
+                    <div class="form-success-title">Reservation Requested!</div>
+                    <p class="form-success-msg">We've received your booking request and will confirm via email within 2 hours. Can't wait to see you!</p>
+                    <a href="#" class="btn btn-outline" style="font-size:11px;padding:12px 24px;" onclick="resetForm('reservation');return false;">Send Another</a>
+                  </div>
+                </form>
+              </div>
+
+              <!-- ─── Panel: General ─── -->
+              <div class="form-panel" id="panel-general" role="tabpanel" aria-hidden="true">
+                <form id="form-general" novalidate aria-label="General contact form">
+                  <div class="form-grid">
+                    <div class="form-group">
+                      <label class="form-label" for="g-name">Full Name *</label>
+                      <input type="text" id="g-name" name="name" class="form-input" placeholder="Your name" required aria-required="true" autocomplete="name"/>
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label" for="g-email">Email *</label>
+                      <input type="email" id="g-email" name="email" class="form-input" placeholder="your@email.com" required aria-required="true" autocomplete="email"/>
+                    </div>
+                    <div class="form-group full">
+                      <label class="form-label" for="g-subject">Subject *</label>
+                      <div class="select-wrap">
+                        <select id="g-subject" name="subject" class="form-input" required aria-required="true">
+                          <option value="">Select a subject</option>
+                          <option>General Enquiry</option>
+                          <option>Feedback / Compliment</option>
+                          <option>Menu Question</option>
+                          <option>Accessibility Request</option>
+                          <option>Press / Media</option>
+                          <option>Partnership / Collaboration</option>
+                          <option>Lost Property</option>
+                          <option>Other</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="form-group full">
+                      <label class="form-label" for="g-message">Message *</label>
+                      <textarea id="g-message" name="message" class="form-input form-textarea" placeholder="How can we help? Tell us as much as you'd like…" required aria-required="true"></textarea>
+                    </div>
+                  </div>
+                  <button type="submit" class="btn btn-primary form-submit">Send Message</button>
+                  <p class="form-note">We respond to all messages within 24 hours, Monday to Friday 9AM–6PM.</p>
+                  <div class="form-success" id="success-general" role="status" aria-live="polite">
+                    <span class="form-success-icon" aria-hidden="true">✉️</span>
+                    <div class="form-success-title">Message Received!</div>
+                    <p class="form-success-msg">Thank you for reaching out. We'll get back to you within 24 hours.</p>
+                    <a href="#" class="btn btn-outline" style="font-size:11px;padding:12px 24px;" onclick="resetForm('general');return false;">Send Another</a>
+                  </div>
+                </form>
+              </div>
+
+              <!-- ─── Panel: Private Event ─── -->
+              <div class="form-panel" id="panel-private" role="tabpanel" aria-hidden="true">
+                <form id="form-private" novalidate aria-label="Private event enquiry">
+                  <div class="form-grid">
+                    <div class="form-group">
+                      <label class="form-label" for="p-name">Full Name *</label>
+                      <input type="text" id="p-name" name="name" class="form-input" placeholder="Your name" required aria-required="true" autocomplete="name"/>
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label" for="p-email">Email *</label>
+                      <input type="email" id="p-email" name="email" class="form-input" placeholder="your@email.com" required aria-required="true" autocomplete="email"/>
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label" for="p-event-type">Event Type *</label>
+                      <div class="select-wrap">
+                        <select id="p-event-type" name="event_type" class="form-input" required aria-required="true">
+                          <option value="">Select type</option>
+                          <option>Birthday Dinner</option>
+                          <option>Anniversary</option>
+                          <option>Corporate Dinner</option>
+                          <option>Engagement / Proposal</option>
+                          <option>Graduation</option>
+                          <option>Family Celebration</option>
+                          <option>Other</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label" for="p-guests">Guests</label>
+                      <div class="select-wrap">
+                        <select id="p-guests" name="guests" class="form-input">
+                          <option value="">Select range</option>
+                          <option>Up to 10</option>
+                          <option>10 – 20</option>
+                          <option>20 – 40</option>
+                          <option>40 – 80</option>
+                          <option>80+</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label" for="p-date">Preferred Date *</label>
+                      <input type="date" id="p-date" name="date" class="form-input" required aria-required="true"/>
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label" for="p-budget">Budget</label>
+                      <div class="select-wrap">
+                        <select id="p-budget" name="budget" class="form-input">
+                          <option value="">Prefer not to say</option>
+                          <option>Under $500</option>
+                          <option>$500 – $1,500</option>
+                          <option>$1,500 – $3,000</option>
+                          <option>$3,000+</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="form-group full">
+                      <label class="form-label" for="p-details">Event Details</label>
+                      <textarea id="p-details" name="details" class="form-input form-textarea" placeholder="Tell us about your event — theme, dietary needs, special requests, or anything we should know…"></textarea>
+                    </div>
+                  </div>
+                  <button type="submit" class="btn btn-primary form-submit">Send Private Event Enquiry</button>
+                  <p class="form-note">For large catering events (50+ guests), visit our <a href="catering.html" style="color:var(--gold);">Catering page</a> for full packages.</p>
+                  <div class="form-success" id="success-private" role="status" aria-live="polite">
+                    <span class="form-success-icon" aria-hidden="true">🎉</span>
+                    <div class="form-success-title">Enquiry Received!</div>
+                    <p class="form-success-msg">We'll contact you within 24 hours to discuss your event. We look forward to making it special!</p>
+                    <a href="#" class="btn btn-outline" style="font-size:11px;padding:12px 24px;" onclick="resetForm('private');return false;">Send Another</a>
+                  </div>
+                </form>
+              </div>
+
+            </div><!-- /form-wrap -->
+          </div><!-- /form-column -->
+
+        </div><!-- /main-grid -->
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════
+         HOURS & GETTING HERE
+    ══════════════════════════════════════ -->
+    <section class="hours-section section-sm" aria-labelledby="hours-heading">
+      <div class="container">
+        <div class="hours-inner">
+
+          <!-- Full hours table -->
+          <div class="hours-block fade-up">
+            <span class="eyebrow">Opening Hours</span>
+            <h3 class="display" id="hours-heading">When We're Open</h3>
+            <table class="hours-table" aria-label="Restaurant opening hours">
+              <tbody>
+                <tr>
+                  <td>Monday</td>
+                  <td>8:00 AM – 12:00 AM</td>
+                </tr>
+                <tr>
+                  <td>Tuesday</td>
+                  <td>8:00 AM – 12:00 AM</td>
+                </tr>
+                <tr>
+                  <td>Wednesday</td>
+                  <td>8:00 AM – 12:00 AM</td>
+                </tr>
+                <tr>
+                  <td>Thursday</td>
+                  <td>8:00 AM – 12:00 AM</td>
+                </tr>
+                <tr>
+                  <td>Friday</td>
+                  <td>8:00 AM – 12:00 AM</td>
+                </tr>
+                <tr>
+                  <td>Saturday</td>
+                  <td>8:00 AM – 12:00 AM</td>
+                </tr>
+                <tr>
+                  <td>Sunday</td>
+                  <td>8:00 AM – 12:00 AM</td>
+                </tr>
+              </tbody>
+            </table>
+            <p class="hours-note">Kitchen closes at 11:00 PM · Full bar service until midnight · Walk-ins welcome based on availability · Happy hour Mon–Fri 3–6 PM</p>
+          </div>
+
+          <!-- Parking info -->
+          <div class="fade-up fade-up-d1">
+            <span class="eyebrow">Parking &amp; Access</span>
+            <h3 class="display" style="margin:10px 0 24px;color:var(--white);">Getting Here</h3>
+            <ul class="info-list" role="list">
+              <li class="info-item" role="listitem">
+                <span class="info-icon" aria-hidden="true">🚗</span>
+                <div>
+                  <div class="info-item-title">Valet Parking</div>
+                  <p class="info-item-desc">Available Thursday to Sunday evenings from 5:00 PM. $[PRICE] flat rate.</p>
+                </div>
+              </li>
+              <li class="info-item" role="listitem">
+                <span class="info-icon" aria-hidden="true">🅿️</span>
+                <div>
+                  <div class="info-item-title">Self-Parking Garage</div>
+                  <p class="info-item-desc">[GARAGE NAME] on [STREET] — 2-minute walk, open 24 hours. Validated parking available with dinner purchase.</p>
+                </div>
+              </li>
+              <li class="info-item" role="listitem">
+                <span class="info-icon" aria-hidden="true">♿</span>
+                <div>
+                  <div class="info-item-title">Accessibility</div>
+                  <p class="info-item-desc">Full wheelchair access. Step-free entrance, accessible restrooms, and accessible seating available. Please call ahead if you need assistance.</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Policies -->
+          <div class="fade-up fade-up-d2">
+            <span class="eyebrow">Good to Know</span>
+            <h3 class="display" style="margin:10px 0 24px;color:var(--white);">Policies</h3>
+            <ul class="info-list" role="list">
+              <li class="info-item" role="listitem">
+                <span class="info-icon" aria-hidden="true">👗</span>
+                <div>
+                  <div class="info-item-title">Dress Code</div>
+                  <p class="info-item-desc">Smart casual. We ask that guests avoid athletic wear and flip-flops in the evening dining room. Jackets are welcome but not required.</p>
+                </div>
+              </li>
+              <li class="info-item" role="listitem">
+                <span class="info-icon" aria-hidden="true">🐕</span>
+                <div>
+                  <div class="info-item-title">Pets</div>
+                  <p class="info-item-desc">Dogs are welcome on our outdoor terrace. Service animals are always welcome throughout the restaurant.</p>
+                </div>
+              </li>
+              <li class="info-item" role="listitem">
+                <span class="info-icon" aria-hidden="true">🎂</span>
+                <div>
+                  <div class="info-item-title">Special Occasions</div>
+                  <p class="info-item-desc">Let us know if you're celebrating! We can arrange a complimentary dessert with a personal message. Please mention this when booking.</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════
+         SOCIAL PROOF / REVIEW PLATFORMS
+    ══════════════════════════════════════ -->
+    <div class="social-strip" aria-label="Review platform ratings">
+      <div class="container">
+        <div class="social-inner">
+
+          <div class="social-platform">
+            <span class="platform-icon" aria-label="Google">⭐</span>
+            <div>
+              <div class="platform-rating" aria-label="4.9 out of 5">4.9</div>
+              <span class="platform-stars" aria-hidden="true">★★★★★</span>
+              <div class="platform-count">340+ reviews</div>
+              <div class="platform-name">Google</div>
+            </div>
+          </div>
+
+          <div class="social-divider" aria-hidden="true"></div>
+
+          <div class="social-platform">
+            <span class="platform-icon" aria-label="Yelp">🟥</span>
+            <div>
+              <div class="platform-rating" aria-label="4.8 out of 5">4.8</div>
+              <span class="platform-stars" aria-hidden="true">★★★★★</span>
+              <div class="platform-count">210+ reviews</div>
+              <div class="platform-name">Yelp</div>
+            </div>
+          </div>
+
+          <div class="social-divider" aria-hidden="true"></div>
+
+          <div class="social-platform">
+            <span class="platform-icon" aria-label="TripAdvisor">🌿</span>
+            <div>
+              <div class="platform-rating" aria-label="5 out of 5">5.0</div>
+              <span class="platform-stars" aria-hidden="true">★★★★★</span>
+              <div class="platform-count">185+ reviews</div>
+              <div class="platform-name">TripAdvisor</div>
+            </div>
+          </div>
+
+          <div class="social-divider" aria-hidden="true"></div>
+
+          <p class="social-cta-text">"The most soulful Italian food in Chicago." — Chicago Tribune</p>
+
+          <a href="index.html#reservation" class="btn btn-primary" style="flex-shrink:0;font-size:11px;padding:14px 28px;">Reserve a Table →</a>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════
+         NEWSLETTER
+    ══════════════════════════════════════ -->
+    <section class="newsletter-section" aria-labelledby="newsletter-heading">
+      <div class="container">
+        <div class="newsletter-content fade-up">
+          <span class="eyebrow">Stay Connected</span>
+          <h2 class="display" id="newsletter-heading">Seasonal Menus &amp;<br/><em>Exclusive Updates</em></h2>
+          <p>Join our mailing list for seasonal menu announcements, exclusive dining events, wine tasting evenings, and special offers for subscribers.</p>
+          <form class="newsletter-form-big" id="newsletter-big" novalidate aria-label="Newsletter sign up">
+            <input type="email" class="newsletter-input-big" id="nl-email" placeholder="Enter your email address" aria-label="Email address" required/>
+            <button type="submit" class="newsletter-btn-big">Subscribe</button>
+          </form>
+          <p class="newsletter-small-print">No spam, ever. Unsubscribe at any time. We send 1–2 emails per month.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ══════════════════════════════════════
+       FOOTER
+  ══════════════════════════════════════ -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-inner">
+        <div>
+          <div class="footer-brand-name">Bella <span>Cucina</span></div>
+          <p class="footer-tagline">Authentic Southern Italian cuisine in the heart of downtown Chicago. Open every day from 8 AM to midnight.</p>
+          <nav class="footer-social" aria-label="Social media">
+            <a href="#" class="social-btn" aria-label="Facebook">f</a>
+            <a href="#" class="social-btn" aria-label="Instagram">📷</a>
+            <a href="#" class="social-btn" aria-label="TripAdvisor">★</a>
+          </nav>
+        </div>
+        <nav aria-label="Footer navigation">
+          <div class="footer-col-title">Navigate</div>
+          <ul class="footer-links">
+            <li><a href="index.html"             class="footer-link">Home</a></li>
+            <li><a href="menu.html"              class="footer-link">Menu</a></li>
+            <li><a href="index.html#reservation" class="footer-link">Reservations</a></li>
+            <li><a href="story.html"             class="footer-link">Our Story</a></li>
+            <li><a href="catering.html"          class="footer-link">Catering</a></li>
+            <li><a href="contact.html"           class="footer-link">Contact</a></li>
+          </ul>
+        </nav>
+        <div>
+          <div class="footer-col-title">Hours</div>
+          <div class="footer-hours-row"><strong>Monday – Sunday</strong></div>
+          <div class="footer-hours-row"><span>Restaurant</span><strong>8AM – 12AM</strong></div>
+          <div class="footer-hours-row"><span>Kitchen</span><strong>Until 11PM</strong></div>
+          <div class="footer-hours-row"><span>Bar</span><strong>Until Midnight</strong></div>
+        </div>
+        <div>
+          <div class="footer-col-title">Stay in Touch</div>
+          <div class="footer-contact-item">📍 [Address, Chicago IL]</div>
+          <div class="footer-contact-item">📞 <a href="tel:[PHONE]">[Phone]</a></div>
+          <div class="footer-contact-item">✉️ <a href="mailto:[EMAIL]">[Email]</a></div>
+          <p class="newsletter-label" style="margin-top:20px;">Subscribe for seasonal menus &amp; events.</p>
+          <form class="newsletter-wrap" id="newsletter-footer" novalidate aria-label="Newsletter signup">
+            <input type="email" class="newsletter-input" id="nl-footer-email" placeholder="your@email.com" aria-label="Email" required/>
+            <button type="submit" class="newsletter-btn">Join</button>
+          </form>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span class="footer-copy">© 2025 Bella Cucina. All rights reserved.</span>
+        <nav class="footer-legal" aria-label="Legal">
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="terms.html">Terms of Service</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+  <button class="back-to-top" id="back-to-top" aria-label="Back to top">↑</button>
+
+  <!-- ══════════════════════════════════════
+       JAVASCRIPT
+  ══════════════════════════════════════ -->
+  <script>
+    // ─── Hamburger ──────────────────────────────────
+    const hamburger = document.getElementById('hamburger');
+    const mobileNav = document.getElementById('mobile-nav');
+    const mobileLinks = mobileNav.querySelectorAll('a');
+    let menuOpen = false;
+    function openMenu() {
+      menuOpen = true; hamburger.classList.add('open'); mobileNav.classList.add('open');
+      mobileNav.setAttribute('aria-hidden','false'); hamburger.setAttribute('aria-expanded','true');
+      hamburger.setAttribute('aria-label','Close menu');
+      mobileLinks.forEach(l => l.setAttribute('tabindex','0'));
+      document.body.style.overflow = 'hidden';
+    }
+    function closeMenu() {
+      menuOpen = false; hamburger.classList.remove('open'); mobileNav.classList.remove('open');
+      mobileNav.setAttribute('aria-hidden','true'); hamburger.setAttribute('aria-expanded','false');
+      hamburger.setAttribute('aria-label','Open menu');
+      mobileLinks.forEach(l => l.setAttribute('tabindex','-1'));
+      document.body.style.overflow = '';
+    }
+    hamburger.addEventListener('click', () => menuOpen ? closeMenu() : openMenu());
+    mobileLinks.forEach(l => l.addEventListener('click', closeMenu));
+    document.addEventListener('keydown', e => { if (e.key === 'Escape' && menuOpen) closeMenu(); });
+
+    // ─── Smooth scroll ───────────────────────────────
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        const href = a.getAttribute('href');
+        if (href === '#') return;
+        const target = document.querySelector(href);
+        if (!target) return;
+        e.preventDefault();
+        const top = target.getBoundingClientRect().top + window.scrollY - 96;
+        window.scrollTo({ top, behavior: 'smooth' });
+      });
+    });
+
+    // ─── Form tabs ───────────────────────────────────
+    const tabBtns   = document.querySelectorAll('.form-tab-btn');
+    const tabPanels = document.querySelectorAll('.form-panel');
+
+    tabBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const target = btn.dataset.tab;
+
+        tabBtns.forEach(b => {
+          b.classList.remove('active');
+          b.setAttribute('aria-selected', 'false');
+        });
+        tabPanels.forEach(p => {
+          p.classList.remove('active');
+          p.setAttribute('aria-hidden', 'true');
+        });
+
+        btn.classList.add('active');
+        btn.setAttribute('aria-selected', 'true');
+        const panel = document.getElementById('panel-' + target);
+        if (panel) { panel.classList.add('active'); panel.removeAttribute('aria-hidden'); }
+      });
+    });
+
+    // ─── Form submission (generic handler) ───────────
+    function handleForm(formId, successId, fields) {
+      const form = document.getElementById(formId);
+      if (!form) return;
+
+      form.addEventListener('submit', e => {
+        e.preventDefault();
+        let valid = true;
+
+        fields.forEach(({ id, type, required }) => {
+          if (!required) return;
+          const el = document.getElementById(id);
+          if (!el) return;
+          let ok = el.value.trim() !== '';
+          if (type === 'email') ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(el.value);
+          if (!ok) { el.classList.add('error'); valid = false; }
+          else el.classList.remove('error');
+          el.addEventListener('input', () => { if (el.value.trim()) el.classList.remove('error'); }, { once: true });
+        });
+
+        if (valid) {
+          // TODO: replace with Formspree/Netlify Forms/backend
+          form.querySelectorAll('.form-submit').forEach(b => b.style.display = 'none');
+          form.querySelectorAll('.form-note').forEach(n => n.style.display = 'none');
+          const success = document.getElementById(successId);
+          if (success) { success.classList.add('show'); success.scrollIntoView({ behavior:'smooth', block:'center' }); }
+        }
+      });
+    }
+
+    handleForm('form-reservation', 'success-reservation', [
+      { id:'r-name', required:true },
+      { id:'r-phone', required:true },
+      { id:'r-email', type:'email', required:true },
+      { id:'r-guests', required:true },
+      { id:'r-date', required:true },
+      { id:'r-time', required:true },
+    ]);
+
+    handleForm('form-general', 'success-general', [
+      { id:'g-name', required:true },
+      { id:'g-email', type:'email', required:true },
+      { id:'g-subject', required:true },
+      { id:'g-message', required:true },
+    ]);
+
+    handleForm('form-private', 'success-private', [
+      { id:'p-name', required:true },
+      { id:'p-email', type:'email', required:true },
+      { id:'p-event-type', required:true },
+      { id:'p-date', required:true },
+    ]);
+
+    // Reset form back to initial state
+    window.resetForm = function(type) {
+      const form = document.getElementById('form-' + type);
+      const success = document.getElementById('success-' + type);
+      if (form) {
+        form.reset();
+        form.querySelectorAll('.form-submit').forEach(b => b.style.display = '');
+        form.querySelectorAll('.form-note').forEach(n => n.style.display = '');
+      }
+      if (success) success.classList.remove('show');
+    };
+
+    // ─── Set min dates ───────────────────────────────
+    ['r-date', 'p-date'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.setAttribute('min', new Date().toISOString().split('T')[0]);
+    });
+
+    // ─── Highlight today in hours table ─────────────
+    const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+    const today = days[new Date().getDay()];
+    document.querySelectorAll('.hours-table tr').forEach(row => {
+      if (row.cells[0] && row.cells[0].textContent.trim() === today) {
+        row.classList.add('today');
+      }
+    });
+
+    // ─── Scroll animations ──────────────────────────
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+    // ─── Back to top ─────────────────────────────────
+    const backToTop = document.getElementById('back-to-top');
+    window.addEventListener('scroll', () => {
+      backToTop.classList.toggle('show', window.scrollY > 400);
+    }, { passive: true });
+    backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+    // ─── Newsletter forms ────────────────────────────
+    ['newsletter-big', 'newsletter-footer'].forEach(formId => {
+      const f = document.getElementById(formId);
+      if (!f) return;
+      f.addEventListener('submit', e => {
+        e.preventDefault();
+        const input = f.querySelector('input[type="email"]');
+        if (input && input.value && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.value)) {
+          const prev = input.placeholder;
+          input.value = '';
+          input.placeholder = '✓ Subscribed! Thank you.';
+          setTimeout(() => { input.placeholder = prev; }, 3500);
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
+
