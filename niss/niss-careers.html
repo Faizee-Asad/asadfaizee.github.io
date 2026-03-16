@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Careers — NISS | Noor Infotech & Software Solutions</title>
+  <meta name="description" content="Join the NISS team. We're hiring developers, designers, and marketers in Malegaon, Maharashtra. Build great software with a great team."/>
+  <meta property="og:title" content="Careers at NISS — Join Our Team"/>
+  <meta property="og:type" content="website"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600;1,700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --bg:#f7f4ef;--bg2:#edeae3;--white:#ffffff;
+  --ink:#1a1714;--ink2:#4a4540;--ink3:#8c847c;
+  --orange:#d4601a;--orange2:#f07840;--orange-bg:#fff2ea;
+  --dark:#16120e;--dark2:#221d18;
+  --border:rgba(26,23,20,.1);--bsoft:rgba(26,23,20,.06);
+  --shsm:0 2px 20px rgba(26,23,20,.07);--shmd:0 8px 48px rgba(26,23,20,.12);--shlg:0 20px 80px rgba(26,23,20,.16);
+  --f1:'Cormorant Garamond',Georgia,serif;--f2:'Outfit',system-ui,sans-serif;
+  --ease:cubic-bezier(.16,1,.3,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--f2);font-size:16px;line-height:1.65;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+img{display:block;max-width:100%;height:auto}
+a{color:inherit;text-decoration:none}
+button{font-family:var(--f2);cursor:pointer}
+ul,ol{list-style:none}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:var(--bg2)}::-webkit-scrollbar-thumb{background:var(--orange);border-radius:2px}
+
+.wrap{width:100%;max-width:1260px;margin:0 auto;padding:0 20px}
+@media(min-width:640px){.wrap{padding:0 32px}}@media(min-width:1100px){.wrap{padding:0 48px}}
+.tag{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;background:var(--orange-bg);border-radius:100px;font-size:11px;font-weight:700;color:var(--orange);letter-spacing:.1em;text-transform:uppercase;}
+.tag::before{content:'';width:5px;height:5px;background:var(--orange);border-radius:50%}
+.stitle{font-family:var(--f1);font-size:clamp(30px,4.5vw,54px);font-weight:700;line-height:1.1;letter-spacing:-.01em;color:var(--ink);}
+.sdesc{font-size:16px;color:var(--ink2);line-height:1.75;max-width:560px}
+.rv{opacity:0;transform:translateY(32px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.rv.in{opacity:1;transform:translateY(0)}
+.d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}.d4{transition-delay:.32s}.d5{transition-delay:.4s}
+
+/* NAV */
+#nav{position:fixed;top:0;left:0;right:0;z-index:500;height:68px;display:flex;align-items:center;justify-content:space-between;padding:0 20px;background:rgba(247,244,239,.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);box-shadow:var(--shsm);}
+@media(min-width:640px){#nav{padding:0 32px}}@media(min-width:1100px){#nav{padding:0 48px}}
+.nl{display:flex;align-items:center;gap:10px}
+.nl-mark{width:38px;height:38px;background:var(--ink);border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.nl-mark svg{width:20px;height:20px}
+.nl-name{font-family:var(--f1);font-size:20px;font-weight:700;color:var(--ink);letter-spacing:-.02em;line-height:1}
+.nl-sub{display:block;font-family:var(--f2);font-size:9px;font-weight:500;color:var(--ink3);letter-spacing:.12em;text-transform:uppercase;margin-top:1px}
+.nlinks{display:none;gap:28px}@media(min-width:900px){.nlinks{display:flex}}
+.nlinks a{font-size:14px;font-weight:500;color:var(--ink2);position:relative;padding-bottom:2px;transition:color .2s}
+.nlinks a::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:2px;background:var(--orange);border-radius:2px;transition:width .3s var(--ease)}
+.nlinks a:hover{color:var(--ink)}.nlinks a:hover::after{width:100%}
+.ncta{display:none;padding:9px 20px;background:var(--ink);color:#f7f4ef;font-size:13px;font-weight:600;border-radius:8px;transition:background .2s,transform .2s}
+@media(min-width:900px){.ncta{display:inline-flex;align-items:center;gap:6px}}.ncta:hover{background:var(--orange);transform:translateY(-1px)}
+.hbg{display:flex;flex-direction:column;gap:5px;background:none;border:none;padding:6px;position:relative;z-index:601}
+@media(min-width:900px){.hbg{display:none}}
+.hbg span{display:block;width:24px;height:2px;background:var(--ink);border-radius:2px;transition:all .32s var(--ease);transform-origin:center}
+.hbg.on span:nth-child(1){transform:translateY(7px) rotate(45deg)}.hbg.on span:nth-child(2){opacity:0;transform:scaleX(0)}.hbg.on span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+/* DRAWER */
+#drawer{position:fixed;inset:0;z-index:600;background:var(--bg);padding-top:max(84px,calc(68px + env(safe-area-inset-top,16px)));padding-left:24px;padding-right:24px;padding-bottom:40px;transform:translateX(100%);transition:transform .4s var(--ease);overflow-y:auto;display:flex;flex-direction:column;}
+#drawer.on{transform:translateX(0)}
+.dr-list{margin-bottom:32px}.dr-list li{border-bottom:1px solid var(--border)}.dr-list li:first-child{border-top:1px solid var(--border)}
+.dr-list a{display:flex;justify-content:space-between;align-items:center;padding:18px 0;font-family:var(--f1);font-size:26px;font-weight:700;color:var(--ink);transition:color .2s}
+.dr-list a:hover{color:var(--orange)}.dr-list a em{font-style:normal;font-size:18px;opacity:.35}
+.dr-cta{display:inline-flex;align-items:center;gap:8px;padding:15px 28px;background:var(--ink);color:var(--bg);font-size:15px;font-weight:600;border-radius:10px;margin-bottom:32px;transition:background .2s}
+.dr-cta:hover{background:var(--orange)}.dr-contact{font-size:13px;color:var(--ink3);line-height:2.2}.dr-contact a{color:var(--orange);font-weight:600}
+
+/* HERO */
+#page-hero{position:relative;padding:140px 20px 80px;background:var(--dark);overflow:hidden;}
+@media(min-width:640px){#page-hero{padding:150px 32px 88px}}@media(min-width:1100px){#page-hero{padding:160px 48px 96px}}
+.ph-rule{position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--orange),transparent);opacity:.6}
+.ph-orb1{position:absolute;width:560px;height:560px;top:-150px;right:-80px;border-radius:50%;pointer-events:none;filter:blur(80px);background:radial-gradient(circle,rgba(212,96,26,.2),transparent 70%)}
+.ph-inner{max-width:1260px;margin:0 auto;position:relative;z-index:1}
+.ph-bc{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:600;color:rgba(247,244,239,.35);letter-spacing:.06em;text-transform:uppercase;margin-bottom:24px;opacity:0;transform:translateY(12px);animation:fup .7s var(--ease) .1s forwards}
+.ph-bc a{color:var(--orange)}.ph-bc span{opacity:.4}
+.ph-cols{display:grid;grid-template-columns:1fr;gap:36px;align-items:end}
+@media(min-width:860px){.ph-cols{grid-template-columns:1fr 1fr;gap:60px}}
+.ph-ta{opacity:0;transform:translateY(14px);animation:fup .8s var(--ease) .16s forwards}.ph-ta.tag{background:rgba(212,96,26,.18)}
+.ph-h1{font-family:var(--f1);font-size:clamp(42px,7vw,88px);font-weight:700;line-height:1.02;letter-spacing:-.025em;color:var(--bg);margin-top:18px;opacity:0;transform:translateY(20px);animation:fup .9s var(--ease) .26s forwards}
+.ph-h1 em{font-style:italic;color:var(--orange)}
+.ph-right{opacity:0;transform:translateY(16px);animation:fup .9s var(--ease) .4s forwards}
+.ph-right p{font-size:17px;color:rgba(247,244,239,.6);line-height:1.8;max-width:440px;margin-bottom:24px}
+.ph-open-badge{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:100px;font-size:13px;font-weight:600;color:rgba(247,244,239,.7)}
+.ph-badge-dot{width:8px;height:8px;border-radius:50%;background:#4ade80;animation:blink 2s infinite;flex-shrink:0}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+@keyframes fup{to{opacity:1;transform:translateY(0)}}
+
+/* CULTURE */
+#culture{padding:96px 0;background:var(--bg)}
+.culture-grid{display:grid;grid-template-columns:1fr;gap:56px;align-items:center}
+@media(min-width:860px){.culture-grid{grid-template-columns:1fr 1fr;gap:72px}}
+.culture-img{border-radius:20px;overflow:hidden;box-shadow:var(--shlg);aspect-ratio:4/3}
+.culture-img img{width:100%;height:100%;object-fit:cover}
+.culture-txt .tag{margin-bottom:16px}
+.culture-txt .stitle{margin-bottom:16px}
+.culture-txt .sdesc{margin-bottom:24px}
+.culture-perks{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:28px}
+@media(max-width:380px){.culture-perks{grid-template-columns:1fr}}
+.cp{display:flex;align-items:flex-start;gap:10px;padding:14px;background:var(--white);border:1px solid var(--bsoft);border-radius:12px;box-shadow:var(--shsm);transition:transform .2s var(--ease)}
+.cp:hover{transform:translateY(-2px)}
+.cp-ico{font-size:20px;flex-shrink:0;margin-top:1px}
+.cp-t{font-size:13px;font-weight:700;color:var(--ink);margin-bottom:2px}
+.cp-d{font-size:12px;color:var(--ink3);line-height:1.5}
+
+/* BENEFITS */
+#benefits{padding:96px 0;background:var(--dark)}
+.ben-head{display:grid;grid-template-columns:1fr;gap:16px;margin-bottom:56px}
+@media(min-width:760px){.ben-head{grid-template-columns:1fr 1fr;align-items:end}}
+.ben-head .tag{background:rgba(212,96,26,.15)}
+.ben-head .stitle{color:var(--bg);margin-top:14px}
+.ben-head p{font-size:15px;color:rgba(247,244,239,.45);max-width:360px;line-height:1.75}
+.ben-grid{display:grid;grid-template-columns:1fr;gap:16px}
+@media(min-width:480px){.ben-grid{grid-template-columns:1fr 1fr}}
+@media(min-width:860px){.ben-grid{grid-template-columns:repeat(3,1fr)}}
+.bc{padding:28px 24px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:16px;transition:background .28s,border-color .28s,transform .28s var(--ease)}
+.bc:hover{background:rgba(212,96,26,.1);border-color:rgba(212,96,26,.25);transform:translateY(-3px)}
+.bc-ico{font-size:28px;margin-bottom:14px;line-height:1}
+.bc-t{font-size:16px;font-weight:700;color:var(--bg);margin-bottom:8px}
+.bc-d{font-size:13px;color:rgba(247,244,239,.45);line-height:1.7}
+
+/* JOBS */
+#jobs{padding:96px 0;background:var(--bg2)}
+.jobs-head{margin-bottom:48px}
+.jobs-head .tag{margin-bottom:14px}
+.jobs-list{display:flex;flex-direction:column;gap:16px}
+
+.job-card{
+  background:var(--white);border:1px solid var(--bsoft);border-radius:16px;
+  box-shadow:var(--shsm);overflow:hidden;
+  transition:box-shadow .3s,transform .3s var(--ease);
+}
+.job-card:hover{box-shadow:var(--shmd);transform:translateY(-3px)}
+
+.job-header{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;padding:24px 28px;cursor:pointer;flex-wrap:wrap}
+.job-left{display:flex;align-items:flex-start;gap:16px}
+.job-ico{width:48px;height:48px;background:var(--orange-bg);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.job-title{font-family:var(--f1);font-size:clamp(18px,2.5vw,22px);font-weight:700;color:var(--ink);margin-bottom:6px}
+.job-meta{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.jm{display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:600;color:var(--ink3);background:var(--bg2);padding:3px 10px;border-radius:100px}
+.jm-new{background:rgba(212,96,26,.1);color:var(--orange)}
+.job-arrow{width:36px;height:36px;border-radius:50%;background:var(--bg2);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;transition:background .2s,transform .3s var(--ease)}
+.job-card.open .job-arrow{background:var(--orange);color:white;transform:rotate(90deg)}
+
+.job-body{max-height:0;overflow:hidden;transition:max-height .4s var(--ease)}
+.job-card.open .job-body{max-height:800px}
+.job-body-inner{padding:0 28px 28px;border-top:1px solid var(--border)}
+.job-desc{font-size:14px;color:var(--ink2);line-height:1.8;margin:20px 0 16px}
+.job-section-title{font-size:12px;font-weight:700;color:var(--ink);text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px;margin-top:18px}
+.job-list{display:flex;flex-direction:column;gap:7px}
+.job-list li{display:flex;align-items:flex-start;gap:8px;font-size:14px;color:var(--ink2);line-height:1.55}
+.job-list li::before{content:'→';color:var(--orange);font-weight:700;flex-shrink:0}
+.job-apply-btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:12px 24px;background:var(--ink);color:var(--bg);
+  font-size:14px;font-weight:600;border-radius:9px;margin-top:24px;
+  transition:background .2s,transform .2s;
+}
+.job-apply-btn:hover{background:var(--orange);transform:translateY(-1px)}
+
+/* NO OPENINGS */
+.no-jobs{text-align:center;padding:56px 0}
+.no-jobs-ico{font-size:48px;margin-bottom:16px}
+.no-jobs-t{font-family:var(--f1);font-size:26px;font-weight:700;color:var(--ink);margin-bottom:8px}
+.no-jobs-d{font-size:15px;color:var(--ink3);max-width:420px;margin:0 auto}
+
+/* SPECULATIVE APPLICATION */
+#spec{padding:96px 0;background:var(--bg)}
+.spec-inner{display:grid;grid-template-columns:1fr;gap:48px}
+@media(min-width:860px){.spec-inner{grid-template-columns:1fr 1.4fr;gap:72px;align-items:start}}
+.spec-txt .tag{margin-bottom:16px}
+.spec-txt .stitle{margin-bottom:14px}
+.spec-txt .sdesc{margin-bottom:20px}
+.spec-txt ul{display:flex;flex-direction:column;gap:10px;margin-top:16px}
+.spec-txt li{display:flex;align-items:center;gap:10px;font-size:14px;color:var(--ink2)}
+.spec-txt li::before{content:'✓';color:var(--orange);font-weight:700;flex-shrink:0}
+.spec-form{background:var(--white);border:1px solid var(--bsoft);border-radius:20px;padding:32px;box-shadow:var(--shmd)}
+@media(min-width:540px){.spec-form{padding:40px}}
+.sf-title{font-family:var(--f1);font-size:22px;font-weight:700;color:var(--ink);margin-bottom:6px}
+.sf-sub{font-size:14px;color:var(--ink3);margin-bottom:28px;line-height:1.65}
+.frow2{display:grid;grid-template-columns:1fr;gap:14px}
+@media(min-width:480px){.frow2{grid-template-columns:1fr 1fr}}
+.fg{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
+.fg label{font-size:11px;font-weight:700;color:var(--ink2);letter-spacing:.07em;text-transform:uppercase}
+.fg label .req{color:var(--orange)}
+.fg input,.fg textarea,.fg select{padding:12px 15px;background:var(--bg);border:1.5px solid var(--border);border-radius:9px;font-family:var(--f2);font-size:14px;color:var(--ink);outline:none;transition:border-color .2s,background .2s;-webkit-appearance:none;resize:none;width:100%}
+.fg input:focus,.fg textarea:focus,.fg select:focus{border-color:var(--orange);background:var(--white)}
+.fg input::placeholder,.fg textarea::placeholder{color:var(--ink3);opacity:.6}
+.fg textarea{height:100px}
+.fg select option{background:white}
+.file-upload{position:relative}
+.file-input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.file-label{display:flex;align-items:center;justify-content:center;gap:8px;padding:12px 15px;background:var(--bg);border:1.5px dashed var(--border);border-radius:9px;font-size:13px;font-weight:600;color:var(--ink3);cursor:pointer;transition:border-color .2s,background .2s;text-align:center}
+.file-label:hover{border-color:var(--orange);color:var(--orange);background:var(--orange-bg)}
+.fsub{width:100%;padding:13px;background:var(--ink);color:var(--bg);font-family:var(--f2);font-size:14px;font-weight:700;border:none;border-radius:9px;transition:background .2s,transform .2s;margin-top:4px}
+.fsub:hover{background:var(--orange);transform:translateY(-1px)}
+.fsub:disabled{opacity:.55;cursor:not-allowed;transform:none}
+#app-status{display:none;text-align:center;font-size:13px;font-weight:600;margin-top:10px}
+
+/* CTA BAND */
+#ctaband{padding:96px 20px;background:var(--dark2);position:relative;overflow:hidden;text-align:center}
+.cta-orb{position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(212,96,26,.18),transparent 70%);top:-200px;right:-100px;pointer-events:none}
+.cta-inner{position:relative;z-index:1;max-width:660px;margin:0 auto}
+.cta-t{font-family:var(--f1);font-size:clamp(32px,5vw,58px);font-weight:700;color:var(--bg);line-height:1.1;letter-spacing:-.015em;margin-bottom:16px}
+.cta-t em{font-style:italic;color:var(--orange)}
+.cta-d{font-size:17px;color:rgba(247,244,239,.5);line-height:1.8;margin-bottom:40px;max-width:480px;margin-left:auto;margin-right:auto}
+.cta-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn-white{display:inline-flex;align-items:center;gap:8px;padding:13px 28px;background:var(--bg);color:var(--ink);font-size:14px;font-weight:600;border-radius:9px;transition:background .2s,transform .2s,color .2s}
+.btn-white:hover{background:var(--orange);color:white;transform:translateY(-2px)}
+.btn-ghost{display:inline-flex;align-items:center;gap:8px;padding:13px 28px;background:transparent;color:var(--bg);font-size:14px;font-weight:500;border-radius:9px;border:1.5px solid rgba(247,244,239,.2);transition:border-color .2s,background .2s}
+.btn-ghost:hover{border-color:rgba(247,244,239,.6);background:rgba(247,244,239,.06)}
+
+/* FOOTER */
+footer{background:var(--dark);padding:60px 20px 28px}
+@media(min-width:640px){footer{padding:72px 32px 32px}}@media(min-width:1100px){footer{padding:80px 48px 36px}}
+.fg-grid{max-width:1260px;margin:0 auto;display:grid;grid-template-columns:1fr;gap:40px;margin-bottom:48px}
+@media(min-width:540px){.fg-grid{grid-template-columns:1fr 1fr;gap:36px}}@media(min-width:860px){.fg-grid{grid-template-columns:2fr 1fr 1fr 1fr;gap:48px}}
+.fb-name{font-family:var(--f1);font-size:22px;font-weight:700;color:var(--bg);letter-spacing:-.02em;margin-bottom:10px}
+.fb-tag{font-size:13px;color:rgba(247,244,239,.4);line-height:1.7;max-width:260px;margin-bottom:24px}
+.fbsocs{display:flex;gap:8px}
+.fbs{width:36px;height:36px;border-radius:8px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:rgba(247,244,239,.5);transition:background .2s,color .2s,border-color .2s}
+.fbs:hover{background:var(--orange);border-color:var(--orange);color:white}
+.fcol h4{font-size:11px;font-weight:700;color:rgba(247,244,239,.35);letter-spacing:.13em;text-transform:uppercase;margin-bottom:18px}
+.fl{display:flex;flex-direction:column;gap:11px}.fl a{font-size:13px;color:rgba(247,244,239,.55);transition:color .2s}.fl a:hover{color:var(--orange)}
+.fbot{max-width:1260px;margin:0 auto;padding-top:22px;border-top:1px solid rgba(255,255,255,.07);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
+.fbot p{font-size:12px;color:rgba(247,244,239,.3)}.fbot a{color:var(--orange)}
+#btt{position:fixed;bottom:24px;right:24px;z-index:200;width:44px;height:44px;border-radius:11px;background:var(--ink);color:var(--bg);border:none;font-size:18px;display:flex;align-items:center;justify-content:center;box-shadow:var(--shmd);opacity:0;transform:translateY(10px);transition:opacity .3s,transform .3s,background .2s}
+#btt.vis{opacity:1;transform:translateY(0)}#btt:hover{background:var(--orange)}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}.rv{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+
+<nav id="nav" role="navigation" aria-label="Main navigation">
+  <a href="index.html" class="nl" aria-label="NISS Home">
+    <div class="nl-mark"><svg viewBox="0 0 20 20" fill="none"><path d="M3 17V3L10 13L17 3V17" stroke="#f7f4ef" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    <div><div class="nl-name">NISS</div><span class="nl-sub">Noor Infotech &amp; Software</span></div>
+  </a>
+  <ul class="nlinks" role="list">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="services.html">Services</a></li>
+    <li><a href="portfolio.html">Work</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <a href="#spec" class="ncta">Apply Now →</a>
+  <button class="hbg" id="hbg" aria-label="Toggle menu" aria-expanded="false"><span></span><span></span><span></span></button>
+</nav>
+
+<div id="drawer" aria-hidden="true" role="dialog" aria-label="Navigation menu">
+  <ul class="dr-list">
+    <li><a href="index.html" class="dl">Home <em>→</em></a></li>
+    <li><a href="about.html" class="dl">About <em>→</em></a></li>
+    <li><a href="services.html" class="dl">Services <em>→</em></a></li>
+    <li><a href="portfolio.html" class="dl">Work <em>→</em></a></li>
+    <li><a href="contact.html" class="dl">Contact <em>→</em></a></li>
+  </ul>
+  <a href="#spec" class="dr-cta dl">Apply Now →</a>
+  <div class="dr-contact">
+    <div>📞 <a href="tel:09372239892">093722 39892</a></div>
+    <div>✉️ <a href="mailto:info@noorinfotech.co.in">info@noorinfotech.co.in</a></div>
+  </div>
+</div>
+
+<!-- HERO -->
+<div id="page-hero">
+  <div class="ph-rule" aria-hidden="true"></div>
+  <div class="ph-orb1" aria-hidden="true"></div>
+  <div class="ph-inner">
+    <nav class="ph-bc" aria-label="Breadcrumb"><a href="index.html">Home</a><span>/</span><span aria-current="page">Careers</span></nav>
+    <div class="ph-cols">
+      <div>
+        <div class="tag ph-ta">Join Our Team</div>
+        <h1 class="ph-h1">Build Great<br>Software <em>With Us</em></h1>
+      </div>
+      <div class="ph-right">
+        <p>We're a small, talented team in Malegaon building software that genuinely helps people. If you care about quality, love solving problems, and want to grow — we'd love to hear from you.</p>
+        <div class="ph-open-badge"><span class="ph-badge-dot"></span>Currently Hiring — 3 Open Positions</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CULTURE -->
+<section id="culture">
+  <div class="wrap">
+    <div class="culture-grid">
+      <div class="culture-img rv">
+        <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&q=85&auto=format&fit=crop" alt="NISS team working" loading="lazy" decoding="async" width="800" height="600"/>
+      </div>
+      <div class="culture-txt">
+        <div class="tag rv">Our Culture</div>
+        <h2 class="stitle rv d1">A Place Where<br>Great Work Happens</h2>
+        <p class="sdesc rv d2">We believe great software is built by happy, empowered people. At NISS, you'll work directly on real client projects from day one — not toy problems or intern work.</p>
+        <p class="sdesc rv d3" style="margin-top:12px">We're based in Malegaon but think and build at the highest standards. Small team means your work matters and your voice is heard.</p>
+        <div class="culture-perks">
+          <div class="cp rv d2"><div class="cp-ico">🚀</div><div><div class="cp-t">Real Projects</div><div class="cp-d">Work on live client projects, not practice exercises</div></div></div>
+          <div class="cp rv d3"><div class="cp-ico">📈</div><div><div class="cp-t">Fast Growth</div><div class="cp-d">Small team means fast learning and clear career path</div></div></div>
+          <div class="cp rv d4"><div class="cp-ico">🤝</div><div><div class="cp-t">Direct Mentorship</div><div class="cp-d">Learn directly from senior developers every day</div></div></div>
+          <div class="cp rv d5"><div class="cp-ico">🏠</div><div><div class="cp-t">Flexible Work</div><div class="cp-d">Hybrid and remote options for the right candidates</div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BENEFITS -->
+<section id="benefits">
+  <div class="wrap">
+    <div class="ben-head">
+      <div>
+        <div class="tag rv">Why Work Here</div>
+        <h2 class="stitle rv d1">What We Offer</h2>
+      </div>
+      <p class="rv d2" style="font-size:15px;color:rgba(247,244,239,.45);max-width:340px;line-height:1.75">Beyond a salary — a place to do meaningful work and grow as a professional.</p>
+    </div>
+    <div class="ben-grid">
+      <div class="bc rv"><div class="bc-ico">💰</div><div class="bc-t">Competitive Pay</div><div class="bc-d">Market-rate salaries reviewed annually based on performance and contribution.</div></div>
+      <div class="bc rv d1"><div class="bc-ico">📚</div><div class="bc-t">Learning Budget</div><div class="bc-d">Annual allowance for courses, books, and conferences to keep your skills sharp.</div></div>
+      <div class="bc rv d2"><div class="bc-ico">🏖️</div><div class="bc-t">Paid Leave</div><div class="bc-d">Generous paid time off plus all national holidays. We believe in rest.</div></div>
+      <div class="bc rv d3"><div class="bc-ico">💻</div><div class="bc-t">Good Equipment</div><div class="bc-d">Fast machine, proper monitor, and the tools you need to work without friction.</div></div>
+      <div class="bc rv d4"><div class="bc-ico">🎯</div><div class="bc-t">Clear Goals</div><div class="bc-d">You'll always know what success looks like in your role — no ambiguity.</div></div>
+      <div class="bc rv d5"><div class="bc-ico">🌱</div><div class="bc-t">Growth Path</div><div class="bc-d">Defined progression from junior to senior to lead. We promote from within.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- OPEN POSITIONS -->
+<section id="jobs">
+  <div class="wrap">
+    <div class="jobs-head">
+      <div class="tag rv">Open Positions</div>
+      <h2 class="stitle rv d1" style="margin-top:14px">Current Openings</h2>
+      <p class="sdesc rv d2" style="margin-top:10px">All roles are based in Malegaon with hybrid/remote options available.</p>
+    </div>
+
+    <div class="jobs-list">
+
+      <!-- JOB 1 -->
+      <div class="job-card rv" id="job1">
+        <div class="job-header" onclick="toggleJob('job1')">
+          <div class="job-left">
+            <div class="job-ico">🌐</div>
+            <div>
+              <div class="job-title">PHP / Web Developer</div>
+              <div class="job-meta">
+                <span class="jm">📍 Malegaon (Hybrid)</span>
+                <span class="jm">⏱ Full-time</span>
+                <span class="jm">📊 1–3 yrs exp</span>
+                <span class="jm jm-new">🟢 Actively Hiring</span>
+              </div>
+            </div>
+          </div>
+          <div class="job-arrow">→</div>
+        </div>
+        <div class="job-body">
+          <div class="job-body-inner">
+            <p class="job-desc">We're looking for a PHP developer to join our web team. You'll work on client web applications, portals, and CMS systems. You'll be building features end-to-end — from database design to front-end integration.</p>
+            <div class="job-section-title">What You'll Do</div>
+            <ul class="job-list">
+              <li>Build and maintain PHP / MySQL web applications for clients</li>
+              <li>Integrate REST APIs and third-party services</li>
+              <li>Work with Bootstrap, JavaScript, and jQuery for front-end</li>
+              <li>Deploy and configure applications on cPanel / Linux servers</li>
+            </ul>
+            <div class="job-section-title">What We're Looking For</div>
+            <ul class="job-list">
+              <li>1–3 years of PHP and MySQL experience</li>
+              <li>Comfortable with WordPress and basic Linux commands</li>
+              <li>Strong problem-solving mindset and attention to detail</li>
+              <li>Good communication skills — you'll work directly with clients</li>
+            </ul>
+            <a href="#spec" class="job-apply-btn">Apply for This Role →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- JOB 2 -->
+      <div class="job-card rv d1" id="job2">
+        <div class="job-header" onclick="toggleJob('job2')">
+          <div class="job-left">
+            <div class="job-ico">🎨</div>
+            <div>
+              <div class="job-title">UI/UX Designer</div>
+              <div class="job-meta">
+                <span class="jm">📍 Malegaon (Hybrid)</span>
+                <span class="jm">⏱ Full-time</span>
+                <span class="jm">📊 0–2 yrs exp</span>
+                <span class="jm jm-new">🟢 Actively Hiring</span>
+              </div>
+            </div>
+          </div>
+          <div class="job-arrow">→</div>
+        </div>
+        <div class="job-body">
+          <div class="job-body-inner">
+            <p class="job-desc">We're looking for a designer who cares deeply about usability and aesthetics. You'll design websites, web apps, and mobile interfaces — from initial wireframes to polished, developer-ready Figma files.</p>
+            <div class="job-section-title">What You'll Do</div>
+            <ul class="job-list">
+              <li>Design UI screens for web and mobile projects in Figma</li>
+              <li>Create wireframes, user flows, and prototypes</li>
+              <li>Work closely with developers to ensure pixel-accurate implementation</li>
+              <li>Contribute to branding projects — logos, style guides, and marketing assets</li>
+            </ul>
+            <div class="job-section-title">What We're Looking For</div>
+            <ul class="job-list">
+              <li>Proficiency in Figma (mandatory)</li>
+              <li>Strong portfolio demonstrating UI/UX work</li>
+              <li>Understanding of responsive design and mobile-first principles</li>
+              <li>Basic HTML/CSS knowledge is a strong plus</li>
+            </ul>
+            <a href="#spec" class="job-apply-btn">Apply for This Role →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- JOB 3 -->
+      <div class="job-card rv d2" id="job3">
+        <div class="job-header" onclick="toggleJob('job3')">
+          <div class="job-left">
+            <div class="job-ico">📈</div>
+            <div>
+              <div class="job-title">Digital Marketing Executive</div>
+              <div class="job-meta">
+                <span class="jm">📍 Malegaon / Remote</span>
+                <span class="jm">⏱ Full-time</span>
+                <span class="jm">📊 1–2 yrs exp</span>
+                <span class="jm jm-new">🟢 Actively Hiring</span>
+              </div>
+            </div>
+          </div>
+          <div class="job-arrow">→</div>
+        </div>
+        <div class="job-body">
+          <div class="job-body-inner">
+            <p class="job-desc">We're growing our SEO and digital marketing practice and need someone who loves search engines, content, and analytics. You'll manage SEO campaigns for our clients and help grow NISS's own digital presence.</p>
+            <div class="job-section-title">What You'll Do</div>
+            <ul class="job-list">
+              <li>Conduct keyword research and on-page/technical SEO audits</li>
+              <li>Create and execute content strategies for client websites</li>
+              <li>Manage Google Analytics, Search Console, and monthly reporting</li>
+              <li>Run and optimise Google Ads and social media campaigns</li>
+            </ul>
+            <div class="job-section-title">What We're Looking For</div>
+            <ul class="job-list">
+              <li>1–2 years of SEO / digital marketing experience</li>
+              <li>Familiarity with Google Analytics 4 and Search Console</li>
+              <li>Strong written communication and content creation skills</li>
+              <li>Data-driven mindset with an eye for detail</li>
+            </ul>
+            <a href="#spec" class="job-apply-btn">Apply for This Role →</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- SPECULATIVE APPLICATION -->
+<section id="spec">
+  <div class="wrap">
+    <div class="spec-inner">
+      <div class="spec-txt">
+        <div class="tag rv">Don't See Your Role?</div>
+        <h2 class="stitle rv d1" style="margin-top:14px">Send a<br>Speculative Application</h2>
+        <p class="sdesc rv d2">We're always open to talented people. If you're a developer, designer, or marketer who thinks you'd be a great fit for NISS — send us your CV and tell us why.</p>
+        <ul class="rv d3">
+          <li>We read every application personally</li>
+          <li>We'll keep your CV on file for 6 months</li>
+          <li>We'll reach out if a role opens that matches your profile</li>
+          <li>No automated rejections — a real person will respond</li>
+        </ul>
+      </div>
+      <div class="spec-form rv d2">
+        <div class="sf-title">Apply to NISS</div>
+        <p class="sf-sub">Fill in the form below and we'll be in touch within 5 business days.</p>
+        <!-- PLACEHOLDER: Connect to Formspree or EmailJS before going live -->
+        <form id="app-form" novalidate>
+          <div class="frow2">
+            <div class="fg"><label for="af-name">Full Name <span class="req">*</span></label><input type="text" id="af-name" name="name" placeholder="Your name" required autocomplete="name"/></div>
+            <div class="fg"><label for="af-email">Email <span class="req">*</span></label><input type="email" id="af-email" name="email" placeholder="you@email.com" required autocomplete="email"/></div>
+          </div>
+          <div class="frow2">
+            <div class="fg"><label for="af-phone">Phone</label><input type="tel" id="af-phone" name="phone" placeholder="+91 98765 43210" autocomplete="tel"/></div>
+            <div class="fg"><label for="af-role">Role You're Applying For</label>
+              <select id="af-role" name="role">
+                <option value="">Select…</option>
+                <option>PHP / Web Developer</option>
+                <option>UI/UX Designer</option>
+                <option>Digital Marketing Executive</option>
+                <option>Other / Speculative</option>
+              </select>
+            </div>
+          </div>
+          <div class="fg">
+            <label for="af-message">Why NISS? <span class="req">*</span></label>
+            <textarea id="af-message" name="message" placeholder="Tell us about yourself, your experience, and why you want to join the NISS team…" required></textarea>
+          </div>
+          <div class="fg">
+            <label>CV / Resume (PDF)</label>
+            <!-- PLACEHOLDER: File upload — connect to Formspree or backend before going live -->
+            <div class="file-upload">
+              <input type="file" accept=".pdf,.doc,.docx" class="file-input" id="af-cv" name="cv"/>
+              <label for="af-cv" class="file-label">📎 Click to attach your CV (PDF / Word)</label>
+            </div>
+          </div>
+          <button type="submit" class="fsub" id="app-btn">Submit Application →</button>
+          <p id="app-status" role="status"></p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div id="ctaband">
+  <div class="cta-orb" aria-hidden="true"></div>
+  <div class="cta-inner rv">
+    <div class="tag" style="background:rgba(212,96,26,.18);margin-bottom:20px">Any Questions?</div>
+    <h2 class="cta-t">Want to Know More<br>About <em>Life at NISS?</em></h2>
+    <p class="cta-d">Reach out directly — we're happy to answer any questions about the team, the work, or the hiring process.</p>
+    <div class="cta-btns">
+      <a href="mailto:info@noorinfotech.co.in" class="btn-white">✉️ Email Us</a>
+      <a href="about.html" class="btn-ghost">Meet the Team</a>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer role="contentinfo">
+  <div class="fg-grid">
+    <div><div class="fb-name">NISS</div><p class="fb-tag">Where innovation meets excellence. Custom software &amp; digital solutions from Malegaon to the world.</p><div class="fbsocs"><a href="#" class="fbs" aria-label="LinkedIn">in</a><a href="#" class="fbs" aria-label="Twitter">𝕏</a><a href="#" class="fbs" aria-label="Facebook">f</a><a href="#" class="fbs" aria-label="Instagram">ig</a></div></div>
+    <div class="fcol"><h4>Company</h4><div class="fl"><a href="index.html">Home</a><a href="about.html">About</a><a href="services.html">Services</a><a href="portfolio.html">Work</a><a href="contact.html">Contact</a></div></div>
+    <div class="fcol"><h4>Jobs</h4><div class="fl"><a href="#job1">PHP Developer</a><a href="#job2">UI/UX Designer</a><a href="#job3">Digital Marketing</a><a href="#spec">Speculative Apply</a></div></div>
+    <div class="fcol"><h4>Contact</h4><div class="fl"><a href="tel:09372239892">+91 93722 39892</a><a href="mailto:info@noorinfotech.co.in">info@noorinfotech.co.in</a><a href="https://wa.me/919372239892" target="_blank" rel="noopener">WhatsApp Us</a></div></div>
+  </div>
+  <div class="fbot"><p>© 2024 <a href="index.html">Noor Infotech &amp; Software Solutions</a>. All rights reserved.</p><p>Malegaon · Maharashtra · India</p></div>
+</footer>
+<button id="btt" aria-label="Back to top">↑</button>
+
+<script>
+(function(){
+  'use strict';
+  const btt=document.getElementById('btt');
+  window.addEventListener('scroll',()=>btt.classList.toggle('vis',scrollY>400),{passive:true});
+  btt.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+
+  // Drawer
+  const hbg=document.getElementById('hbg'),drawer=document.getElementById('drawer');
+  let open=false;
+  function tog(s){open=s;hbg.classList.toggle('on',open);hbg.setAttribute('aria-expanded',String(open));drawer.classList.toggle('on',open);drawer.setAttribute('aria-hidden',String(!open));document.body.style.overflow=open?'hidden':'';}
+  hbg.addEventListener('click',()=>tog(!open));
+  document.querySelectorAll('.dl').forEach(l=>l.addEventListener('click',()=>tog(false)));
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&open){tog(false);hbg.focus();}});
+
+  // Smooth scroll
+  document.querySelectorAll('a[href^="#"]').forEach(a=>{
+    a.addEventListener('click',function(e){
+      const t=document.querySelector(this.getAttribute('href'));
+      if(!t)return;e.preventDefault();
+      window.scrollTo({top:t.getBoundingClientRect().top+scrollY-80,behavior:'smooth'});
+    });
+  });
+
+  // Reveal
+  const io=new IntersectionObserver(en=>{en.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.1});
+  document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+
+  // Job accordion
+  window.toggleJob=function(id){
+    const card=document.getElementById(id);
+    const isOpen=card.classList.contains('open');
+    document.querySelectorAll('.job-card').forEach(c=>c.classList.remove('open'));
+    if(!isOpen)card.classList.add('open');
+  };
+
+  // File input label update
+  const fileInput=document.getElementById('af-cv');
+  const fileLabel=document.querySelector('.file-label');
+  if(fileInput){
+    fileInput.addEventListener('change',function(){
+      fileLabel.textContent=this.files[0]?'📎 '+this.files[0].name:'📎 Click to attach your CV (PDF / Word)';
+    });
+  }
+
+  // Application form
+  const appForm=document.getElementById('app-form');
+  const appBtn=document.getElementById('app-btn');
+  const appStatus=document.getElementById('app-status');
+  appForm.addEventListener('submit',async function(e){
+    e.preventDefault();
+    const nm=document.getElementById('af-name').value.trim();
+    const em=document.getElementById('af-email').value.trim();
+    const mg=document.getElementById('af-message').value.trim();
+    if(!nm||!em||!mg){appStatus.style.display='block';appStatus.style.color='#c0392b';appStatus.textContent='⚠️ Please fill in all required fields.';return;}
+    appBtn.textContent='Submitting…';appBtn.disabled=true;appStatus.style.display='none';
+    // PLACEHOLDER: Replace with Formspree/EmailJS endpoint
+    await new Promise(r=>setTimeout(r,1400));
+    appStatus.style.display='block';appStatus.style.color='#1e7e4a';
+    appStatus.textContent='✅ Application received! We\'ll be in touch within 5 business days.';
+    appBtn.textContent='Submitted ✓';appForm.reset();fileLabel.textContent='📎 Click to attach your CV (PDF / Word)';
+    setTimeout(()=>{appBtn.textContent='Submit Application →';appBtn.disabled=false;appStatus.style.display='none';},7000);
+  });
+})();
+</script>
+</body>
+</html>
