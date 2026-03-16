@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Portfolio — NISS | Noor Infotech & Software Solutions</title>
+  <meta name="description" content="Explore NISS portfolio — Educational ERPs, e-commerce stores, mobile apps, news portals, architecture sites and more. 50+ projects delivered since 2010."/>
+  <meta property="og:title" content="Portfolio — NISS"/>
+  <meta property="og:description" content="50+ projects delivered. See what we've built for clients across India."/>
+  <meta property="og:type" content="website"/>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600;1,700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+
+<style>
+/* ─────────────────────────────────────────
+   TOKENS
+───────────────────────────────────────── */
+:root{
+  --bg:#f7f4ef;--bg2:#edeae3;--white:#ffffff;
+  --ink:#1a1714;--ink2:#4a4540;--ink3:#8c847c;
+  --orange:#d4601a;--orange2:#f07840;--orange-bg:#fff2ea;
+  --dark:#16120e;--dark2:#221d18;
+  --border:rgba(26,23,20,.1);--bsoft:rgba(26,23,20,.06);
+  --shsm:0 2px 20px rgba(26,23,20,.07);
+  --shmd:0 8px 48px rgba(26,23,20,.12);
+  --shlg:0 20px 80px rgba(26,23,20,.16);
+  --f1:'Cormorant Garamond',Georgia,serif;
+  --f2:'Outfit',system-ui,sans-serif;
+  --ease:cubic-bezier(.16,1,.3,1);
+}
+
+/* ─────────────────────────────────────────
+   RESET
+───────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{
+  background:var(--bg);color:var(--ink);
+  font-family:var(--f2);font-size:16px;line-height:1.65;
+  overflow-x:hidden;-webkit-font-smoothing:antialiased;
+}
+img{display:block;max-width:100%;height:auto}
+a{color:inherit;text-decoration:none}
+button{font-family:var(--f2);cursor:pointer}
+ul,ol{list-style:none}
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--bg2)}
+::-webkit-scrollbar-thumb{background:var(--orange);border-radius:2px}
+
+/* ─────────────────────────────────────────
+   UTILITIES
+───────────────────────────────────────── */
+.wrap{width:100%;max-width:1260px;margin:0 auto;padding:0 20px}
+@media(min-width:640px){.wrap{padding:0 32px}}
+@media(min-width:1100px){.wrap{padding:0 48px}}
+
+.tag{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:6px 14px;background:var(--orange-bg);border-radius:100px;
+  font-size:11px;font-weight:700;color:var(--orange);letter-spacing:.1em;text-transform:uppercase;
+}
+.tag::before{content:'';width:5px;height:5px;background:var(--orange);border-radius:50%}
+
+.stitle{
+  font-family:var(--f1);font-size:clamp(30px,4.5vw,54px);font-weight:700;
+  line-height:1.1;letter-spacing:-.01em;color:var(--ink);
+}
+.sdesc{font-size:16px;color:var(--ink2);line-height:1.75;max-width:560px}
+
+.rv{opacity:0;transform:translateY(32px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.rv.in{opacity:1;transform:translateY(0)}
+.d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}
+.d4{transition-delay:.32s}.d5{transition-delay:.40s}.d6{transition-delay:.48s}
+
+.btn-primary{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:13px 26px;background:var(--ink);color:var(--bg);
+  font-size:14px;font-weight:600;border-radius:9px;
+  box-shadow:0 4px 18px rgba(26,23,20,.2);
+  transition:background .2s,transform .2s,box-shadow .2s;
+}
+.btn-primary:hover{background:var(--orange);transform:translateY(-2px);box-shadow:0 8px 28px rgba(212,96,26,.35)}
+.btn-sec{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:13px 26px;background:transparent;color:var(--ink);
+  font-size:14px;font-weight:500;border-radius:9px;
+  border:1.5px solid var(--border);
+  transition:border-color .2s,color .2s,background .2s;
+}
+.btn-sec:hover{border-color:var(--orange);color:var(--orange);background:var(--orange-bg)}
+
+/* ─────────────────────────────────────────
+   NAV
+───────────────────────────────────────── */
+#nav{
+  position:fixed;top:0;left:0;right:0;z-index:500;height:68px;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 20px;
+  background:rgba(247,244,239,.95);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  box-shadow:var(--shsm);
+}
+@media(min-width:640px){#nav{padding:0 32px}}
+@media(min-width:1100px){#nav{padding:0 48px}}
+
+.nl{display:flex;align-items:center;gap:10px}
+.nl-mark{width:38px;height:38px;background:var(--ink);border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.nl-mark svg{width:20px;height:20px}
+.nl-name{font-family:var(--f1);font-size:20px;font-weight:700;color:var(--ink);letter-spacing:-.02em;line-height:1}
+.nl-sub{display:block;font-family:var(--f2);font-size:9px;font-weight:500;color:var(--ink3);letter-spacing:.12em;text-transform:uppercase;margin-top:1px}
+
+.nlinks{display:none;gap:28px}
+@media(min-width:900px){.nlinks{display:flex}}
+.nlinks a{font-size:14px;font-weight:500;color:var(--ink2);position:relative;padding-bottom:2px;transition:color .2s}
+.nlinks a::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:2px;background:var(--orange);border-radius:2px;transition:width .3s var(--ease)}
+.nlinks a.active{color:var(--orange)}
+.nlinks a.active::after,.nlinks a:hover::after{width:100%}
+.nlinks a:hover{color:var(--ink)}
+
+.ncta{display:none;padding:9px 20px;background:var(--ink);color:#f7f4ef;font-size:13px;font-weight:600;border-radius:8px;transition:background .2s,transform .2s}
+@media(min-width:900px){.ncta{display:inline-flex;align-items:center;gap:6px}}
+.ncta:hover{background:var(--orange);transform:translateY(-1px)}
+
+.hbg{display:flex;flex-direction:column;gap:5px;background:none;border:none;padding:6px}
+@media(min-width:900px){.hbg{display:none}}
+.hbg span{display:block;width:24px;height:2px;background:var(--ink);border-radius:2px;transition:all .32s var(--ease);transform-origin:center}
+.hbg.on span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.hbg.on span:nth-child(2){opacity:0;transform:scaleX(0)}
+.hbg.on span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+/* ─────────────────────────────────────────
+   DRAWER
+───────────────────────────────────────── */
+#drawer{
+  position:fixed;inset:0;z-index:499;background:var(--bg);
+  padding:84px 24px 40px;transform:translateX(100%);
+  transition:transform .4s var(--ease);overflow-y:auto;display:flex;flex-direction:column;
+}
+#drawer.on{transform:translateX(0)}
+.dr-list{margin-bottom:32px}
+.dr-list li{border-bottom:1px solid var(--border)}
+.dr-list a{display:flex;justify-content:space-between;align-items:center;padding:18px 0;font-family:var(--f1);font-size:26px;font-weight:700;color:var(--ink);transition:color .2s}
+.dr-list a:hover,.dr-list a.active{color:var(--orange)}
+.dr-list a em{font-style:normal;font-size:18px;opacity:.35}
+.dr-cta{display:inline-flex;align-items:center;gap:8px;padding:15px 28px;background:var(--ink);color:var(--bg);font-size:15px;font-weight:600;border-radius:10px;margin-bottom:32px;transition:background .2s}
+.dr-cta:hover{background:var(--orange)}
+.dr-contact{font-size:13px;color:var(--ink3);line-height:2.2}
+.dr-contact a{color:var(--orange);font-weight:600}
+
+/* ─────────────────────────────────────────
+   PAGE HERO
+───────────────────────────────────────── */
+#page-hero{
+  position:relative;padding:140px 20px 72px;
+  background:var(--bg);overflow:hidden;
+}
+@media(min-width:640px){#page-hero{padding:150px 32px 88px}}
+@media(min-width:1100px){#page-hero{padding:160px 48px 96px}}
+
+.ph-rule{position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--orange),transparent);opacity:.5}
+.ph-orb1{position:absolute;width:560px;height:560px;top:-140px;right:-80px;border-radius:50%;pointer-events:none;filter:blur(80px);background:radial-gradient(circle,rgba(212,96,26,.14),transparent 70%)}
+.ph-orb2{position:absolute;width:400px;height:400px;bottom:-100px;left:-60px;border-radius:50%;pointer-events:none;filter:blur(80px);background:radial-gradient(circle,rgba(26,23,20,.05),transparent 70%)}
+
+.ph-inner{max-width:1260px;margin:0 auto;position:relative;z-index:1}
+
+.ph-breadcrumb{
+  display:flex;align-items:center;gap:8px;font-size:12px;font-weight:600;
+  color:var(--ink3);letter-spacing:.06em;text-transform:uppercase;margin-bottom:24px;
+  opacity:0;transform:translateY(12px);animation:fup .7s var(--ease) .1s forwards;
+}
+.ph-breadcrumb a{color:var(--orange);transition:opacity .2s}
+.ph-breadcrumb a:hover{opacity:.7}
+.ph-breadcrumb span{opacity:.4}
+
+.ph-cols{display:grid;grid-template-columns:1fr;gap:36px;align-items:end}
+@media(min-width:860px){.ph-cols{grid-template-columns:1.1fr 1fr;gap:64px}}
+
+.ph-tag-anim{opacity:0;transform:translateY(14px);animation:fup .8s var(--ease) .16s forwards}
+.ph-h1{
+  font-family:var(--f1);font-size:clamp(42px,7vw,88px);font-weight:700;
+  line-height:1.02;letter-spacing:-.025em;color:var(--ink);
+  margin-top:18px;
+  opacity:0;transform:translateY(20px);animation:fup .9s var(--ease) .26s forwards;
+}
+.ph-h1 em{font-style:italic;color:var(--orange)}
+
+.ph-right{opacity:0;transform:translateY(16px);animation:fup .9s var(--ease) .4s forwards}
+.ph-right p{font-size:17px;color:var(--ink2);line-height:1.8;max-width:440px;margin-bottom:28px}
+.ph-stats{display:flex;gap:28px;flex-wrap:wrap;margin-top:28px;padding-top:28px;border-top:1px solid var(--border)}
+.phs{text-align:left}
+.phs-n{font-family:var(--f1);font-size:32px;font-weight:700;color:var(--ink);letter-spacing:-.02em;line-height:1}
+.phs-n span{color:var(--orange)}
+.phs-l{font-size:11px;font-weight:600;color:var(--ink3);text-transform:uppercase;letter-spacing:.08em;margin-top:3px}
+
+@keyframes fup{to{opacity:1;transform:translateY(0)}}
+
+/* ─────────────────────────────────────────
+   FILTER BAR
+───────────────────────────────────────── */
+#filter-bar{
+  padding:32px 0;
+  background:var(--bg);
+  border-bottom:1px solid var(--border);
+  position:sticky;top:68px;z-index:100;
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
+  background:rgba(247,244,239,.96);
+}
+.filter-inner{
+  display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+  max-width:1260px;margin:0 auto;padding:0 20px;
+}
+@media(min-width:640px){.filter-inner{padding:0 32px}}
+@media(min-width:1100px){.filter-inner{padding:0 48px}}
+
+.filter-label{font-size:12px;font-weight:700;color:var(--ink3);letter-spacing:.08em;text-transform:uppercase;margin-right:4px;white-space:nowrap}
+
+.fbtn{
+  padding:8px 18px;background:transparent;
+  border:1.5px solid var(--border);border-radius:100px;
+  font-size:13px;font-weight:600;color:var(--ink3);
+  cursor:pointer;white-space:nowrap;
+  transition:background .2s,border-color .2s,color .2s,transform .15s;
+}
+.fbtn:hover{border-color:var(--orange);color:var(--orange);background:var(--orange-bg)}
+.fbtn.active{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+
+/* ─────────────────────────────────────────
+   PROJECT GRID
+───────────────────────────────────────── */
+#projects{padding:72px 0 96px;background:var(--bg)}
+
+.proj-count{
+  font-size:13px;font-weight:600;color:var(--ink3);margin-bottom:32px;
+}
+.proj-count span{color:var(--ink);font-weight:700}
+
+.proj-grid{
+  display:grid;grid-template-columns:1fr;gap:20px;
+}
+@media(min-width:540px){.proj-grid{grid-template-columns:1fr 1fr}}
+@media(min-width:960px){.proj-grid{grid-template-columns:repeat(3,1fr)}}
+
+/* Featured card — spans 2 cols */
+.pc.featured{
+  grid-column:1/-1;
+}
+@media(min-width:960px){
+  .pc.featured{grid-column:span 2}
+  .pc.featured .pc-img{aspect-ratio:16/9}
+}
+
+.pc{
+  background:var(--white);border:1px solid var(--bsoft);border-radius:20px;
+  overflow:hidden;box-shadow:var(--shsm);
+  transition:transform .3s var(--ease),box-shadow .3s,opacity .4s;
+  cursor:pointer;
+}
+.pc:hover{transform:translateY(-5px);box-shadow:var(--shlg)}
+.pc.hidden{display:none}
+
+.pc-img{
+  width:100%;aspect-ratio:16/9;
+  position:relative;overflow:hidden;background:var(--bg2);
+}
+.pc-img img{width:100%;height:100%;object-fit:cover;transition:transform .5s var(--ease)}
+.pc:hover .pc-img img{transform:scale(1.06)}
+
+.pc-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(26,23,20,.7) 0%,transparent 50%);
+  opacity:0;transition:opacity .3s;
+  display:flex;align-items:flex-end;padding:20px;
+}
+.pc:hover .pc-overlay{opacity:1}
+.pc-overlay-btn{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:9px 18px;background:white;color:var(--ink);
+  border-radius:7px;font-size:12px;font-weight:700;
+  transform:translateY(6px);transition:transform .3s var(--ease),background .2s,color .2s;
+}
+.pc:hover .pc-overlay-btn{transform:translateY(0)}
+.pc-overlay-btn:hover{background:var(--orange);color:white}
+
+.pc-body{padding:22px 24px}
+.pc-meta{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.pc-cat{
+  font-size:10px;font-weight:700;color:var(--orange);
+  letter-spacing:.1em;text-transform:uppercase;
+}
+.pc-year{font-size:11px;font-weight:600;color:var(--ink3)}
+.pc-name{font-family:var(--f1);font-size:20px;font-weight:700;color:var(--ink);margin-bottom:8px;letter-spacing:-.01em}
+.pc.featured .pc-name{font-size:clamp(22px,2.8vw,30px)}
+.pc-desc{font-size:13px;color:var(--ink3);line-height:1.65;margin-bottom:16px}
+.pc-tags{display:flex;flex-wrap:wrap;gap:6px}
+.pc-tag{
+  padding:4px 10px;background:var(--bg2);border-radius:100px;
+  font-size:11px;font-weight:600;color:var(--ink3);
+}
+
+/* ─────────────────────────────────────────
+   CASE STUDY MODAL
+───────────────────────────────────────── */
+#modal-backdrop{
+  position:fixed;inset:0;z-index:800;
+  background:rgba(26,23,20,.6);
+  backdrop-filter:blur(8px);
+  opacity:0;pointer-events:none;
+  transition:opacity .35s var(--ease);
+}
+#modal-backdrop.open{opacity:1;pointer-events:all}
+
+#modal{
+  position:fixed;top:50%;left:50%;z-index:801;
+  transform:translate(-50%,-46%);
+  width:calc(100% - 32px);max-width:860px;
+  max-height:90svh;overflow-y:auto;
+  background:var(--white);border-radius:22px;
+  box-shadow:var(--shlg);
+  opacity:0;pointer-events:none;
+  transition:opacity .35s var(--ease),transform .35s var(--ease);
+}
+#modal.open{opacity:1;pointer-events:all;transform:translate(-50%,-50%)}
+@media(min-width:640px){#modal{width:calc(100% - 64px)}}
+
+.modal-close{
+  position:absolute;top:16px;right:16px;z-index:2;
+  width:36px;height:36px;border-radius:50%;
+  background:var(--bg2);border:none;
+  display:flex;align-items:center;justify-content:center;
+  font-size:18px;color:var(--ink3);cursor:pointer;
+  transition:background .2s,color .2s;
+}
+.modal-close:hover{background:var(--orange);color:white}
+
+.modal-img{width:100%;aspect-ratio:16/9;overflow:hidden;border-radius:16px 16px 0 0;background:var(--bg2)}
+.modal-img img{width:100%;height:100%;object-fit:cover}
+
+.modal-body{padding:28px}
+@media(min-width:640px){.modal-body{padding:36px 40px 40px}}
+
+.modal-meta{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.modal-cat{font-size:11px;font-weight:700;color:var(--orange);letter-spacing:.1em;text-transform:uppercase}
+.modal-year{font-size:11px;font-weight:600;color:var(--ink3)}
+.modal-title{font-family:var(--f1);font-size:clamp(26px,4vw,38px);font-weight:700;color:var(--ink);letter-spacing:-.02em;margin-bottom:14px;line-height:1.1}
+.modal-desc{font-size:15px;color:var(--ink2);line-height:1.8;margin-bottom:24px}
+
+.modal-grid{
+  display:grid;grid-template-columns:1fr;gap:20px;margin-bottom:28px;
+}
+@media(min-width:540px){.modal-grid{grid-template-columns:1fr 1fr}}
+
+.modal-info-block{padding:18px;background:var(--bg);border-radius:12px;border:1px solid var(--bsoft)}
+.mib-label{font-size:11px;font-weight:700;color:var(--orange);letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px}
+.mib-val{font-size:14px;font-weight:600;color:var(--ink)}
+
+.modal-features{margin-bottom:28px}
+.modal-features h4{font-size:13px;font-weight:700;color:var(--ink);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px}
+.modal-features ul{display:flex;flex-direction:column;gap:8px}
+.modal-features li{display:flex;align-items:flex-start;gap:10px;font-size:14px;color:var(--ink2);line-height:1.55}
+.modal-features li::before{content:'✓';color:var(--orange);font-weight:700;flex-shrink:0;margin-top:1px}
+
+.modal-actions{display:flex;gap:12px;flex-wrap:wrap}
+.modal-btn-primary{
+  display:inline-flex;align-items:center;gap:7px;
+  padding:12px 24px;background:var(--ink);color:var(--bg);
+  font-size:14px;font-weight:600;border-radius:9px;
+  transition:background .2s,transform .2s;
+}
+.modal-btn-primary:hover{background:var(--orange);transform:translateY(-1px)}
+.modal-btn-sec{
+  display:inline-flex;align-items:center;gap:7px;
+  padding:12px 24px;background:transparent;color:var(--ink);
+  font-size:14px;font-weight:500;border-radius:9px;
+  border:1.5px solid var(--border);
+  transition:border-color .2s,color .2s,background .2s;
+}
+.modal-btn-sec:hover{border-color:var(--orange);color:var(--orange);background:var(--orange-bg)}
+
+/* ─────────────────────────────────────────
+   STATS BAND
+───────────────────────────────────────── */
+#stats-band{padding:72px 0;background:var(--dark)}
+.stats-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:1px;
+  background:rgba(255,255,255,.06);border-radius:20px;overflow:hidden;
+}
+@media(min-width:640px){.stats-grid{grid-template-columns:repeat(4,1fr)}}
+.stat-cell{
+  text-align:center;padding:40px 24px;background:var(--dark);
+  transition:background .3s;
+}
+.stat-cell:hover{background:rgba(212,96,26,.08)}
+.sc-num{font-family:var(--f1);font-size:clamp(36px,5vw,56px);font-weight:700;color:var(--bg);letter-spacing:-.03em;line-height:1}
+.sc-num span{color:var(--orange)}
+.sc-lbl{font-size:12px;font-weight:600;color:rgba(247,244,239,.4);text-transform:uppercase;letter-spacing:.09em;margin-top:8px}
+
+/* ─────────────────────────────────────────
+   CLIENT LOGOS
+───────────────────────────────────────── */
+#client-logos{padding:80px 0;background:var(--bg2)}
+.cl-head{text-align:center;margin-bottom:48px}
+.cl-head .tag{margin-bottom:14px}
+.cl-head .stitle{margin-bottom:10px}
+.cl-head p{font-size:15px;color:var(--ink2);max-width:440px;margin:0 auto;line-height:1.75}
+
+.cl-grid{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:12px;
+}
+@media(min-width:480px){.cl-grid{grid-template-columns:repeat(3,1fr)}}
+@media(min-width:760px){.cl-grid{grid-template-columns:repeat(4,1fr)}}
+@media(min-width:1000px){.cl-grid{grid-template-columns:repeat(5,1fr)}}
+
+.cl-item{
+  display:flex;align-items:center;justify-content:center;
+  padding:20px 16px;background:var(--white);border:1px solid var(--bsoft);
+  border-radius:14px;box-shadow:var(--shsm);
+  font-size:13px;font-weight:700;color:var(--ink3);text-align:center;
+  line-height:1.3;
+  transition:border-color .2s,color .2s,background .2s;
+}
+.cl-item:hover{border-color:var(--orange);color:var(--orange);background:var(--orange-bg)}
+
+/* ─────────────────────────────────────────
+   CTA BAND
+───────────────────────────────────────── */
+#ctaband{padding:96px 20px;background:var(--dark2);position:relative;overflow:hidden;text-align:center}
+.cta-orb{position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(212,96,26,.18),transparent 70%);top:-200px;right:-100px;pointer-events:none}
+.cta-inner{position:relative;z-index:1;max-width:680px;margin:0 auto}
+.cta-t{font-family:var(--f1);font-size:clamp(32px,5vw,60px);font-weight:700;color:var(--bg);line-height:1.1;letter-spacing:-.015em;margin-bottom:16px}
+.cta-t em{font-style:italic;color:var(--orange)}
+.cta-d{font-size:17px;color:rgba(247,244,239,.5);line-height:1.8;margin-bottom:40px;max-width:500px;margin-left:auto;margin-right:auto}
+.cta-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn-white{display:inline-flex;align-items:center;gap:8px;padding:13px 26px;background:var(--bg);color:var(--ink);font-size:14px;font-weight:600;border-radius:9px;transition:background .2s,transform .2s,color .2s}
+.btn-white:hover{background:var(--orange);color:white;transform:translateY(-2px)}
+.btn-ghost{display:inline-flex;align-items:center;gap:8px;padding:13px 26px;background:transparent;color:var(--bg);font-size:14px;font-weight:500;border-radius:9px;border:1.5px solid rgba(247,244,239,.2);transition:border-color .2s,background .2s}
+.btn-ghost:hover{border-color:rgba(247,244,239,.6);background:rgba(247,244,239,.06)}
+
+/* ─────────────────────────────────────────
+   FOOTER
+───────────────────────────────────────── */
+footer{background:var(--dark);padding:60px 20px 28px}
+@media(min-width:640px){footer{padding:72px 32px 32px}}
+@media(min-width:1100px){footer{padding:80px 48px 36px}}
+.fg-grid{max-width:1260px;margin:0 auto;display:grid;grid-template-columns:1fr;gap:40px;margin-bottom:48px}
+@media(min-width:540px){.fg-grid{grid-template-columns:1fr 1fr;gap:36px}}
+@media(min-width:860px){.fg-grid{grid-template-columns:2fr 1fr 1fr 1fr;gap:48px}}
+.fb-name{font-family:var(--f1);font-size:22px;font-weight:700;color:var(--bg);letter-spacing:-.02em;margin-bottom:10px}
+.fb-tag{font-size:13px;color:rgba(247,244,239,.4);line-height:1.7;max-width:260px;margin-bottom:24px}
+.fbsocs{display:flex;gap:8px}
+.fbs{width:36px;height:36px;border-radius:8px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:rgba(247,244,239,.5);transition:background .2s,color .2s,border-color .2s}
+.fbs:hover{background:var(--orange);border-color:var(--orange);color:white}
+.fcol h4{font-size:11px;font-weight:700;color:rgba(247,244,239,.35);letter-spacing:.13em;text-transform:uppercase;margin-bottom:18px}
+.fl{display:flex;flex-direction:column;gap:11px}
+.fl a{font-size:13px;color:rgba(247,244,239,.55);transition:color .2s}
+.fl a:hover{color:var(--orange)}
+.fbot{max-width:1260px;margin:0 auto;padding-top:22px;border-top:1px solid rgba(255,255,255,.07);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
+.fbot p{font-size:12px;color:rgba(247,244,239,.3)}
+.fbot a{color:var(--orange)}
+
+#btt{position:fixed;bottom:24px;right:24px;z-index:200;width:44px;height:44px;border-radius:11px;background:var(--ink);color:var(--bg);border:none;font-size:18px;display:flex;align-items:center;justify-content:center;box-shadow:var(--shmd);opacity:0;transform:translateY(10px);transition:opacity .3s,transform .3s,background .2s}
+#btt.vis{opacity:1;transform:translateY(0)}
+#btt:hover{background:var(--orange)}
+
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
+  .rv{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════ NAV ══════════ -->
+<nav id="nav" role="navigation" aria-label="Main navigation">
+  <a href="index.html" class="nl" aria-label="NISS Home">
+    <div class="nl-mark">
+      <svg viewBox="0 0 20 20" fill="none"><path d="M3 17V3L10 13L17 3V17" stroke="#f7f4ef" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+    <div>
+      <div class="nl-name">NISS</div>
+      <span class="nl-sub">Noor Infotech &amp; Software</span>
+    </div>
+  </a>
+  <ul class="nlinks" role="list">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="services.html">Services</a></li>
+    <li><a href="portfolio.html" class="active">Work</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <a href="contact.html" class="ncta">Get a Quote →</a>
+  <button class="hbg" id="hbg" aria-label="Toggle menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- ══════════ DRAWER ══════════ -->
+<div id="drawer" aria-hidden="true" role="dialog" aria-label="Navigation menu">
+  <ul class="dr-list">
+    <li><a href="index.html"     class="dl">Home     <em>→</em></a></li>
+    <li><a href="about.html"     class="dl">About    <em>→</em></a></li>
+    <li><a href="services.html"  class="dl">Services <em>→</em></a></li>
+    <li><a href="portfolio.html" class="dl active">Work     <em>→</em></a></li>
+    <li><a href="contact.html"   class="dl">Contact  <em>→</em></a></li>
+  </ul>
+  <a href="contact.html" class="dr-cta dl">Start a Project →</a>
+  <div class="dr-contact">
+    <div>📞 <a href="tel:09372239892">093722 39892</a></div>
+    <div>✉️ <a href="mailto:info@noorinfotech.co.in">info@noorinfotech.co.in</a></div>
+  </div>
+</div>
+
+<!-- ══════════ PAGE HERO ══════════ -->
+<div id="page-hero">
+  <div class="ph-rule" aria-hidden="true"></div>
+  <div class="ph-orb1" aria-hidden="true"></div>
+  <div class="ph-orb2" aria-hidden="true"></div>
+  <div class="ph-inner">
+    <nav class="ph-breadcrumb" aria-label="Breadcrumb">
+      <a href="index.html">Home</a>
+      <span aria-hidden="true">/</span>
+      <span aria-current="page">Portfolio</span>
+    </nav>
+    <div class="ph-cols">
+      <div>
+        <div class="tag ph-tag-anim">Our Work</div>
+        <h1 class="ph-h1">50+ Projects.<br>One <em>Standard.</em></h1>
+      </div>
+      <div class="ph-right">
+        <p>From educational ERPs and e-commerce platforms to mobile apps and news portals — every project we build reflects our commitment to quality, performance, and lasting value.</p>
+        <div class="ph-stats" role="list">
+          <div class="phs" role="listitem">
+            <div class="phs-n" data-count="50">0<span>+</span></div>
+            <div class="phs-l">Projects</div>
+          </div>
+          <div class="phs" role="listitem">
+            <div class="phs-n" data-count="14">0<span>+</span></div>
+            <div class="phs-l">Years</div>
+          </div>
+          <div class="phs" role="listitem">
+            <div class="phs-n" data-count="6">0<span>+</span></div>
+            <div class="phs-l">Industries</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ FILTER BAR ══════════ -->
+<div id="filter-bar" role="toolbar" aria-label="Filter projects">
+  <div class="filter-inner">
+    <span class="filter-label">Filter:</span>
+    <button class="fbtn active" data-filter="all">All</button>
+    <button class="fbtn" data-filter="erp">ERP / Software</button>
+    <button class="fbtn" data-filter="web">Web Apps</button>
+    <button class="fbtn" data-filter="ecom">E-Commerce</button>
+    <button class="fbtn" data-filter="mobile">Mobile Apps</button>
+    <button class="fbtn" data-filter="design">Design / Branding</button>
+  </div>
+</div>
+
+<!-- ══════════ PROJECT GRID ══════════ -->
+<section id="projects" aria-label="Portfolio projects">
+  <div class="wrap">
+    <p class="proj-count"><span id="proj-count-num">6</span> projects shown</p>
+    <div class="proj-grid" id="proj-grid">
+
+      <!-- 01 — Wigital Campus (FEATURED) -->
+      <article class="pc featured rv" data-cat="erp"
+        data-title="Wigital Campus"
+        data-category="Educational ERP"
+        data-year="2013"
+        data-desc="Wigital Campus is a comprehensive Educational Resource Planning (ERP) system built for schools, colleges, and academic institutions across Maharashtra. The platform manages admissions, student records, attendance, fee collection, examination results, and staff management — all from a single web-based interface."
+        data-tech="PHP, MySQL, JavaScript, Bootstrap, AWS"
+        data-client="Multiple Educational Institutions"
+        data-duration="6 months (ongoing)"
+        data-url="https://wigitalcampus.com"
+        data-feat-1="Student lifecycle management — admissions to graduation"
+        data-feat-2="Automated fee collection with payment gateway integration"
+        data-feat-3="Real-time attendance tracking with parent notifications"
+        data-feat-4="Examination management and result publishing portal"
+        data-feat-5="Multi-institution support with separate admin panels"
+        data-img="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=1200&q=85&auto=format&fit=crop"
+      >
+        <div class="pc-img">
+          <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=900&q=85&auto=format&fit=crop" alt="Wigital Campus Educational ERP" loading="lazy" decoding="async" width="900" height="506"/>
+          <div class="pc-overlay">
+            <div class="pc-overlay-btn">View Case Study →</div>
+          </div>
+        </div>
+        <div class="pc-body">
+          <div class="pc-meta">
+            <span class="pc-cat">Educational ERP</span>
+            <span class="pc-year">2013 – Present</span>
+          </div>
+          <div class="pc-name">Wigital Campus</div>
+          <div class="pc-desc">Full ERP system for academic institutions — admissions, attendance, fees, results, and staff management in one platform. Used by multiple institutions across Maharashtra.</div>
+          <div class="pc-tags">
+            <span class="pc-tag">PHP</span>
+            <span class="pc-tag">MySQL</span>
+            <span class="pc-tag">AWS</span>
+            <span class="pc-tag">Bootstrap</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- 02 — PR Corp -->
+      <article class="pc rv d1" data-cat="ecom"
+        data-title="PR Corp"
+        data-category="E-Commerce"
+        data-year="2018"
+        data-desc="PR Corp is a full-featured e-commerce platform built for a manufacturing and retail business. The platform includes a custom product catalogue, category management, shopping cart, and integrated payment gateway — enabling the client to sell products directly to customers online."
+        data-tech="WordPress, WooCommerce, PHP, MySQL"
+        data-client="PR Corporation"
+        data-duration="2 months"
+        data-url="https://prcorp.co.in/"
+        data-feat-1="Custom product catalogue with advanced filtering and search"
+        data-feat-2="WooCommerce integration with Razorpay payment gateway"
+        data-feat-3="Inventory management and low-stock alerts"
+        data-feat-4="Mobile-responsive design optimised for conversions"
+        data-feat-5="SEO-optimised product pages and category structure"
+        data-img="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=900&q=85&auto=format&fit=crop"
+      >
+        <div class="pc-img">
+          <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=640&q=80&auto=format&fit=crop" alt="PR Corp E-Commerce" loading="lazy" decoding="async" width="640" height="360"/>
+          <div class="pc-overlay"><div class="pc-overlay-btn">View Case Study →</div></div>
+        </div>
+        <div class="pc-body">
+          <div class="pc-meta"><span class="pc-cat">E-Commerce</span><span class="pc-year">2018</span></div>
+          <div class="pc-name">PR Corp</div>
+          <div class="pc-desc">Custom WooCommerce store with product catalogue, cart, payment gateway integration, and inventory management.</div>
+          <div class="pc-tags"><span class="pc-tag">WooCommerce</span><span class="pc-tag">PHP</span><span class="pc-tag">MySQL</span></div>
+        </div>
+      </article>
+
+      <!-- 03 — Archi Athar -->
+      <article class="pc rv d2" data-cat="design"
+        data-title="Archi Athar"
+        data-category="Architecture Portfolio"
+        data-year="2021"
+        data-desc="Archi Athar is a portfolio website designed and developed for an architecture firm. The goal was to create a visually impressive digital presence that showcases completed projects, the team's design philosophy, and contact information — all with a premium, minimal aesthetic."
+        data-tech="HTML5, CSS3, JavaScript, WordPress"
+        data-client="Archi Athar Architecture"
+        data-duration="3 weeks"
+        data-url="https://archi-athar.com/"
+        data-feat-1="Bespoke UI design with full-screen project photography"
+        data-feat-2="Animated page transitions and scroll-triggered reveals"
+        data-feat-3="Custom WordPress CMS for easy project uploads"
+        data-feat-4="Mobile-first responsive layout across all breakpoints"
+        data-feat-5="Optimised image loading for fast performance"
+        data-img="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=900&q=85&auto=format&fit=crop"
+      >
+        <div class="pc-img">
+          <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=640&q=80&auto=format&fit=crop" alt="Archi Athar Architecture Portfolio" loading="lazy" decoding="async" width="640" height="360"/>
+          <div class="pc-overlay"><div class="pc-overlay-btn">View Case Study →</div></div>
+        </div>
+        <div class="pc-body">
+          <div class="pc-meta"><span class="pc-cat">Design &amp; Branding</span><span class="pc-year">2021</span></div>
+          <div class="pc-name">Archi Athar</div>
+          <div class="pc-desc">Premium portfolio website for an architecture firm, with full-screen project photography and animated transitions.</div>
+          <div class="pc-tags"><span class="pc-tag">HTML/CSS</span><span class="pc-tag">JavaScript</span><span class="pc-tag">WordPress</span></div>
+        </div>
+      </article>
+
+      <!-- 04 — Ummid App -->
+      <article class="pc rv d3" data-cat="mobile"
+        data-title="Ummid Android App"
+        data-category="Mobile Application"
+        data-year="2017"
+        data-desc="The Ummid app is a native Android application for India's leading Urdu-English news portal, Ummid.com. The app brings breaking news, editorial content, and community updates to Android users with a clean, fast interface and offline reading support."
+        data-tech="Android (Java), REST APIs, Firebase"
+        data-client="Ummid Media Network"
+        data-duration="3 months"
+        data-url="https://play.google.com/store/apps/details?id=com.ummid.ummid&pli=1"
+        data-feat-1="Real-time news feed with category-based navigation"
+        data-feat-2="Push notifications for breaking news alerts"
+        data-feat-3="Offline reading mode — save articles to read later"
+        data-feat-4="Multilingual support (English and Urdu)"
+        data-feat-5="Published and maintained on Google Play Store"
+        data-img="https://images.unsplash.com/photo-1555774698-0b77e0d5fac6?w=900&q=85&auto=format&fit=crop"
+      >
+        <div class="pc-img">
+          <img src="https://images.unsplash.com/photo-1555774698-0b77e0d5fac6?w=640&q=80&auto=format&fit=crop" alt="Ummid Android App" loading="lazy" decoding="async" width="640" height="360"/>
+          <div class="pc-overlay"><div class="pc-overlay-btn">View Case Study →</div></div>
+        </div>
+        <div class="pc-body">
+          <div class="pc-meta"><span class="pc-cat">Mobile App</span><span class="pc-year">2017</span></div>
+          <div class="pc-name">Ummid App</div>
+          <div class="pc-desc">Native Android news app for India's leading Urdu portal with push notifications and offline reading.</div>
+          <div class="pc-tags"><span class="pc-tag">Android</span><span class="pc-tag">Java</span><span class="pc-tag">Firebase</span></div>
+        </div>
+      </article>
+
+      <!-- 05 — Ummid.com -->
+      <article class="pc rv d4" data-cat="web"
+        data-title="Ummid.com News Portal"
+        data-category="News Portal"
+        data-year="2015"
+        data-desc="Ummid.com is one of India's leading Urdu-English bilingual news portals. NISS built and continues to maintain the CMS-driven news platform that handles thousands of articles, high traffic volumes, breaking news workflows, and a robust editorial backend."
+        data-tech="WordPress, PHP, MySQL, CDN, AWS"
+        data-client="Ummid Media Network"
+        data-duration="4 months (ongoing)"
+        data-url="https://ummid.com/"
+        data-feat-1="Custom WordPress CMS for high-volume news publishing"
+        data-feat-2="Bilingual content delivery (English &amp; Urdu RTL)"
+        data-feat-3="CDN integration for fast global content delivery"
+        data-feat-4="Breaking news ticker and category-based navigation"
+        data-feat-5="Ad management system with Google AdSense integration"
+        data-img="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=900&q=85&auto=format&fit=crop"
+      >
+        <div class="pc-img">
+          <img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=640&q=80&auto=format&fit=crop" alt="Ummid.com News Portal" loading="lazy" decoding="async" width="640" height="360"/>
+          <div class="pc-overlay"><div class="pc-overlay-btn">View Case Study →</div></div>
+        </div>
+        <div class="pc-body">
+          <div class="pc-meta"><span class="pc-cat">Web Application</span><span class="pc-year">2015 – Present</span></div>
+          <div class="pc-name">Ummid.com</div>
+          <div class="pc-desc">High-traffic bilingual news portal with custom CMS, CDN delivery, and editorial workflow management.</div>
+          <div class="pc-tags"><span class="pc-tag">WordPress</span><span class="pc-tag">PHP</span><span class="pc-tag">AWS</span><span class="pc-tag">CDN</span></div>
+        </div>
+      </article>
+
+      <!-- 06 — Hiray MIS -->
+      <article class="pc rv d5" data-cat="erp"
+        data-title="Hiray Institute MIS"
+        data-category="MIS / Institution"
+        data-year="2019"
+        data-desc="The Hiray Institute Management Information System is a deployment of the Wigital Campus platform customised for Hiray College. It provides the institution with comprehensive management of student data, academic records, fee management, and administrative reports."
+        data-tech="PHP, MySQL, JavaScript, Bootstrap"
+        data-client="Hiray College"
+        data-duration="6 weeks"
+        data-url="https://hiray.wigitalcampus.com/"
+        data-feat-1="Student admission portal with document management"
+        data-feat-2="Timetable scheduling and classroom allocation"
+        data-feat-3="Staff management and payroll integration"
+        data-feat-4="Parent portal for attendance and fee tracking"
+        data-feat-5="Custom reports and data export for management"
+        data-img="https://images.unsplash.com/photo-1560179707-f14e90ef3623?w=900&q=85&auto=format&fit=crop"
+      >
+        <div class="pc-img">
+          <img src="https://images.unsplash.com/photo-1560179707-f14e90ef3623?w=640&q=80&auto=format&fit=crop" alt="Hiray Institute MIS" loading="lazy" decoding="async" width="640" height="360"/>
+          <div class="pc-overlay"><div class="pc-overlay-btn">View Case Study →</div></div>
+        </div>
+        <div class="pc-body">
+          <div class="pc-meta"><span class="pc-cat">ERP / MIS</span><span class="pc-year">2019</span></div>
+          <div class="pc-name">Hiray Institute MIS</div>
+          <div class="pc-desc">Custom MIS for Hiray College — student records, timetables, fees, staff management, and parent portal.</div>
+          <div class="pc-tags"><span class="pc-tag">PHP</span><span class="pc-tag">MySQL</span><span class="pc-tag">Bootstrap</span></div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ CASE STUDY MODAL ══════════ -->
+<div id="modal-backdrop" aria-hidden="true" role="presentation"></div>
+<div id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-hidden="true">
+  <button class="modal-close" id="modal-close" aria-label="Close case study">✕</button>
+  <div class="modal-img"><img id="modal-img" src="" alt="" loading="lazy" decoding="async" width="860" height="484"/></div>
+  <div class="modal-body">
+    <div class="modal-meta">
+      <span class="modal-cat" id="modal-cat"></span>
+      <span class="modal-year" id="modal-year"></span>
+    </div>
+    <h2 class="modal-title" id="modal-title"></h2>
+    <p class="modal-desc" id="modal-desc"></p>
+    <div class="modal-grid">
+      <div class="modal-info-block"><div class="mib-label">Client</div><div class="mib-val" id="modal-client"></div></div>
+      <div class="modal-info-block"><div class="mib-label">Tech Stack</div><div class="mib-val" id="modal-tech"></div></div>
+      <div class="modal-info-block"><div class="mib-label">Duration</div><div class="mib-val" id="modal-duration"></div></div>
+      <div class="modal-info-block"><div class="mib-label">Category</div><div class="mib-val" id="modal-cat2"></div></div>
+    </div>
+    <div class="modal-features">
+      <h4>Key Features</h4>
+      <ul id="modal-features-list"></ul>
+    </div>
+    <div class="modal-actions">
+      <a id="modal-visit-btn" href="#" target="_blank" rel="noopener" class="modal-btn-primary">Visit Live Site ↗</a>
+      <a href="contact.html" class="modal-btn-sec">Start a Similar Project →</a>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ STATS BAND ══════════ -->
+<div id="stats-band" aria-label="Portfolio statistics">
+  <div class="wrap">
+    <div class="stats-grid rv">
+      <div class="stat-cell">
+        <div class="sc-num" data-count="50">0<span>+</span></div>
+        <div class="sc-lbl">Projects Delivered</div>
+      </div>
+      <div class="stat-cell">
+        <div class="sc-num" data-count="6">0<span>+</span></div>
+        <div class="sc-lbl">Industries Served</div>
+      </div>
+      <div class="stat-cell">
+        <div class="sc-num" data-count="14">0<span>+</span></div>
+        <div class="sc-lbl">Years of Experience</div>
+      </div>
+      <div class="stat-cell">
+        <div class="sc-num" data-count="100">0<span>%</span></div>
+        <div class="sc-lbl">Completion Rate</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ CLIENT LOGOS ══════════ -->
+<section id="client-logos" aria-label="Our clients">
+  <div class="wrap">
+    <div class="cl-head">
+      <div class="tag rv">Trusted By</div>
+      <h2 class="stitle rv d1">Clients Who Trust NISS</h2>
+      <p class="rv d2">From educational institutions to media companies — businesses across India partner with us.</p>
+    </div>
+    <div class="cl-grid rv d2">
+      <div class="cl-item">AFA Architecture</div>
+      <div class="cl-item">PR Corp</div>
+      <div class="cl-item">MMANTC</div>
+      <div class="cl-item">KBH MBA College</div>
+      <div class="cl-item">JAT Mono</div>
+      <div class="cl-item">JATHS School</div>
+      <div class="cl-item">Ummid Media</div>
+      <div class="cl-item">KBH BCA College</div>
+      <div class="cl-item">JATSR</div>
+      <div class="cl-item">Sardar Group</div>
+      <div class="cl-item">Dar Ul Madina</div>
+      <div class="cl-item">MMC Institute</div>
+      <div class="cl-item">Malegaon Diocese</div>
+      <div class="cl-item">Wigital Campus</div>
+      <div class="cl-item">Hiray College</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ CTA ══════════ -->
+<div id="ctaband">
+  <div class="cta-orb" aria-hidden="true"></div>
+  <div class="cta-inner rv">
+    <div class="tag" style="background:rgba(212,96,26,.18);margin-bottom:20px">Your Project Next?</div>
+    <h2 class="cta-t">Let's Add Your<br>Project to This <em>List</em></h2>
+    <p class="cta-d">Every project here started with a conversation. Tell us what you want to build and we'll make it happen.</p>
+    <div class="cta-btns">
+      <a href="contact.html" class="btn-white">Start Your Project →</a>
+      <a href="services.html" class="btn-ghost">Explore Our Services</a>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ FOOTER ══════════ -->
+<footer role="contentinfo">
+  <div class="fg-grid">
+    <div>
+      <div class="fb-name">NISS</div>
+      <p class="fb-tag">Where innovation meets excellence. Custom software &amp; digital solutions from Malegaon to the world.</p>
+      <div class="fbsocs" aria-label="Social media">
+        <!-- PLACEHOLDER: Replace # with actual social URLs -->
+        <a href="#" class="fbs" aria-label="LinkedIn">in</a>
+        <a href="#" class="fbs" aria-label="Twitter">𝕏</a>
+        <a href="#" class="fbs" aria-label="Facebook">f</a>
+        <a href="#" class="fbs" aria-label="Instagram">ig</a>
+      </div>
+    </div>
+    <div class="fcol">
+      <h4>Services</h4>
+      <div class="fl">
+        <a href="services.html">Software Development</a>
+        <a href="services.html">E-Commerce</a>
+        <a href="services.html">Web Applications</a>
+        <a href="services.html">Web Design</a>
+        <a href="services.html">Mobile Apps</a>
+        <a href="services.html">SEO Services</a>
+      </div>
+    </div>
+    <div class="fcol">
+      <h4>Portfolio</h4>
+      <div class="fl">
+        <a href="https://wigitalcampus.com" target="_blank" rel="noopener">Wigital Campus</a>
+        <a href="https://prcorp.co.in/" target="_blank" rel="noopener">PR Corp</a>
+        <a href="https://archi-athar.com/" target="_blank" rel="noopener">Archi Athar</a>
+        <a href="https://ummid.com/" target="_blank" rel="noopener">Ummid.com</a>
+      </div>
+    </div>
+    <div class="fcol">
+      <h4>Company</h4>
+      <div class="fl">
+        <a href="index.html">Home</a>
+        <a href="about.html">About NISS</a>
+        <a href="services.html">Services</a>
+        <a href="contact.html">Contact</a>
+        <a href="https://noorinfotech.co.in/privacy-policy-2/" target="_blank" rel="noopener">Privacy Policy</a>
+      </div>
+    </div>
+  </div>
+  <div class="fbot">
+    <p>© 2024 <a href="index.html">Noor Infotech &amp; Software Solutions</a>. All rights reserved.</p>
+    <p>Malegaon · Maharashtra · India</p>
+  </div>
+</footer>
+
+<button id="btt" aria-label="Back to top">↑</button>
+
+<!-- ══════════════════════════════════════════
+     SCRIPTS
+══════════════════════════════════════════ -->
+<script>
+(function(){
+  'use strict';
+
+  /* ── BACK TO TOP ── */
+  const btt = document.getElementById('btt');
+  window.addEventListener('scroll', () => btt.classList.toggle('vis', scrollY > 500), { passive: true });
+  btt.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+  /* ── HAMBURGER / DRAWER ── */
+  const hbg = document.getElementById('hbg');
+  const drawer = document.getElementById('drawer');
+  let open = false;
+  function toggleDrawer(s){
+    open = s;
+    hbg.classList.toggle('on', open);
+    hbg.setAttribute('aria-expanded', open);
+    drawer.classList.toggle('on', open);
+    drawer.setAttribute('aria-hidden', !open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  hbg.addEventListener('click', () => toggleDrawer(!open));
+  document.querySelectorAll('.dl').forEach(l => l.addEventListener('click', () => toggleDrawer(false)));
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      if (open) { toggleDrawer(false); hbg.focus(); }
+      else closeModal();
+    }
+  });
+
+  /* ── REVEAL ── */
+  const io = new IntersectionObserver(en => {
+    en.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.rv').forEach(el => io.observe(el));
+
+  /* ── COUNTERS ── */
+  const co = new IntersectionObserver(en => {
+    en.forEach(e => {
+      if (!e.isIntersecting) return;
+      const el = e.target, target = +el.getAttribute('data-count');
+      const suf = el.querySelector('span') ? el.querySelector('span').outerHTML : '';
+      const dur = 1600, t0 = performance.now();
+      function tick(now) {
+        const p = Math.min((now - t0) / dur, 1);
+        el.innerHTML = Math.round((1 - Math.pow(1 - p, 3)) * target) + suf;
+        if (p < 1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+      co.unobserve(el);
+    });
+  }, { threshold: 0.5 });
+  document.querySelectorAll('[data-count]').forEach(el => co.observe(el));
+
+  /* ── FILTER ── */
+  const filterBtns = document.querySelectorAll('.fbtn');
+  const cards = document.querySelectorAll('.pc');
+  const countEl = document.getElementById('proj-count-num');
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', function() {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      this.classList.add('active');
+      const filter = this.getAttribute('data-filter');
+      let visible = 0;
+      cards.forEach(card => {
+        const cat = card.getAttribute('data-cat');
+        const show = filter === 'all' || cat === filter;
+        card.classList.toggle('hidden', !show);
+        if (show) visible++;
+      });
+      countEl.textContent = visible;
+    });
+  });
+
+  /* ── MODAL ── */
+  const backdrop = document.getElementById('modal-backdrop');
+  const modal = document.getElementById('modal');
+
+  function openModal(card) {
+    const d = card.dataset;
+    document.getElementById('modal-img').src = d.img;
+    document.getElementById('modal-img').alt = d.title;
+    document.getElementById('modal-cat').textContent = d.category;
+    document.getElementById('modal-year').textContent = d.year;
+    document.getElementById('modal-title').textContent = d.title;
+    document.getElementById('modal-desc').textContent = d.desc;
+    document.getElementById('modal-client').textContent = d.client;
+    document.getElementById('modal-tech').textContent = d.tech;
+    document.getElementById('modal-duration').textContent = d.duration;
+    document.getElementById('modal-cat2').textContent = d.category;
+    document.getElementById('modal-visit-btn').href = d.url;
+
+    const featList = document.getElementById('modal-features-list');
+    featList.innerHTML = '';
+    for (let i = 1; i <= 5; i++) {
+      const feat = d['feat' + i];
+      if (feat) {
+        const li = document.createElement('li');
+        li.textContent = feat;
+        featList.appendChild(li);
+      }
+    }
+
+    backdrop.classList.add('open');
+    modal.classList.add('open');
+    backdrop.setAttribute('aria-hidden', 'false');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    document.getElementById('modal-close').focus();
+  }
+
+  function closeModal() {
+    backdrop.classList.remove('open');
+    modal.classList.remove('open');
+    backdrop.setAttribute('aria-hidden', 'true');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  // Open on card click
+  cards.forEach(card => {
+    card.addEventListener('click', function(e) {
+      if (e.target.tagName === 'A') return; // let links work
+      openModal(this);
+    });
+  });
+
+  document.getElementById('modal-close').addEventListener('click', closeModal);
+  backdrop.addEventListener('click', closeModal);
+
+  // Trap focus inside modal
+  modal.addEventListener('keydown', e => {
+    if (e.key !== 'Tab') return;
+    const focusable = modal.querySelectorAll('button, a[href], [tabindex]:not([tabindex="-1"])');
+    const first = focusable[0], last = focusable[focusable.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  });
+
+  /* ── SMOOTH ANCHOR SCROLL ── */
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', function(e) {
+      const t = document.querySelector(this.getAttribute('href'));
+      if (!t) return;
+      e.preventDefault();
+      window.scrollTo({ top: t.getBoundingClientRect().top + scrollY - 80, behavior: 'smooth' });
+    });
+  });
+
+})();
+</script>
+
+</body>
+</html>
