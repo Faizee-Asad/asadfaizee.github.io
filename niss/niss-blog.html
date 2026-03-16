@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Blog & Insights — NISS | Noor Infotech & Software Solutions</title>
+  <meta name="description" content="Software development insights, tech tips, digital transformation stories, and industry news from the NISS team in Malegaon, Maharashtra."/>
+  <meta property="og:title" content="Blog & Insights — NISS"/>
+  <meta property="og:type" content="website"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600;1,700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --bg:#f7f4ef;--bg2:#edeae3;--white:#ffffff;
+  --ink:#1a1714;--ink2:#4a4540;--ink3:#8c847c;
+  --orange:#d4601a;--orange2:#f07840;--orange-bg:#fff2ea;
+  --dark:#16120e;--dark2:#221d18;
+  --border:rgba(26,23,20,.1);--bsoft:rgba(26,23,20,.06);
+  --shsm:0 2px 20px rgba(26,23,20,.07);--shmd:0 8px 48px rgba(26,23,20,.12);--shlg:0 20px 80px rgba(26,23,20,.16);
+  --f1:'Cormorant Garamond',Georgia,serif;--f2:'Outfit',system-ui,sans-serif;
+  --ease:cubic-bezier(.16,1,.3,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--f2);font-size:16px;line-height:1.65;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+img{display:block;max-width:100%;height:auto}
+a{color:inherit;text-decoration:none}
+button{font-family:var(--f2);cursor:pointer}
+ul,ol{list-style:none}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:var(--bg2)}::-webkit-scrollbar-thumb{background:var(--orange);border-radius:2px}
+
+.wrap{width:100%;max-width:1260px;margin:0 auto;padding:0 20px}
+@media(min-width:640px){.wrap{padding:0 32px}}@media(min-width:1100px){.wrap{padding:0 48px}}
+.tag{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;background:var(--orange-bg);border-radius:100px;font-size:11px;font-weight:700;color:var(--orange);letter-spacing:.1em;text-transform:uppercase;}
+.tag::before{content:'';width:5px;height:5px;background:var(--orange);border-radius:50%}
+.stitle{font-family:var(--f1);font-size:clamp(30px,4.5vw,54px);font-weight:700;line-height:1.1;letter-spacing:-.01em;color:var(--ink);}
+.rv{opacity:0;transform:translateY(32px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.rv.in{opacity:1;transform:translateY(0)}
+.d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}.d4{transition-delay:.32s}.d5{transition-delay:.4s}
+
+/* NAV */
+#nav{position:fixed;top:0;left:0;right:0;z-index:500;height:68px;display:flex;align-items:center;justify-content:space-between;padding:0 20px;background:rgba(247,244,239,.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);box-shadow:var(--shsm);}
+@media(min-width:640px){#nav{padding:0 32px}}@media(min-width:1100px){#nav{padding:0 48px}}
+.nl{display:flex;align-items:center;gap:10px}
+.nl-mark{width:38px;height:38px;background:var(--ink);border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.nl-mark svg{width:20px;height:20px}
+.nl-name{font-family:var(--f1);font-size:20px;font-weight:700;color:var(--ink);letter-spacing:-.02em;line-height:1}
+.nl-sub{display:block;font-family:var(--f2);font-size:9px;font-weight:500;color:var(--ink3);letter-spacing:.12em;text-transform:uppercase;margin-top:1px}
+.nlinks{display:none;gap:28px}@media(min-width:900px){.nlinks{display:flex}}
+.nlinks a{font-size:14px;font-weight:500;color:var(--ink2);position:relative;padding-bottom:2px;transition:color .2s}
+.nlinks a::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:2px;background:var(--orange);border-radius:2px;transition:width .3s var(--ease)}
+.nlinks a:hover{color:var(--ink)}.nlinks a:hover::after{width:100%}
+.ncta{display:none;padding:9px 20px;background:var(--ink);color:#f7f4ef;font-size:13px;font-weight:600;border-radius:8px;transition:background .2s,transform .2s}
+@media(min-width:900px){.ncta{display:inline-flex;align-items:center;gap:6px}}.ncta:hover{background:var(--orange);transform:translateY(-1px)}
+.hbg{display:flex;flex-direction:column;gap:5px;background:none;border:none;padding:6px;position:relative;z-index:601}
+@media(min-width:900px){.hbg{display:none}}
+.hbg span{display:block;width:24px;height:2px;background:var(--ink);border-radius:2px;transition:all .32s var(--ease);transform-origin:center}
+.hbg.on span:nth-child(1){transform:translateY(7px) rotate(45deg)}.hbg.on span:nth-child(2){opacity:0;transform:scaleX(0)}.hbg.on span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+/* DRAWER */
+#drawer{position:fixed;inset:0;z-index:600;background:var(--bg);padding-top:max(84px,calc(68px + env(safe-area-inset-top,16px)));padding-left:24px;padding-right:24px;padding-bottom:40px;transform:translateX(100%);transition:transform .4s var(--ease);overflow-y:auto;display:flex;flex-direction:column;}
+#drawer.on{transform:translateX(0)}
+.dr-list{margin-bottom:32px}.dr-list li{border-bottom:1px solid var(--border)}.dr-list li:first-child{border-top:1px solid var(--border)}
+.dr-list a{display:flex;justify-content:space-between;align-items:center;padding:18px 0;font-family:var(--f1);font-size:26px;font-weight:700;color:var(--ink);transition:color .2s}
+.dr-list a:hover{color:var(--orange)}.dr-list a em{font-style:normal;font-size:18px;opacity:.35}
+.dr-cta{display:inline-flex;align-items:center;gap:8px;padding:15px 28px;background:var(--ink);color:var(--bg);font-size:15px;font-weight:600;border-radius:10px;margin-bottom:32px;transition:background .2s}
+.dr-cta:hover{background:var(--orange)}.dr-contact{font-size:13px;color:var(--ink3);line-height:2.2}.dr-contact a{color:var(--orange);font-weight:600}
+
+/* HERO */
+#page-hero{position:relative;padding:140px 20px 72px;background:var(--bg);overflow:hidden;}
+@media(min-width:640px){#page-hero{padding:150px 32px 80px}}@media(min-width:1100px){#page-hero{padding:160px 48px 88px}}
+.ph-orb1{position:absolute;width:500px;height:500px;top:-100px;right:-60px;border-radius:50%;pointer-events:none;filter:blur(80px);background:radial-gradient(circle,rgba(212,96,26,.12),transparent 70%)}
+.ph-rule{position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--orange),transparent);opacity:.4}
+.ph-inner{max-width:1260px;margin:0 auto;position:relative;z-index:1}
+.ph-bc{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:600;color:var(--ink3);letter-spacing:.06em;text-transform:uppercase;margin-bottom:24px;opacity:0;transform:translateY(12px);animation:fup .7s var(--ease) .1s forwards}
+.ph-bc a{color:var(--orange)}.ph-bc span{opacity:.4}
+.ph-cols{display:grid;grid-template-columns:1fr;gap:32px;align-items:end}
+@media(min-width:860px){.ph-cols{grid-template-columns:1fr 1fr;gap:56px}}
+.ph-ta{opacity:0;transform:translateY(14px);animation:fup .8s var(--ease) .16s forwards}
+.ph-h1{font-family:var(--f1);font-size:clamp(42px,7vw,88px);font-weight:700;line-height:1.02;letter-spacing:-.025em;color:var(--ink);margin-top:18px;opacity:0;transform:translateY(20px);animation:fup .9s var(--ease) .26s forwards}
+.ph-h1 em{font-style:italic;color:var(--orange)}
+.ph-right{opacity:0;transform:translateY(16px);animation:fup .9s var(--ease) .4s forwards}
+.ph-right p{font-size:17px;color:var(--ink2);line-height:1.8;max-width:420px;margin-bottom:20px}
+.ph-stats{display:flex;gap:24px;flex-wrap:wrap}
+.phs-n{font-family:var(--f1);font-size:28px;font-weight:700;color:var(--ink);letter-spacing:-.02em;line-height:1}
+.phs-n span{color:var(--orange)}
+.phs-l{font-size:11px;font-weight:600;color:var(--ink3);text-transform:uppercase;letter-spacing:.08em;margin-top:3px}
+@keyframes fup{to{opacity:1;transform:translateY(0)}}
+
+/* FILTER / CATEGORY BAR */
+#cat-bar{padding:28px 0;background:rgba(247,244,239,.96);backdrop-filter:blur(16px);position:sticky;top:68px;z-index:100;border-bottom:1px solid var(--border)}
+.cat-bar-inner{display:flex;gap:8px;flex-wrap:wrap;max-width:1260px;margin:0 auto;padding:0 20px}
+@media(min-width:640px){.cat-bar-inner{padding:0 32px}}@media(min-width:1100px){.cat-bar-inner{padding:0 48px}}
+.cbtn{padding:8px 16px;background:transparent;border:1.5px solid var(--border);border-radius:100px;font-size:13px;font-weight:600;color:var(--ink3);transition:all .2s}
+.cbtn:hover{border-color:var(--orange);color:var(--orange);background:var(--orange-bg)}
+.cbtn.active{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+
+/* FEATURED POST */
+#featured{padding:56px 0 0;background:var(--bg)}
+.featured-card{
+  display:grid;grid-template-columns:1fr;gap:0;
+  background:var(--white);border-radius:20px;overflow:hidden;
+  box-shadow:var(--shlg);border:1px solid var(--bsoft);
+  transition:transform .3s var(--ease);
+}
+@media(min-width:760px){.featured-card{grid-template-columns:1.2fr 1fr}}
+.featured-card:hover{transform:translateY(-4px)}
+.feat-img{aspect-ratio:16/9;overflow:hidden;background:var(--bg2)}
+@media(min-width:760px){.feat-img{aspect-ratio:auto;min-height:360px}}
+.feat-img img{width:100%;height:100%;object-fit:cover;transition:transform .5s var(--ease)}
+.featured-card:hover .feat-img img{transform:scale(1.04)}
+.feat-body{padding:36px;display:flex;flex-direction:column;justify-content:center}
+@media(min-width:640px){.feat-body{padding:44px 48px}}
+.feat-badge{display:inline-flex;align-items:center;gap:8px;margin-bottom:16px;font-size:11px;font-weight:700;color:var(--orange);text-transform:uppercase;letter-spacing:.1em}
+.feat-badge::before{content:'★';font-size:13px}
+.feat-title{font-family:var(--f1);font-size:clamp(22px,3vw,34px);font-weight:700;color:var(--ink);line-height:1.15;letter-spacing:-.015em;margin-bottom:12px;transition:color .2s}
+.featured-card:hover .feat-title{color:var(--orange)}
+.feat-excerpt{font-size:15px;color:var(--ink2);line-height:1.75;margin-bottom:24px}
+.feat-meta{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.feat-author{display:flex;align-items:center;gap:8px}
+.feat-avatar{width:36px;height:36px;border-radius:50%;overflow:hidden;background:var(--bg2);flex-shrink:0}
+.feat-avatar img{width:100%;height:100%;object-fit:cover}
+.feat-author-name{font-size:13px;font-weight:700;color:var(--ink)}
+.feat-author-date{font-size:12px;color:var(--ink3);margin-top:1px}
+.feat-read{margin-left:auto;display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--orange);border-bottom:1.5px solid var(--orange);padding-bottom:1px;transition:opacity .2s}
+.feat-read:hover{opacity:.7}
+
+/* POST GRID */
+#posts{padding:48px 0 96px;background:var(--bg)}
+.posts-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:32px;flex-wrap:wrap;gap:12px}
+.posts-count{font-size:13px;font-weight:600;color:var(--ink3)}
+.posts-count span{color:var(--ink);font-weight:700}
+.posts-grid{display:grid;grid-template-columns:1fr;gap:20px}
+@media(min-width:540px){.posts-grid{grid-template-columns:1fr 1fr}}
+@media(min-width:960px){.posts-grid{grid-template-columns:repeat(3,1fr)}}
+
+.pc{
+  background:var(--white);border:1px solid var(--bsoft);border-radius:18px;
+  overflow:hidden;box-shadow:var(--shsm);
+  transition:transform .3s var(--ease),box-shadow .3s;
+  display:flex;flex-direction:column;
+}
+.pc:hover{transform:translateY(-5px);box-shadow:var(--shlg)}
+.pc.hidden{display:none}
+
+.pc-img{width:100%;aspect-ratio:16/9;overflow:hidden;position:relative;background:var(--bg2)}
+.pc-img img{width:100%;height:100%;object-fit:cover;transition:transform .5s var(--ease)}
+.pc:hover .pc-img img{transform:scale(1.06)}
+.pc-cat-badge{position:absolute;top:12px;left:12px;padding:4px 10px;background:var(--orange);color:white;border-radius:100px;font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+
+.pc-body{padding:22px;display:flex;flex-direction:column;flex:1}
+.pc-title{font-family:var(--f1);font-size:18px;font-weight:700;color:var(--ink);line-height:1.25;letter-spacing:-.01em;margin-bottom:10px;transition:color .2s}
+.pc:hover .pc-title{color:var(--orange)}
+.pc-excerpt{font-size:13px;color:var(--ink3);line-height:1.65;flex:1;margin-bottom:18px}
+.pc-footer{display:flex;align-items:center;justify-content:space-between;padding-top:14px;border-top:1px solid var(--bsoft);flex-wrap:wrap;gap:8px}
+.pc-meta{font-size:12px;color:var(--ink3);font-weight:500}
+.pc-link{font-size:12px;font-weight:700;color:var(--orange);display:inline-flex;align-items:center;gap:4px;transition:opacity .2s}
+.pc-link:hover{opacity:.7}
+
+/* NEWSLETTER */
+#newsletter{padding:80px 0;background:var(--dark)}
+.nl-inner{max-width:600px;margin:0 auto;text-align:center}
+.nl-t{font-family:var(--f1);font-size:clamp(26px,4vw,42px);font-weight:700;color:var(--bg);letter-spacing:-.02em;margin-bottom:12px}
+.nl-t em{font-style:italic;color:var(--orange)}
+.nl-d{font-size:15px;color:rgba(247,244,239,.5);line-height:1.75;margin-bottom:32px}
+.nl-form{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.nl-input{
+  flex:1;min-width:220px;padding:13px 18px;
+  background:rgba(255,255,255,.07);border:1.5px solid rgba(255,255,255,.12);
+  border-radius:10px;font-family:var(--f2);font-size:14px;color:var(--bg);
+  outline:none;transition:border-color .2s;
+}
+.nl-input:focus{border-color:var(--orange)}
+.nl-input::placeholder{color:rgba(247,244,239,.4)}
+.nl-btn{padding:13px 24px;background:var(--orange);color:white;font-family:var(--f2);font-size:14px;font-weight:700;border:none;border-radius:10px;cursor:pointer;white-space:nowrap;transition:opacity .2s,transform .2s}
+.nl-btn:hover{opacity:.88;transform:translateY(-1px)}
+.nl-fine{font-size:12px;color:rgba(247,244,239,.3);margin-top:12px}
+#nl-status{display:none;font-size:13px;font-weight:600;margin-top:12px}
+
+/* SIDEBAR / TOPICS */
+#topics{padding:72px 0;background:var(--bg2)}
+.topics-head{text-align:center;margin-bottom:40px}
+.topics-head .tag{margin-bottom:14px}
+.topics-head .stitle{margin-bottom:10px}
+.topics-grid{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.topic-chip{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:10px 18px;background:var(--white);border:1px solid var(--border);
+  border-radius:100px;font-size:13px;font-weight:600;color:var(--ink2);
+  box-shadow:var(--shsm);transition:all .2s;
+}
+.topic-chip:hover{border-color:var(--orange);color:var(--orange);background:var(--orange-bg)}
+.topic-chip-count{font-size:11px;color:var(--ink3);background:var(--bg2);padding:2px 7px;border-radius:100px}
+
+/* FOOTER */
+footer{background:var(--dark);padding:60px 20px 28px}
+@media(min-width:640px){footer{padding:72px 32px 32px}}@media(min-width:1100px){footer{padding:80px 48px 36px}}
+.fg-grid{max-width:1260px;margin:0 auto;display:grid;grid-template-columns:1fr;gap:40px;margin-bottom:48px}
+@media(min-width:540px){.fg-grid{grid-template-columns:1fr 1fr;gap:36px}}@media(min-width:860px){.fg-grid{grid-template-columns:2fr 1fr 1fr 1fr;gap:48px}}
+.fb-name{font-family:var(--f1);font-size:22px;font-weight:700;color:var(--bg);letter-spacing:-.02em;margin-bottom:10px}
+.fb-tag{font-size:13px;color:rgba(247,244,244,.4);line-height:1.7;max-width:260px;margin-bottom:24px}
+.fbsocs{display:flex;gap:8px}
+.fbs{width:36px;height:36px;border-radius:8px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:rgba(247,244,239,.5);transition:background .2s,color .2s,border-color .2s}
+.fbs:hover{background:var(--orange);border-color:var(--orange);color:white}
+.fcol h4{font-size:11px;font-weight:700;color:rgba(247,244,239,.35);letter-spacing:.13em;text-transform:uppercase;margin-bottom:18px}
+.fl{display:flex;flex-direction:column;gap:11px}.fl a{font-size:13px;color:rgba(247,244,239,.55);transition:color .2s}.fl a:hover{color:var(--orange)}
+.fbot{max-width:1260px;margin:0 auto;padding-top:22px;border-top:1px solid rgba(255,255,255,.07);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
+.fbot p{font-size:12px;color:rgba(247,244,239,.3)}.fbot a{color:var(--orange)}
+#btt{position:fixed;bottom:24px;right:24px;z-index:200;width:44px;height:44px;border-radius:11px;background:var(--ink);color:var(--bg);border:none;font-size:18px;display:flex;align-items:center;justify-content:center;box-shadow:var(--shmd);opacity:0;transform:translateY(10px);transition:opacity .3s,transform .3s,background .2s}
+#btt.vis{opacity:1;transform:translateY(0)}#btt:hover{background:var(--orange)}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}.rv{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+
+<nav id="nav" role="navigation" aria-label="Main navigation">
+  <a href="index.html" class="nl" aria-label="NISS Home">
+    <div class="nl-mark"><svg viewBox="0 0 20 20" fill="none"><path d="M3 17V3L10 13L17 3V17" stroke="#f7f4ef" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    <div><div class="nl-name">NISS</div><span class="nl-sub">Noor Infotech &amp; Software</span></div>
+  </a>
+  <ul class="nlinks" role="list">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="services.html">Services</a></li>
+    <li><a href="portfolio.html">Work</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <a href="contact.html" class="ncta">Get a Quote →</a>
+  <button class="hbg" id="hbg" aria-label="Toggle menu" aria-expanded="false"><span></span><span></span><span></span></button>
+</nav>
+
+<div id="drawer" aria-hidden="true" role="dialog" aria-label="Navigation menu">
+  <ul class="dr-list">
+    <li><a href="index.html" class="dl">Home <em>→</em></a></li>
+    <li><a href="about.html" class="dl">About <em>→</em></a></li>
+    <li><a href="services.html" class="dl">Services <em>→</em></a></li>
+    <li><a href="portfolio.html" class="dl">Work <em>→</em></a></li>
+    <li><a href="contact.html" class="dl">Contact <em>→</em></a></li>
+  </ul>
+  <a href="contact.html" class="dr-cta dl">Start a Project →</a>
+  <div class="dr-contact">
+    <div>📞 <a href="tel:09372239892">093722 39892</a></div>
+    <div>✉️ <a href="mailto:info@noorinfotech.co.in">info@noorinfotech.co.in</a></div>
+  </div>
+</div>
+
+<!-- HERO -->
+<div id="page-hero">
+  <div class="ph-rule" aria-hidden="true"></div>
+  <div class="ph-orb1" aria-hidden="true"></div>
+  <div class="ph-inner">
+    <nav class="ph-bc" aria-label="Breadcrumb"><a href="index.html">Home</a><span>/</span><span aria-current="page">Blog</span></nav>
+    <div class="ph-cols">
+      <div>
+        <div class="tag ph-ta">Insights &amp; Ideas</div>
+        <h1 class="ph-h1">From Our<br>Team to <em>Yours</em></h1>
+      </div>
+      <div class="ph-right">
+        <p>Software tips, digital transformation stories, tech deep-dives, and business insights — straight from the NISS team in Malegaon.</p>
+        <div class="ph-stats">
+          <div><div class="phs-n">12<span>+</span></div><div class="phs-l">Articles</div></div>
+          <div><div class="phs-n">6</div><div class="phs-l">Topics</div></div>
+          <div><div class="phs-n">Monthly</div><div class="phs-l">New Posts</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CATEGORY BAR -->
+<div id="cat-bar" role="toolbar" aria-label="Filter by category">
+  <div class="cat-bar-inner">
+    <button class="cbtn active" data-cat="all">All Posts</button>
+    <button class="cbtn" data-cat="web-dev">Web Development</button>
+    <button class="cbtn" data-cat="software">Software &amp; ERP</button>
+    <button class="cbtn" data-cat="mobile">Mobile Apps</button>
+    <button class="cbtn" data-cat="seo">SEO &amp; Marketing</button>
+    <button class="cbtn" data-cat="business">Business &amp; Tech</button>
+  </div>
+</div>
+
+<!-- FEATURED POST -->
+<section id="featured" aria-label="Featured article">
+  <div class="wrap">
+    <a href="#" class="featured-card rv" data-cat="business" aria-label="Read featured article">
+      <div class="feat-img">
+        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=900&q=85&auto=format&fit=crop" alt="Digital transformation for Indian SMEs" loading="eager" decoding="async" width="900" height="506"/>
+      </div>
+      <div class="feat-body">
+        <div class="feat-badge">Featured Article</div>
+        <h2 class="feat-title">Why Small Businesses in Maharashtra Are Losing Customers to Competitors With Better Websites</h2>
+        <p class="feat-excerpt">In 2024, your website is your first impression — and in many cases, your only impression. Here's what we've learned from 14 years of building digital products for businesses across Maharashtra.</p>
+        <div class="feat-meta">
+          <div class="feat-author">
+            <div class="feat-avatar"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&q=80&auto=format&fit=crop&crop=face" alt="Author" loading="lazy" width="36" height="36"/></div>
+            <div>
+              <!-- PLACEHOLDER: Replace with actual author name -->
+              <div class="feat-author-name">Mohammed Noor</div>
+              <div class="feat-author-date">December 2024 · 8 min read</div>
+            </div>
+          </div>
+          <span class="feat-read">Read Article →</span>
+        </div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- POST GRID -->
+<section id="posts" aria-label="Blog posts">
+  <div class="wrap">
+    <div class="posts-header">
+      <p class="posts-count"><span id="post-count">12</span> articles</p>
+    </div>
+    <div class="posts-grid" id="posts-grid">
+
+      <article class="pc rv" data-cat="web-dev">
+        <div class="pc-img">
+          <img src="https://images.unsplash.com/photo-1547658719-da2b51169166?w=600&q=80&auto=format&fit=crop" alt="Mobile-first web design" loading="lazy" decoding="async" width="600" height="338"/>
+          <span class="pc-cat-badge">Web Dev</span>
+        </div>
+        <div class="pc-body">
+          <h3 class="pc-title">Mobile-First Is Not Optional: How We Build Every Website in 2024</h3>
+          <p class="pc-excerpt">With 75%+ of Indian internet users on mobile, a desktop-first approach is leaving money on the table. Here's exactly how we approach mobile-first design.</p>
+          <div class="pc-footer">
+            <span class="pc-meta">Nov 2024 · 6 min</span>
+            <a href="#" class="pc-link">Read →</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="pc rv d1" data-cat="software">
+        <div class="pc-img">
+          <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=600&q=80&auto=format&fit=crop" alt="ERP system for schools" loading="lazy" decoding="async" width="600" height="338"/>
+          <span class="pc-cat-badge">Software</span>
+        </div>
+        <div class="pc-body">
+          <h3 class="pc-title">5 Signs Your School or College Needs an ERP System Right Now</h3>
+          <p class="pc-excerpt">Manual registers, paper fee receipts, and WhatsApp groups for attendance — if this sounds familiar, it's time for a better system. Here's when to make the move.</p>
+          <div class="pc-footer">
+            <span class="pc-meta">Oct 2024 · 7 min</span>
+            <a href="#" class="pc-link">Read →</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="pc rv d2" data-cat="seo">
+        <div class="pc-img">
+          <img src="https://images.unsplash.com/photo-1432888622747-4eb9a8efbc07?w=600&q=80&auto=format&fit=crop" alt="Local SEO for Maharashtra" loading="lazy" decoding="async" width="600" height="338"/>
+          <span class="pc-cat-badge">SEO</span>
+        </div>
+        <div class="pc-body">
+          <h3 class="pc-title">Local SEO for Malegaon &amp; Nashik Businesses: A Practical 2024 Guide</h3>
+          <p class="pc-excerpt">Ranking on Google for local searches isn't magic — it's a process. We break down exactly what we do for our clients to get them visible in their local market.</p>
+          <div class="pc-footer">
+            <span class="pc-meta">Oct 2024 · 9 min</span>
+            <a href="#" class="pc-link">Read →</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="pc rv d3" data-cat="mobile">
+        <div class="pc-img">
+          <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=600&q=80&auto=format&fit=crop" alt="Android app development" loading="lazy" decoding="async" width="600" height="338"/>
+          <span class="pc-cat-badge">Mobile</span>
+        </div>
+        <div class="pc-body">
+          <h3 class="pc-title">When Does a Business Actually Need a Mobile App (And When It Doesn't)</h3>
+          <p class="pc-excerpt">We've built 10+ Android apps. Here's our honest framework for deciding whether a mobile app is the right move — or whether a great mobile website is enough.</p>
+          <div class="pc-footer">
+            <span class="pc-meta">Sep 2024 · 5 min</span>
+            <a href="#" class="pc-link">Read →</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="pc rv d4" data-cat="web-dev">
+        <div class="pc-img">
+          <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&q=80&auto=format&fit=crop" alt="WooCommerce vs custom e-commerce" loading="lazy" decoding="async" width="600" height="338"/>
+          <span class="pc-cat-badge">Web Dev</span>
+        </div>
+        <div class="pc-body">
+          <h3 class="pc-title">WooCommerce vs Custom-Built E-Commerce: Which Is Right for Your Business?</h3>
+          <p class="pc-excerpt">We've built both. The answer isn't always obvious — it depends on your budget, growth plans, and technical requirements. Here's how we think about it.</p>
+          <div class="pc-footer">
+            <span class="pc-meta">Sep 2024 · 7 min</span>
+            <a href="#" class="pc-link">Read →</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="pc rv d5" data-cat="business">
+        <div class="pc-img">
+          <img src="https://images.unsplash.com/photo-1553877522-43269d4ea984?w=600&q=80&auto=format&fit=crop" alt="Software development cost" loading="lazy" decoding="async" width="600" height="338"/>
+          <span class="pc-cat-badge">Business</span>
+        </div>
+        <div class="pc-body">
+          <h3 class="pc-title">How Much Does Custom Software Actually Cost in India in 2024?</h3>
+          <p class="pc-excerpt">We break down the real cost factors — scope, technology, team size, and timeline — so you can budget your next software project with confidence.</p>
+          <div class="pc-footer">
+            <span class="pc-meta">Aug 2024 · 8 min</span>
+            <a href="#" class="pc-link">Read →</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="pc rv" data-cat="software">
+        <div class="pc-img">
+          <img src="https://images.unsplash.com/photo-1607799279861-4dd421887fb3?w=600&q=80&auto=format&fit=crop" alt="PHP vs .NET for web apps" loading="lazy" decoding="async" width="600" height="338"/>
+          <span class="pc-cat-badge">Software</span>
+        </div>
+        <div class="pc-body">
+          <h3 class="pc-title">PHP vs .NET: How We Choose the Right Stack for Each Project</h3>
+          <p class="pc-excerpt">We use both — and the choice isn't religious, it's pragmatic. Here's the decision framework we apply when starting a new web application project.</p>
+          <div class="pc-footer">
+            <span class="pc-meta">Aug 2024 · 6 min</span>
+            <a href="#" class="pc-link">Read →</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="pc rv d1" data-cat="seo">
+        <div class="pc-img">
+          <img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=600&q=80&auto=format&fit=crop" alt="Content marketing for tech companies" loading="lazy" decoding="async" width="600" height="338"/>
+          <span class="pc-cat-badge">SEO</span>
+        </div>
+        <div class="pc-body">
+          <h3 class="pc-title">Why Most Small Business Websites Don't Rank on Google (And How to Fix It)</h3>
+          <p class="pc-excerpt">After auditing dozens of local business websites, we see the same 5 mistakes over and over. Here's what they are and exactly how to fix each one.</p>
+          <div class="pc-footer">
+            <span class="pc-meta">Jul 2024 · 10 min</span>
+            <a href="#" class="pc-link">Read →</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="pc rv d2" data-cat="business">
+        <div class="pc-img">
+          <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=600&q=80&auto=format&fit=crop" alt="Working with software developers" loading="lazy" decoding="async" width="600" height="338"/>
+          <span class="pc-cat-badge">Business</span>
+        </div>
+        <div class="pc-body">
+          <h3 class="pc-title">How to Work With a Software Agency: 7 Things Every Client Should Know</h3>
+          <p class="pc-excerpt">Good client-agency relationships make great software. After 14 years, here's everything we wish our clients knew before starting a project with us.</p>
+          <div class="pc-footer">
+            <span class="pc-meta">Jul 2024 · 6 min</span>
+            <a href="#" class="pc-link">Read →</a>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<div id="newsletter" aria-label="Newsletter signup">
+  <div class="wrap">
+    <div class="nl-inner rv">
+      <div class="tag" style="background:rgba(212,96,26,.15);margin-bottom:18px">Stay Updated</div>
+      <h2 class="nl-t">Get Our Best Insights<br><em>In Your Inbox</em></h2>
+      <p class="nl-d">One email per month. No spam, no sales pitches — just genuinely useful software and digital tips for Indian businesses.</p>
+      <div class="nl-form">
+        <!-- PLACEHOLDER: Connect to Mailchimp / ConvertKit endpoint -->
+        <input type="email" class="nl-input" id="nl-email" placeholder="your@email.com" autocomplete="email" aria-label="Email address"/>
+        <button class="nl-btn" id="nl-btn" type="button">Subscribe →</button>
+      </div>
+      <p class="nl-fine">No spam ever. Unsubscribe anytime. We send one email per month.</p>
+      <p id="nl-status" role="status"></p>
+    </div>
+  </div>
+</div>
+
+<!-- TOPICS -->
+<section id="topics" aria-label="Blog topics">
+  <div class="wrap">
+    <div class="topics-head">
+      <div class="tag rv">Browse Topics</div>
+      <h2 class="stitle rv d1" style="margin-top:14px">What We Write About</h2>
+    </div>
+    <div class="topics-grid rv d2">
+      <a href="#" class="topic-chip" data-cat="web-dev">🌐 Web Development <span class="topic-chip-count">4</span></a>
+      <a href="#" class="topic-chip" data-cat="software">⚙️ Software &amp; ERP <span class="topic-chip-count">3</span></a>
+      <a href="#" class="topic-chip" data-cat="mobile">📱 Mobile Apps <span class="topic-chip-count">2</span></a>
+      <a href="#" class="topic-chip" data-cat="seo">📈 SEO &amp; Marketing <span class="topic-chip-count">3</span></a>
+      <a href="#" class="topic-chip" data-cat="business">💼 Business &amp; Tech <span class="topic-chip-count">3</span></a>
+      <a href="#" class="topic-chip">🔐 Security <span class="topic-chip-count">1</span></a>
+      <a href="#" class="topic-chip">☁️ Cloud &amp; Hosting <span class="topic-chip-count">1</span></a>
+      <a href="#" class="topic-chip">🎓 Tutorials <span class="topic-chip-count">2</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer role="contentinfo">
+  <div class="fg-grid">
+    <div><div class="fb-name">NISS</div><p class="fb-tag">Where innovation meets excellence. Custom software &amp; digital solutions from Malegaon to the world.</p><div class="fbsocs"><a href="#" class="fbs" aria-label="LinkedIn">in</a><a href="#" class="fbs" aria-label="Twitter">𝕏</a><a href="#" class="fbs" aria-label="Facebook">f</a><a href="#" class="fbs" aria-label="Instagram">ig</a></div></div>
+    <div class="fcol"><h4>Services</h4><div class="fl"><a href="services.html">Software Development</a><a href="services.html">E-Commerce</a><a href="services.html">Web Applications</a><a href="services.html">Mobile Apps</a><a href="services.html">SEO Services</a></div></div>
+    <div class="fcol"><h4>Company</h4><div class="fl"><a href="index.html">Home</a><a href="about.html">About</a><a href="portfolio.html">Work</a><a href="contact.html">Contact</a><a href="careers.html">Careers</a></div></div>
+    <div class="fcol"><h4>Contact</h4><div class="fl"><a href="tel:09372239892">+91 93722 39892</a><a href="mailto:info@noorinfotech.co.in">info@noorinfotech.co.in</a><a href="https://wa.me/919372239892" target="_blank" rel="noopener">WhatsApp Us</a></div></div>
+  </div>
+  <div class="fbot"><p>© 2024 <a href="index.html">Noor Infotech &amp; Software Solutions</a>. All rights reserved.</p><p>Malegaon · Maharashtra · India</p></div>
+</footer>
+<button id="btt" aria-label="Back to top">↑</button>
+
+<script>
+(function(){
+  'use strict';
+  const btt=document.getElementById('btt');
+  window.addEventListener('scroll',()=>btt.classList.toggle('vis',scrollY>400),{passive:true});
+  btt.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+
+  // Drawer
+  const hbg=document.getElementById('hbg'),drawer=document.getElementById('drawer');
+  let open=false;
+  function tog(s){open=s;hbg.classList.toggle('on',open);hbg.setAttribute('aria-expanded',String(open));drawer.classList.toggle('on',open);drawer.setAttribute('aria-hidden',String(!open));document.body.style.overflow=open?'hidden':'';}
+  hbg.addEventListener('click',()=>tog(!open));
+  document.querySelectorAll('.dl').forEach(l=>l.addEventListener('click',()=>tog(false)));
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&open){tog(false);hbg.focus();}});
+
+  // Reveal
+  const io=new IntersectionObserver(en=>{en.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.1});
+  document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+
+  // Filter
+  const cbtns=document.querySelectorAll('.cbtn');
+  const posts=document.querySelectorAll('.pc');
+  const countEl=document.getElementById('post-count');
+  cbtns.forEach(btn=>{
+    btn.addEventListener('click',function(){
+      cbtns.forEach(b=>b.classList.remove('active'));this.classList.add('active');
+      const cat=this.getAttribute('data-cat');
+      let visible=0;
+      posts.forEach(p=>{
+        const show=cat==='all'||p.getAttribute('data-cat')===cat;
+        p.classList.toggle('hidden',!show);
+        if(show)visible++;
+      });
+      countEl.textContent=visible;
+    });
+  });
+
+  // Topic chips filter
+  document.querySelectorAll('.topic-chip[data-cat]').forEach(chip=>{
+    chip.addEventListener('click',function(e){
+      e.preventDefault();
+      const cat=this.getAttribute('data-cat');
+      cbtns.forEach(b=>b.classList.toggle('active',b.getAttribute('data-cat')===cat));
+      let visible=0;
+      posts.forEach(p=>{const show=p.getAttribute('data-cat')===cat;p.classList.toggle('hidden',!show);if(show)visible++;});
+      countEl.textContent=visible;
+      document.getElementById('posts').scrollIntoView({behavior:'smooth',block:'start'});
+    });
+  });
+
+  // Newsletter
+  const nlBtn=document.getElementById('nl-btn');
+  const nlStatus=document.getElementById('nl-status');
+  nlBtn.addEventListener('click',async function(){
+    const email=document.getElementById('nl-email').value.trim();
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){nlStatus.style.display='block';nlStatus.style.color='#c0392b';nlStatus.textContent='⚠️ Please enter a valid email.';return;}
+    nlBtn.textContent='Subscribing…';nlBtn.disabled=true;
+    // PLACEHOLDER: Replace with Mailchimp / ConvertKit API call
+    await new Promise(r=>setTimeout(r,1200));
+    nlStatus.style.display='block';nlStatus.style.color='#4ade80';
+    nlStatus.textContent='✅ Subscribed! You\'ll get our next article in your inbox.';
+    document.getElementById('nl-email').value='';
+    setTimeout(()=>{nlBtn.textContent='Subscribe →';nlBtn.disabled=false;},5000);
+  });
+})();
+</script>
+</body>
+</html>
