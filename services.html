@@ -972,7 +972,22 @@
       .pricing-grid { grid-template-columns: 1fr; }
       .services-grid { grid-template-columns: 1fr; }
     }
+    
+.service-proof-strip {
+  padding: 18px 20px;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.03);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
 
+.service-proof-strip p {
+  max-width: 980px;
+  margin: 0 auto;
+  color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 1.8;
+}
   </style>
 </head>
 <body>
@@ -1038,9 +1053,14 @@
           Freelance Web Developer in Mumbai, India
         </div>
 
-        <h1 class="hero-title">
+      <!-- <h1 class="hero-title">
           Professional Websites
           <span>That Rank and Convert</span>
+        </h1> -->
+
+        <h1 class="hero-title">
+  Professional Websites
+  <span>That Rank and Convert</span>
         </h1>
 
         <p class="hero-desc">
@@ -1058,19 +1078,23 @@
 
         <div class="hero-stats">
           <div class="hero-stat">
-            <div class="num" data-count="50">0</div>
+           <!-- <div class="num" data-count="50">0</div> -->
+            <div class="num" data-count="50">50+</div>
             <div class="label">Projects Delivered</div>
           </div>
           <div class="hero-stat">
-            <div class="num" data-count="30">0</div>
+          <!--  <div class="num" data-count="30">0</div> -->
+            <div class="num" data-count="30">30+</div>
             <div class="label">Happy Clients</div>
           </div>
           <div class="hero-stat">
-            <div class="num" data-count="99">0</div>
+         <!--   <div class="num" data-count="99">0</div> -->
+            <div class="num" data-count="99">99%</div>
             <div class="label">Uptime Guarantee</div>
           </div>
           <div class="hero-stat">
-            <div class="num" data-count="3">0</div>
+         <!--   <div class="num" data-count="3">0</div>-->
+            <div class="num" data-count="3">3+</div>
             <div class="label">Years Experience</div>
           </div>
         </div>
@@ -1096,7 +1120,7 @@
 </header>
 
 <!-- ─── MARQUEE ─── -->
-<div class="marquee-section" aria-hidden="true">
+<!--<div class="marquee-section" aria-hidden="true">
   <div class="marquee-track">
     <span>Web Development</span>
     <span class="accent">--</span>
@@ -1131,7 +1155,15 @@
     <span>Website Maintenance</span>
     <span class="accent">--</span>
   </div>
-</div>
+</div>-->
+
+  <section class="service-proof-strip" aria-label="Website and SEO service highlights">
+  <p>
+    Fast websites, technical SEO, local search setup, hosting, maintenance,
+    WhatsApp lead capture and monthly growth support for small businesses in
+    Mumbai and across India.
+  </p>
+  </section>
 
 <!-- ─── SERVICES ─── -->
 <section id="services" aria-labelledby="services-heading">
