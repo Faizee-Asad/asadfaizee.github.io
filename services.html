@@ -189,7 +189,7 @@
   </script>
 
   <!-- ─── BREADCRUMB SCHEMA ─── -->
-  <script type="application/ld+json">
+<!-- <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -200,8 +200,28 @@
       {"@type": "ListItem", "position": 4, "name": "Contact", "item": "https://asadfaizee.is-a.dev/#contact"}
     ]
   }
-  </script>
-
+  </script> -->
+  
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://asadfaizee.is-a.dev/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Services",
+      "item": "https://asadfaizee.is-a.dev/services"
+    }
+  ]
+}
+</script>
   <!-- ─── FAQ SCHEMA ─── -->
   <script type="application/ld+json">
   {
