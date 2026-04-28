@@ -1,3 +1,5 @@
 User-agent: *
 Allow: /
+
 Sitemap: https://asadfaizee.is-a.dev/sitemap.xml
+Sitemap: https://blog.asadfaizee.is-a.dev/sitemap.xml
