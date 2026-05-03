@@ -1,0 +1,1735 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NEO Artesian Water | Premium Hydration Reimagined</title>
+  <meta name="description" content="NEO is premium artesian bottled water crafted for clean taste, balanced minerals, sustainable packaging, and modern everyday hydration." />
+  <meta name="keywords" content="NEO water, premium bottled water, artesian water, alkaline water, mineral water, pure drinking water, sustainable water bottle" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://asadfaizee.is-a.dev/neo/" />
+
+  <meta property="og:title" content="NEO Artesian Water | Refresh Your Existence" />
+  <meta property="og:description" content="Premium artesian water with clean taste, mineral balance, and refined sustainable packaging." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://asadfaizee.is-a.dev/neo/" />
+
+  <style>
+    :root {
+      --bg: #dcecf1;
+      --bg-soft: #e8f5f8;
+      --bg-deep: #b9d4dc;
+      --ink: #123040;
+      --muted: #5e7783;
+      --aqua: #29c7dd;
+      --aqua-dark: #0798b2;
+      --blue: #165f7a;
+      --white: #ffffff;
+      --shadow-dark: rgba(85, 118, 130, 0.42);
+      --shadow-light: rgba(255, 255, 255, 0.92);
+      --shadow-neu: 18px 18px 42px var(--shadow-dark), -18px -18px 42px var(--shadow-light);
+      --shadow-neu-small: 8px 8px 20px rgba(85, 118, 130, 0.33), -8px -8px 20px rgba(255, 255, 255, 0.92);
+      --shadow-inset: inset 8px 8px 18px rgba(85, 118, 130, 0.26), inset -8px -8px 18px rgba(255, 255, 255, 0.82);
+      --radius-xl: 36px;
+      --radius-lg: 26px;
+      --radius-md: 18px;
+      --container: 1180px;
+      --ease: cubic-bezier(.2,.8,.2,1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 8%, rgba(41,199,221,.24), transparent 34%),
+        radial-gradient(circle at 88% 16%, rgba(255,255,255,.78), transparent 32%),
+        linear-gradient(145deg, var(--bg-soft), var(--bg));
+      overflow-x: hidden;
+      line-height: 1.62;
+    }
+
+    body.nav-open {
+      overflow: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img,
+    video {
+      max-width: 100%;
+      display: block;
+    }
+
+    button,
+    input,
+    textarea {
+      font: inherit;
+    }
+
+    .container {
+      width: min(100% - 32px, var(--container));
+      margin-inline: auto;
+    }
+
+    .section {
+      position: relative;
+      padding: 104px 0;
+    }
+
+    .section::before {
+      content: "";
+      position: absolute;
+      inset: auto 0 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(18,48,64,.12), transparent);
+      pointer-events: none;
+    }
+
+    .noise {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: .22;
+      mix-blend-mode: soft-light;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 260 260' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='.32'/%3E%3C/svg%3E");
+      z-index: 0;
+    }
+
+    .orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(5px);
+      opacity: .42;
+      pointer-events: none;
+      z-index: 0;
+      animation: drift 15s var(--ease) infinite alternate;
+    }
+
+    .orb-one {
+      width: 240px;
+      height: 240px;
+      left: -80px;
+      top: 180px;
+      background: rgba(41,199,221,.22);
+    }
+
+    .orb-two {
+      width: 190px;
+      height: 190px;
+      right: -70px;
+      top: 52%;
+      background: rgba(22,95,122,.14);
+      animation-delay: -5s;
+    }
+
+    @keyframes drift {
+      from { transform: translate3d(0, 0, 0) scale(1); }
+      to { transform: translate3d(35px, -45px, 0) scale(1.12); }
+    }
+
+    .site-header,
+    main,
+    footer {
+      position: relative;
+      z-index: 1;
+    }
+
+    .neu {
+      background: linear-gradient(145deg, #e9f7fa, #cddfe6);
+      border: 1px solid rgba(255,255,255,.52);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-neu);
+      transition: transform .36s var(--ease), box-shadow .36s var(--ease), background .36s var(--ease);
+    }
+
+    .neu:hover,
+    .neu:focus-within {
+      transform: translateY(-8px);
+      box-shadow: 24px 24px 52px rgba(85, 118, 130, 0.38), -22px -22px 54px rgba(255,255,255,.98);
+    }
+
+    .neu-inset {
+      background: linear-gradient(145deg, #d4e7ed, #edf9fb);
+      border: 1px solid rgba(255,255,255,.48);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-inset);
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 9px 15px;
+      border-radius: 999px;
+      color: var(--blue);
+      font-size: .78rem;
+      font-weight: 900;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      background: linear-gradient(145deg, #e9f7fa, #cfe2e8);
+      box-shadow: var(--shadow-neu-small);
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--aqua);
+      box-shadow: 0 0 18px rgba(41,199,221,.8);
+    }
+
+    .section-head {
+      max-width: 790px;
+      margin: 0 auto 50px;
+      text-align: center;
+    }
+
+    .section-head h2 {
+      margin-top: 20px;
+      font-size: clamp(2.1rem, 5vw, 4.4rem);
+      line-height: .98;
+      letter-spacing: -.07em;
+    }
+
+    .section-head p {
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: clamp(1rem, 1.7vw, 1.15rem);
+    }
+
+    .btn {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 50px;
+      padding: 14px 24px;
+      border: 0;
+      border-radius: 999px;
+      font-weight: 900;
+      cursor: pointer;
+      overflow: hidden;
+      transition: transform .24s var(--ease), box-shadow .24s var(--ease);
+      isolation: isolate;
+      white-space: nowrap;
+    }
+
+    .btn::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(255,255,255,.56), transparent 28%);
+      opacity: 0;
+      transition: opacity .28s var(--ease);
+      z-index: -1;
+    }
+
+    .btn:hover::after,
+    .btn:active::after {
+      opacity: 1;
+    }
+
+    .btn:hover {
+      transform: translateY(-3px) scale(1.015);
+    }
+
+    .btn-primary {
+      color: #073140;
+      background: linear-gradient(145deg, #55e0ef, #12acc6);
+      box-shadow: 10px 10px 24px rgba(85,118,130,.34), -10px -10px 24px rgba(255,255,255,.86);
+    }
+
+    .btn-soft {
+      color: var(--ink);
+      background: linear-gradient(145deg, #e9f7fa, #cfe2e8);
+      box-shadow: var(--shadow-neu-small);
+    }
+
+    .touch-ripple {
+      position: fixed;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      pointer-events: none;
+      background: rgba(41,199,221,.3);
+      border: 1px solid rgba(255,255,255,.75);
+      transform: translate(-50%, -50%) scale(1);
+      animation: ripple .8s var(--ease) forwards;
+      z-index: 9999;
+    }
+
+    .water-creature {
+      position: fixed;
+      pointer-events: none;
+      z-index: 9999;
+      font-size: 24px;
+      transform: translate(-50%, -50%) scale(.5) rotate(-10deg);
+      animation: creatureSwim 1.15s var(--ease) forwards;
+      filter: drop-shadow(0 9px 14px rgba(18,48,64,.22));
+    }
+
+    @keyframes ripple {
+      to {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(9);
+      }
+    }
+
+    @keyframes creatureSwim {
+      0% { opacity: 0; transform: translate(-50%, -50%) scale(.5) rotate(-12deg); }
+      22% { opacity: 1; }
+      100% { opacity: 0; transform: translate(calc(-50% + 42px), calc(-50% - 52px)) scale(1.25) rotate(16deg); }
+    }
+
+    /* Header */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      padding: 14px 0;
+      background: rgba(220,236,241,.78);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(255,255,255,.45);
+    }
+
+    .nav-wrap {
+      min-height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      font-size: 1.5rem;
+      font-weight: 950;
+      letter-spacing: -.08em;
+      color: var(--ink);
+      z-index: 1002;
+    }
+
+    .brand-mark {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 30% 22%, #fff 0 12%, #85eff8 28%, #17b3cc 64%, #0b7893 100%);
+      box-shadow: 7px 7px 16px rgba(85,118,130,.34), -7px -7px 16px rgba(255,255,255,.92);
+      animation: pulseDrop 2.8s var(--ease) infinite;
+    }
+
+    @keyframes pulseDrop {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.08); }
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px;
+      border-radius: 999px;
+      background: linear-gradient(145deg, #e9f7fa, #cfe2e8);
+      box-shadow: var(--shadow-neu-small);
+    }
+
+    .nav-links a {
+      padding: 10px 15px;
+      border-radius: 999px;
+      color: var(--muted);
+      font-size: .93rem;
+      font-weight: 800;
+      transition: background .22s var(--ease), color .22s var(--ease), transform .22s var(--ease), box-shadow .22s var(--ease);
+    }
+
+    .nav-links a:hover,
+    .nav-links a:focus-visible {
+      color: var(--ink);
+      background: #deeff4;
+      box-shadow: inset 5px 5px 10px rgba(85,118,130,.2), inset -5px -5px 10px rgba(255,255,255,.8);
+      transform: translateY(-1px);
+      outline: none;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .menu-toggle {
+      display: none;
+      width: 48px;
+      height: 48px;
+      border: 0;
+      border-radius: 16px;
+      background: linear-gradient(145deg, #e9f7fa, #cfe2e8);
+      box-shadow: var(--shadow-neu-small);
+      color: var(--ink);
+      cursor: pointer;
+      z-index: 1002;
+    }
+
+    .menu-toggle span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      margin: 5px auto;
+      border-radius: 999px;
+      background: currentColor;
+      transition: transform .22s var(--ease), opacity .22s var(--ease);
+    }
+
+    body.nav-open .menu-toggle span:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+
+    body.nav-open .menu-toggle span:nth-child(2) {
+      opacity: 0;
+    }
+
+    body.nav-open .menu-toggle span:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
+
+    .nav-overlay {
+      display: none;
+    }
+
+    /* Hero */
+    .hero {
+      min-height: calc(100vh - 92px);
+      display: grid;
+      align-items: center;
+      padding: 64px 0 42px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.03fr) minmax(330px, .86fr);
+      gap: 58px;
+      align-items: center;
+    }
+
+    .hero h1 {
+      margin-top: 24px;
+      max-width: 790px;
+      font-size: clamp(3.2rem, 8vw, 7.8rem);
+      line-height: .86;
+      letter-spacing: -.1em;
+    }
+
+    .hero h1 span {
+      display: block;
+      color: var(--aqua-dark);
+      text-shadow: 8px 8px 20px rgba(85,118,130,.18), -8px -8px 18px rgba(255,255,255,.82);
+    }
+
+    .hero-copy {
+      max-width: 650px;
+      margin-top: 28px;
+      color: var(--muted);
+      font-size: clamp(1.05rem, 2vw, 1.25rem);
+    }
+
+    .hero-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-top: 34px;
+    }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      max-width: 700px;
+      margin-top: 44px;
+    }
+
+    .stat {
+      padding: 18px;
+      border-radius: 22px;
+      box-shadow: var(--shadow-inset);
+      background: linear-gradient(145deg, #d4e7ed, #edf9fb);
+      transition: transform .3s var(--ease);
+    }
+
+    .stat:hover {
+      transform: translateY(-5px) rotate(.5deg);
+    }
+
+    .stat strong {
+      display: block;
+      color: var(--ink);
+      font-size: 1.32rem;
+      letter-spacing: -.04em;
+    }
+
+    .stat span {
+      color: var(--muted);
+      font-size: .9rem;
+    }
+
+    .hero-video-card {
+      position: relative;
+      padding: 20px;
+      overflow: hidden;
+      min-height: 520px;
+    }
+
+    .hero-video-card::before,
+    .hero-video-card::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .hero-video-card::before {
+      width: 190px;
+      height: 190px;
+      right: -60px;
+      top: -60px;
+      background: rgba(41,199,221,.22);
+      filter: blur(2px);
+      animation: floatBubble 6s var(--ease) infinite alternate;
+    }
+
+    .hero-video-card::after {
+      width: 120px;
+      height: 120px;
+      left: -36px;
+      bottom: 40px;
+      background: rgba(255,255,255,.6);
+      animation: floatBubble 7s var(--ease) infinite alternate-reverse;
+    }
+
+    @keyframes floatBubble {
+      from { transform: translate3d(0,0,0) scale(1); }
+      to { transform: translate3d(-20px,30px,0) scale(1.12); }
+    }
+
+    .video-frame {
+      position: relative;
+      z-index: 2;
+      height: 100%;
+      min-height: 480px;
+      border-radius: 30px;
+      overflow: hidden;
+      background: linear-gradient(145deg, #d0e4eb, #eef9fb);
+      box-shadow: var(--shadow-inset);
+    }
+
+    .video-frame video {
+      width: 100%;
+      height: 100%;
+      min-height: 480px;
+      object-fit: cover;
+      opacity: .98;
+    }
+
+    .video-fallback {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      background:
+        radial-gradient(circle at center, rgba(41,199,221,.25), transparent 48%),
+        linear-gradient(145deg, #d5e8ed, #edf9fb);
+    }
+
+    .bottle-shape {
+      position: relative;
+      width: 140px;
+      height: 380px;
+      border-radius: 58px 58px 36px 36px;
+      background:
+        linear-gradient(100deg, rgba(255,255,255,.9), rgba(130,236,246,.35), rgba(255,255,255,.74)),
+        linear-gradient(180deg, rgba(41,199,221,.3), rgba(255,255,255,.14));
+      box-shadow: 16px 18px 40px rgba(85,118,130,.28), -16px -16px 34px rgba(255,255,255,.78), inset 12px 0 22px rgba(255,255,255,.45);
+      animation: bottleFloat 4s var(--ease) infinite alternate;
+    }
+
+    .bottle-shape::before {
+      content: "NEO";
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      color: rgba(18,48,64,.72);
+      font-size: 2.1rem;
+      font-weight: 950;
+      letter-spacing: -.08em;
+    }
+
+    @keyframes bottleFloat {
+      from { transform: translateY(0) rotate(-1deg); }
+      to { transform: translateY(-18px) rotate(1deg); }
+    }
+
+    .video-badge {
+      position: absolute;
+      left: 26px;
+      right: 26px;
+      bottom: 26px;
+      z-index: 3;
+      padding: 17px 18px;
+      border-radius: 22px;
+      background: rgba(232,245,248,.86);
+      box-shadow: 8px 8px 18px rgba(85,118,130,.28), -8px -8px 18px rgba(255,255,255,.72);
+      backdrop-filter: blur(8px);
+    }
+
+    .video-badge strong {
+      display: block;
+      font-size: 1rem;
+    }
+
+    .video-badge span {
+      display: block;
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: .9rem;
+    }
+
+    /* Animated common blocks */
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px) scale(.98);
+      transition: opacity .75s var(--ease), transform .75s var(--ease);
+    }
+
+    .reveal.show {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    .stagger > * {
+      opacity: 0;
+      transform: translateY(26px);
+      transition: opacity .7s var(--ease), transform .7s var(--ease);
+    }
+
+    .stagger.show > * {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .stagger.show > *:nth-child(2) { transition-delay: .08s; }
+    .stagger.show > *:nth-child(3) { transition-delay: .16s; }
+    .stagger.show > *:nth-child(4) { transition-delay: .24s; }
+    .stagger.show > *:nth-child(5) { transition-delay: .32s; }
+    .stagger.show > *:nth-child(6) { transition-delay: .4s; }
+
+    .tilt {
+      transform-style: preserve-3d;
+      will-change: transform;
+    }
+
+    .icon {
+      width: 58px;
+      height: 58px;
+      display: grid;
+      place-items: center;
+      border-radius: 20px;
+      background: linear-gradient(145deg, #e9f7fa, #cfe2e8);
+      box-shadow: var(--shadow-neu-small);
+      margin-bottom: 24px;
+      font-size: 1.55rem;
+      animation: softBounce 3.2s var(--ease) infinite;
+    }
+
+    @keyframes softBounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-7px); }
+    }
+
+    .feature-grid,
+    .benefit-grid,
+    .product-grid,
+    .testimonial-grid,
+    .facts-grid {
+      display: grid;
+      gap: 24px;
+    }
+
+    .feature-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .feature-card,
+    .benefit-card,
+    .product-card,
+    .testimonial,
+    .fact-card {
+      padding: 28px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feature-card::after,
+    .benefit-card::after,
+    .product-card::after,
+    .testimonial::after,
+    .fact-card::after {
+      content: "";
+      position: absolute;
+      width: 120px;
+      height: 120px;
+      right: -62px;
+      top: -62px;
+      border-radius: 50%;
+      background: rgba(41,199,221,.16);
+      transition: transform .35s var(--ease);
+    }
+
+    .feature-card:hover::after,
+    .benefit-card:hover::after,
+    .product-card:hover::after,
+    .testimonial:hover::after,
+    .fact-card:hover::after {
+      transform: scale(1.8);
+    }
+
+    .feature-card h3,
+    .benefit-card h3,
+    .product-card h3,
+    .testimonial h3,
+    .fact-card h3,
+    .step h3,
+    .split-content h2,
+    .faq-item summary {
+      letter-spacing: -.045em;
+    }
+
+    .feature-card p,
+    .benefit-card p,
+    .product-card p,
+    .testimonial p,
+    .fact-card p,
+    .step p,
+    .split-content p,
+    .faq-item p {
+      color: var(--muted);
+      margin-top: 12px;
+    }
+
+    .journey-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      position: relative;
+    }
+
+    .step {
+      padding: 26px;
+      min-height: 260px;
+    }
+
+    .step-num {
+      display: inline-grid;
+      place-items: center;
+      width: 54px;
+      height: 54px;
+      border-radius: 18px;
+      color: var(--aqua-dark);
+      font-weight: 950;
+      background: linear-gradient(145deg, #e9f7fa, #cfe2e8);
+      box-shadow: var(--shadow-neu-small);
+    }
+
+    .step h3 {
+      margin-top: 44px;
+      font-size: 1.28rem;
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: .96fr 1.04fr;
+      gap: 46px;
+      align-items: center;
+    }
+
+    .split-content h2 {
+      margin-top: 22px;
+      font-size: clamp(2.2rem, 5vw, 4.7rem);
+      line-height: .96;
+    }
+
+    .check-list {
+      display: grid;
+      gap: 16px;
+      margin-top: 30px;
+    }
+
+    .check-list li {
+      list-style: none;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 13px;
+      align-items: start;
+      padding: 16px;
+      border-radius: 20px;
+      color: var(--muted);
+      background: linear-gradient(145deg, #e4f2f6, #d3e6ec);
+      box-shadow: var(--shadow-inset);
+      transition: transform .3s var(--ease);
+    }
+
+    .check-list li:hover {
+      transform: translateX(6px);
+    }
+
+    .check-list b {
+      color: var(--ink);
+    }
+
+    .check-mark {
+      width: 27px;
+      height: 27px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      color: #06313f;
+      background: linear-gradient(145deg, #55e0ef, #12acc6);
+      box-shadow: 5px 5px 12px rgba(85,118,130,.26), -5px -5px 12px rgba(255,255,255,.76);
+      font-weight: 950;
+    }
+
+    .purity-panel {
+      min-height: 470px;
+      padding: 34px;
+      display: grid;
+      align-content: end;
+      overflow: hidden;
+    }
+
+    .water-visual {
+      position: absolute;
+      inset: 24px 24px auto;
+      height: 230px;
+      border-radius: 30px;
+      background:
+        radial-gradient(circle at 35% 35%, rgba(255,255,255,.8), transparent 18%),
+        radial-gradient(circle at 70% 22%, rgba(41,199,221,.28), transparent 20%),
+        linear-gradient(145deg, #cfe8ef, #effbfd);
+      box-shadow: var(--shadow-inset);
+      overflow: hidden;
+    }
+
+    .wave {
+      position: absolute;
+      left: -18%;
+      right: -18%;
+      bottom: -55px;
+      height: 145px;
+      border-radius: 45% 45% 0 0;
+      background: rgba(41,199,221,.38);
+      animation: waveMove 4.2s ease-in-out infinite alternate;
+    }
+
+    .wave:nth-child(2) {
+      bottom: -75px;
+      background: rgba(22,95,122,.18);
+      animation-duration: 5.8s;
+      animation-delay: -.9s;
+    }
+
+    @keyframes waveMove {
+      from { transform: translateX(-28px) rotate(-2deg); }
+      to { transform: translateX(28px) rotate(2deg); }
+    }
+
+    .purity-meter {
+      width: 100%;
+      height: 16px;
+      margin-top: 20px;
+      border-radius: 999px;
+      background: #d6e8ee;
+      box-shadow: var(--shadow-inset);
+      overflow: hidden;
+    }
+
+    .purity-meter span {
+      display: block;
+      width: 0;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--aqua-dark), var(--aqua));
+      transition: width 1.4s var(--ease) .25s;
+    }
+
+    .show .purity-meter span {
+      width: 99%;
+    }
+
+    .benefit-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .benefit-card {
+      min-height: 210px;
+    }
+
+    .product-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .product-visual {
+      min-height: 250px;
+      display: grid;
+      place-items: center;
+      border-radius: 28px;
+      background: linear-gradient(145deg, #d4e7ed, #edf9fb);
+      box-shadow: var(--shadow-inset);
+      margin-bottom: 24px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .product-visual::before {
+      content: "";
+      position: absolute;
+      width: 170px;
+      height: 170px;
+      border-radius: 50%;
+      background: rgba(41,199,221,.18);
+      animation: floatBubble 5.3s var(--ease) infinite alternate;
+    }
+
+    .mini-bottle {
+      position: relative;
+      z-index: 2;
+      width: 82px;
+      height: 215px;
+      border-radius: 34px 34px 23px 23px;
+      background:
+        linear-gradient(100deg, rgba(255,255,255,.92), rgba(130,236,246,.32), rgba(255,255,255,.7));
+      box-shadow: 12px 15px 32px rgba(85,118,130,.26), -12px -12px 26px rgba(255,255,255,.78), inset 8px 0 14px rgba(255,255,255,.44);
+      animation: bottleFloat 3.4s var(--ease) infinite alternate;
+    }
+
+    .mini-bottle::after {
+      content: "NEO";
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      color: rgba(18,48,64,.72);
+      font-size: 1.1rem;
+      font-weight: 950;
+      letter-spacing: -.08em;
+    }
+
+    .facts-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .fact-card strong {
+      display: block;
+      color: var(--aqua-dark);
+      font-size: clamp(2rem, 4vw, 3.4rem);
+      line-height: 1;
+      letter-spacing: -.08em;
+    }
+
+    .testimonial-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .stars {
+      color: var(--aqua-dark);
+      letter-spacing: .14em;
+      margin-bottom: 18px;
+    }
+
+    .faq-wrap {
+      max-width: 890px;
+      margin: 0 auto;
+      display: grid;
+      gap: 16px;
+    }
+
+    .faq-item {
+      padding: 0 22px;
+      border-radius: 24px;
+    }
+
+    .faq-item summary {
+      cursor: pointer;
+      list-style: none;
+      padding: 22px 0;
+      display: flex;
+      justify-content: space-between;
+      gap: 22px;
+      font-weight: 900;
+      font-size: 1.05rem;
+    }
+
+    .faq-item summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .faq-item summary::after {
+      content: "+";
+      flex: 0 0 auto;
+      width: 30px;
+      height: 30px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: linear-gradient(145deg, #e9f7fa, #cfe2e8);
+      box-shadow: var(--shadow-neu-small);
+      color: var(--aqua-dark);
+      font-size: 1.2rem;
+    }
+
+    .faq-item[open] summary::after {
+      content: "−";
+      box-shadow: var(--shadow-inset);
+    }
+
+    .faq-item p {
+      padding-bottom: 22px;
+    }
+
+    .cta {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 32px;
+      align-items: center;
+      padding: 54px;
+      overflow: hidden;
+    }
+
+    .cta h2 {
+      margin-top: 18px;
+      font-size: clamp(2.1rem, 5vw, 4.4rem);
+      line-height: .96;
+      letter-spacing: -.07em;
+    }
+
+    .cta p {
+      max-width: 690px;
+      color: var(--muted);
+      margin-top: 18px;
+    }
+
+    .order-form {
+      display: grid;
+      gap: 14px;
+      min-width: 310px;
+    }
+
+    .order-form input {
+      width: 100%;
+      border: 0;
+      outline: none;
+      color: var(--ink);
+      padding: 15px 17px;
+      border-radius: 18px;
+      background: #dcecf1;
+      box-shadow: var(--shadow-inset);
+    }
+
+    .footer {
+      padding: 46px 0;
+      color: var(--muted);
+    }
+
+    .footer-grid {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 22px;
+      flex-wrap: wrap;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+      font-weight: 800;
+    }
+
+    .footer-links a:hover {
+      color: var(--ink);
+    }
+
+    @media (max-width: 1040px) {
+      .section {
+        padding: 86px 0;
+      }
+
+      .hero-grid,
+      .split {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        min-height: auto;
+      }
+
+      .hero-video-card {
+        max-width: 680px;
+        margin-inline: auto;
+        min-height: auto;
+      }
+
+      .video-frame,
+      .video-frame video {
+        min-height: 460px;
+      }
+
+      .feature-grid,
+      .product-grid,
+      .testimonial-grid,
+      .facts-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .benefit-grid,
+      .journey-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .cta {
+        grid-template-columns: 1fr;
+      }
+
+      .order-form {
+        min-width: 0;
+        max-width: 520px;
+      }
+    }
+
+    @media (max-width: 820px) {
+      .nav-actions .btn {
+        display: none;
+      }
+
+      .menu-toggle {
+        display: block;
+      }
+
+      .nav-overlay {
+        display: block;
+        position: fixed;
+        inset: 0;
+        background: rgba(18,48,64,.22);
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity .24s var(--ease), visibility .24s var(--ease);
+        z-index: 998;
+      }
+
+      body.nav-open .nav-overlay {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .nav-links {
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: min(88vw, 380px);
+        height: 100dvh;
+        padding: 104px 20px 28px;
+        flex-direction: column;
+        align-items: stretch;
+        justify-content: flex-start;
+        border-radius: 0;
+        background: rgba(220,236,241,.95);
+        box-shadow: -20px 0 44px rgba(85,118,130,.26);
+        transform: translateX(105%);
+        transition: transform .28s var(--ease);
+        z-index: 999;
+      }
+
+      body.nav-open .nav-links {
+        transform: translateX(0);
+      }
+
+      .nav-links a {
+        width: 100%;
+        padding: 16px 18px;
+        border-radius: 18px;
+        background: linear-gradient(145deg, #e9f7fa, #cfe2e8);
+        box-shadow: var(--shadow-neu-small);
+        color: var(--ink);
+      }
+
+      .nav-links a:last-child {
+        margin-top: 8px;
+        text-align: center;
+        color: #06313f;
+        background: linear-gradient(145deg, #55e0ef, #12acc6);
+      }
+    }
+
+    @media (max-width: 700px) {
+      .container {
+        width: min(100% - 24px, var(--container));
+      }
+
+      .section {
+        padding: 72px 0;
+      }
+
+      .hero {
+        padding-top: 50px;
+      }
+
+      .hero h1 {
+        font-size: clamp(3rem, 18vw, 5.2rem);
+      }
+
+      .hero-buttons .btn,
+      .cta .btn,
+      .order-form button {
+        width: 100%;
+      }
+
+      .hero-stats,
+      .feature-grid,
+      .benefit-grid,
+      .journey-grid,
+      .product-grid,
+      .testimonial-grid,
+      .facts-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-video-card {
+        padding: 13px;
+        border-radius: 28px;
+      }
+
+      .video-frame,
+      .video-frame video {
+        min-height: 410px;
+      }
+
+      .feature-card,
+      .benefit-card,
+      .product-card,
+      .testimonial,
+      .fact-card,
+      .step,
+      .cta,
+      .purity-panel {
+        padding: 24px;
+        border-radius: 26px;
+      }
+
+      .cta {
+        padding: 30px 22px;
+      }
+
+      .water-visual {
+        position: relative;
+        inset: auto;
+        margin-bottom: 28px;
+      }
+
+      .purity-panel {
+        min-height: auto;
+      }
+    }
+
+    @media (max-width: 430px) {
+      .brand {
+        font-size: 1.28rem;
+      }
+
+      .brand-mark {
+        width: 34px;
+        height: 34px;
+      }
+
+      .site-header {
+        padding: 10px 0;
+      }
+
+      .menu-toggle {
+        width: 44px;
+        height: 44px;
+      }
+
+      .section-head {
+        margin-bottom: 34px;
+      }
+
+      .video-frame,
+      .video-frame video {
+        min-height: 360px;
+      }
+
+      .video-badge {
+        left: 16px;
+        right: 16px;
+        bottom: 16px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: .01ms !important;
+      }
+
+      .reveal,
+      .stagger > * {
+        opacity: 1 !important;
+        transform: none !important;
+      }
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": "NEO Premium Artesian Water",
+    "description": "Premium artesian bottled water with balanced minerals, clean taste, and sustainable packaging.",
+    "brand": { "@type": "Brand", "name": "NEO" },
+    "category": "Bottled Water"
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What makes NEO water premium?",
+        "acceptedAnswer": { "@type": "Answer", "text": "NEO is positioned as premium artesian bottled water with a clean taste, balanced mineral profile, refined packaging, and a hydration experience made for modern lifestyles." }
+      },
+      {
+        "@type": "Question",
+        "name": "Is NEO suitable for daily hydration?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes. NEO is designed for everyday hydration at home, work, fitness spaces, travel, restaurants, hotels, and events where taste and presentation matter." }
+      },
+      {
+        "@type": "Question",
+        "name": "Does NEO use sustainable packaging?",
+        "acceptedAnswer": { "@type": "Answer", "text": "NEO can be positioned with recycled and BPA-free packaging to support responsible bottled water choices while preserving a premium product experience." }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <div class="noise" aria-hidden="true"></div>
+  <div class="orb orb-one" aria-hidden="true"></div>
+  <div class="orb orb-two" aria-hidden="true"></div>
+
+  <header class="site-header" id="top">
+    <div class="container nav-wrap">
+      <a class="brand" href="#top" aria-label="NEO home">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span>NEO</span>
+      </a>
+
+      <nav class="nav-links" id="primaryNav" aria-label="Primary navigation">
+        <a href="#source">Source</a>
+        <a href="#journey">Journey</a>
+        <a href="#purity">Purity</a>
+        <a href="#benefits">Benefits</a>
+        <a href="#products">Products</a>
+        <a href="#faq">FAQ</a>
+        <a href="#order">Order Now</a>
+      </nav>
+
+      <div class="nav-actions">
+        <a class="btn btn-primary magnetic" href="#order">Order Now</a>
+        <button class="menu-toggle" id="menuToggle" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="primaryNav">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+    <button class="nav-overlay" id="navOverlay" type="button" aria-label="Close navigation menu"></button>
+  </header>
+
+  <main>
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="container hero-grid">
+        <div class="reveal">
+          <span class="eyebrow">Premium Artesian Hydration</span>
+          <h1 id="hero-title">Refresh Your <span>Existence.</span></h1>
+          <p class="hero-copy">NEO is premium artesian bottled water crafted for clean taste, balanced minerals, and a refined hydration experience for people who expect more from every sip.</p>
+          <div class="hero-buttons">
+            <a class="btn btn-primary magnetic" href="#order">Order Premium Water</a>
+            <a class="btn btn-soft magnetic" href="#source">Discover NEO</a>
+          </div>
+          <div class="hero-stats stagger">
+            <div class="stat tilt"><strong>7.4 pH</strong><span>Naturally balanced taste profile</span></div>
+            <div class="stat tilt"><strong>99.99%</strong><span>Purity-led production approach</span></div>
+            <div class="stat tilt"><strong>BPA-Free</strong><span>Modern responsible bottle design</span></div>
+          </div>
+        </div>
+
+        <div class="neu hero-video-card reveal tilt" aria-label="NEO product video card">
+          <div class="video-frame">
+            <!-- Keep your original video URL here. Replace only the src below with the actual video path from your existing page. -->
+            <video autoplay muted loop playsinline preload="metadata">
+              <source src="neo-water.mp4" type="video/mp4" />
+            </video>
+            <div class="video-fallback" aria-hidden="true">
+              <div class="bottle-shape"></div>
+            </div>
+            <div class="video-badge">
+              <strong>The NEO Standard</strong>
+              <span>Premium taste. Clean finish. Everyday elegance.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="source">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow">The Source</span>
+          <h2>Pure water shaped by nature and refined by design.</h2>
+          <p>NEO is built around the promise of clean premium bottled water: protected sourcing, mineral balance, responsible packaging, and consistent freshness.</p>
+        </div>
+
+        <div class="feature-grid stagger">
+          <article class="neu feature-card tilt">
+            <div class="icon">⛰️</div>
+            <h3>Protected Artesian Source</h3>
+            <p>Water from naturally protected underground sources gives NEO a clean, smooth, and refined drinking profile.</p>
+          </article>
+          <article class="neu feature-card tilt">
+            <div class="icon">💧</div>
+            <h3>Clean Mineral Balance</h3>
+            <p>A balanced mineral character helps deliver a crisp taste without unnecessary artificial additives or heavy aftertaste.</p>
+          </article>
+          <article class="neu feature-card tilt">
+            <div class="icon">♻️</div>
+            <h3>Responsible Packaging</h3>
+            <p>A premium bottle experience designed for modern users who care about taste, presentation, and environmental responsibility.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="journey">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow">The Journey</span>
+          <h2>From deep source to daily ritual.</h2>
+          <p>Every touchpoint is created to make NEO feel premium, trustworthy, and memorable from first look to final sip.</p>
+        </div>
+
+        <div class="journey-grid stagger">
+          <article class="neu step tilt"><span class="step-num">01</span><h3>Source Selection</h3><p>Protected aquifers are selected for their naturally clean water character and stable mineral profile.</p></article>
+          <article class="neu step tilt"><span class="step-num">02</span><h3>Purity Process</h3><p>The water is refined with care to preserve clean taste, freshness, and a premium bottled water experience.</p></article>
+          <article class="neu step tilt"><span class="step-num">03</span><h3>Bottle Design</h3><p>The product presentation is minimal, elegant, and suitable for personal, hospitality, and corporate use.</p></article>
+          <article class="neu step tilt"><span class="step-num">04</span><h3>Daily Experience</h3><p>NEO becomes part of wellness routines, meetings, events, travel, and high-quality everyday hydration.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="purity">
+      <div class="container split">
+        <div class="split-content reveal">
+          <span class="eyebrow">Purity & Taste</span>
+          <h2>Soft, clean, balanced, and unmistakably premium.</h2>
+          <p>NEO is not positioned as ordinary packaged water. It is a premium hydration product made for people who notice taste, bottle feel, brand presentation, and consistency.</p>
+          <ul class="check-list stagger">
+            <li><span class="check-mark">✓</span><span><b>Clean taste:</b><br />Smooth drinking profile with no unnecessary artificial flavoring.</span></li>
+            <li><span class="check-mark">✓</span><span><b>Modern wellness fit:</b><br />Suitable for office, gym, travel, hospitality, and daily hydration rituals.</span></li>
+            <li><span class="check-mark">✓</span><span><b>Premium appearance:</b><br />A bottle that looks refined on desks, dining tables, event counters, and hotel rooms.</span></li>
+          </ul>
+        </div>
+
+        <div class="neu purity-panel reveal tilt">
+          <div class="water-visual" aria-hidden="true">
+            <div class="wave"></div>
+            <div class="wave"></div>
+          </div>
+          <span class="eyebrow">NEO Purity Index</span>
+          <h3 style="font-size: clamp(2rem, 4vw, 3.3rem); line-height: 1; margin-top: 18px; letter-spacing: -.06em;">99.99% Purity Focus</h3>
+          <p>Built around clarity, freshness, and balanced hydration for a premium drinking water experience.</p>
+          <div class="purity-meter" aria-hidden="true"><span></span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="benefits">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow">Why Choose NEO</span>
+          <h2>Premium bottled water with purpose.</h2>
+          <p>These benefit blocks support both conversion and SEO by explaining why NEO is different from ordinary packaged drinking water.</p>
+        </div>
+
+        <div class="benefit-grid stagger">
+          <article class="neu benefit-card tilt"><div class="icon">🧊</div><h3>Crisp Finish</h3><p>Light, refreshing taste that works well with meals, workdays, workouts, and travel.</p></article>
+          <article class="neu benefit-card tilt"><div class="icon">🌿</div><h3>Better Everyday Choice</h3><p>Designed for users who want clean hydration and more responsible product presentation.</p></article>
+          <article class="neu benefit-card tilt"><div class="icon">🏨</div><h3>Hospitality Ready</h3><p>Elegant enough for hotels, restaurants, lounges, business meetings, and premium events.</p></article>
+          <article class="neu benefit-card tilt"><div class="icon">⚡</div><h3>Modern Lifestyle Fit</h3><p>Made for active routines, desk hydration, wellness spaces, and refined daily use.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="products">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow">Products</span>
+          <h2>Choose NEO for every occasion.</h2>
+          <p>Create clear buying paths for individuals, businesses, hotels, restaurants, offices, and event organizers.</p>
+        </div>
+
+        <div class="product-grid stagger">
+          <article class="neu product-card tilt">
+            <div class="product-visual"><div class="mini-bottle"></div></div>
+            <h3>NEO Daily</h3>
+            <p>Premium artesian bottled water for home, office, gym, travel, and everyday wellness routines.</p>
+          </article>
+          <article class="neu product-card tilt">
+            <div class="product-visual"><div class="mini-bottle"></div></div>
+            <h3>NEO Hospitality</h3>
+            <p>Refined bottled water presentation for hotels, cafes, restaurants, lounges, and professional meetings.</p>
+          </article>
+          <article class="neu product-card tilt">
+            <div class="product-visual"><div class="mini-bottle"></div></div>
+            <h3>NEO Events</h3>
+            <p>Bulk water supply for premium events, corporate gatherings, launches, wellness sessions, and celebrations.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="facts">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow">Trust Signals</span>
+          <h2>Designed for quality perception and user confidence.</h2>
+          <p>Use this section to strengthen buyer trust and help search engines understand the value proposition of the landing page.</p>
+        </div>
+
+        <div class="facts-grid stagger">
+          <article class="neu fact-card tilt"><strong>3x</strong><h3>Use Cases</h3><p>Daily hydration, hospitality service, and event supply in one premium water brand.</p></article>
+          <article class="neu fact-card tilt"><strong>24/7</strong><h3>Hydration Fit</h3><p>Suitable for workdays, travel, workouts, dining, meetings, and wellness routines.</p></article>
+          <article class="neu fact-card tilt"><strong>100%</strong><h3>Premium Feel</h3><p>Built around clean taste, modern design, and a refined bottled water experience.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="testimonials">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow">Testimonials</span>
+          <h2>What people notice first.</h2>
+          <p>Replace these with real reviews when available. Until then, keep the tone realistic, simple, and trust-focused.</p>
+        </div>
+
+        <div class="testimonial-grid stagger">
+          <article class="neu testimonial tilt"><div class="stars">★★★★★</div><h3>“The bottle feels premium.”</h3><p>NEO looks elegant on the table and the water tastes clean and refreshing. It feels more refined than regular bottled water.</p><p><strong>— Aarav M.</strong></p></article>
+          <article class="neu testimonial tilt"><div class="stars">★★★★★</div><h3>“Perfect for meetings.”</h3><p>The design works well for office guests and corporate meetings. It gives a more professional impression instantly.</p><p><strong>— Riya S.</strong></p></article>
+          <article class="neu testimonial tilt"><div class="stars">★★★★★</div><h3>“Clean taste, smooth finish.”</h3><p>The taste is light and balanced. It feels like a premium daily hydration choice, not just another water bottle.</p><p><strong>— Daniel K.</strong></p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="faq">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow">FAQ</span>
+          <h2>Questions about NEO premium water.</h2>
+          <p>SEO-focused answers for users searching for premium artesian bottled water, alkaline water, mineral water, and sustainable packaged drinking water.</p>
+        </div>
+
+        <div class="faq-wrap stagger">
+          <details class="neu faq-item">
+            <summary>What makes NEO water premium?</summary>
+            <p>NEO is positioned as premium artesian bottled water with clean taste, balanced minerals, refined packaging, and a hydration experience designed for modern daily life, hospitality, offices, and events.</p>
+          </details>
+          <details class="neu faq-item">
+            <summary>Is NEO suitable for daily hydration?</summary>
+            <p>Yes. NEO is suitable for daily drinking at home, work, fitness spaces, restaurants, hotels, travel, and events. Its clean and balanced profile makes it easy to use throughout the day.</p>
+          </details>
+          <details class="neu faq-item">
+            <summary>Is NEO alkaline water?</summary>
+            <p>NEO can be presented as naturally balanced artesian water with a smooth mineral profile. Avoid making medical claims unless you have verified lab reports and regulatory approval for those claims.</p>
+          </details>
+          <details class="neu faq-item">
+            <summary>Can businesses order NEO in bulk?</summary>
+            <p>Yes. NEO can be offered for offices, hotels, restaurants, cafes, corporate events, premium gatherings, and wellness spaces. Add a WhatsApp or order form for faster business inquiries.</p>
+          </details>
+          <details class="neu faq-item">
+            <summary>Does NEO use sustainable packaging?</summary>
+            <p>NEO can highlight recycled and BPA-free packaging if those claims are accurate for the final product. Keep sustainability claims precise and avoid exaggerated environmental promises.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="order">
+      <div class="container">
+        <div class="neu cta reveal tilt">
+          <div>
+            <span class="eyebrow">Order NEO</span>
+            <h2>Make premium hydration part of your day.</h2>
+            <p>Order NEO for your home, office, restaurant, hotel, event, or wellness space. Clean taste, premium appearance, and a modern hydration experience in every bottle.</p>
+          </div>
+          <form class="order-form" action="mailto:hello@example.com" method="post" enctype="text/plain">
+            <input type="text" name="name" placeholder="Your name" aria-label="Your name" />
+            <input type="email" name="email" placeholder="Email address" aria-label="Email address" />
+            <input type="text" name="quantity" placeholder="Quantity or business need" aria-label="Quantity or business need" />
+            <button class="btn btn-primary magnetic" type="submit">Request Order</button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-grid">
+      <a class="brand" href="#top" aria-label="NEO home"><span class="brand-mark" aria-hidden="true"></span><span>NEO</span></a>
+      <p>Premium artesian bottled water. © 2026 NEO Beverages.</p>
+      <div class="footer-links"><a href="#source">Source</a><a href="#faq">FAQ</a><a href="#order">Order</a></div>
+    </div>
+  </footer>
+
+  <script>
+    const body = document.body;
+    const menuToggle = document.getElementById('menuToggle');
+    const navOverlay = document.getElementById('navOverlay');
+    const navLinks = document.querySelectorAll('.nav-links a');
+
+    function closeMenu() {
+      body.classList.remove('nav-open');
+      menuToggle.setAttribute('aria-expanded', 'false');
+      menuToggle.setAttribute('aria-label', 'Open navigation menu');
+    }
+
+    function openMenu() {
+      body.classList.add('nav-open');
+      menuToggle.setAttribute('aria-expanded', 'true');
+      menuToggle.setAttribute('aria-label', 'Close navigation menu');
+    }
+
+    menuToggle.addEventListener('click', () => {
+      body.classList.contains('nav-open') ? closeMenu() : openMenu();
+    });
+
+    navOverlay.addEventListener('click', closeMenu);
+    navLinks.forEach((link) => link.addEventListener('click', closeMenu));
+    window.addEventListener('keydown', (event) => { if (event.key === 'Escape') closeMenu(); });
+    window.addEventListener('resize', () => { if (window.innerWidth > 820) closeMenu(); });
+
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('show');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.16 });
+
+    document.querySelectorAll('.reveal, .stagger').forEach((el) => revealObserver.observe(el));
+
+    function setPointerVars(event) {
+      const target = event.currentTarget;
+      const rect = target.getBoundingClientRect();
+      const x = ((event.clientX - rect.left) / rect.width) * 100;
+      const y = ((event.clientY - rect.top) / rect.height) * 100;
+      target.style.setProperty('--x', `${x}%`);
+      target.style.setProperty('--y', `${y}%`);
+    }
+
+    document.querySelectorAll('.btn').forEach((btn) => {
+      btn.addEventListener('pointermove', setPointerVars);
+    });
+
+    document.querySelectorAll('.tilt').forEach((card) => {
+      card.addEventListener('pointermove', (event) => {
+        if (window.innerWidth < 760) return;
+        const rect = card.getBoundingClientRect();
+        const x = event.clientX - rect.left;
+        const y = event.clientY - rect.top;
+        const rotateY = ((x / rect.width) - .5) * 8;
+        const rotateX = -((y / rect.height) - .5) * 8;
+        card.style.transform = `perspective(900px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-8px)`;
+      });
+
+      card.addEventListener('pointerleave', () => {
+        card.style.transform = '';
+      });
+    });
+
+    document.querySelectorAll('.magnetic').forEach((el) => {
+      el.addEventListener('pointermove', (event) => {
+        if (window.innerWidth < 760) return;
+        const rect = el.getBoundingClientRect();
+        const x = event.clientX - rect.left - rect.width / 2;
+        const y = event.clientY - rect.top - rect.height / 2;
+        el.style.transform = `translate(${x * .12}px, ${y * .16}px) translateY(-3px)`;
+      });
+
+      el.addEventListener('pointerleave', () => {
+        el.style.transform = '';
+      });
+    });
+
+    const creatures = ['🐬', '🐠', '🫧', '💧'];
+    let lastCreatureTime = 0;
+
+    function spawnTouchEffect(x, y) {
+      const ripple = document.createElement('span');
+      ripple.className = 'touch-ripple';
+      ripple.style.left = `${x}px`;
+      ripple.style.top = `${y}px`;
+      document.body.appendChild(ripple);
+      setTimeout(() => ripple.remove(), 850);
+
+      const now = Date.now();
+      if (now - lastCreatureTime > 260) {
+        const creature = document.createElement('span');
+        creature.className = 'water-creature';
+        creature.textContent = creatures[Math.floor(Math.random() * creatures.length)];
+        creature.style.left = `${x}px`;
+        creature.style.top = `${y}px`;
+        document.body.appendChild(creature);
+        setTimeout(() => creature.remove(), 1200);
+        lastCreatureTime = now;
+      }
+    }
+
+    document.addEventListener('pointerdown', (event) => {
+      spawnTouchEffect(event.clientX, event.clientY);
+    }, { passive: true });
+  </script>
+</body>
+</html>
