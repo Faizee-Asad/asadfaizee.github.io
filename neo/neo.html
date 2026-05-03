@@ -1,0 +1,1248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NEO Artesian Water | Premium Alkaline Bottled Water</title>
+  <meta name="description" content="Discover NEO, premium artesian bottled water with naturally balanced minerals, crisp taste, sustainable packaging, and pure hydration for modern lifestyles." />
+  <meta name="keywords" content="premium artesian water, alkaline bottled water, mineral water, sustainable bottled water, pure drinking water, NEO water" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://asadfaizee.is-a.dev/neo/" />
+
+  <meta property="og:title" content="NEO Artesian Water | Refresh Your Existence" />
+  <meta property="og:description" content="Premium artesian bottled water crafted for balanced hydration, clean taste, and sustainable living." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://asadfaizee.is-a.dev/neo/" />
+
+  <style>
+    :root {
+      --bg: #06151d;
+      --bg-2: #082331;
+      --card: rgba(255, 255, 255, 0.08);
+      --glass: rgba(255, 255, 255, 0.11);
+      --glass-strong: rgba(255, 255, 255, 0.16);
+      --line: rgba(255, 255, 255, 0.18);
+      --text: #eef9ff;
+      --muted: #a9c6d3;
+      --aqua: #74f2ff;
+      --cyan: #23c7e8;
+      --deep: #0a3545;
+      --white: #ffffff;
+      --shadow: 0 26px 80px rgba(0, 0, 0, 0.34);
+      --radius: 28px;
+      --container: 1180px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at 15% 8%, rgba(116, 242, 255, 0.15), transparent 34%),
+        radial-gradient(circle at 84% 20%, rgba(35, 199, 232, 0.16), transparent 30%),
+        linear-gradient(135deg, var(--bg), var(--bg-2));
+      color: var(--text);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img,
+    video {
+      max-width: 100%;
+      display: block;
+    }
+
+    .container {
+      width: min(100% - 32px, var(--container));
+      margin-inline: auto;
+    }
+
+    .section {
+      padding: 96px 0;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.07);
+      color: var(--aqua);
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      backdrop-filter: blur(14px);
+    }
+
+    .section-head {
+      max-width: 760px;
+      margin: 0 auto 46px;
+      text-align: center;
+    }
+
+    .section-head h2 {
+      margin-top: 18px;
+      font-size: clamp(2rem, 4vw, 3.8rem);
+      line-height: 1.05;
+      letter-spacing: -0.06em;
+    }
+
+    .section-head p {
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: clamp(1rem, 1.8vw, 1.12rem);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 48px;
+      padding: 14px 22px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      font-weight: 800;
+      transition: transform 0.22s ease, background 0.22s ease, border-color 0.22s ease;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--aqua), var(--cyan));
+      color: #03242f;
+      box-shadow: 0 18px 44px rgba(35, 199, 232, 0.24);
+    }
+
+    .btn-ghost {
+      border-color: var(--line);
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(12px);
+    }
+
+    .glass-card {
+      background: linear-gradient(145deg, rgba(255, 255, 255, 0.13), rgba(255, 255, 255, 0.055));
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(24px) saturate(150%);
+      -webkit-backdrop-filter: blur(24px) saturate(150%);
+    }
+
+    /* Header + fixed mobile nav */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+      background: rgba(6, 21, 29, 0.72);
+      backdrop-filter: blur(22px);
+      -webkit-backdrop-filter: blur(22px);
+    }
+
+    .nav-wrap {
+      height: 78px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 22px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 950;
+      letter-spacing: -0.06em;
+      font-size: 1.45rem;
+      position: relative;
+      z-index: 1002;
+    }
+
+    .brand-mark {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 20%, #ffffff, var(--aqua) 35%, var(--cyan) 70%);
+      box-shadow: 0 0 34px rgba(116, 242, 255, 0.35);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+      color: var(--muted);
+      font-weight: 700;
+      font-size: 0.96rem;
+    }
+
+    .nav-links a:hover {
+      color: var(--white);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .menu-toggle {
+      display: none;
+      width: 46px;
+      height: 46px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text);
+      cursor: pointer;
+      position: relative;
+      z-index: 1002;
+    }
+
+    .menu-toggle span {
+      display: block;
+      width: 20px;
+      height: 2px;
+      margin: 5px auto;
+      border-radius: 999px;
+      background: currentColor;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+
+    body.nav-open {
+      overflow: hidden;
+    }
+
+    body.nav-open .menu-toggle span:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+
+    body.nav-open .menu-toggle span:nth-child(2) {
+      opacity: 0;
+    }
+
+    body.nav-open .menu-toggle span:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
+
+    .nav-overlay {
+      display: none;
+    }
+
+    /* Hero */
+    .hero {
+      min-height: calc(100vh - 78px);
+      display: grid;
+      align-items: center;
+      padding: 68px 0 42px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(340px, 0.82fr);
+      gap: 58px;
+      align-items: center;
+    }
+
+    .hero h1 {
+      margin-top: 22px;
+      font-size: clamp(3.1rem, 8vw, 7.7rem);
+      line-height: 0.86;
+      letter-spacing: -0.09em;
+    }
+
+    .hero h1 span {
+      display: block;
+      color: var(--aqua);
+      text-shadow: 0 0 42px rgba(116, 242, 255, 0.22);
+    }
+
+    .hero-copy {
+      max-width: 620px;
+      margin-top: 28px;
+      color: var(--muted);
+      font-size: clamp(1.05rem, 2vw, 1.26rem);
+    }
+
+    .hero-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 34px;
+    }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 44px;
+      max-width: 650px;
+    }
+
+    .stat {
+      padding: 18px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 1.35rem;
+      color: var(--white);
+      letter-spacing: -0.04em;
+    }
+
+    .stat span {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .video-shell {
+      position: relative;
+      padding: 18px;
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    .video-shell::before {
+      content: "";
+      position: absolute;
+      inset: -2px;
+      z-index: -1;
+      background:
+        radial-gradient(circle at 25% 15%, rgba(116, 242, 255, 0.33), transparent 30%),
+        linear-gradient(135deg, rgba(116, 242, 255, 0.22), rgba(255, 255, 255, 0.04));
+      opacity: 0.95;
+    }
+
+    .video-frame {
+      position: relative;
+      aspect-ratio: 4 / 5;
+      overflow: hidden;
+      border-radius: 24px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      background: rgba(4, 29, 39, 0.36);
+    }
+
+    .video-frame video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.94;
+      mix-blend-mode: screen;
+    }
+
+    .video-fallback {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding: 28px;
+      background:
+        linear-gradient(180deg, rgba(116, 242, 255, 0.15), rgba(6, 21, 29, 0.26)),
+        radial-gradient(circle at center, rgba(255, 255, 255, 0.18), transparent 46%);
+    }
+
+    .bottle-shape {
+      width: 132px;
+      height: 360px;
+      border-radius: 54px 54px 34px 34px;
+      background:
+        linear-gradient(90deg, rgba(255, 255, 255, 0.24), rgba(116, 242, 255, 0.08), rgba(255, 255, 255, 0.2)),
+        linear-gradient(180deg, rgba(116, 242, 255, 0.34), rgba(35, 199, 232, 0.08));
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      box-shadow: inset 18px 0 28px rgba(255, 255, 255, 0.08), 0 30px 90px rgba(116, 242, 255, 0.2);
+      position: relative;
+    }
+
+    .bottle-shape::before {
+      content: "NEO";
+      position: absolute;
+      top: 42%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 2rem;
+      font-weight: 950;
+      letter-spacing: -0.08em;
+      color: rgba(255, 255, 255, 0.82);
+    }
+
+    .video-badge {
+      position: absolute;
+      left: 28px;
+      right: 28px;
+      bottom: 28px;
+      padding: 16px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(18px);
+    }
+
+    .video-badge strong {
+      display: block;
+      font-size: 1rem;
+    }
+
+    .video-badge span {
+      display: block;
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    /* Cards and grids */
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+
+    .feature-card {
+      padding: 28px;
+      min-height: 260px;
+    }
+
+    .icon {
+      width: 54px;
+      height: 54px;
+      display: grid;
+      place-items: center;
+      border-radius: 18px;
+      background: rgba(116, 242, 255, 0.13);
+      color: var(--aqua);
+      font-size: 1.5rem;
+      margin-bottom: 24px;
+    }
+
+    .feature-card h3,
+    .split-content h2,
+    .testimonial h3,
+    .faq-item summary {
+      letter-spacing: -0.04em;
+    }
+
+    .feature-card p,
+    .split-content p,
+    .testimonial p,
+    .faq-item p {
+      color: var(--muted);
+      margin-top: 12px;
+    }
+
+    .journey-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+    }
+
+    .step {
+      padding: 24px;
+      position: relative;
+    }
+
+    .step-num {
+      font-size: 0.82rem;
+      color: var(--aqua);
+      font-weight: 900;
+      letter-spacing: 0.12em;
+    }
+
+    .step h3 {
+      margin-top: 28px;
+      font-size: 1.22rem;
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: 0.95fr 1.05fr;
+      gap: 42px;
+      align-items: center;
+    }
+
+    .split-content h2 {
+      font-size: clamp(2.2rem, 5vw, 4.6rem);
+      line-height: 0.98;
+    }
+
+    .check-list {
+      display: grid;
+      gap: 14px;
+      margin-top: 30px;
+    }
+
+    .check-list li {
+      list-style: none;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 14px 16px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--muted);
+    }
+
+    .check-list b {
+      color: var(--white);
+    }
+
+    .check-mark {
+      flex: 0 0 auto;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: rgba(116, 242, 255, 0.16);
+      color: var(--aqua);
+      font-weight: 900;
+    }
+
+    .purity-panel {
+      padding: 34px;
+      min-height: 430px;
+      display: grid;
+      align-content: end;
+      background:
+        radial-gradient(circle at 50% 20%, rgba(116, 242, 255, 0.26), transparent 38%),
+        linear-gradient(145deg, rgba(255, 255, 255, 0.13), rgba(255, 255, 255, 0.05));
+    }
+
+    .purity-meter {
+      width: 100%;
+      height: 14px;
+      margin-top: 20px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.13);
+      overflow: hidden;
+    }
+
+    .purity-meter span {
+      display: block;
+      width: 99%;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--cyan), var(--aqua));
+    }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+
+    .product-card {
+      padding: 24px;
+    }
+
+    .product-visual {
+      min-height: 260px;
+      border-radius: 24px;
+      display: grid;
+      place-items: center;
+      background:
+        radial-gradient(circle at center, rgba(116, 242, 255, 0.22), transparent 54%),
+        rgba(255, 255, 255, 0.055);
+      margin-bottom: 22px;
+    }
+
+    .mini-bottle {
+      width: 82px;
+      height: 220px;
+      border-radius: 34px 34px 24px 24px;
+      border: 1px solid rgba(255, 255, 255, 0.24);
+      background: linear-gradient(90deg, rgba(255, 255, 255, 0.3), rgba(116, 242, 255, 0.09));
+      box-shadow: 0 20px 60px rgba(116, 242, 255, 0.16);
+      position: relative;
+    }
+
+    .mini-bottle::after {
+      content: "NEO";
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      font-weight: 950;
+      color: rgba(255, 255, 255, 0.82);
+      letter-spacing: -0.08em;
+    }
+
+    .product-card h3 {
+      font-size: 1.28rem;
+    }
+
+    .product-card p {
+      color: var(--muted);
+      margin-top: 10px;
+    }
+
+    .testimonial-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+
+    .testimonial {
+      padding: 28px;
+    }
+
+    .stars {
+      color: var(--aqua);
+      letter-spacing: 0.12em;
+      margin-bottom: 18px;
+    }
+
+    .faq-wrap {
+      max-width: 880px;
+      margin: 0 auto;
+      display: grid;
+      gap: 14px;
+    }
+
+    .faq-item {
+      padding: 4px 22px;
+    }
+
+    .faq-item summary {
+      cursor: pointer;
+      padding: 20px 0;
+      font-weight: 850;
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .faq-item summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .faq-item summary::after {
+      content: "+";
+      color: var(--aqua);
+      font-size: 1.4rem;
+      line-height: 1;
+    }
+
+    .faq-item[open] summary::after {
+      content: "−";
+    }
+
+    .faq-item p {
+      padding-bottom: 22px;
+    }
+
+    .cta {
+      padding: 50px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 30px;
+      align-items: center;
+      background:
+        radial-gradient(circle at 85% 12%, rgba(116, 242, 255, 0.28), transparent 35%),
+        linear-gradient(135deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.06));
+    }
+
+    .cta h2 {
+      font-size: clamp(2rem, 5vw, 4.2rem);
+      line-height: 0.98;
+      letter-spacing: -0.06em;
+    }
+
+    .cta p {
+      max-width: 650px;
+      color: var(--muted);
+      margin-top: 16px;
+    }
+
+    .footer {
+      padding: 44px 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--muted);
+    }
+
+    .footer-grid {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 22px;
+      flex-wrap: wrap;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 980px) {
+      .section {
+        padding: 76px 0;
+      }
+
+      .hero-grid,
+      .split {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        min-height: auto;
+      }
+
+      .hero-grid {
+        gap: 40px;
+      }
+
+      .video-shell {
+        max-width: 620px;
+        margin-inline: auto;
+      }
+
+      .video-frame {
+        aspect-ratio: 16 / 11;
+      }
+
+      .feature-grid,
+      .product-grid,
+      .testimonial-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .journey-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .cta {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .container {
+        width: min(100% - 24px, var(--container));
+      }
+
+      .nav-wrap {
+        height: 70px;
+      }
+
+      .menu-toggle {
+        display: block;
+      }
+
+      .nav-actions .btn {
+        display: none;
+      }
+
+      .nav-overlay {
+        display: block;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.42);
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.2s ease, visibility 0.2s ease;
+        z-index: 998;
+      }
+
+      body.nav-open .nav-overlay {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .nav-links {
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: min(86vw, 360px);
+        height: 100dvh;
+        padding: 104px 24px 28px;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+        background: rgba(6, 21, 29, 0.94);
+        border-left: 1px solid var(--line);
+        backdrop-filter: blur(24px);
+        -webkit-backdrop-filter: blur(24px);
+        transform: translateX(105%);
+        transition: transform 0.24s ease;
+        z-index: 999;
+      }
+
+      body.nav-open .nav-links {
+        transform: translateX(0);
+      }
+
+      .nav-links a {
+        padding: 16px 18px;
+        border-radius: 16px;
+        background: rgba(255, 255, 255, 0.07);
+      }
+
+      .nav-links a:last-child {
+        margin-top: 8px;
+        text-align: center;
+        color: #03242f;
+        background: linear-gradient(135deg, var(--aqua), var(--cyan));
+        font-weight: 900;
+      }
+
+      .hero {
+        padding: 48px 0 28px;
+      }
+
+      .hero h1 {
+        font-size: clamp(3rem, 18vw, 5.1rem);
+      }
+
+      .hero-stats {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-buttons .btn {
+        width: 100%;
+      }
+
+      .video-frame {
+        aspect-ratio: 1 / 1.15;
+      }
+
+      .feature-grid,
+      .journey-grid,
+      .product-grid,
+      .testimonial-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .feature-card,
+      .testimonial,
+      .product-card,
+      .step,
+      .purity-panel {
+        border-radius: 22px;
+      }
+
+      .cta {
+        padding: 30px 22px;
+      }
+
+      .cta .btn {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 420px) {
+      .section {
+        padding: 62px 0;
+      }
+
+      .brand {
+        font-size: 1.25rem;
+      }
+
+      .brand-mark {
+        width: 32px;
+        height: 32px;
+      }
+
+      .section-head {
+        margin-bottom: 32px;
+      }
+
+      .video-shell {
+        padding: 12px;
+      }
+
+      .video-badge {
+        left: 18px;
+        right: 18px;
+        bottom: 18px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": "NEO Premium Artesian Bottled Water",
+    "description": "Premium artesian bottled water with naturally balanced minerals, crisp taste, and sustainable packaging.",
+    "brand": {
+      "@type": "Brand",
+      "name": "NEO"
+    },
+    "category": "Bottled Water",
+    "material": "Recycled BPA-free bottle"
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What makes NEO artesian water different?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "NEO is sourced from protected artesian aquifers and crafted for clean taste, balanced minerals, and premium hydration. The water is designed for people who want purity, freshness, and sustainable packaging in one refined bottled water experience."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is NEO naturally alkaline?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "NEO is positioned as naturally balanced artesian water with a smooth mineral profile. Its alkaline character supports a crisp, refreshing taste without unnecessary additives or artificial flavoring."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is the NEO bottle eco-friendly?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "NEO uses recycled, BPA-free bottle materials designed to protect the water while reducing environmental impact. The brand focuses on premium design, responsible packaging, and better hydration choices."
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <header class="site-header" id="top">
+    <div class="container nav-wrap">
+      <a class="brand" href="#top" aria-label="NEO home">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span>NEO</span>
+      </a>
+
+      <nav class="nav-links" id="primaryNav" aria-label="Primary navigation">
+        <a href="#source">Source</a>
+        <a href="#journey">Journey</a>
+        <a href="#purity">Purity</a>
+        <a href="#products">Products</a>
+        <a href="#faq">FAQ</a>
+        <a href="#order">Order Now</a>
+      </nav>
+
+      <div class="nav-actions">
+        <a class="btn btn-primary" href="#order">Order Now</a>
+        <button class="menu-toggle" id="menuToggle" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="primaryNav">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+    <button class="nav-overlay" id="navOverlay" type="button" aria-label="Close navigation menu"></button>
+  </header>
+
+  <main>
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="container hero-grid">
+        <div>
+          <span class="eyebrow">Premium Hydration</span>
+          <h1 id="hero-title">Refresh Your <span>Existence.</span></h1>
+          <p class="hero-copy">NEO is premium artesian bottled water sourced from protected underground aquifers, balanced with essential minerals, and crafted for a clean, crisp hydration experience.</p>
+          <div class="hero-buttons">
+            <a class="btn btn-primary" href="#order">Order Premium Water</a>
+            <a class="btn btn-ghost" href="#source">Discover Purity</a>
+          </div>
+          <div class="hero-stats" aria-label="NEO highlights">
+            <div class="stat"><strong>7.4 pH</strong><span>Naturally balanced profile</span></div>
+            <div class="stat"><strong>99.99%</strong><span>Purity-focused process</span></div>
+            <div class="stat"><strong>BPA-Free</strong><span>Recycled bottle material</span></div>
+          </div>
+        </div>
+
+        <div class="glass-card video-shell" aria-label="NEO product video card">
+          <div class="video-frame">
+            <!-- Replace src with your actual product video file. Keep autoplay muted playsinline for mobile compatibility. -->
+            <video autoplay muted loop playsinline preload="metadata" poster="">
+              <source src="neo-water.mp4" type="video/mp4" />
+            </video>
+            <div class="video-fallback" aria-hidden="true">
+              <div class="bottle-shape"></div>
+            </div>
+            <div class="video-badge">
+              <strong>The NEO Standard</strong>
+              <span>Clean taste. Balanced minerals. Premium hydration.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="source">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">The Essence of NEO</span>
+          <h2>Pure water, protected at every stage.</h2>
+          <p>From deep aquifer sourcing to sustainable packaging, NEO is built around taste, trust, and premium bottled water quality.</p>
+        </div>
+
+        <div class="feature-grid">
+          <article class="glass-card feature-card">
+            <div class="icon">⛰️</div>
+            <h3>Protected Artesian Source</h3>
+            <p>Drawn from carefully selected underground aquifers naturally shielded by ancient rock layers for a clean and refined water profile.</p>
+          </article>
+          <article class="glass-card feature-card">
+            <div class="icon">⚖️</div>
+            <h3>Balanced Mineral Taste</h3>
+            <p>A crisp, smooth taste profile with naturally balanced minerals that support everyday hydration without artificial additives.</p>
+          </article>
+          <article class="glass-card feature-card">
+            <div class="icon">♻️</div>
+            <h3>Sustainable Bottle Design</h3>
+            <p>Packaged in recycled, BPA-free materials designed to preserve purity while supporting a more responsible hydration choice.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="journey">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Our Journey</span>
+          <h2>From deep earth to modern lifestyle.</h2>
+          <p>Every bottle of NEO follows a careful process built for source protection, clarity, freshness, and consistent premium quality.</p>
+        </div>
+
+        <div class="journey-grid">
+          <article class="glass-card step">
+            <span class="step-num">01</span>
+            <h3>The Discovery</h3>
+            <p>We begin with protected aquifer sourcing to preserve the natural character of the water.</p>
+          </article>
+          <article class="glass-card step">
+            <span class="step-num">02</span>
+            <h3>The Process</h3>
+            <p>Careful purification and mineral balancing refine the water without compromising its clean essence.</p>
+          </article>
+          <article class="glass-card step">
+            <span class="step-num">03</span>
+            <h3>The Design</h3>
+            <p>Minimal, premium packaging reflects the purity and lifestyle value inside every bottle.</p>
+          </article>
+          <article class="glass-card step">
+            <span class="step-num">04</span>
+            <h3>The Experience</h3>
+            <p>NEO delivers smooth, crisp hydration for work, travel, wellness, events, and everyday rituals.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="purity">
+      <div class="container split">
+        <div class="split-content">
+          <span class="eyebrow">Purity & Taste</span>
+          <h2>Elevated design. Unmatched taste.</h2>
+          <p>NEO is made for people who expect more from bottled water: reliable purity, smooth mineral balance, premium presentation, and a refreshing drinking experience.</p>
+          <ul class="check-list">
+            <li><span class="check-mark">✓</span><span><b>Zero artificial additives</b><br />Clean hydration without unnecessary flavoring or color.</span></li>
+            <li><span class="check-mark">✓</span><span><b>Naturally balanced profile</b><br />A crisp, refreshing taste suited for daily wellness and premium hospitality.</span></li>
+            <li><span class="check-mark">✓</span><span><b>Responsible packaging</b><br />Recycled, BPA-free bottle materials with a refined modern appearance.</span></li>
+          </ul>
+        </div>
+
+        <div class="glass-card purity-panel">
+          <span class="eyebrow">The NEO Standard</span>
+          <h3 style="font-size: clamp(2rem, 4vw, 3.2rem); line-height: 1; margin-top: 18px;">Purity Level 99.99%</h3>
+          <p>Designed to deliver premium bottled water quality with a clean finish and trusted consistency.</p>
+          <div class="purity-meter" aria-hidden="true"><span></span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="products">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Choose Your Hydration</span>
+          <h2>Premium water for every moment.</h2>
+          <p>NEO is suitable for daily use, business meetings, hospitality, wellness spaces, restaurants, gifting, and premium events.</p>
+        </div>
+
+        <div class="product-grid">
+          <article class="glass-card product-card">
+            <div class="product-visual"><div class="mini-bottle"></div></div>
+            <h3>NEO Daily</h3>
+            <p>Clean, crisp artesian water for home, office, gym, and everyday premium hydration.</p>
+          </article>
+          <article class="glass-card product-card">
+            <div class="product-visual"><div class="mini-bottle"></div></div>
+            <h3>NEO Hospitality</h3>
+            <p>A refined bottled water experience for hotels, restaurants, lounges, and corporate events.</p>
+          </article>
+          <article class="glass-card product-card">
+            <div class="product-visual"><div class="mini-bottle"></div></div>
+            <h3>NEO Subscription</h3>
+            <p>Regular deliveries for customers who want premium hydration always available.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="testimonials">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Customer Experience</span>
+          <h2>Trusted for taste, design, and purity.</h2>
+          <p>Use this section to build credibility with real testimonials from customers, retailers, hospitality partners, or early users.</p>
+        </div>
+
+        <div class="testimonial-grid">
+          <article class="glass-card testimonial">
+            <div class="stars">★★★★★</div>
+            <h3>“It feels premium from the first sip.”</h3>
+            <p>The bottle design looks elegant and the water tastes clean, smooth, and refreshing. It fits perfectly for our office and guest meetings.</p>
+            <p><strong>— Aarav M.</strong></p>
+          </article>
+          <article class="glass-card testimonial">
+            <div class="stars">★★★★★</div>
+            <h3>“A strong fit for hospitality.”</h3>
+            <p>NEO has the kind of presentation that works well on restaurant tables, premium rooms, and event setups where details matter.</p>
+            <p><strong>— Riya S.</strong></p>
+          </article>
+          <article class="glass-card testimonial">
+            <div class="stars">★★★★★</div>
+            <h3>“Clean, crisp, and memorable.”</h3>
+            <p>The taste is light and balanced. It does not feel ordinary, and the sustainable packaging makes the brand easier to recommend.</p>
+            <p><strong>— Daniel K.</strong></p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="faq">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">FAQ</span>
+          <h2>Questions about NEO premium water.</h2>
+          <p>SEO-friendly answers for customers searching for premium artesian bottled water, alkaline water, mineral water, and sustainable packaged drinking water.</p>
+        </div>
+
+        <div class="faq-wrap">
+          <details class="glass-card faq-item">
+            <summary>What makes NEO artesian water different?</summary>
+            <p>NEO is sourced from protected artesian aquifers and crafted for clean taste, balanced minerals, and premium hydration. It is designed for customers who want pure drinking water with refined packaging and a modern lifestyle feel.</p>
+          </details>
+          <details class="glass-card faq-item">
+            <summary>Is NEO naturally alkaline bottled water?</summary>
+            <p>NEO is positioned as naturally balanced artesian water with a smooth mineral profile and a clean finish. Its balanced character gives it a refreshing taste without relying on artificial additives or unnecessary flavoring.</p>
+          </details>
+          <details class="glass-card faq-item">
+            <summary>Is the NEO bottle BPA-free?</summary>
+            <p>Yes. NEO uses recycled, BPA-free bottle materials designed to protect the water’s purity while supporting more responsible packaging. This helps make NEO suitable for daily hydration, hospitality, and premium lifestyle use.</p>
+          </details>
+          <details class="glass-card faq-item">
+            <summary>Who is NEO best suited for?</summary>
+            <p>NEO is ideal for customers who prefer premium bottled water for home, office, fitness, travel, restaurants, hotels, business meetings, events, and gifting. It is built for taste, presentation, and everyday refreshment.</p>
+          </details>
+          <details class="glass-card faq-item">
+            <summary>Can I order NEO for events or businesses?</summary>
+            <p>Yes. NEO can be positioned for offices, restaurants, hotels, corporate events, wellness spaces, and premium gatherings. Add a clear order form or WhatsApp button to help business customers request bulk pricing quickly.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="order">
+      <div class="container">
+        <div class="glass-card cta">
+          <div>
+            <span class="eyebrow">Stay Hydrated. Stay Premium.</span>
+            <h2>Bring NEO into your daily ritual.</h2>
+            <p>Order premium artesian bottled water for your home, office, restaurant, event, or wellness space. Experience clean taste, refined packaging, and balanced hydration.</p>
+          </div>
+          <a class="btn btn-primary" href="mailto:hello@example.com?subject=NEO%20Water%20Order%20Inquiry">Request Order</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-grid">
+      <a class="brand" href="#top" aria-label="NEO home">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span>NEO</span>
+      </a>
+      <p>Premium packaged drinking water. © 2026 NEO Beverages.</p>
+      <div class="footer-links">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#source">Sustainability</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const body = document.body;
+    const menuToggle = document.getElementById('menuToggle');
+    const navOverlay = document.getElementById('navOverlay');
+    const navLinks = document.querySelectorAll('.nav-links a');
+
+    function closeMenu() {
+      body.classList.remove('nav-open');
+      menuToggle.setAttribute('aria-expanded', 'false');
+      menuToggle.setAttribute('aria-label', 'Open navigation menu');
+    }
+
+    function openMenu() {
+      body.classList.add('nav-open');
+      menuToggle.setAttribute('aria-expanded', 'true');
+      menuToggle.setAttribute('aria-label', 'Close navigation menu');
+    }
+
+    menuToggle.addEventListener('click', () => {
+      body.classList.contains('nav-open') ? closeMenu() : openMenu();
+    });
+
+    navOverlay.addEventListener('click', closeMenu);
+    navLinks.forEach((link) => link.addEventListener('click', closeMenu));
+
+    window.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') closeMenu();
+    });
+
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 760) closeMenu();
+    });
+  </
