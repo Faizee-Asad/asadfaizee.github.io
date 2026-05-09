@@ -701,7 +701,7 @@
     </section>
 
     <!-- Appointment Section -->
-    <section id="appointment" class="py-24 bg-white relative overflow-hidden">
+    <!-- <section id="appointment" class="py-24 bg-white relative overflow-hidden">
         <div class="absolute top-0 right-0 w-96 h-96 bg-green-100 rounded-full filter blur-3xl opacity-50"></div>
         <div class="absolute bottom-0 left-0 w-80 h-80 bg-emerald-100 rounded-full filter blur-3xl opacity-50"></div>
         
@@ -716,9 +716,9 @@
                 </p>
             </div>
             
-            <div class="grid lg:grid-cols-5 gap-12">
+            <div class="grid lg:grid-cols-5 gap-12"> -->
                 <!-- Appointment Form -->
-                <div class="lg:col-span-3 bg-white p-10 rounded-3xl shadow-2xl border border-green-100">
+                <!-- <div class="lg:col-span-3 bg-white p-10 rounded-3xl shadow-2xl border border-green-100">
                     <h3 class="text-2xl font-bold text-gray-800 mb-8 flex items-center">
                         <span class="bg-green-100 p-3 rounded-xl mr-4">
                             <svg class="w-6 h-6 text-green-600" fill="currentColor" viewBox="0 0 24 24">
@@ -741,9 +741,9 @@
                                     class="w-full px-5 py-4 border-2 border-gray-200 rounded-xl focus:border-green-500 focus:outline-none text-lg transition"
                                     placeholder="10-digit number">
                             </div>
-                        </div>
+                        </div> -->
                         
-                        <div class="grid md:grid-cols-2 gap-6">
+                        <!-- <div class="grid md:grid-cols-2 gap-6">
                             <div>
                                 <label class="block text-gray-700 font-medium mb-2" for="date">Preferred Date</label>
                                 <input type="date" id="date" name="date"
@@ -758,8 +758,8 @@
                                 </select>
                             </div>
                         </div>
-                        
-                        <div>
+                         -->
+                        <!-- <div>
                             <label class="block text-gray-700 font-medium mb-2" for="message">Health Concern / Message</label>
                             <textarea id="message" name="message" rows="4"
                                 class="w-full px-5 py-4 border-2 border-gray-200 rounded-xl focus:border-green-500 focus:outline-none text-lg resize-none transition"
@@ -777,7 +777,156 @@
                         <p class="font-bold text-xl mb-2">Thank you!</p>
                         <p>Your enquiry has been submitted. We will contact you shortly to confirm your appointment.</p>
                     </div>
-                </div>
+                </div> -->
+
+    <!-- Appointment Section -->
+<section id="appointment" class="py-24 bg-white relative overflow-hidden">
+    <div class="absolute top-0 right-0 w-96 h-96 bg-green-100 rounded-full filter blur-3xl opacity-50"></div>
+    <div class="absolute bottom-0 left-0 w-80 h-80 bg-emerald-100 rounded-full filter blur-3xl opacity-50"></div>
+    
+    <div class="max-w-7xl mx-auto px-4 relative z-10">
+        <div class="text-center mb-12">
+            <span class="inline-block bg-green-100 text-green-700 px-4 py-2 rounded-full text-sm font-semibold mb-4">
+                BOOK APPOINTMENT
+            </span>
+            
+            <h2 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
+                Schedule Your <span class="gradient-text">Visit Today</span>
+            </h2>
+            
+            <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+                Fill the form below or contact us directly via phone or WhatsApp. We'll get back to you promptly.
+            </p>
+        </div>
+        
+        <div class="grid lg:grid-cols-5 gap-12">
+            
+            <!-- Appointment Form -->
+            <div class="lg:col-span-3 bg-white p-10 rounded-3xl shadow-2xl border border-green-100">
+                
+                <h3 class="text-2xl font-bold text-gray-800 mb-8 flex items-center">
+                    <span class="bg-green-100 p-3 rounded-xl mr-4">
+                        <svg class="w-6 h-6 text-green-600" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11z"/>
+                        </svg>
+                    </span>
+                    Appointment Enquiry
+                </h3>
+
+                <!-- FORM START -->
+                <form 
+                    id="appointmentForm"
+                    action="https://formsubmit.co/YOURMAIL@gmail.com"
+                    method="POST"
+                    class="space-y-6"
+                >
+
+                    <!-- FormSubmit Hidden Fields -->
+                    <input type="hidden" name="_subject" value="New Appointment Request">
+                    <input type="hidden" name="_captcha" value="false">
+                    <input type="hidden" name="_template" value="table">
+
+                    <!-- Optional Thank You Redirect -->
+                    <!--
+                    <input type="hidden" name="_next" value="https://yourwebsite.com/thank-you.html">
+                    -->
+
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-gray-700 font-medium mb-2" for="name">
+                                Full Name *
+                            </label>
+
+                            <input 
+                                type="text"
+                                id="name"
+                                name="Full Name"
+                                required
+                                class="w-full px-5 py-4 border-2 border-gray-200 rounded-xl focus:border-green-500 focus:outline-none text-lg transition"
+                                placeholder="Enter your name"
+                            >
+                        </div>
+
+                        <div>
+                            <label class="block text-gray-700 font-medium mb-2" for="mobile">
+                                Mobile Number *
+                            </label>
+
+                            <input 
+                                type="tel"
+                                id="mobile"
+                                name="Mobile Number"
+                                required
+                                pattern="[0-9]{10}"
+                                class="w-full px-5 py-4 border-2 border-gray-200 rounded-xl focus:border-green-500 focus:outline-none text-lg transition"
+                                placeholder="10-digit number"
+                            >
+                        </div>
+                    </div>
+                    
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-gray-700 font-medium mb-2" for="date">
+                                Preferred Date
+                            </label>
+
+                            <input 
+                                type="date"
+                                id="date"
+                                name="Preferred Date"
+                                class="w-full px-5 py-4 border-2 border-gray-200 rounded-xl focus:border-green-500 focus:outline-none text-lg transition"
+                            >
+                        </div>
+
+                        <div>
+                            <label class="block text-gray-700 font-medium mb-2" for="time">
+                                Preferred Time
+                            </label>
+
+                            <select 
+                                id="time"
+                                name="Preferred Time"
+                                class="w-full px-5 py-4 border-2 border-gray-200 rounded-xl focus:border-green-500 focus:outline-none text-lg transition"
+                            >
+                                <option value="">Select Time</option>
+                                <option value="Morning (10 AM - 2 PM)">
+                                    Morning (10 AM - 2 PM)
+                                </option>
+                                <option value="Evening (7 PM - 11 PM)">
+                                    Evening (7 PM - 11 PM)
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-gray-700 font-medium mb-2" for="message">
+                            Health Concern / Message
+                        </label>
+
+                        <textarea 
+                            id="message"
+                            name="Health Concern"
+                            rows="4"
+                            class="w-full px-5 py-4 border-2 border-gray-200 rounded-xl focus:border-green-500 focus:outline-none text-lg resize-none transition"
+                            placeholder="Briefly describe your symptoms or reason for visit..."
+                        ></textarea>
+                    </div>
+                    
+                    <button 
+                        type="submit"
+                        class="w-full bg-gradient-to-r from-green-500 to-emerald-600 text-white py-5 rounded-xl text-xl font-bold hover:shadow-xl hover:shadow-green-200 transition"
+                    >
+                        Submit Appointment Request
+                    </button>
+
+                </form>
+                <!-- FORM END -->
+
+            </div>
+        </div>
+    </div>
+</section>
                 
                 <!-- Contact Options -->
                 <div class="lg:col-span-2 space-y-6">
