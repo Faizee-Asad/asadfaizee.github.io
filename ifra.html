@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Happy Birthday Ifra! 🎉</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Poppins:wght@300;400;600;700&display=swap');
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(160deg, #0d0221, #1a0533, #0d1b4b);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Poppins', sans-serif;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* ── STARS ── */
+    .star {
+      position: fixed;
+      background: #fff;
+      border-radius: 50%;
+      animation: twinkle ease-in-out infinite;
+      pointer-events: none;
+      z-index: 0;
+    }
+    @keyframes twinkle {
+      0%,100% { opacity: .15; transform: scale(1); }
+      50%      { opacity: 1;   transform: scale(1.6); }
+    }
+
+    /* ── BALLOONS ── */
+    .balloon-wrap {
+      position: fixed;
+      bottom: -180px;
+      animation: floatUp linear infinite;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .balloon-body {
+      border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+      position: relative;
+      filter: drop-shadow(0 6px 12px rgba(0,0,0,.35));
+    }
+    .balloon-body::before {
+      content: '';
+      position: absolute;
+      top: 14%; left: 18%;
+      width: 28%; height: 20%;
+      background: rgba(255,255,255,.45);
+      border-radius: 50%;
+      transform: rotate(-30deg);
+    }
+    .balloon-string {
+      width: 1.5px;
+      height: 80px;
+      background: linear-gradient(to bottom, rgba(255,255,255,.6), rgba(255,255,255,.1));
+      margin: 0 auto;
+    }
+    @keyframes floatUp {
+      0%   { bottom: -180px; transform: translateX(0px)   rotate(0deg); opacity: 0; }
+      5%   { opacity: 1; }
+      30%  { transform: translateX(25px)  rotate(6deg); }
+      60%  { transform: translateX(-25px) rotate(-6deg); }
+      85%  { transform: translateX(15px)  rotate(4deg); }
+      95%  { opacity: 1; }
+      100% { bottom: 115vh; transform: translateX(0px) rotate(0deg); opacity: 0; }
+    }
+
+    /* ── CONFETTI ── */
+    .confetti {
+      position: fixed;
+      top: -20px;
+      pointer-events: none;
+      z-index: 2;
+      animation: confettiFall linear infinite;
+    }
+    @keyframes confettiFall {
+      0%   { top: -20px; transform: rotate(0deg) translateX(0); opacity: 1; }
+      80%  { opacity: 1; }
+      100% { top: 110vh; transform: rotate(800deg) translateX(80px); opacity: 0; }
+    }
+
+    /* ── CARD ── */
+    .card {
+      position: relative;
+      z-index: 10;
+      background: rgba(255,255,255,.07);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid rgba(255,255,255,.18);
+      border-radius: 36px;
+      padding: 64px 52px 52px;
+      max-width: 540px;
+      width: 92%;
+      text-align: center;
+      box-shadow:
+        0 30px 70px rgba(0,0,0,.5),
+        0 0 100px rgba(168,85,247,.15),
+        inset 0 1px 0 rgba(255,255,255,.12);
+      animation: cardIn .9s cubic-bezier(.22,1,.36,1) both;
+    }
+    @keyframes cardIn {
+      from { opacity: 0; transform: translateY(50px) scale(.94); }
+      to   { opacity: 1; transform: translateY(0)    scale(1);   }
+    }
+
+    /* ── SHARE BUTTON (top-right) ── */
+    .share-btn {
+      position: absolute;
+      top: 20px;
+      right: 22px;
+      background: rgba(255,255,255,.1);
+      border: 1px solid rgba(255,255,255,.22);
+      border-radius: 50%;
+      width: 46px;
+      height: 46px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      backdrop-filter: blur(10px);
+      transition: all .3s ease;
+      color: #fff;
+      z-index: 20;
+    }
+    .share-btn:hover {
+      background: linear-gradient(135deg, #ff6b9d, #a855f7);
+      border-color: transparent;
+      transform: scale(1.12) rotate(8deg);
+      box-shadow: 0 8px 25px rgba(168,85,247,.5);
+    }
+    .share-btn svg {
+      width: 20px;
+      height: 20px;
+      fill: none;
+      stroke: #fff;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      transition: transform .3s ease;
+    }
+
+    /* ── TOAST NOTIFICATION ── */
+    .toast {
+      position: fixed;
+      bottom: 36px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: linear-gradient(135deg, #1e1e3f, #2d1b5e);
+      border: 1px solid rgba(168,85,247,.4);
+      color: #fff;
+      font-size: .85rem;
+      font-weight: 500;
+      padding: 14px 26px;
+      border-radius: 99px;
+      box-shadow: 0 12px 40px rgba(0,0,0,.4), 0 0 30px rgba(168,85,247,.2);
+      z-index: 999;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      white-space: nowrap;
+      transition: transform .4s cubic-bezier(.22,1,.36,1), opacity .4s ease;
+      opacity: 0;
+      pointer-events: none;
+    }
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+    .toast-icon { font-size: 1.1rem; }
+
+    /* ── CAKE ── */
+    .cake-icon {
+      font-size: 4rem;
+      display: block;
+      animation: cakeBounce 1.8s ease-in-out infinite alternate;
+      margin-bottom: 14px;
+    }
+    @keyframes cakeBounce {
+      from { transform: translateY(0)    rotate(-4deg) scale(1);   }
+      to   { transform: translateY(-12px) rotate(4deg) scale(1.1); }
+    }
+
+    /* ── RAINBOW TEXT ── */
+    .happy-bday {
+      font-family: 'Dancing Script', cursive;
+      font-size: clamp(2rem, 6vw, 2.8rem);
+      font-weight: 700;
+      background: linear-gradient(
+        90deg,
+        #ff6b9d 0%, #ff9a3c 18%, #ffd93d 35%,
+        #6bcb77 52%, #4d96ff 68%, #a855f7 84%, #ff6b9d 100%
+      );
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: rainbowFlow 3s linear infinite;
+      line-height: 1.2;
+      margin-bottom: 6px;
+    }
+    @keyframes rainbowFlow {
+      0%   { background-position: 0%   center; }
+      100% { background-position: 200% center; }
+    }
+
+    /* ── GLOWING NAME ── */
+    .name {
+      font-family: 'Dancing Script', cursive;
+      font-size: clamp(3.8rem, 12vw, 5.5rem);
+      font-weight: 700;
+      color: #fff;
+      line-height: 1;
+      margin-bottom: 28px;
+      display: inline-block;
+      animation: namePulse 2.4s ease-in-out infinite;
+    }
+    @keyframes namePulse {
+      0%,100% {
+        text-shadow:
+          0 0 20px rgba(255,107,157,.9),
+          0 0 50px rgba(255,107,157,.6),
+          0 0 100px rgba(255,107,157,.3);
+      }
+      50% {
+        text-shadow:
+          0 0 40px rgba(168,85,247,1),
+          0 0 90px rgba(168,85,247,.7),
+          0 0 160px rgba(168,85,247,.4),
+          0 0 10px #fff;
+      }
+    }
+
+    /* ── DIVIDER ── */
+    .divider {
+      width: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #ff6b9d, #ffd93d, #4d96ff, #a855f7);
+      border-radius: 99px;
+      margin: 0 auto 28px;
+      animation: dividerGrow 1.2s .6s cubic-bezier(.22,1,.36,1) forwards;
+    }
+    @keyframes dividerGrow { to { width: 80px; } }
+
+    /* ── MESSAGE ── */
+    .message {
+      color: rgba(255,255,255,.82);
+      font-size: .97rem;
+      line-height: 1.9;
+      font-weight: 300;
+      margin-bottom: 32px;
+    }
+    .message .highlight {
+      background: linear-gradient(90deg, #ffd93d, #ff9a3c);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-weight: 700;
+    }
+    .message .pink {
+      background: linear-gradient(90deg, #ff6b9d, #a855f7);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-weight: 600;
+    }
+
+    /* ── WISH BUTTON ── */
+    .wish-btn {
+      display: inline-block;
+      background: linear-gradient(135deg, #ff6b9d, #a855f7, #4d96ff);
+      background-size: 200% 200%;
+      color: #fff;
+      font-family: 'Poppins', sans-serif;
+      font-size: .88rem;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 14px 36px;
+      border-radius: 99px;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 10px 30px rgba(168,85,247,.45);
+      animation: btnShift 3s ease infinite, btnGlow 2s ease-in-out infinite alternate;
+    }
+    @keyframes btnShift {
+      0%,100% { background-position: 0%   50%; }
+      50%      { background-position: 100% 50%; }
+    }
+    @keyframes btnGlow {
+      from { box-shadow: 0 10px 30px rgba(255,107,157,.4); }
+      to   { box-shadow: 0 10px 50px rgba(168,85,247,.7); }
+    }
+
+    /* ── FOOTER ── */
+    .footer {
+      margin-top: 28px;
+      color: rgba(255,255,255,.3);
+      font-size: .75rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    /* ── EMOJI RING ── */
+    .emoji-ring {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 18px;
+      font-size: 1.4rem;
+    }
+    .emoji-ring span { animation: spinFloat 3s ease-in-out infinite; }
+    .emoji-ring span:nth-child(1) { animation-delay: 0s; }
+    .emoji-ring span:nth-child(2) { animation-delay: .3s; }
+    .emoji-ring span:nth-child(3) { animation-delay: .6s; }
+    .emoji-ring span:nth-child(4) { animation-delay: .9s; }
+    .emoji-ring span:nth-child(5) { animation-delay: 1.2s; }
+    @keyframes spinFloat {
+      0%,100% { transform: translateY(0)    rotate(0deg); }
+      50%      { transform: translateY(-8px) rotate(15deg); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── CARD ── -->
+<div class="card">
+
+  <!-- Share Button -->
+  <button class="share-btn" id="shareBtn" title="Share Birthday Wish">
+    <svg viewBox="0 0 24 24">
+      <circle cx="18" cy="5"  r="3"/>
+      <circle cx="6"  cy="12" r="3"/>
+      <circle cx="18" cy="19" r="3"/>
+      <line x1="8.59"  y1="13.51" x2="15.42" y2="17.49"/>
+      <line x1="15.41" y1="6.51"  x2="8.59"  y2="10.49"/>
+    </svg>
+  </button>
+
+  <span class="cake-icon">🎂</span>
+
+  <div class="emoji-ring">
+    <span>🎀</span><span>⭐</span><span>🎊</span><span>⭐</span><span>🎀</span>
+  </div>
+
+  <div class="happy-bday">Happy Birthday</div>
+  <div class="name">Ifra</div>
+  <div class="divider"></div>
+
+  <p class="message">
+    Today we celebrate <span class="highlight">YOU</span> — the sunshine of our office! ☀️<br><br>
+    Your <span class="pink">warmth, laughter, and dedication</span> make every single
+    day brighter for everyone around you.<br><br>
+    May this year bring you <span class="highlight">endless joy, big dreams,
+    and every happiness</span> you deserve, and so much more. 🌸🥂<br><br>
+    We are so lucky to have you on our team! 💼❤️
+  </p>
+
+  <button class="wish-btn">🥳 &nbsp; Wishing You the Very Best!</button>
+
+  <div class="footer">With love — Your Office Family 💜</div>
+</div>
+
+<!-- ── TOAST ── -->
+<div class="toast" id="toast">
+  <span class="toast-icon">🎉</span>
+  <span id="toastMsg">Birthday wish shared!</span>
+</div>
+
+<script>
+  /* ── STARS ── */
+  for (let i = 0; i < 90; i++) {
+    const s = document.createElement('div');
+    s.className = 'star';
+    const sz = Math.random() * 2.5 + .8;
+    Object.assign(s.style, {
+      width: sz + 'px', height: sz + 'px',
+      top:  Math.random() * 100 + '%',
+      left: Math.random() * 100 + '%',
+      animationDuration: (Math.random() * 3 + 2) + 's',
+      animationDelay:    (Math.random() * 4) + 's',
+      position: 'fixed', zIndex: 0,
+    });
+    document.body.appendChild(s);
+  }
+
+  /* ── BALLOONS ── */
+  const balloonColors = [
+    ['#ff6b9d','#d94f7e'], ['#ffd93d','#e6c22a'],
+    ['#6bcb77','#4ea85a'], ['#4d96ff','#2e78e0'],
+    ['#ff6348','#d94830'], ['#a29bfe','#7c72f5'],
+    ['#fd79a8','#d4638a'], ['#00cec9','#009e9a'],
+  ];
+  [4,12,22,32,44,56,66,76,86,94].forEach((left, i) => {
+    const color = balloonColors[i % balloonColors.length];
+    const w = 44 + Math.random() * 22;
+    const h = w * 1.2;
+    const dur   = 7 + Math.random() * 6;
+    const delay = Math.random() * 8;
+
+    const wrap = document.createElement('div');
+    wrap.className = 'balloon-wrap';
+    Object.assign(wrap.style, {
+      left: left + '%',
+      animationDuration: dur + 's',
+      animationDelay: -delay + 's',
+    });
+
+    const body = document.createElement('div');
+    body.className = 'balloon-body';
+    Object.assign(body.style, {
+      width: w + 'px', height: h + 'px',
+      background: `radial-gradient(circle at 35% 35%, ${color[0]}, ${color[1]})`,
+    });
+
+    const str = document.createElement('div');
+    str.className = 'balloon-string';
+
+    wrap.appendChild(body);
+    wrap.appendChild(str);
+    document.body.appendChild(wrap);
+  });
+
+  /* ── CONFETTI ── */
+  const confettiColors = [
+    '#ff6b9d','#ffd93d','#6bcb77','#4d96ff',
+    '#ff6348','#a29bfe','#ffffff','#fd79a8','#00cec9'
+  ];
+  const shapes = ['circle','square','rect','triangle'];
+
+  for (let i = 0; i < 55; i++) {
+    const el = document.createElement('div');
+    el.className = 'confetti';
+    const shape = shapes[Math.floor(Math.random() * shapes.length)];
+    const color = confettiColors[Math.floor(Math.random() * confettiColors.length)];
+    const size  = Math.random() * 9 + 6;
+    const dur   = Math.random() * 5 + 5;
+    const delay = Math.random() * 8;
+
+    Object.assign(el.style, {
+      left: Math.random() * 100 + '%',
+      animationDuration: dur + 's',
+      animationDelay: -delay + 's',
+      opacity: Math.random() * .5 + .5,
+    });
+
+    if (shape === 'circle') {
+      el.style.width  = size + 'px';
+      el.style.height = size + 'px';
+      el.style.borderRadius = '50%';
+      el.style.background = color;
+    } else if (shape === 'square') {
+      el.style.width  = size + 'px';
+      el.style.height = size + 'px';
+      el.style.borderRadius = '2px';
+      el.style.background = color;
+    } else if (shape === 'rect') {
+      el.style.width  = (size * 1.8) + 'px';
+      el.style.height = (size * .6) + 'px';
+      el.style.borderRadius = '2px';
+      el.style.background = color;
+    } else {
+      el.style.width  = size + 'px';
+      el.style.height = size + 'px';
+      el.style.borderLeft   = (size/2) + 'px solid transparent';
+      el.style.borderRight  = (size/2) + 'px solid transparent';
+      el.style.borderBottom = size + 'px solid ' + color;
+    }
+
+    document.body.appendChild(el);
+  }
+
+  /* ── SHARE LOGIC ── */
+  const shareBtn = document.getElementById('shareBtn');
+  const toast    = document.getElementById('toast');
+  const toastMsg = document.getElementById('toastMsg');
+  let toastTimer;
+
+  const shareData = {
+    title: '🎂 Happy Birthday Ifra! 🎉',
+    text:  '🥳 Wishing our amazing colleague Ifra a very Happy Birthday! 🎈\n\nMay your day be filled with endless joy, laughter, and all the love you deserve. You make our office a brighter place every single day! 🌸💜\n\n— With love, Your Office Family 💼❤️',
+    url:   window.location.href,
+  };
+
+  function showToast(msg, icon = '🎉') {
+    clearTimeout(toastTimer);
+    document.querySelector('.toast-icon').textContent = icon;
+    toastMsg.textContent = msg;
+    toast.classList.add('show');
+    toastTimer = setTimeout(() => toast.classList.remove('show'), 3200);
+  }
+
+  shareBtn.addEventListener('click', async () => {
+    // Animate button
+    shareBtn.style.transform = 'scale(.9) rotate(8deg)';
+    setTimeout(() => shareBtn.style.transform = '', 200);
+
+    if (navigator.share) {
+      try {
+        await navigator.share(shareData);
+        showToast('Birthday wish shared! 🎊', '🎊');
+      } catch (err) {
+        if (err.name !== 'AbortError') {
+          fallbackCopy();
+        }
+      }
+    } else {
+      fallbackCopy();
+    }
+  });
+
+  function fallbackCopy() {
+    const textToCopy =
+      `${shareData.title}\n\n${shareData.text}\n\n🔗 ${shareData.url}`;
+    navigator.clipboard.writeText(textToCopy)
+      .then(() => showToast('Wish copied to clipboard!', '📋'))
+      .catch(() => {
+        // Final fallback — textarea trick
+        const ta = document.createElement('textarea');
+        ta.value = textToCopy;
+        ta.style.position = 'fixed';
+        ta.style.opacity  = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        showToast('Wish copied to clipboard!', '📋');
+      });
+  }
+</script>
+</body>
+</html>
