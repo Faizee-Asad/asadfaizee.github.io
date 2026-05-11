@@ -16,8 +16,10 @@
       align-items: center;
       justify-content: center;
       font-family: 'Poppins', sans-serif;
-      overflow: hidden;
+      overflow-x: hidden;
+      overflow-y: auto;
       position: relative;
+      padding: 20px 0;
     }
 
     /* ── STARS ── */
@@ -63,7 +65,7 @@
       margin: 0 auto;
     }
     @keyframes floatUp {
-      0%   { bottom: -180px; transform: translateX(0px)   rotate(0deg); opacity: 0; }
+      0%   { bottom: -180px; transform: translateX(0px) rotate(0deg); opacity: 0; }
       5%   { opacity: 1; }
       30%  { transform: translateX(25px)  rotate(6deg); }
       60%  { transform: translateX(-25px) rotate(-6deg); }
@@ -86,6 +88,48 @@
       100% { top: 110vh; transform: rotate(800deg) translateX(80px); opacity: 0; }
     }
 
+    /* ── BURST CONFETTI (on click) ── */
+    .burst-piece {
+      position: fixed;
+      pointer-events: none;
+      z-index: 999;
+      border-radius: 50%;
+      animation: burstFly .9s cubic-bezier(.22,1,.36,1) forwards;
+    }
+    @keyframes burstFly {
+      0%   { transform: translate(0,0) scale(1) rotate(0deg); opacity: 1; }
+      100% { transform: translate(var(--tx), var(--ty)) scale(0) rotate(var(--tr)); opacity: 0; }
+    }
+
+    /* ── FIREWORK ── */
+    .firework-dot {
+      position: fixed;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 998;
+      animation: fireworkShoot .7s ease-out forwards;
+    }
+    @keyframes fireworkShoot {
+      0%   { transform: translate(0,0) scale(1); opacity: 1; }
+      100% { transform: translate(var(--fx), var(--fy)) scale(0); opacity: 0; }
+    }
+
+    /* ── SPARKLE STAR ── */
+    .sparkle {
+      position: fixed;
+      pointer-events: none;
+      z-index: 997;
+      font-size: 1.4rem;
+      animation: sparklePop .8s ease-out forwards;
+    }
+    @keyframes sparklePop {
+      0%   { transform: scale(0) rotate(0deg);   opacity: 1; }
+      50%  { transform: scale(1.4) rotate(180deg); opacity: 1; }
+      100% { transform: scale(0) rotate(360deg); opacity: 0; }
+    }
+
     /* ── CARD ── */
     .card {
       position: relative;
@@ -95,7 +139,7 @@
       -webkit-backdrop-filter: blur(24px);
       border: 1px solid rgba(255,255,255,.18);
       border-radius: 36px;
-      padding: 64px 52px 52px;
+      padding: 52px 40px 44px;
       max-width: 540px;
       width: 92%;
       text-align: center;
@@ -110,16 +154,18 @@
       to   { opacity: 1; transform: translateY(0)    scale(1);   }
     }
 
-    /* ── SHARE BUTTON (top-right) ── */
+    /* ── SHARE BTN (top-right, always visible) ── */
     .share-btn {
       position: absolute;
-      top: 20px;
-      right: 22px;
-      background: rgba(255,255,255,.1);
-      border: 1px solid rgba(255,255,255,.22);
+      top: 16px;
+      right: 16px;
+      background: linear-gradient(135deg, rgba(255,107,157,.25), rgba(168,85,247,.25));
+      border: 1.5px solid rgba(255,255,255,.3);
       border-radius: 50%;
-      width: 46px;
-      height: 46px;
+      width: 48px;
+      height: 48px;
+      min-width: 48px;
+      min-height: 48px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -127,60 +173,35 @@
       backdrop-filter: blur(10px);
       transition: all .3s ease;
       color: #fff;
-      z-index: 20;
+      z-index: 30;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
     }
-    .share-btn:hover {
+    .share-btn:hover,
+    .share-btn:active {
       background: linear-gradient(135deg, #ff6b9d, #a855f7);
       border-color: transparent;
-      transform: scale(1.12) rotate(8deg);
-      box-shadow: 0 8px 25px rgba(168,85,247,.5);
+      transform: scale(1.15) rotate(10deg);
+      box-shadow: 0 8px 28px rgba(168,85,247,.6);
     }
     .share-btn svg {
-      width: 20px;
-      height: 20px;
+      width: 22px;
+      height: 22px;
       fill: none;
       stroke: #fff;
-      stroke-width: 2;
+      stroke-width: 2.2;
       stroke-linecap: round;
       stroke-linejoin: round;
-      transition: transform .3s ease;
+      flex-shrink: 0;
     }
-
-    /* ── TOAST NOTIFICATION ── */
-    .toast {
-      position: fixed;
-      bottom: 36px;
-      left: 50%;
-      transform: translateX(-50%) translateY(100px);
-      background: linear-gradient(135deg, #1e1e3f, #2d1b5e);
-      border: 1px solid rgba(168,85,247,.4);
-      color: #fff;
-      font-size: .85rem;
-      font-weight: 500;
-      padding: 14px 26px;
-      border-radius: 99px;
-      box-shadow: 0 12px 40px rgba(0,0,0,.4), 0 0 30px rgba(168,85,247,.2);
-      z-index: 999;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      white-space: nowrap;
-      transition: transform .4s cubic-bezier(.22,1,.36,1), opacity .4s ease;
-      opacity: 0;
-      pointer-events: none;
-    }
-    .toast.show {
-      transform: translateX(-50%) translateY(0);
-      opacity: 1;
-    }
-    .toast-icon { font-size: 1.1rem; }
 
     /* ── CAKE ── */
     .cake-icon {
-      font-size: 4rem;
+      font-size: 3.6rem;
       display: block;
       animation: cakeBounce 1.8s ease-in-out infinite alternate;
-      margin-bottom: 14px;
+      margin-bottom: 12px;
+      margin-top: 8px;
     }
     @keyframes cakeBounce {
       from { transform: translateY(0)    rotate(-4deg) scale(1);   }
@@ -190,7 +211,7 @@
     /* ── RAINBOW TEXT ── */
     .happy-bday {
       font-family: 'Dancing Script', cursive;
-      font-size: clamp(2rem, 6vw, 2.8rem);
+      font-size: clamp(1.9rem, 6vw, 2.8rem);
       font-weight: 700;
       background: linear-gradient(
         90deg,
@@ -213,11 +234,11 @@
     /* ── GLOWING NAME ── */
     .name {
       font-family: 'Dancing Script', cursive;
-      font-size: clamp(3.8rem, 12vw, 5.5rem);
+      font-size: clamp(3.4rem, 11vw, 5.5rem);
       font-weight: 700;
       color: #fff;
       line-height: 1;
-      margin-bottom: 28px;
+      margin-bottom: 24px;
       display: inline-block;
       animation: namePulse 2.4s ease-in-out infinite;
     }
@@ -243,18 +264,49 @@
       height: 3px;
       background: linear-gradient(90deg, #ff6b9d, #ffd93d, #4d96ff, #a855f7);
       border-radius: 99px;
-      margin: 0 auto 28px;
+      margin: 0 auto 24px;
       animation: dividerGrow 1.2s .6s cubic-bezier(.22,1,.36,1) forwards;
     }
     @keyframes dividerGrow { to { width: 80px; } }
 
+    /* ── QUALITY TAGS ── */
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 22px;
+    }
+    .tag {
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.15);
+      color: rgba(255,255,255,.85);
+      font-size: .72rem;
+      font-weight: 600;
+      letter-spacing: .8px;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 99px;
+      animation: tagPop .5s ease both;
+    }
+    .tag:nth-child(1) { animation-delay: .8s;  border-color: rgba(255,107,157,.5);  color: #ff9ac1; }
+    .tag:nth-child(2) { animation-delay: .95s; border-color: rgba(255,217,61,.5);   color: #ffd93d; }
+    .tag:nth-child(3) { animation-delay: 1.1s; border-color: rgba(107,203,119,.5);  color: #6bcb77; }
+    .tag:nth-child(4) { animation-delay: 1.25s;border-color: rgba(77,150,255,.5);   color: #7db8ff; }
+    .tag:nth-child(5) { animation-delay: 1.4s; border-color: rgba(168,85,247,.5);   color: #c084fc; }
+    @keyframes tagPop {
+      from { opacity: 0; transform: scale(.7) translateY(10px); }
+      to   { opacity: 1; transform: scale(1)  translateY(0); }
+    }
+
     /* ── MESSAGE ── */
     .message {
       color: rgba(255,255,255,.82);
-      font-size: .97rem;
-      line-height: 1.9;
+      font-size: .93rem;
+      line-height: 1.95;
       font-weight: 300;
-      margin-bottom: 32px;
+      margin-bottom: 28px;
+      text-align: left;
     }
     .message .highlight {
       background: linear-gradient(90deg, #ffd93d, #ff9a3c);
@@ -270,25 +322,60 @@
       background-clip: text;
       font-weight: 600;
     }
+    .message .green {
+      background: linear-gradient(90deg, #6bcb77, #4d96ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-weight: 600;
+    }
+
+    /* ── QUOTE BOX ── */
+    .quote {
+      background: rgba(168,85,247,.1);
+      border-left: 3px solid #a855f7;
+      border-radius: 0 16px 16px 0;
+      padding: 14px 18px;
+      margin-bottom: 28px;
+      text-align: left;
+      color: rgba(255,255,255,.7);
+      font-size: .88rem;
+      font-style: italic;
+      line-height: 1.7;
+    }
+
+    /* ── BUTTONS ROW ── */
+    .btn-row {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 4px;
+    }
 
     /* ── WISH BUTTON ── */
     .wish-btn {
-      display: inline-block;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
       background: linear-gradient(135deg, #ff6b9d, #a855f7, #4d96ff);
       background-size: 200% 200%;
       color: #fff;
       font-family: 'Poppins', sans-serif;
-      font-size: .88rem;
+      font-size: .82rem;
       font-weight: 600;
-      letter-spacing: 2px;
+      letter-spacing: 1.5px;
       text-transform: uppercase;
-      padding: 14px 36px;
+      padding: 14px 28px;
       border-radius: 99px;
       border: none;
       cursor: pointer;
       box-shadow: 0 10px 30px rgba(168,85,247,.45);
       animation: btnShift 3s ease infinite, btnGlow 2s ease-in-out infinite alternate;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
     }
+    .wish-btn:active { transform: scale(.95); }
     @keyframes btnShift {
       0%,100% { background-position: 0%   50%; }
       50%      { background-position: 100% 50%; }
@@ -300,9 +387,9 @@
 
     /* ── FOOTER ── */
     .footer {
-      margin-top: 28px;
+      margin-top: 26px;
       color: rgba(255,255,255,.3);
-      font-size: .75rem;
+      font-size: .72rem;
       letter-spacing: 1.5px;
       text-transform: uppercase;
     }
@@ -312,8 +399,8 @@
       display: flex;
       justify-content: center;
       gap: 10px;
-      margin-bottom: 18px;
-      font-size: 1.4rem;
+      margin-bottom: 16px;
+      font-size: 1.3rem;
     }
     .emoji-ring span { animation: spinFloat 3s ease-in-out infinite; }
     .emoji-ring span:nth-child(1) { animation-delay: 0s; }
@@ -325,6 +412,42 @@
       0%,100% { transform: translateY(0)    rotate(0deg); }
       50%      { transform: translateY(-8px) rotate(15deg); }
     }
+
+    /* ── TOAST ── */
+    .toast {
+      position: fixed;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%) translateY(120px);
+      background: linear-gradient(135deg, #1e1e3f, #2d1b5e);
+      border: 1px solid rgba(168,85,247,.4);
+      color: #fff;
+      font-size: .83rem;
+      font-weight: 500;
+      padding: 13px 24px;
+      border-radius: 99px;
+      box-shadow: 0 12px 40px rgba(0,0,0,.4), 0 0 30px rgba(168,85,247,.2);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      white-space: nowrap;
+      transition: transform .4s cubic-bezier(.22,1,.36,1), opacity .4s ease;
+      opacity: 0;
+      pointer-events: none;
+    }
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    /* ── MOBILE TWEAKS ── */
+    @media (max-width: 420px) {
+      .card { padding: 48px 24px 36px; border-radius: 28px; }
+      .message { font-size: .88rem; }
+      .wish-btn { font-size: .78rem; padding: 13px 22px; }
+      .tag { font-size: .68rem; padding: 4px 11px; }
+    }
   </style>
 </head>
 <body>
@@ -333,7 +456,7 @@
 <div class="card">
 
   <!-- Share Button -->
-  <button class="share-btn" id="shareBtn" title="Share Birthday Wish">
+  <button class="share-btn" id="shareBtn" aria-label="Share Birthday Wish">
     <svg viewBox="0 0 24 24">
       <circle cx="18" cy="5"  r="3"/>
       <circle cx="6"  cy="12" r="3"/>
@@ -353,28 +476,58 @@
   <div class="name">Ifra</div>
   <div class="divider"></div>
 
+  <!-- Personality Tags -->
+  <div class="tags">
+    <span class="tag">💖 Kind-hearted</span>
+    <span class="tag">✨ Inspiring</span>
+    <span class="tag">🌟 Hard Worker</span>
+    <span class="tag">😄 Joyful Soul</span>
+    <span class="tag">💡 Creative</span>
+  </div>
+
   <p class="message">
-    Today we celebrate <span class="highlight">YOU</span> — the sunshine of our office! ☀️<br><br>
-    Your <span class="pink">warmth, laughter, and dedication</span> make every single
-    day brighter for everyone around you.<br><br>
-    May this year bring you <span class="highlight">endless joy, big dreams,
-    and every happiness</span> you deserve, and so much more. 🌸🥂<br><br>
-    We are so lucky to have you on our team! 💼❤️
+    Dear <span class="pink">Ifra</span>, today is all about celebrating
+    <span class="highlight">the incredible person you are</span>. 🌸<br><br>
+
+    You are one of those rare souls who walks into a room and
+    <span class="green">instantly makes it warmer</span>. Your kindness is not just
+    a trait — it's a <span class="highlight">superpower</span> that lifts everyone
+    around you every single day.<br><br>
+
+    The way you give your <span class="pink">whole heart</span> to everything you do —
+    your work, your friendships, your laughter — is something truly beautiful.
+    You never make anyone feel small. You always make time to listen, to care,
+    and to <span class="green">show up</span> when it matters most.<br><br>
+
+    Our office would simply not be the same without your
+    <span class="highlight">spark, your smile, and your spirit</span>. 💼✨<br><br>
+
+    On this special day, we wish you all the love, happiness, and
+    <span class="pink">big beautiful dreams</span> your heart can hold. 🥂🌷
   </p>
 
-  <button class="wish-btn">🥳 &nbsp; Wishing You the Very Best!</button>
+  <div class="quote">
+    "People like you don't just make birthdays special — you make ordinary days feel like celebrations." 🌟
+  </div>
 
-  <div class="footer">With love — Your Office Family 💜</div>
+  <!-- Buttons -->
+  <div class="btn-row">
+    <button class="wish-btn" id="celebrateBtn">
+      🥳 Celebrate Ifra!
+    </button>
+  </div>
+
+  <div class="footer">With so much love — Your Office Family 💜</div>
 </div>
 
 <!-- ── TOAST ── -->
 <div class="toast" id="toast">
-  <span class="toast-icon">🎉</span>
+  <span id="toastIcon">🎉</span>
   <span id="toastMsg">Birthday wish shared!</span>
 </div>
 
 <script>
-  /* ── STARS ── */
+  /* ══════════════ STARS ══════════════ */
   for (let i = 0; i < 90; i++) {
     const s = document.createElement('div');
     s.className = 'star';
@@ -390,7 +543,7 @@
     document.body.appendChild(s);
   }
 
-  /* ── BALLOONS ── */
+  /* ══════════════ BALLOONS ══════════════ */
   const balloonColors = [
     ['#ff6b9d','#d94f7e'], ['#ffd93d','#e6c22a'],
     ['#6bcb77','#4ea85a'], ['#4d96ff','#2e78e0'],
@@ -399,139 +552,239 @@
   ];
   [4,12,22,32,44,56,66,76,86,94].forEach((left, i) => {
     const color = balloonColors[i % balloonColors.length];
-    const w = 44 + Math.random() * 22;
-    const h = w * 1.2;
-    const dur   = 7 + Math.random() * 6;
-    const delay = Math.random() * 8;
-
+    const w = 44 + Math.random() * 22, h = w * 1.2;
     const wrap = document.createElement('div');
     wrap.className = 'balloon-wrap';
     Object.assign(wrap.style, {
       left: left + '%',
-      animationDuration: dur + 's',
-      animationDelay: -delay + 's',
+      animationDuration: (7 + Math.random() * 6) + 's',
+      animationDelay: -(Math.random() * 8) + 's',
     });
-
     const body = document.createElement('div');
     body.className = 'balloon-body';
     Object.assign(body.style, {
       width: w + 'px', height: h + 'px',
       background: `radial-gradient(circle at 35% 35%, ${color[0]}, ${color[1]})`,
     });
-
     const str = document.createElement('div');
     str.className = 'balloon-string';
-
     wrap.appendChild(body);
     wrap.appendChild(str);
     document.body.appendChild(wrap);
   });
 
-  /* ── CONFETTI ── */
+  /* ══════════════ BACKGROUND CONFETTI ══════════════ */
   const confettiColors = [
     '#ff6b9d','#ffd93d','#6bcb77','#4d96ff',
     '#ff6348','#a29bfe','#ffffff','#fd79a8','#00cec9'
   ];
-  const shapes = ['circle','square','rect','triangle'];
-
   for (let i = 0; i < 55; i++) {
     const el = document.createElement('div');
     el.className = 'confetti';
-    const shape = shapes[Math.floor(Math.random() * shapes.length)];
-    const color = confettiColors[Math.floor(Math.random() * confettiColors.length)];
     const size  = Math.random() * 9 + 6;
-    const dur   = Math.random() * 5 + 5;
-    const delay = Math.random() * 8;
-
+    const color = confettiColors[Math.floor(Math.random() * confettiColors.length)];
+    const shapeN = Math.floor(Math.random() * 3);
     Object.assign(el.style, {
       left: Math.random() * 100 + '%',
-      animationDuration: dur + 's',
-      animationDelay: -delay + 's',
+      animationDuration: (Math.random() * 5 + 5) + 's',
+      animationDelay:   -(Math.random() * 8) + 's',
       opacity: Math.random() * .5 + .5,
     });
-
-    if (shape === 'circle') {
-      el.style.width  = size + 'px';
-      el.style.height = size + 'px';
-      el.style.borderRadius = '50%';
-      el.style.background = color;
-    } else if (shape === 'square') {
-      el.style.width  = size + 'px';
-      el.style.height = size + 'px';
-      el.style.borderRadius = '2px';
-      el.style.background = color;
-    } else if (shape === 'rect') {
-      el.style.width  = (size * 1.8) + 'px';
-      el.style.height = (size * .6) + 'px';
-      el.style.borderRadius = '2px';
-      el.style.background = color;
+    if (shapeN === 0) {
+      Object.assign(el.style, { width: size+'px', height: size+'px', borderRadius:'50%', background: color });
+    } else if (shapeN === 1) {
+      Object.assign(el.style, { width: size+'px', height: size+'px', borderRadius:'2px', background: color });
     } else {
-      el.style.width  = size + 'px';
-      el.style.height = size + 'px';
-      el.style.borderLeft   = (size/2) + 'px solid transparent';
-      el.style.borderRight  = (size/2) + 'px solid transparent';
-      el.style.borderBottom = size + 'px solid ' + color;
+      Object.assign(el.style, { width: (size*1.8)+'px', height: (size*.6)+'px', borderRadius:'2px', background: color });
     }
-
     document.body.appendChild(el);
   }
 
-  /* ── SHARE LOGIC ── */
-  const shareBtn = document.getElementById('shareBtn');
-  const toast    = document.getElementById('toast');
-  const toastMsg = document.getElementById('toastMsg');
-  let toastTimer;
+  /* ══════════════ CELEBRATION BURST (on click) ══════════════ */
+  const burstColors   = ['#ff6b9d','#ffd93d','#6bcb77','#4d96ff','#ff6348','#a29bfe','#fd79a8','#00cec9','#fff'];
+  const sparkleEmojis = ['✨','⭐','🌟','💫','🎊','🎉','💥','🎈','🎀'];
 
-  const shareData = {
-    title: '🎂 Happy Birthday Ifra! 🎉',
-    text:  '🥳 Wishing our amazing colleague Ifra a very Happy Birthday! 🎈\n\nMay your day be filled with endless joy, laughter, and all the love you deserve. You make our office a brighter place every single day! 🌸💜\n\n— With love, Your Office Family 💼❤️',
-    url:   window.location.href,
-  };
+  function triggerCelebration(cx, cy) {
+    // 1. Confetti burst
+    for (let i = 0; i < 60; i++) {
+      const piece = document.createElement('div');
+      piece.className = 'burst-piece';
+      const size  = Math.random() * 10 + 5;
+      const angle = Math.random() * 360;
+      const dist  = 80 + Math.random() * 200;
+      const tx    = Math.cos(angle * Math.PI / 180) * dist;
+      const ty    = Math.sin(angle * Math.PI / 180) * dist - 60;
+      const color = burstColors[Math.floor(Math.random() * burstColors.length)];
+      const isCircle = Math.random() > .5;
 
-  function showToast(msg, icon = '🎉') {
-    clearTimeout(toastTimer);
-    document.querySelector('.toast-icon').textContent = icon;
-    toastMsg.textContent = msg;
-    toast.classList.add('show');
-    toastTimer = setTimeout(() => toast.classList.remove('show'), 3200);
+      piece.style.cssText = `
+        left: ${cx}px; top: ${cy}px;
+        width: ${size}px; height: ${size}px;
+        background: ${color};
+        border-radius: ${isCircle ? '50%' : '2px'};
+        --tx: ${tx}px; --ty: ${ty}px;
+        --tr: ${Math.random() * 720 - 360}deg;
+        animation-duration: ${.6 + Math.random() * .5}s;
+        animation-delay: ${Math.random() * .1}s;
+      `;
+      document.body.appendChild(piece);
+      piece.addEventListener('animationend', () => piece.remove());
+    }
+
+    // 2. Firework rays
+    for (let i = 0; i < 20; i++) {
+      const dot = document.createElement('div');
+      dot.className = 'firework-dot';
+      const angle = (360 / 20) * i;
+      const dist  = 100 + Math.random() * 120;
+      const color = burstColors[Math.floor(Math.random() * burstColors.length)];
+      dot.style.cssText = `
+        left: ${cx}px; top: ${cy}px;
+        background: ${color};
+        --fx: ${Math.cos(angle * Math.PI / 180) * dist}px;
+        --fy: ${Math.sin(angle * Math.PI / 180) * dist}px;
+        animation-duration: ${.5 + Math.random() * .3}s;
+      `;
+      document.body.appendChild(dot);
+      dot.addEventListener('animationend', () => dot.remove());
+    }
+
+    // 3. Sparkle emojis
+    for (let i = 0; i < 10; i++) {
+      const sp = document.createElement('div');
+      sp.className = 'sparkle';
+      const offsetX = (Math.random() - .5) * 260;
+      const offsetY = (Math.random() - .5) * 260;
+      sp.style.cssText = `
+        left: ${cx + offsetX}px;
+        top:  ${cy + offsetY}px;
+        animation-duration: ${.6 + Math.random() * .5}s;
+        animation-delay:    ${Math.random() * .2}s;
+      `;
+      sp.textContent = sparkleEmojis[Math.floor(Math.random() * sparkleEmojis.length)];
+      document.body.appendChild(sp);
+      sp.addEventListener('animationend', () => sp.remove());
+    }
+
+    // 4. Extra balloon burst from bottom
+    for (let b = 0; b < 5; b++) {
+      const color = balloonColors[Math.floor(Math.random() * balloonColors.length)];
+      const w = 30 + Math.random() * 20, h = w * 1.2;
+      const wrap = document.createElement('div');
+      wrap.className = 'balloon-wrap';
+      Object.assign(wrap.style, {
+        left: (10 + Math.random() * 80) + '%',
+        animationDuration: (3 + Math.random() * 2) + 's',
+        animationDelay: (Math.random() * .5) + 's',
+        animationIterationCount: '1',
+      });
+      const body = document.createElement('div');
+      body.className = 'balloon-body';
+      Object.assign(body.style, {
+        width: w + 'px', height: h + 'px',
+        background: `radial-gradient(circle at 35% 35%, ${color[0]}, ${color[1]})`,
+      });
+      const str = document.createElement('div');
+      str.className = 'balloon-string';
+      wrap.appendChild(body); wrap.appendChild(str);
+      document.body.appendChild(wrap);
+      wrap.addEventListener('animationend', () => wrap.remove());
+    }
   }
 
-  shareBtn.addEventListener('click', async () => {
-    // Animate button
-    shareBtn.style.transform = 'scale(.9) rotate(8deg)';
-    setTimeout(() => shareBtn.style.transform = '', 200);
+  /* ══════════════ TOAST ══════════════ */
+  let toastTimer;
+  function showToast(msg, icon = '🎉') {
+    clearTimeout(toastTimer);
+    document.getElementById('toastIcon').textContent = icon;
+    document.getElementById('toastMsg').textContent  = msg;
+    const t = document.getElementById('toast');
+    t.classList.add('show');
+    toastTimer = setTimeout(() => t.classList.remove('show'), 3200);
+  }
+
+  /* ══════════════ CELEBRATE BUTTON ══════════════ */
+  const celebrateMessages = [
+    "🎊 Ifra, you're absolutely amazing!",
+    "🌟 The world is better with you in it!",
+    "💖 Sending you all the birthday love!",
+    "🎈 You deserve every happiness today!",
+    "✨ Keep shining, wonderful Ifra!",
+    "🥂 Here's to YOU — celebrate big!",
+  ];
+  let celebIdx = 0;
+
+  document.getElementById('celebrateBtn').addEventListener('click', function(e) {
+    const rect = this.getBoundingClientRect();
+    const cx   = rect.left + rect.width  / 2;
+    const cy   = rect.top  + rect.height / 2;
+    triggerCelebration(cx, cy);
+    showToast(celebrateMessages[celebIdx % celebrateMessages.length], '🎉');
+    celebIdx++;
+  });
+
+  /* ══════════════ SHARE BUTTON ══════════════ */
+  const shareText =
+`🎂 Happy Birthday, Ifra! 🎉
+
+✨ Today we celebrate someone truly special — YOU!
+
+You are one of those rare souls whose kindness, warmth, and laughter make every single day brighter for everyone around you. The way you give your whole heart to your work, your friendships, and the people you care about is something truly beautiful.
+
+Our office would simply not be the same without your spark, your smile, and your incredible spirit. 💼💜
+
+On your special day, we wish you:
+🌸 Endless joy & laughter
+🌟 Big beautiful dreams
+💖 All the love you so freely give to others
+🥂 A year filled with magic & happiness
+
+You don't just make birthdays special — you make ordinary days feel like celebrations!
+
+— With so much love, Your Office Family 💜🎊`;
+
+  document.getElementById('shareBtn').addEventListener('click', async function(e) {
+    const rect = this.getBoundingClientRect();
+    triggerCelebration(rect.left + rect.width/2, rect.top + rect.height/2);
+
+    const shareData = {
+      title: '🎂 Happy Birthday Ifra! 🎉 — From Your Office Family',
+      text:  shareText,
+      url:   window.location.href,
+    };
 
     if (navigator.share) {
       try {
         await navigator.share(shareData);
         showToast('Birthday wish shared! 🎊', '🎊');
       } catch (err) {
-        if (err.name !== 'AbortError') {
-          fallbackCopy();
-        }
+        if (err.name !== 'AbortError') fallbackCopy(shareData);
       }
     } else {
-      fallbackCopy();
+      fallbackCopy(shareData);
     }
   });
 
-  function fallbackCopy() {
-    const textToCopy =
-      `${shareData.title}\n\n${shareData.text}\n\n🔗 ${shareData.url}`;
-    navigator.clipboard.writeText(textToCopy)
-      .then(() => showToast('Wish copied to clipboard!', '📋'))
-      .catch(() => {
-        // Final fallback — textarea trick
-        const ta = document.createElement('textarea');
-        ta.value = textToCopy;
-        ta.style.position = 'fixed';
-        ta.style.opacity  = '0';
-        document.body.appendChild(ta);
-        ta.select();
-        document.execCommand('copy');
-        document.body.removeChild(ta);
-        showToast('Wish copied to clipboard!', '📋');
-      });
+  function fallbackCopy(data) {
+    const text = `${data.title}\n\n${data.text}\n\n🔗 ${data.url}`;
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(text)
+        .then(()  => showToast('Wish copied to clipboard!', '📋'))
+        .catch(()  => legacyCopy(text));
+    } else {
+      legacyCopy(text);
+    }
+  }
+
+  function legacyCopy(text) {
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    Object.assign(ta.style, { position:'fixed', opacity:'0', top:'0', left:'0' });
+    document.body.appendChild(ta);
+    ta.focus(); ta.select();
+    try { document.execCommand('copy'); showToast('Wish copied!', '📋'); }
+    catch { showToast('Long-press to copy!', '💡'); }
+    document.body.removeChild(ta);
   }
 </script>
 </body>
