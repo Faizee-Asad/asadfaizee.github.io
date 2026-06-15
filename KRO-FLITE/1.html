@@ -1,0 +1,1060 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>KRO·FLITE SS-26 — Engineered Walk Sandal</title>
+<meta name="description" content="A modular, four-layer sandal engineered for trail, water and city. Built layer by layer. Scrollytelling product page." />
+<style>
+    :root {
+        --bg: #0b0b0c;
+        --bg-2: #131316;
+        --bg-3: #1c1c20;
+        --ink: #f5f4ef;
+        --ink-2: #d8d6cf;
+        --muted: #8a8880;
+        --line: rgba(255,255,255,0.08);
+        --accent: #d8c79b;
+        --accent-2: #b09a6a;
+        --rust:  #c66a3a;
+        --moss:  #6b7a52;
+        --slate: #4a5560;
+        --serif: "Times New Roman", "Cormorant Garamond", Georgia, serif;
+        --sans:  ui-sans-serif, -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, sans-serif;
+        --mono:  ui-monospace, SFMono-Regular, "JetBrains Mono", Menlo, monospace;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+        background: var(--bg);
+        color: var(--ink);
+        font-family: var(--sans);
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+        line-height: 1.5;
+        overflow-x: hidden;
+    }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; cursor: pointer; }
+    ::selection { background: var(--accent); color: #000; }
+
+    /* ============== nav ============== */
+    .nav {
+        position: fixed; top: 0; left: 0; right: 0;
+        z-index: 50;
+        display: flex; align-items: center; justify-content: space-between;
+        padding: 18px 32px;
+        background: linear-gradient(to bottom, rgba(11,11,12,0.85), rgba(11,11,12,0));
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        transition: background 0.3s ease, border-color 0.3s ease;
+        border-bottom: 1px solid transparent;
+    }
+    .nav.scrolled {
+        background: rgba(11,11,12,0.78);
+        border-bottom-color: var(--line);
+    }
+    .nav .brand {
+        font-family: var(--sans);
+        font-weight: 600;
+        letter-spacing: 0.32em;
+        font-size: 13px;
+        text-transform: uppercase;
+    }
+    .nav .brand span { color: var(--accent); }
+    .nav ul {
+        display: flex; gap: 32px; list-style: none; margin: 0; padding: 0;
+        font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase;
+        color: var(--ink-2);
+    }
+    .nav ul a { transition: color 0.2s ease; }
+    .nav ul a:hover { color: var(--accent); }
+    .nav .cta {
+        padding: 10px 18px;
+        border: 1px solid var(--ink-2);
+        border-radius: 999px;
+        font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase;
+        transition: all 0.2s ease;
+    }
+    .nav .cta:hover { background: var(--ink); color: var(--bg); }
+    .nav .menu { display: none; }
+    @media (max-width: 820px) {
+        .nav ul { display: none; }
+        .nav .menu {
+            display: block; background: none; border: 0; color: var(--ink);
+            font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase;
+        }
+    }
+
+    /* ============== shared bits ============== */
+    .eyebrow {
+        font-size: 11px; letter-spacing: 0.4em; text-transform: uppercase;
+        color: var(--accent);
+    }
+    .h-display {
+        font-family: var(--serif); font-weight: 400;
+        font-size: clamp(48px, 8vw, 128px);
+        line-height: 0.95; letter-spacing: -0.02em;
+        margin: 0;
+    }
+    .h-display em { font-style: italic; color: var(--accent); }
+    .h-section {
+        font-family: var(--serif); font-weight: 400;
+        font-size: clamp(36px, 5.2vw, 80px);
+        line-height: 1.0; letter-spacing: -0.015em;
+        margin: 0 0 18px;
+    }
+    .h-section em { font-style: italic; color: var(--accent); }
+    .lede {
+        color: var(--ink-2);
+        font-size: clamp(15px, 1.2vw, 17px);
+        line-height: 1.7;
+        max-width: 56ch;
+    }
+    .container {
+        max-width: 1240px;
+        margin: 0 auto;
+        padding: 0 32px;
+    }
+    .btn {
+        display: inline-flex; align-items: center; gap: 10px;
+        padding: 14px 22px;
+        border-radius: 999px;
+        font-size: 12px; letter-spacing: 0.22em; text-transform: uppercase;
+        transition: all 0.25s ease;
+        border: 1px solid transparent;
+    }
+    .btn-primary {
+        background: var(--ink); color: var(--bg);
+    }
+    .btn-primary:hover { background: var(--accent); }
+    .btn-ghost {
+        border-color: var(--line);
+        color: var(--ink);
+    }
+    .btn-ghost:hover { border-color: var(--ink); background: rgba(255,255,255,0.04); }
+    .arrow { width: 14px; height: 14px; }
+    .meta {
+        font-family: var(--mono);
+        font-size: 11px; letter-spacing: 0.16em;
+        color: var(--muted);
+        text-transform: uppercase;
+    }
+
+    /* ============== hero ============== */
+    .hero {
+        position: relative;
+        min-height: 100vh;
+        padding: 120px 32px 64px;
+        display: flex; align-items: center;
+        overflow: hidden;
+        background:
+            radial-gradient(ellipse at 20% 30%, rgba(216,199,155,0.08), transparent 50%),
+            radial-gradient(ellipse at 90% 80%, rgba(198,106,58,0.06), transparent 50%),
+            var(--bg);
+    }
+    .hero .container {
+        position: relative; z-index: 2;
+        display: grid; grid-template-columns: 1.1fr 1fr; gap: 64px; align-items: center;
+        width: 100%;
+    }
+    .hero .badge {
+        display: inline-flex; align-items: center; gap: 10px;
+        padding: 6px 12px; border: 1px solid var(--line); border-radius: 999px;
+        font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em;
+        color: var(--ink-2); text-transform: uppercase;
+    }
+    .hero .badge .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 8px var(--accent); }
+    .hero h1 { margin: 22px 0 28px; }
+    .hero .actions { display: flex; gap: 12px; margin-top: 36px; flex-wrap: wrap; }
+    .hero .stats {
+        display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+        margin-top: 56px; max-width: 540px;
+        border-top: 1px solid var(--line); padding-top: 28px;
+    }
+    .hero .stat .v { font-family: var(--serif); font-size: 30px; color: var(--ink); }
+    .hero .stat .l { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); margin-top: 4px; }
+
+    /* hero product visual */
+    .hero .visual {
+        position: relative;
+        aspect-ratio: 1 / 1;
+        border-radius: 24px;
+        overflow: hidden;
+        background: linear-gradient(160deg, #1a1a1d, #0e0e10);
+        border: 1px solid var(--line);
+        box-shadow: 0 30px 80px -20px rgba(0,0,0,0.6);
+    }
+    .hero .visual img {
+        width: 100%; height: 100%; object-fit: cover;
+        animation: floaty 8s ease-in-out infinite;
+    }
+    @keyframes floaty {
+        0%, 100% { transform: translateY(0) rotate(0deg); }
+        50%      { transform: translateY(-14px) rotate(-1deg); }
+    }
+    .hero .visual::after {
+        content: ""; position: absolute; inset: 0;
+        background: radial-gradient(circle at 50% 90%, rgba(0,0,0,0.45), transparent 60%);
+    }
+    .hero .price-tag {
+        position: absolute; top: 20px; right: 20px; z-index: 3;
+        background: rgba(11,11,12,0.85);
+        border: 1px solid var(--line);
+        padding: 8px 12px; border-radius: 999px;
+        font-family: var(--mono); font-size: 12px; letter-spacing: 0.1em;
+        color: var(--ink);
+        backdrop-filter: blur(6px);
+    }
+    .hero .visual .chip {
+        position: absolute; bottom: 20px; left: 20px; z-index: 3;
+        display: flex; align-items: center; gap: 8px;
+        font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+        color: var(--ink-2);
+    }
+    .hero .visual .chip .swatch {
+        width: 12px; height: 12px; border-radius: 50%;
+        background: #4a3a2c; box-shadow: 0 0 0 2px rgba(255,255,255,0.1);
+    }
+
+    @media (max-width: 900px) {
+        .hero { padding: 100px 24px 48px; }
+        .hero .container { grid-template-columns: 1fr; gap: 40px; }
+        .hero .visual { aspect-ratio: 4/3; }
+    }
+
+    /* ============== section shells ============== */
+    section { position: relative; }
+    .section-pad { padding: 120px 0; }
+    .section-pad-sm { padding: 80px 0; }
+    .divider { height: 1px; background: var(--line); margin: 0; }
+
+    /* ============== features ============== */
+    .features-head {
+        display: grid; grid-template-columns: 1fr 1.4fr; gap: 64px; align-items: end;
+        margin-bottom: 72px;
+    }
+    .features-grid {
+        display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+    }
+    .feature {
+        padding: 32px 28px;
+        background: var(--bg-2);
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        transition: transform 0.4s ease, border-color 0.4s ease, background 0.4s ease;
+    }
+    .feature:hover {
+        transform: translateY(-4px);
+        border-color: rgba(216,199,155,0.4);
+        background: linear-gradient(160deg, var(--bg-2), var(--bg-3));
+    }
+    .feature .num {
+        font-family: var(--mono); font-size: 11px; letter-spacing: 0.3em;
+        color: var(--muted); text-transform: uppercase;
+    }
+    .feature h3 {
+        font-family: var(--serif); font-weight: 400; font-style: italic;
+        font-size: 28px; line-height: 1.1; margin: 18px 0 12px;
+        color: var(--ink);
+    }
+    .feature p { color: var(--muted); font-size: 14px; line-height: 1.65; margin: 0; }
+    .feature .icon {
+        width: 44px; height: 44px;
+        display: grid; place-items: center;
+        border: 1px solid var(--line); border-radius: 12px;
+        color: var(--accent);
+        margin-bottom: 20px;
+    }
+    .feature .icon svg { width: 22px; height: 22px; }
+
+    @media (max-width: 900px) {
+        .features-head { grid-template-columns: 1fr; gap: 24px; margin-bottom: 48px; }
+        .features-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ============== scrolly ============== */
+    .scrolly {
+        background: linear-gradient(to bottom, var(--bg) 0%, #0a0a0b 100%);
+        border-top: 1px solid var(--line);
+        border-bottom: 1px solid var(--line);
+    }
+    .scrolly-head {
+        padding: 80px 32px 32px;
+        display: flex; justify-content: space-between; align-items: end; gap: 24px;
+        max-width: 1240px; margin: 0 auto;
+        flex-wrap: wrap;
+    }
+    .scroller {
+        position: relative;
+        height: 1200vh;
+    }
+    .stage {
+        position: sticky; top: 0; height: 100vh; width: 100%; overflow: hidden;
+    }
+    #film {
+        display: block; width: 100vw; height: 100vh;
+        background: #141416; object-fit: cover;
+    }
+    .stage::after {
+        content: ""; position: absolute; inset: 0; pointer-events: none;
+        background:
+            radial-gradient(ellipse at center, transparent 55%, rgba(0,0,0,0.45) 100%),
+            linear-gradient(to bottom, rgba(0,0,0,0.15), transparent 18%, transparent 82%, rgba(0,0,0,0.25));
+    }
+
+    /* ============== gallery ============== */
+    .gallery-head { margin-bottom: 56px; }
+    .gallery {
+        display: grid; grid-template-columns: repeat(12, 1fr); gap: 16px;
+    }
+    .gallery .tile {
+        position: relative; overflow: hidden; border-radius: 14px;
+        border: 1px solid var(--line); background: var(--bg-2);
+        aspect-ratio: 16/9;
+    }
+    .gallery .tile img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s ease; }
+    .gallery .tile:hover img { transform: scale(1.04); }
+    .gallery .tile .cap {
+        position: absolute; left: 12px; bottom: 12px;
+        font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em;
+        color: var(--ink); text-transform: uppercase;
+        background: rgba(11,11,12,0.7); padding: 4px 8px; border-radius: 6px;
+        backdrop-filter: blur(4px);
+    }
+    .tile.t-1 { grid-column: span 7; }
+    .tile.t-2 { grid-column: span 5; }
+    .tile.t-3 { grid-column: span 4; }
+    .tile.t-4 { grid-column: span 4; }
+    .tile.t-5 { grid-column: span 4; }
+    @media (max-width: 900px) {
+        .tile { grid-column: span 12 !important; aspect-ratio: 4/3; }
+    }
+
+    /* ============== specs ============== */
+    .specs-wrap { display: grid; grid-template-columns: 1fr 1.4fr; gap: 64px; align-items: start; }
+    .specs {
+        border-top: 1px solid var(--line);
+    }
+    .specs .row {
+        display: grid; grid-template-columns: 200px 1fr 80px;
+        align-items: center;
+        padding: 22px 0;
+        border-bottom: 1px solid var(--line);
+        gap: 24px;
+    }
+    .specs .row .k { font-family: var(--mono); font-size: 11px; letter-spacing: 0.2em; color: var(--muted); text-transform: uppercase; }
+    .specs .row .v { font-family: var(--serif); font-size: 22px; color: var(--ink); }
+    .specs .row .u { font-family: var(--mono); font-size: 11px; color: var(--muted); text-align: right; }
+    .specs-wrap .visual {
+        position: relative; border-radius: 20px; overflow: hidden;
+        border: 1px solid var(--line);
+        aspect-ratio: 4/5;
+        background: linear-gradient(160deg, #1a1a1d, #0e0e10);
+    }
+    .specs-wrap .visual img { width: 100%; height: 100%; object-fit: cover; }
+    .specs-wrap .visual .grid-overlay {
+        position: absolute; inset: 0; pointer-events: none;
+        background-image:
+            linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+        background-size: 40px 40px;
+    }
+    @media (max-width: 900px) {
+        .specs-wrap { grid-template-columns: 1fr; }
+        .specs .row { grid-template-columns: 1fr 1fr; }
+        .specs .row .u { display: none; }
+    }
+
+    /* ============== colors ============== */
+    .colors { display: grid; grid-template-columns: 1.1fr 1fr; gap: 64px; align-items: center; }
+    .swatches { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+    .swatch {
+        position: relative; aspect-ratio: 1/1; border-radius: 14px;
+        border: 1px solid var(--line);
+        overflow: hidden;
+        cursor: pointer;
+        transition: transform 0.3s ease, border-color 0.3s ease;
+    }
+    .swatch:hover { transform: translateY(-4px); border-color: var(--accent); }
+    .swatch.active { border-color: var(--accent); box-shadow: 0 0 0 2px rgba(216,199,155,0.2); }
+    .swatch .lbl {
+        position: absolute; left: 10px; bottom: 10px; right: 10px;
+        font-family: var(--mono); font-size: 10px; letter-spacing: 0.16em;
+        color: var(--ink); text-transform: uppercase;
+        text-shadow: 0 1px 2px rgba(0,0,0,0.6);
+    }
+    .swatch[data-color="espresso"] { background: linear-gradient(160deg, #4a3a2c, #2a201a); }
+    .swatch[data-color="rust"]     { background: linear-gradient(160deg, #c66a3a, #7a3a1a); }
+    .swatch[data-color="moss"]     { background: linear-gradient(160deg, #6b7a52, #38422a); }
+    .swatch[data-color="slate"]    { background: linear-gradient(160deg, #4a5560, #2a3038); }
+    @media (max-width: 900px) {
+        .colors { grid-template-columns: 1fr; }
+    }
+
+    /* ============== testimonials ============== */
+    .quotes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .quote {
+        padding: 32px; border: 1px solid var(--line);
+        background: var(--bg-2); border-radius: 18px;
+        display: flex; flex-direction: column; gap: 24px;
+    }
+    .quote blockquote {
+        margin: 0; font-family: var(--serif); font-style: italic;
+        font-size: 20px; line-height: 1.4; color: var(--ink);
+    }
+    .quote .who { display: flex; align-items: center; gap: 12px; }
+    .quote .avatar {
+        width: 36px; height: 36px; border-radius: 50%;
+        background: linear-gradient(160deg, var(--accent), var(--accent-2));
+        color: #000; display: grid; place-items: center;
+        font-family: var(--mono); font-size: 13px; font-weight: 600;
+    }
+    .quote .who .name { font-size: 13px; color: var(--ink); }
+    .quote .who .role { font-size: 11px; color: var(--muted); letter-spacing: 0.16em; text-transform: uppercase; }
+    @media (max-width: 900px) { .quotes { grid-template-columns: 1fr; } }
+
+    /* ============== pricing / CTA ============== */
+    .cta {
+        position: relative;
+        padding: 120px 0;
+        background:
+            radial-gradient(ellipse at 50% 0%, rgba(216,199,155,0.08), transparent 60%),
+            var(--bg);
+        border-top: 1px solid var(--line);
+        overflow: hidden;
+    }
+    .cta .container {
+        display: grid; grid-template-columns: 1.2fr 1fr; gap: 64px; align-items: center;
+    }
+    .cta .price-card {
+        background: var(--bg-2); border: 1px solid var(--line);
+        border-radius: 20px; padding: 36px;
+        box-shadow: 0 30px 80px -20px rgba(0,0,0,0.6);
+    }
+    .cta .price-card .name {
+        font-family: var(--mono); font-size: 11px; letter-spacing: 0.3em;
+        color: var(--accent); text-transform: uppercase;
+    }
+    .cta .price-card .price {
+        font-family: var(--serif); font-size: 72px; line-height: 1; margin: 12px 0 6px;
+    }
+    .cta .price-card .price small { font-size: 16px; color: var(--muted); margin-left: 6px; }
+    .cta .price-card .note { color: var(--muted); font-size: 13px; margin-bottom: 28px; }
+    .cta .size-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px; }
+    .cta .size-row button {
+        padding: 10px 14px; min-width: 48px;
+        background: transparent; color: var(--ink-2);
+        border: 1px solid var(--line); border-radius: 10px;
+        font-family: var(--mono); font-size: 12px;
+        transition: all 0.2s ease;
+    }
+    .cta .size-row button:hover { border-color: var(--ink-2); }
+    .cta .size-row button.active {
+        background: var(--ink); color: var(--bg); border-color: var(--ink);
+    }
+    .cta .actions { display: flex; gap: 12px; flex-wrap: wrap; }
+    .cta .features-list {
+        margin-top: 28px; padding-top: 24px; border-top: 1px solid var(--line);
+        display: grid; grid-template-columns: 1fr 1fr; gap: 12px 24px;
+        font-size: 13px; color: var(--ink-2);
+    }
+    .cta .features-list span::before { content: "✓"; color: var(--accent); margin-right: 8px; }
+
+    @media (max-width: 900px) {
+        .cta .container { grid-template-columns: 1fr; }
+    }
+
+    /* ============== footer ============== */
+    footer {
+        background: #070708;
+        border-top: 1px solid var(--line);
+        padding: 80px 0 32px;
+    }
+    .foot-grid {
+        display: grid; grid-template-columns: 2fr repeat(3, 1fr); gap: 48px;
+        margin-bottom: 64px;
+    }
+    .foot-grid h4 {
+        font-family: var(--mono); font-size: 11px; letter-spacing: 0.25em;
+        color: var(--muted); text-transform: uppercase; margin: 0 0 16px;
+    }
+    .foot-grid ul { list-style: none; margin: 0; padding: 0; }
+    .foot-grid li { margin-bottom: 10px; }
+    .foot-grid a { color: var(--ink-2); font-size: 14px; transition: color 0.2s; }
+    .foot-grid a:hover { color: var(--accent); }
+    .foot-grid .brand-line {
+        font-family: var(--serif); font-size: 28px; line-height: 1.2; color: var(--ink);
+    }
+    .foot-grid .brand-line span { color: var(--accent); }
+    .foot-grid .newsletter { display: flex; margin-top: 16px; }
+    .foot-grid .newsletter input {
+        flex: 1; padding: 12px 14px; background: var(--bg-2);
+        border: 1px solid var(--line); border-right: 0; border-radius: 10px 0 0 10px;
+        color: var(--ink); font-family: var(--sans); font-size: 13px;
+        outline: none;
+    }
+    .foot-grid .newsletter input:focus { border-color: var(--accent); }
+    .foot-grid .newsletter button {
+        padding: 0 18px; background: var(--ink); color: var(--bg);
+        border: 0; border-radius: 0 10px 10px 0;
+        font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase;
+    }
+    .foot-grid .newsletter button:hover { background: var(--accent); }
+
+    .foot-bot {
+        display: flex; justify-content: space-between; align-items: center;
+        padding-top: 24px; border-top: 1px solid var(--line);
+        font-family: var(--mono); font-size: 11px; letter-spacing: 0.16em;
+        color: var(--muted); text-transform: uppercase;
+        flex-wrap: wrap; gap: 16px;
+    }
+
+    @media (max-width: 900px) {
+        .foot-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 600px) {
+        .foot-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ============== reveal on scroll ============== */
+    .reveal {
+        opacity: 0; transform: translateY(24px);
+        transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .reveal.in { opacity: 1; transform: translateY(0); }
+
+    /* ============== loader ============== */
+    .loader {
+        position: fixed; inset: 0; background: var(--bg);
+        display: flex; align-items: center; justify-content: center;
+        flex-direction: column; gap: 18px; z-index: 100;
+        transition: opacity 0.6s ease;
+    }
+    .loader.hidden { opacity: 0; pointer-events: none; }
+    .loader .ring {
+        width: 36px; height: 36px; border-radius: 50%;
+        border: 1px solid rgba(255,255,255,0.15);
+        border-top-color: var(--accent);
+        animation: spin 1s linear infinite;
+    }
+    .loader .label { font-size: 11px; letter-spacing: 0.4em; color: var(--muted); text-transform: uppercase; }
+    .loader .count { font-family: var(--mono); font-size: 12px; color: var(--ink); }
+    @keyframes spin { to { transform: rotate(360deg); } }
+</style>
+</head>
+<body>
+
+<!-- ============== LOADER ============== -->
+<div class="loader" id="loader">
+    <div class="ring"></div>
+    <div class="label">Loading SS-26</div>
+    <div class="count" id="count">0 / 300</div>
+</div>
+
+<!-- ============== NAV ============== -->
+<nav class="nav" id="nav">
+    <a class="brand" href="#top">KRO<span>·</span>FLITE</a>
+    <ul>
+        <li><a href="#features">Features</a></li>
+        <li><a href="#construction">Construction</a></li>
+        <li><a href="#specs">Specs</a></li>
+        <li><a href="#colors">Colors</a></li>
+        <li><a href="#reviews">Reviews</a></li>
+    </ul>
+    <a href="#buy" class="cta">Pre-order</a>
+    <button class="menu" aria-label="Menu">Menu</button>
+</nav>
+
+<!-- ============== HERO ============== -->
+<header class="hero" id="top">
+    <div class="container">
+        <div>
+            <span class="badge"><span class="dot"></span>SS-26 · Spring Drop · Limited 2,000 pairs</span>
+            <h1 class="h-display">Built layer<br/>by <em>layer</em>.</h1>
+            <p class="lede">A modular four-piece sandal engineered for trail, water and city. Breathable cage. Anatomical footbed. Grip-grade outsole. No glue, no compromise.</p>
+            <div class="actions">
+                <a href="#buy" class="btn btn-primary">Pre-order · $148
+                    <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+                </a>
+                <a href="#construction" class="btn btn-ghost">See the build</a>
+            </div>
+            <div class="stats">
+                <div class="stat"><div class="v">4</div><div class="l">Modular parts</div></div>
+                <div class="stat"><div class="v">320<span style="font-size:14px;color:var(--muted)">g</span></div><div class="l">Per shoe (M9)</div></div>
+                <div class="stat"><div class="v">100%</div><div class="l">Recyclable</div></div>
+            </div>
+        </div>
+        <div class="visual">
+            <div class="price-tag">$148</div>
+            <img src="frames/frame_0001.jpg" alt="KRO·FLITE SS-26 sandal" />
+            <div class="chip"><span class="swatch"></span> Espresso · 01</div>
+        </div>
+    </div>
+</header>
+
+<!-- ============== FEATURES ============== -->
+<section class="section-pad" id="features">
+    <div class="container">
+        <div class="features-head reveal">
+            <div>
+                <div class="eyebrow">Why SS-26</div>
+                <h2 class="h-section">A sandal that <em>thinks</em><br/>in four parts.</h2>
+            </div>
+            <p class="lede">Most sandals are one molded piece fighting your foot. SS-26 separates concerns: cage holds, footbed cushions, tread grips. Each part is replaceable, recyclable, and tuned for the way you actually walk.</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature reveal">
+                <div class="icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 12c4-6 14-6 18 0M3 12c4 6 14 6 18 0"/><circle cx="12" cy="12" r="3"/></svg>
+                </div>
+                <div class="num">01 · Cage</div>
+                <h3>Breathable one-piece upper</h3>
+                <p>3D-printed polymer shell with 1,200 micro-perforations. Wet-dry, hot-cold, it breathes with your foot instead of trapping it.</p>
+            </div>
+            <div class="feature reveal">
+                <div class="icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 18l4-12 4 8 4-6 4 10z"/></svg>
+                </div>
+                <div class="num">02 · Footbed</div>
+                <h3>Anatomical cork-blend</h3>
+                <p>A contoured cork + EVA footbed that molds to your arch over the first ten miles, then holds. Removable, washable, replaceable.</p>
+            </div>
+            <div class="feature reveal">
+                <div class="icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="8" width="18" height="8" rx="4"/><path d="M7 12h2M11 12h2M15 12h2"/></svg>
+                </div>
+                <div class="num">03 · Outsole</div>
+                <h3>Grip-grade vulcanized rubber</h3>
+                <p>3.5mm lug pattern tuned for wet rock, packed dirt and city concrete. Siped for water channeling, not just looks.</p>
+            </div>
+            <div class="feature reveal">
+                <div class="icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2v20M2 12h20M5 5l14 14M19 5L5 19"/></svg>
+                </div>
+                <div class="num">04 · Bungee</div>
+                <h3>Quick-lace closure system</h3>
+                <p>One-pull bungee with a glove-friendly toggle. Adjust tension on the fly — tighter for trail, looser for the train.</p>
+            </div>
+            <div class="feature reveal">
+                <div class="icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l9 4-9 4-9-4 9-4z"/><path d="M3 12l9 4 9-4M3 17l9 4 9-4"/></svg>
+                </div>
+                <div class="num">05 · Stack</div>
+                <h3>Replaceable, not disposable</h3>
+                <p>Every part is a serviceable module. Worn out the outsole after 800 miles? Swap it. Keep the rest. Less waste, longer life.</p>
+            </div>
+            <div class="feature reveal">
+                <div class="icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg>
+                </div>
+                <div class="num">06 · Verified</div>
+                <h3>Field-tested for 18 months</h3>
+                <p>Two years of prototype testing across the Pacific Northwest, the Alps and Tokyo — 4,200 miles logged by 38 testers.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============== SCROLLY CONSTRUCTION (no overlay steps) ============== -->
+<section class="scrolly" id="construction">
+    <div class="scrolly-head">
+        <div>
+            <div class="eyebrow">Construction</div>
+            <h2 class="h-section" style="margin-top:14px">Disassemble it<br/>with your <em>scroll wheel</em>.</h2>
+        </div>
+    </div>
+
+    <div class="scroller" id="scroller">
+        <div class="stage">
+            <canvas id="film" width="1280" height="720"></canvas>
+        </div>
+    </div>
+</section>
+
+<!-- ============== GALLERY ============== -->
+<section class="section-pad">
+    <div class="container">
+        <div class="gallery-head reveal">
+            <div class="eyebrow">In the wild</div>
+            <h2 class="h-section">Stills from the build.</h2>
+        </div>
+        <div class="gallery">
+            <div class="tile t-1 reveal"><img src="frames/frame_0001.jpg" alt="SS-26 closed view" loading="lazy" /><div class="cap">Closed · t=0.0s</div></div>
+            <div class="tile t-2 reveal"><img src="frames/frame_0150.jpg" alt="SS-26 mid-disassembly" loading="lazy" /><div class="cap">Mid · t=5.0s</div></div>
+            <div class="tile t-3 reveal"><img src="frames/frame_0030.jpg" alt="SS-26 detail" loading="lazy" /><div class="cap">Detail · t=1.0s</div></div>
+            <div class="tile t-4 reveal"><img src="frames/frame_0060.jpg" alt="SS-26 profile" loading="lazy" /><div class="cap">Profile · t=2.0s</div></div>
+            <div class="tile t-5 reveal"><img src="frames/frame_0300.jpg" alt="SS-26 fully exploded" loading="lazy" /><div class="cap">Exploded · t=10.0s</div></div>
+        </div>
+    </div>
+</section>
+
+<!-- ============== SPECS ============== -->
+<section class="section-pad" id="specs" style="background: var(--bg-2); border-top:1px solid var(--line); border-bottom:1px solid var(--line);">
+    <div class="container">
+        <div class="specs-wrap">
+            <div class="reveal">
+                <div class="eyebrow">Specifications</div>
+                <h2 class="h-section">The <em>numbers</em><br/>behind the walk.</h2>
+                <p class="lede" style="margin-top: 16px">Every gram, lug, and millimeter is intentional. Here's the full spec sheet for SS-26 — what to expect, and what's replaceable.</p>
+                <div style="margin-top: 28px; display:flex; gap:12px; flex-wrap:wrap;">
+                    <a href="#buy" class="btn btn-primary">Buy now</a>
+                    <a href="#" class="btn btn-ghost">Download spec sheet (PDF)</a>
+                </div>
+            </div>
+            <div>
+                <div class="visual reveal" style="position:relative; border-radius:20px; overflow:hidden; border:1px solid var(--line); aspect-ratio: 4/5; background: linear-gradient(160deg, #1a1a1d, #0e0e10); margin-bottom: 24px;">
+                    <img src="frames/frame_0240.jpg" alt="SS-26 exploded" />
+                    <div class="grid-overlay"></div>
+                </div>
+                <div class="specs reveal">
+                    <div class="row"><div class="k">Weight (M9)</div><div class="v">320</div><div class="u">g / shoe</div></div>
+                    <div class="row"><div class="k">Stack height</div><div class="v">26</div><div class="u">mm</div></div>
+                    <div class="row"><div class="k">Drop</div><div class="v">4</div><div class="u">mm</div></div>
+                    <div class="row"><div class="k">Upper</div><div class="v">Recycled PA12</div><div class="u">3D-print</div></div>
+                    <div class="row"><div class="k">Footbed</div><div class="v">Cork · EVA</div><div class="u">blend</div></div>
+                    <div class="row"><div class="k">Outsole</div><div class="v">Vibram® EcoStep</div><div class="u">3.5mm</div></div>
+                    <div class="row"><div class="k">Closure</div><div class="v">Bungee · toggle</div><div class="u">one-pull</div></div>
+                    <div class="row"><div class="k">Sizes</div><div class="v">US 5 – 14</div><div class="u">unisex</div></div>
+                    <div class="row"><div class="k">Origin</div><div class="v">Porto, PT</div><div class="u">EU-made</div></div>
+                    <div class="row"><div class="k">Warranty</div><div class="v">Lifetime</div><div class="u">on cage</div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============== COLORS ============== -->
+<section class="section-pad" id="colors">
+    <div class="container">
+        <div class="colors">
+            <div class="reveal">
+                <div class="eyebrow">Colorways</div>
+                <h2 class="h-section">Four shades.<br/>One <em>stance</em>.</h2>
+                <p class="lede" style="margin-top: 16px">All colorways share the same construction — only the upper polymer and footbed tint change. Pick your frequency.</p>
+                <div id="colorMeta" style="margin-top: 28px; padding: 18px 22px; background: var(--bg-2); border: 1px solid var(--line); border-radius: 14px; max-width: 460px;">
+                    <div class="meta" style="color: var(--accent);">01 · Espresso</div>
+                    <div style="font-family: var(--serif); font-size: 24px; margin-top: 6px;">Dark-roast polymer, tan footbed.</div>
+                    <div style="color: var(--muted); font-size: 13px; margin-top: 6px;">Our flagship — pairs with denim, linen, and black.</div>
+                </div>
+            </div>
+            <div class="swatches reveal">
+                <div class="swatch active" data-color="espresso" data-name="Espresso" data-desc="Dark-roast polymer, tan footbed. Pairs with denim, linen, and black."><div class="lbl">Espresso · 01</div></div>
+                <div class="swatch" data-color="rust" data-name="Rust" data-desc="Burnt-orange polymer, natural footbed. Made for golden hour."><div class="lbl">Rust · 02</div></div>
+                <div class="swatch" data-color="moss" data-name="Moss" data-desc="Forest-green polymer, charcoal footbed. Trail-coded."><div class="lbl">Moss · 03</div></div>
+                <div class="swatch" data-color="slate" data-name="Slate" data-desc="Cool grey polymer, black footbed. The city build."><div class="lbl">Slate · 04</div></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============== REVIEWS ============== -->
+<section class="section-pad" id="reviews" style="background: var(--bg-2); border-top:1px solid var(--line); border-bottom:1px solid var(--line);">
+    <div class="container">
+        <div class="reveal" style="display:flex; justify-content:space-between; align-items:end; flex-wrap:wrap; gap:24px; margin-bottom: 56px;">
+            <div>
+                <div class="eyebrow">From the field</div>
+                <h2 class="h-section">Tested by <em>38 feet</em><br/>across 4,200 miles.</h2>
+            </div>
+            <div style="display:flex; align-items:center; gap:18px;">
+                <div style="font-family: var(--serif); font-size: 56px; line-height:1; color: var(--ink);">4.8</div>
+                <div>
+                    <div style="color: var(--accent); letter-spacing: 4px; font-size: 14px;">★★★★★</div>
+                    <div class="meta">126 early reviews</div>
+                </div>
+            </div>
+        </div>
+        <div class="quotes">
+            <div class="quote reveal">
+                <blockquote>"Replaced my Tevas and my Chacos. The bungee closure is the best idea I've seen on a sandal in ten years."</blockquote>
+                <div class="who">
+                    <div class="avatar">MR</div>
+                    <div>
+                        <div class="name">Maya R.</div>
+                        <div class="role">PNW Tester · 800mi</div>
+                    </div>
+                </div>
+            </div>
+            <div class="quote reveal">
+                <blockquote>"Light enough for a thru-hike, clean enough for a restaurant. The replaceable outsole is genuinely the future."</blockquote>
+                <div class="who">
+                    <div class="avatar">JK</div>
+                    <div>
+                        <div class="name">Jonas K.</div>
+                        <div class="role">Alps Tester · 1,200mi</div>
+                    </div>
+                </div>
+            </div>
+            <div class="quote reveal">
+                <blockquote>"Wore them on a 14-day Japan trip — Tokyo trains, mountain temples, coastal walks. Never wanted another shoe."</blockquote>
+                <div class="who">
+                    <div class="avatar">SH</div>
+                    <div>
+                        <div class="name">Sora H.</div>
+                        <div class="role">Tokyo Tester · 600mi</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============== CTA / PRICING ============== -->
+<section class="cta" id="buy">
+    <div class="container">
+        <div class="reveal">
+            <div class="eyebrow">Pre-order · Ships April 2026</div>
+            <h2 class="h-section" style="margin-top:14px">Step into <em>SS-26</em>.</h2>
+            <p class="lede" style="margin-top: 16px">First production run is capped at 2,000 pairs to keep quality tight. Reserve yours now — full refund up to 30 days before ship.</p>
+            <ul class="features-list">
+                <span>Lifetime cage warranty</span>
+                <span>Free shipping in EU/US/JP</span>
+                <span>30-day fit guarantee</span>
+                <span>Recyclable end-of-life</span>
+            </ul>
+        </div>
+        <div class="price-card reveal">
+            <div class="name">SS-26 · Single Pair</div>
+            <div class="price">$148<small>USD</small></div>
+            <div class="note">Includes 1 cage, 1 footbed, 1 outsole, 1 bungee. Spare parts sold separately.</div>
+            <div class="eyebrow" style="font-size:10px;">Size (US unisex)</div>
+            <div class="size-row" id="sizeRow">
+                <button>6</button><button>7</button><button class="active">8</button><button>9</button>
+                <button>10</button><button>11</button><button>12</button><button>13</button>
+            </div>
+            <div class="actions">
+                <button class="btn btn-primary" style="flex:1; justify-content:center;">Add to bag
+                    <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+                </button>
+                <button class="btn btn-ghost">Save</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============== FOOTER ============== -->
+<footer>
+    <div class="container">
+        <div class="foot-grid">
+            <div>
+                <div class="brand-line">KRO<span>·</span>FLITE</div>
+                <p style="color:var(--muted); font-size: 14px; max-width: 32ch; margin: 14px 0 0;">Engineered walk footwear, made in modular pieces. Built to be replaced, not thrown away.</p>
+                <form class="newsletter" onsubmit="event.preventDefault(); this.querySelector('input').value=''; this.querySelector('button').textContent='Subscribed';">
+                    <input type="email" placeholder="Email for early access" required />
+                    <button type="submit">Join</button>
+                </form>
+            </div>
+            <div>
+                <h4>Product</h4>
+                <ul>
+                    <li><a href="#features">SS-26 Sandal</a></li>
+                    <li><a href="#construction">Construction</a></li>
+                    <li><a href="#specs">Specs</a></li>
+                    <li><a href="#colors">Colorways</a></li>
+                    <li><a href="#">Replacement parts</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Sustainability</a></li>
+                    <li><a href="#">Field journal</a></li>
+                    <li><a href="#">Press kit</a></li>
+                    <li><a href="#">Careers</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="#">Sizing guide</a></li>
+                    <li><a href="#">Shipping</a></li>
+                    <li><a href="#">Returns</a></li>
+                    <li><a href="#">Warranty</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="foot-bot">
+            <div>© 2026 KRO·FLITE Footwear · Porto, PT</div>
+            <div>Designed in EU · Made for anywhere</div>
+        </div>
+    </div>
+</footer>
+
+<script>
+/* ============== scrolly film engine (no overlay) ============== */
+(() => {
+    const FRAME_COUNT = 300;
+    const film = document.getElementById('film');
+    const ctx = film.getContext('2d', { alpha: false });
+    const loader = document.getElementById('loader');
+    const countEl = document.getElementById('count');
+
+    function fitCanvas() {
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        const w = window.innerWidth, h = window.innerHeight;
+        const tr = w / h, sr = 1280 / 720;
+        let dw, dh, dx, dy;
+        if (tr > sr) { dw = w; dh = w / sr; dx = 0; dy = (h - dh) / 2; }
+        else         { dh = h; dw = h * sr; dx = (w - dw) / 2; dy = 0; }
+        film.style.width = w + 'px';
+        film.style.height = h + 'px';
+        film.width = Math.round(w * dpr);
+        film.height = Math.round(h * dpr);
+        film._dx = dx * dpr; film._dy = dy * dpr;
+        film._dw = dw * dpr; film._dh = dh * dpr;
+        ctx.imageSmoothingEnabled = true;
+        ctx.imageSmoothingQuality = 'high';
+    }
+    fitCanvas();
+    window.addEventListener('resize', () => { fitCanvas(); requestDraw(); });
+
+    const frames = new Array(FRAME_COUNT).fill(null);
+    let loaded = 0, firstDrawn = false;
+    let allFramesLoaded = false, windowLoaded = false;
+
+    function loadOne(i) {
+        return new Promise((resolve) => {
+            const img = new Image();
+            img.decoding = 'async';
+            img.onload = () => { frames[i] = img; loaded++; countEl.textContent = `${loaded} / ${FRAME_COUNT}`; resolve(); };
+            img.onerror = () => { loaded++; countEl.textContent = `${loaded} / ${FRAME_COUNT}`; resolve(); };
+            img.src = `frames/frame_${String(i + 1).padStart(4, '0')}.jpg`;
+        });
+    }
+
+    async function preloadAll() {
+        const pool = 16; let next = 0;
+        const workers = Array.from({ length: pool }, async () => {
+            while (true) {
+                const i = next++;
+                if (i >= FRAME_COUNT) return;
+                await loadOne(i);
+                if (!firstDrawn && loaded >= 4) { drawFrame(0); firstDrawn = true; }
+            }
+        });
+        await Promise.all(workers);
+        allFramesLoaded = true;
+        checkHideLoader();
+        requestDraw();
+    }
+
+    function drawFrame(i) {
+        if (i < 0) i = 0; if (i > FRAME_COUNT - 1) i = FRAME_COUNT - 1;
+        ctx.fillStyle = '#141416';
+        ctx.fillRect(0, 0, film.width, film.height);
+        const img = frames[i];
+        if (img && img.complete && img.naturalWidth) {
+            ctx.drawImage(img, film._dx, film._dy, film._dw, film._dh);
+        }
+    }
+
+    function progressToFrame(p) {
+        const start = 100/1200, end = 1100/1200;
+        const t = Math.max(0, Math.min(1, (p - start) / (end - start)));
+        return Math.min(FRAME_COUNT - 1, Math.floor(t * (FRAME_COUNT - 1)));
+    }
+
+    let lastFrame = -1, queued = false;
+    function requestDraw() {
+        if (queued) return;
+        queued = true;
+        requestAnimationFrame(() => {
+            queued = false;
+            const doc = document.documentElement;
+            const top = window.scrollY || doc.scrollTop;
+            const max = (doc.scrollHeight - window.innerHeight);
+            const p = max > 0 ? top / max : 0;
+            const f = progressToFrame(p);
+            if (f !== lastFrame) { drawFrame(f); lastFrame = f; }
+        });
+    }
+
+    function checkHideLoader() {
+        if (allFramesLoaded && windowLoaded) {
+            loader.classList.add('hidden');
+            setTimeout(() => loader.remove(), 700);
+        }
+    }
+
+    window.addEventListener('load', () => {
+        windowLoaded = true;
+        checkHideLoader();
+    });
+
+    window.addEventListener('scroll', requestDraw, { passive: true });
+    window.addEventListener('resize', requestDraw);
+    preloadAll();
+    requestDraw();
+})();
+
+/* ============== nav scrolled state ============== */
+(() => {
+    const nav = document.getElementById('nav');
+    const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 16);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+})();
+
+/* ============== reveal on scroll ============== */
+(() => {
+    const els = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+            if (e.isIntersecting) {
+                e.target.classList.add('in');
+                io.unobserve(e.target);
+            }
+        });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    els.forEach((el) => io.observe(el));
+})();
+
+/* ============== swatches ============== */
+(() => {
+    const swatches = document.querySelectorAll('.swatch');
+    const meta = document.getElementById('colorMeta');
+    swatches.forEach((sw) => {
+        sw.addEventListener('click', () => {
+            swatches.forEach((s) => s.classList.remove('active'));
+            sw.classList.add('active');
+            const num = String(parseInt(sw.dataset.color, 36) + 1).padStart(2, '0');
+            const label = sw.dataset.color.charAt(0).toUpperCase() + sw.dataset.color.slice(1);
+            meta.innerHTML = `
+                <div class="meta" style="color: var(--accent);">${num} · ${sw.dataset.color}</div>
+                <div style="font-family: var(--serif); font-size: 24px; margin-top: 6px;">${label} colorway.</div>
+                <div style="color: var(--muted); font-size: 13px; margin-top: 6px;">${sw.dataset.desc}</div>`;
+        });
+    });
+})();
+
+/* ============== size buttons ============== */
+(() => {
+    const row = document.getElementById('sizeRow');
+    if (!row) return;
+    row.querySelectorAll('button').forEach((b) => {
+        b.addEventListener('click', () => {
+            row.querySelectorAll('button').forEach((x) => x.classList.remove('active'));
+            b.classList.add('active');
+        });
+    });
+})();
+
+/* ============== hero parallax tilt ============== */
+(() => {
+    const visual = document.querySelector('.hero .visual');
+    if (!visual) return;
+    visual.addEventListener('mousemove', (e) => {
+        const r = visual.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width - 0.5;
+        const y = (e.clientY - r.top)  / r.height - 0.5;
+        visual.style.transform = `perspective(900px) rotateY(${x * 6}deg) rotateX(${-y * 6}deg)`;
+    });
+    visual.addEventListener('mouseleave', () => { visual.style.transform = ''; });
+})();
+</script>
+</body>
+</html>
