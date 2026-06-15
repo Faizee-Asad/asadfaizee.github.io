@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth" style="scroll-behavior: smooth;">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ninjutsu Creative — World-Class Digital Collective</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://db.onlinewebfonts.com/c/8b75d9dcff6a48c35a46656192adf019?family=FSP+DEMO+-+PODIUM+Sharp+4.11">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com">
+    </script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        podium: ['"FSP DEMO - PODIUM Sharp 4.11"', 'sans-serif'],
+                        inter: ['Inter', 'sans-serif'],
+                    },
+                    animation: {
+                        'fade-up': 'fade-up 0.8s ease-out forwards',
+                        'fade-up-delay-1': 'fade-up 0.8s ease-out 0.2s forwards',
+                        'fade-up-delay-2': 'fade-up 0.8s ease-out 0.4s forwards',
+                        'fade-up-delay-3': 'fade-up 0.8s ease-out 0.6s forwards',
+                        'fade-up-delay-4': 'fade-up 0.8s ease-out 0.8s forwards',
+                        'fade-in': 'fade-in 0.6s ease-out forwards',
+                        'fade-in-delay': 'fade-in 0.6s ease-out 0.3s forwards',
+                        'scale-in': 'scale-in 0.5s ease-out forwards',
+                    },
+                    keyframes: {
+                        'fade-up': {
+                            'from': {
+                                opacity: '0',
+                                transform: 'translateY(30px)'
+                            },
+                            'to': {
+                                opacity: '1',
+                                transform: 'translateY(0)'
+                            },
+                        },
+                        'fade-in': {
+                            'from': {
+                                opacity: '0'
+                            },
+                            'to': {
+                                opacity: '1'
+                            },
+                        },
+                        'scale-in': {
+                            'from': {
+                                opacity: '0',
+                                transform: 'scale(0.9)'
+                            },
+                            'to': {
+                                opacity: '1',
+                                transform: 'scale(1)'
+                            },
+                        },
+                    },
+                },
+            },
+        }
+    </script>
+
+    <style>
+        /* Base styles */
+        body {
+            background-color: #000;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        /* Custom animation base states */
+        .animate-fade-up,
+        .animate-fade-up-delay-1,
+        .animate-fade-up-delay-2,
+        .animate-fade-up-delay-3,
+        .animate-fade-up-delay-4 {
+            opacity: 0;
+            animation-fill-mode: forwards;
+        }
+
+        .animate-fade-in,
+        .animate-fade-in-delay {
+            opacity: 0;
+            animation-fill-mode: forwards;
+        }
+
+        .animate-scale-in {
+            opacity: 0;
+            animation-fill-mode: forwards;
+        }
+
+        /* Video fallback */
+        video::-webkit-media-controls {
+            display: none !important;
+        }
+
+        video::-webkit-media-controls-enclosure {
+            display: none !important;
+        }
+
+        /* Smooth overlay transitions */
+        .menu-overlay-enter {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .menu-overlay-exit {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #0a0a0a;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        /* Selection */
+        ::selection {
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <!-- React + ReactDOM CDN -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js">
+    </script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js">
+    </script>
+
+    <!-- Babel standalone for JSX -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js">
+    </script>
+
+    <script type="text/babel" data-presets="react">
+        const { useState, useEffect, useCallback, useRef } = React;
+
+        // ──────────────────────────────────────
+        // Lucide-style Icon Components
+        // ──────────────────────────────────────
+        const Crown = ({ className = "w-6 h-6", ...props }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+                className={className} {...props}>
+                <path d="M2 4l3 12h14l3-12-6 7-4-7-4 7-6-7z" />
+                <path d="M2 18h20" />
+            </svg>
+        );
+
+        const ArrowUpRight = ({ className = "w-6 h-6", ...props }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+                className={className} {...props}>
+                <path d="M7 17L17 7" />
+                <path d="M7 7h10v10" />
+            </svg>
+        );
+
+        const Award = ({ className = "w-6 h-6", ...props }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+                className={className} {...props}>
+                <circle cx="12" cy="8" r="7" />
+                <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88" />
+            </svg>
+        );
+
+        const X = ({ className = "w-6 h-6", ...props }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+                className={className} {...props}>
+                <path d="M18 6 6 18" />
+                <path d="M6 6l12 12" />
+            </svg>
+        );
+
+        const Sparkles = ({ className = "w-6 h-6", ...props }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+                className={className} {...props}>
+                <path d="M12 3l2 7 7 2-7 2-2 7-2-7-7-2 7-2z" />
+                <path d="M18 16l1 3 3 1-3 1-1 3-1-3-3-1 3-1z" />
+            </svg>
+        );
+
+        const Zap = ({ className = "w-6 h-6", ...props }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+                className={className} {...props}>
+                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+            </svg>
+        );
+
+        const Target = ({ className = "w-6 h-6", ...props }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+                className={className} {...props}>
+                <circle cx="12" cy="12" r="10" />
+                <circle cx="12" cy="12" r="6" />
+                <circle cx="12" cy="12" r="2" />
+            </svg>
+        );
+
+        const PenTool = ({ className = "w-6 h-6", ...props }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+                className={className} {...props}>
+                <path d="M12 19l7-7 3 3-7 7-3-3z" />
+                <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z" />
+                <path d="M2 2l7.586 7.586" />
+                <circle cx="11" cy="11" r="2" />
+            </svg>
+        );
+
+        const Globe = ({ className = "w-6 h-6", ...props }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+                className={className} {...props}>
+                <circle cx="12" cy="12" r="10" />
+                <line x1="2" y1="12" x2="22" y2="12" />
+                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+            </svg>
+        );
+
+        // ──────────────────────────────────────
+        // Navbar Component
+        // ──────────────────────────────────────
+        const Navbar = ({ isScrolled, onMenuToggle, menuOpen }) => {
+            const navLinks = [
+                { label: 'Projects', href: '#projects' },
+                { label: 'Studio', href: '#studio' },
+                { label: 'Offerings', href: '#offerings' },
+                { label: 'Inquire', href: '#inquire' },
+            ];
+
+            return (
+                <nav
+                    className={`fixed top-0 left-0 right-0 z-40 transition-all duration-500 ${
+                        isScrolled
+                            ? 'bg-black/90 backdrop-blur-md shadow-[0_1px_0_rgba(255,255,255,0.05)]'
+                            : 'bg-gradient-to-b from-black/70 to-transparent'
+                    }`}
+                >
+                    <div className="flex items-center justify-between px-6 sm:px-10 lg:px-16 py-5 lg:py-7">
+                        {/* Brand */}
+                        <a
+                            href="#"
+                            className="font-podium text-white font-bold uppercase text-2xl sm:text-3xl tracking-wider select-none"
+                            onClick={(e) => {
+                                e.preventDefault();
+                                window.scrollTo({ top: 0, behavior: 'smooth' });
+                            }}
+                        >
+                            Ninjutsu Creative
+                        </a>
+
+                        {/* Center nav links (hidden below md) */}
+                        <div className="hidden md:flex items-center gap-8 lg:gap-10">
+                            {navLinks.map((link) => (
+                                <a
+                                    key={link.label}
+                                    href={link.href}
+                                    className="font-inter text-sm text-white/80 tracking-widest uppercase hover:text-white transition-colors duration-300"
+                                >
+                                    {link.label}
+                                </a>
+                            ))}
+                        </div>
+
+                        {/* Right: GET IN TOUCH (hidden below md) */}
+                        <div className="hidden md:block">
+                            <a
+                                href="#inquire"
+                                className="group inline-flex items-center gap-2 border border-white/30 hover:border-white/60 px-6 py-3 text-xs tracking-widest uppercase font-inter text-white hover:bg-white/10 transition-all duration-300"
+                            >
+                                GET IN TOUCH
+                                <ArrowUpRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                            </a>
+                        </div>
+
+                        {/* Hamburger (visible below md) */}
+                        <button
+                            onClick={onMenuToggle}
+                            className="md:hidden flex flex-col space-y-1.5 p-2 -mr-2 focus:outline-none"
+                            aria-label="Toggle menu"
+                        >
+                            <div className="w-6 h-0.5 bg-white transition-all duration-300"></div>
+                            <div className="w-6 h-0.5 bg-white transition-all duration-300"></div>
+                            <div className="w-4 h-0.5 bg-white transition-all duration-300 ml-auto"></div>
+                        </button>
+                    </div>
+                </nav>
+            );
+        };
+
+        // ──────────────────────────────────────
+        // Mobile Menu Overlay
+        // ──────────────────────────────────────
+        const MobileMenu = ({ isOpen, onClose }) => {
+            const navLinks = [
+                { label: 'Projects', href: '#projects' },
+                { label: 'Studio', href: '#studio' },
+                { label: 'Offerings', href: '#offerings' },
+                { label: 'Inquire', href: '#inquire' },
+            ];
+
+            const handleLinkClick = (href) => {
+                onClose();
+                setTimeout(() => {
+                    const el = document.querySelector(href);
+                    if (el) {
+                        el.scrollIntoView({ behavior: 'smooth' });
+                    }
+                }, 400);
+            };
+
+            return (
+                <div
+                    className={`fixed inset-0 z-50 bg-black/95 backdrop-blur-sm flex flex-col transition-all duration-500 ${
+                        isOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
+                    }`}
+                >
+                    {/* Header row */}
+                    <div className="flex items-center justify-between px-6 sm:px-10 py-5 lg:py-7">
+                        <span className="font-podium text-white font-bold uppercase text-2xl sm:text-3xl tracking-wider select-none">
+                            Ninjutsu Creative
+                        </span>
+                        <button
+                            onClick={onClose}
+                            className="p-2 -mr-2 focus:outline-none"
+                            aria-label="Close menu"
+                        >
+                            <X className="w-7 h-7 text-white" />
+                        </button>
+                    </div>
+
+                    {/* Centered nav links */}
+                    <div className="flex-1 flex flex-col items-center justify-center gap-6 -mt-12">
+                        {navLinks.map((link, i) => (
+                            <a
+                                key={link.label}
+                                href={link.href}
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    handleLinkClick(link.href);
+                                }}
+                                className="font-podium text-4xl sm:text-5xl text-white uppercase transition-all duration-500"
+                                style={{
+                                    transitionDelay: isOpen ? `${i * 80 + 100}ms` : '0ms',
+                                    opacity: isOpen ? 1 : 0,
+                                    transform: isOpen ? 'translateY(0)' : 'translateY(20px)',
+                                }}
+                            >
+                                {link.label}
+                            </a>
+                        ))}
+
+                        {/* GET IN TOUCH button */}
+                        <a
+                            href="#inquire"
+                            onClick={(e) => {
+                                e.preventDefault();
+                                handleLinkClick('#inquire');
+                            }}
+                            className="mt-4 inline-flex items-center gap-2 border border-white/40 hover:border-white/70 px-7 py-4 text-sm tracking-widest uppercase font-inter text-white hover:bg-white/10 transition-all duration-300"
+                            style={{
+                                transitionDelay: isOpen ? `${navLinks.length * 80 + 100}ms` : '0ms',
+                                opacity: isOpen ? 1 : 0,
+                                transform: isOpen ? 'translateY(0)' : 'translateY(20px)',
+                            }}
+                        >
+                            GET IN TOUCH
+                            <ArrowUpRight className="w-4 h-4" />
+                        </a>
+                    </div>
+
+                    {/* Bottom spacer */}
+                    <div className="h-16"></div>
+                </div>
+            );
+        };
+
+        // ──────────────────────────────────────
+        // Hero Section
+        // ──────────────────────────────────────
+        const HeroSection = () => {
+            return (
+                <section id="hero" className="relative h-screen w-full overflow-hidden">
+                    {/* Background Video */}
+                    <video
+                        autoPlay
+                        muted
+                        loop
+                        playsInline
+                        className="absolute inset-0 w-full h-full object-cover"
+                        poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1920' height='1080'%3E%3Crect fill='%230a0a0a' width='1920' height='1080'/%3E%3C/svg%3E"
+                    >
+                        <source
+                            src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260606_154941_df1a96e1-a06f-450c-bd02-d863414cc1a0.mp4"
+                            type="video/mp4"
+                        />
+                    </video>
+
+                    {/* Dark overlay for text readability */}
+                    <div className="absolute inset-0 bg-black/45 z-[1]"></div>
+
+                    {/* Subtle top-to-bottom gradient for navbar blend */}
+                    <div className="absolute top-0 left-0 right-0 h-40 bg-gradient-to-b from-black/80 to-transparent z-[2]"></div>
+
+                    {/* Content */}
+                    <div className="relative z-10 flex items-center h-full px-6 sm:px-10 lg:px-16">
+                        <div className="w-full max-w-5xl">
+                            {/* Tagline */}
+                            <div className="flex items-center gap-3 mb-6 lg:mb-8 animate-fade-up">
+                                <Crown className="w-4 h-4 text-white/70" />
+                                <span className="text-white/70 text-xs sm:text-sm font-inter tracking-[0.3em] uppercase">
+                                    World-Class Digital Collective
+                                </span>
+                            </div>
+
+                            {/* Main Heading */}
+                            <h1 className="font-podium text-white uppercase leading-[0.92] tracking-tight animate-fade-up-delay-1">
+                                <span className="block text-[clamp(2.8rem,8vw,7rem)]">Shape.</span>
+                                <span className="block text-[clamp(2.8rem,8vw,7rem)]">Shatter.</span>
+                                <span className="block text-[clamp(2.8rem,8vw,7rem)]">Reign.</span>
+                            </h1>
+
+                            {/* Subtext */}
+                            <p className="text-white/70 text-sm sm:text-base font-inter leading-relaxed max-w-md mt-6 lg:mt-8 animate-fade-up-delay-2">
+                                We design, disrupt, and conquer<br />
+                                to ensure your brand doesn't just compete —{' '}
+                                <span className="text-white font-bold">it dominates.</span>
+                            </p>
+
+                            {/* CTA Row */}
+                            <div className="mt-8 lg:mt-10 flex flex-wrap items-center gap-4 sm:gap-6 animate-fade-up-delay-3">
+                                <a
+                                    href="#projects"
+                                    className="group inline-flex items-center gap-2.5 bg-black hover:bg-neutral-900 text-white px-5 sm:px-7 py-3 sm:py-4 text-[11px] sm:text-xs tracking-widest uppercase font-inter border border-white/10 hover:border-white/20 transition-all duration-300"
+                                >
+                                    SEE OUR WORK
+                                    <ArrowUpRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                                </a>
+
+                                {/* Award badge (hidden on mobile) */}
+                                <div className="hidden sm:flex items-center gap-3">
+                                    <Award className="w-8 h-8 text-white/50" />
+                                    <div className="flex flex-col">
+                                        <span className="text-white/60 text-xs tracking-wider uppercase font-inter">
+                                            Top-Rated
+                                        </span>
+                                        <span className="text-white/60 text-xs tracking-wider uppercase font-inter">
+                                            Brand Studio
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Stats Row */}
+                            <div className="mt-8 sm:mt-10 lg:mt-14 flex flex-wrap gap-6 sm:gap-12 lg:gap-16 animate-fade-up-delay-4">
+                                {[
+                                    { value: '250+', label: 'Brands Transformed' },
+                                    { value: '95%', label: 'Client Retention' },
+                                    { value: '10+', label: 'Years in the Game' },
+                                ].map((stat, i) => (
+                                    <div key={i}>
+                                        <div className="font-inter text-white text-2xl sm:text-4xl lg:text-5xl font-bold tracking-tight">
+                                            {stat.value}
+                                        </div>
+                                        <div className="text-white/50 text-[9px] sm:text-xs tracking-widest uppercase mt-1 font-inter">
+                                            {stat.label}
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Subtle scroll indicator */}
+                    <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 animate-fade-in-delay">
+                        <div className="w-5 h-8 border border-white/30 rounded-full flex justify-center pt-1.5">
+                            <div className="w-1 h-2.5 bg-white/60 rounded-full animate-pulse"></div>
+                        </div>
+                    </div>
+                </section>
+            );
+        };
+
+        // ──────────────────────────────────────
+        // Projects Section
+        // ──────────────────────────────────────
+        const ProjectsSection = () => {
+            const projects = [
+                {
+                    title: 'Nexus Protocol',
+                    category: 'Brand Identity',
+                    gradient: 'from-indigo-950 via-neutral-950 to-neutral-900',
+                    accent: 'bg-indigo-500/20',
+                },
+                {
+                    title: 'Aether Finance',
+                    category: 'Digital Product',
+                    gradient: 'from-emerald-950 via-neutral-950 to-neutral-900',
+                    accent: 'bg-emerald-500/20',
+                },
+                {
+                    title: 'Prism Studios',
+                    category: 'Web Experience',
+                    gradient: 'from-amber-950 via-neutral-950 to-neutral-900',
+                    accent: 'bg-amber-500/20',
+                },
+                {
+                    title: 'Valhalla Athletics',
+                    category: 'Campaign Strategy',
+                    gradient: 'from-rose-950 via-neutral-950 to-neutral-900',
+                    accent: 'bg-rose-500/20',
+                },
+            ];
+
+            return (
+                <section id="projects" className="relative bg-black py-24 sm:py-32 lg:py-40 px-6 sm:px-10 lg:px-16">
+                    {/* Section header */}
+                    <div className="max-w-6xl mx-auto mb-16 sm:mb-20 lg:mb-28">
+                        <div className="flex items-center gap-3 mb-4">
+                            <span className="w-8 h-[1px] bg-white/30"></span>
+                            <span className="text-white/50 text-xs tracking-[0.3em] uppercase font-inter">
+                                Selected Work
+                            </span>
+                        </div>
+                        <h2 className="font-podium text-white uppercase text-[clamp(2rem,5vw,4.5rem)] leading-[0.94] tracking-tight">
+                            Projects that<br />demand attention.
+                        </h2>
+                    </div>
+
+                    {/* Project grid */}
+                    <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
+                        {projects.map((project, i) => (
+                            <a
+                                href="#"
+                                key={i}
+                                onClick={(e) => e.preventDefault()}
+                                className="group relative overflow-hidden rounded-none border border-white/10 hover:border-white/25 transition-all duration-500"
+                            >
+                                {/* Gradient placeholder */}
+                                <div
+                                    className={`bg-gradient-to-br ${project.gradient} h-64 sm:h-80 lg:h-96 w-full relative overflow-hidden`}
+                                >
+                                    {/* Abstract geometric accent */}
+                                    <div
+                                        className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 sm:w-64 sm:h-64 rounded-full ${project.accent} blur-3xl opacity-40 group-hover:opacity-60 group-hover:scale-125 transition-all duration-700`}
+                                    ></div>
+                                    {/* Grid pattern overlay */}
+                                    <div
+                                        className="absolute inset-0 opacity-[0.03]"
+                                        style={{
+                                            backgroundImage: 'linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)',
+                                            backgroundSize: '40px 40px',
+                                        }}
+                                    ></div>
+                                    {/* Project number */}
+                                    <span className="absolute top-5 right-6 font-podium text-white/15 text-7xl sm:text-8xl select-none">
+                                        {String(i + 1).padStart(2, '0')}
+                                    </span>
+                                </div>
+
+                                {/* Card info */}
+                                <div className="absolute bottom-0 left-0 right-0 p-5 sm:p-7 bg-gradient-to-t from-black/90 via-black/60 to-transparent">
+                                    <div className="flex items-end justify-between">
+                                        <div>
+                                            <span className="text-white/50 text-[10px] sm:text-xs tracking-widest uppercase font-inter">
+                                                {project.category}
+                                            </span>
+                                            <h3 className="font-podium text-white text-xl sm:text-2xl lg:text-3xl uppercase mt-1 tracking-tight">
+                                                {project.title}
+                                            </h3>
+                                        </div>
+                                        <div className="w-10 h-10 sm:w-12 sm:h-12 border border-white/20 rounded-full flex items-center justify-center group-hover:bg-white group-hover:text-black transition-all duration-400">
+                                            <ArrowUpRight className="w-4 h-4 sm:w-5 sm:h-5" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        ))}
+                    </div>
+
+                    {/* View all link */}
+                    <div className="max-w-6xl mx-auto mt-10 sm:mt-14 text-center">
+                        <a
+                            href="#"
+                            onClick={(e) => e.preventDefault()}
+                            className="inline-flex items-center gap-2 font-inter text-white/60 hover:text-white text-xs tracking-widest uppercase transition-colors duration-300"
+                        >
+                            View All Projects
+                            <ArrowUpRight className="w-3 h-3" />
+                        </a>
+                    </div>
+                </section>
+            );
+        };
+
+        // ──────────────────────────────────────
+        // Studio Section
+        // ──────────────────────────────────────
+        const StudioSection = () => {
+            return (
+                <section id="studio" className="relative bg-neutral-950 py-24 sm:py-32 lg:py-40 px-6 sm:px-10 lg:px-16">
+                    <div className="max-w-6xl mx-auto">
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+                            {/* Left: Large statement */}
+                            <div>
+                                <div className="flex items-center gap-3 mb-6">
+                                    <span className="w-8 h-[1px] bg-white/30"></span>
+                                    <span className="text-white/50 text-xs tracking-[0.3em] uppercase font-inter">
+                                        Our Studio
+                                    </span>
+                                </div>
+                                <h2 className="font-podium text-white uppercase text-[clamp(2rem,5vw,4rem)] leading-[0.94] tracking-tight mb-8">
+                                    We don't follow trends.
+                                    <br />
+                                    <span className="text-white/60">We set them.</span>
+                                </h2>
+                                <p className="text-white/60 font-inter text-sm sm:text-base leading-relaxed max-w-lg">
+                                    Ninjutsu Creative is a world-class digital collective built on the principles of
+                                    precision, strategy, and relentless execution. We partner with ambitious brands
+                                    to craft experiences that resonate, disrupt markets, and leave lasting impressions.
+                                </p>
+                                <p className="text-white/40 font-inter text-sm sm:text-base leading-relaxed max-w-lg mt-4">
+                                    Every project is a mission. Every deliverable is a statement. We move with the
+                                    speed and agility of a strike team — and the creative firepower of a global studio.
+                                </p>
+                            </div>
+
+                            {/* Right: Values / Accolades */}
+                            <div className="space-y-6 sm:space-y-8">
+                                {[
+                                    {
+                                        icon: <Target className="w-5 h-5" />,
+                                        title: 'Precision Strategy',
+                                        desc: 'Data-driven decisions backed by deep market intelligence and creative intuition.',
+                                    },
+                                    {
+                                        icon: <Zap className="w-5 h-5" />,
+                                        title: 'Rapid Execution',
+                                        desc: 'From concept to launch in record time — without compromising on craft or quality.',
+                                    },
+                                    {
+                                        icon: <Globe className="w-5 h-5" />,
+                                        title: 'Global Reach',
+                                        desc: 'Studios in three continents, serving clients across 40+ countries worldwide.',
+                                    },
+                                ].map((item, i) => (
+                                    <div
+                                        key={i}
+                                        className="flex gap-5 p-5 sm:p-6 border border-white/10 hover:border-white/25 transition-all duration-400 group"
+                                    >
+                                        <div className="flex-shrink-0 w-10 h-10 border border-white/20 rounded-full flex items-center justify-center text-white/60 group-hover:text-white group-hover:border-white/40 transition-all duration-300">
+                                            {item.icon}
+                                        </div>
+                                        <div>
+                                            <h4 className="font-podium text-white text-lg sm:text-xl uppercase tracking-tight">
+                                                {item.title}
+                                            </h4>
+                                            <p className="text-white/50 font-inter text-xs sm:text-sm leading-relaxed mt-1.5">
+                                                {item.desc}
+                                            </p>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            );
+        };
+
+        // ──────────────────────────────────────
+        // Offerings Section
+        // ──────────────────────────────────────
+        const OfferingsSection = () => {
+            const offerings = [
+                {
+                    icon: <PenTool className="w-6 h-6" />,
+                    title: 'Brand Design',
+                    items: ['Identity Systems', 'Art Direction', 'Visual Language', 'Brand Strategy'],
+                },
+                {
+                    icon: <Sparkles className="w-6 h-6" />,
+                    title: 'Digital Product',
+                    items: ['Web Experiences', 'Mobile Apps', 'Interactive Platforms', 'UI/UX Design'],
+                },
+                {
+                    icon: <Target className="w-6 h-6" />,
+                    title: 'Campaign Strategy',
+                    items: ['Go-to-Market', 'Content Systems', 'Performance Creative', 'Social Strategy'],
+                },
+                {
+                    icon: <Globe className="w-6 h-6" />,
+                    title: 'Motion & Film',
+                    items: ['Brand Films', '3D Animation', 'Motion Systems', 'Post-Production'],
+                },
+            ];
+
+            return (
+                <section id="offerings" className="relative bg-black py-24 sm:py-32 lg:py-40 px-6 sm:px-10 lg:px-16">
+                    <div className="max-w-6xl mx-auto">
+                        {/* Section header */}
+                        <div className="mb-16 sm:mb-20 lg:mb-28">
+                            <div className="flex items-center gap-3 mb-4">
+                                <span className="w-8 h-[1px] bg-white/30"></span>
+                                <span className="text-white/50 text-xs tracking-[0.3em] uppercase font-inter">
+                                    Capabilities
+                                </span>
+                            </div>
+                            <h2 className="font-podium text-white uppercase text-[clamp(2rem,5vw,4.5rem)] leading-[0.94] tracking-tight">
+                                Everything you need
+                                <br />
+                                <span className="text-white/50">to dominate.</span>
+                            </h2>
+                        </div>
+
+                        {/* Offerings grid */}
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+                            {offerings.map((offering, i) => (
+                                <div
+                                    key={i}
+                                    className="border border-white/10 hover:border-white/30 p-6 sm:p-8 transition-all duration-400 group"
+                                >
+                                    <div className="w-12 h-12 border border-white/20 rounded-full flex items-center justify-center text-white/50 group-hover:text-white group-hover:border-white/40 transition-all duration-300 mb-6">
+                                        {offering.icon}
+                                    </div>
+                                    <h3 className="font-podium text-white text-xl sm:text-2xl uppercase tracking-tight mb-5">
+                                        {offering.title}
+                                    </h3>
+                                    <ul className="space-y-3">
+                                        {offering.items.map((item, j) => (
+                                            <li
+                                                key={j}
+                                                className="text-white/50 font-inter text-xs sm:text-sm flex items-center gap-2"
+                                            >
+                                                <span className="w-1 h-1 bg-white/30 rounded-full flex-shrink-0"></span>
+                                                {item}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+            );
+        };
+
+        // ──────────────────────────────────────
+        // Inquire Section
+        // ──────────────────────────────────────
+        const InquireSection = () => {
+            return (
+                <section id="inquire" className="relative bg-neutral-950 py-24 sm:py-32 lg:py-40 px-6 sm:px-10 lg:px-16">
+                    <div className="max-w-4xl mx-auto text-center">
+                        <div className="flex items-center justify-center gap-3 mb-6">
+                            <span className="w-8 h-[1px] bg-white/30"></span>
+                            <span className="text-white/50 text-xs tracking-[0.3em] uppercase font-inter">
+                                Let's Collaborate
+                            </span>
+                            <span className="w-8 h-[1px] bg-white/30"></span>
+                        </div>
+
+                        <h2 className="font-podium text-white uppercase text-[clamp(2rem,6vw,5rem)] leading-[0.94] tracking-tight mb-8">
+                            Ready to
+                            <br />
+                            make moves?
+                        </h2>
+
+                        <p className="text-white/50 font-inter text-sm sm:text-base leading-relaxed max-w-lg mx-auto mb-12">
+                            Whether you're launching a new brand, reimagining an existing one, or plotting total market
+                            domination — we're the collective you want in your corner.
+                        </p>
+
+                        {/* CTA Buttons */}
+                        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6">
+                            <a
+                                href="mailto:hello@ninjutsucreative.com"
+                                className="group inline-flex items-center gap-3 bg-white hover:bg-neutral-200 text-black px-8 sm:px-10 py-4 sm:py-5 text-xs sm:text-sm tracking-widest uppercase font-inter transition-all duration-300"
+                            >
+                                Start a Project
+                                <ArrowUpRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                            </a>
+                            <a
+                                href="mailto:hello@ninjutsucreative.com"
+                                className="inline-flex items-center gap-3 border border-white/30 hover:border-white/60 text-white px-8 sm:px-10 py-4 sm:py-5 text-xs sm:text-sm tracking-widest uppercase font-inter hover:bg-white/5 transition-all duration-300"
+                            >
+                                hello@ninjutsucreative.com
+                            </a>
+                        </div>
+
+                        {/* Stats strip */}
+                        <div className="mt-16 sm:mt-20 pt-10 sm:pt-14 border-t border-white/10 flex flex-wrap justify-center gap-8 sm:gap-16 lg:gap-20">
+                            {[
+                                { value: '250+', label: 'Brands Transformed' },
+                                { value: '95%', label: 'Client Retention' },
+                                { value: '40+', label: 'Countries Reached' },
+                                { value: '10+', label: 'Years in the Game' },
+                            ].map((stat, i) => (
+                                <div key={i} className="text-center">
+                                    <div className="font-inter text-white text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight">
+                                        {stat.value}
+                                    </div>
+                                    <div className="text-white/40 text-[9px] sm:text-xs tracking-widest uppercase mt-1 font-inter">
+                                        {stat.label}
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+            );
+        };
+
+        // ──────────────────────────────────────
+        // Footer
+        // ──────────────────────────────────────
+        const Footer = () => {
+            return (
+                <footer className="relative bg-black border-t border-white/10 py-10 sm:py-14 px-6 sm:px-10 lg:px-16">
+                    <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-6">
+                        <span className="font-podium text-white/80 text-lg sm:text-xl uppercase tracking-wider">
+                            Ninjutsu Creative
+                        </span>
+                        <div className="flex items-center gap-6 sm:gap-10">
+                            {['Instagram', 'LinkedIn', 'X/Twitter', 'Behance'].map((social, i) => (
+                                <a
+                                    key={i}
+                                    href="#"
+                                    onClick={(e) => e.preventDefault()}
+                                    className="text-white/40 hover:text-white text-xs tracking-widest uppercase font-inter transition-colors duration-300"
+                                >
+                                    {social}
+                                </a>
+                            ))}
+                        </div>
+                        <span className="text-white/30 text-xs font-inter tracking-wider">
+                            © {new Date().getFullYear()} All Rights Reserved
+                        </span>
+                    </div>
+                </footer>
+            );
+        };
+
+        // ──────────────────────────────────────
+        // Main App Component
+        // ──────────────────────────────────────
+        const App = () => {
+            const [menuOpen, setMenuOpen] = useState(false);
+            const [isScrolled, setIsScrolled] = useState(false);
+
+            const handleMenuToggle = useCallback(() => {
+                setMenuOpen((prev) => !prev);
+            }, []);
+
+            const handleMenuClose = useCallback(() => {
+                setMenuOpen(false);
+            }, []);
+
+            useEffect(() => {
+                const handleScroll = () => {
+                    setIsScrolled(window.scrollY > 60);
+                };
+
+                window.addEventListener('scroll', handleScroll, { passive: true });
+                handleScroll(); // Check initial state
+
+                return () => window.removeEventListener('scroll', handleScroll);
+            }, []);
+
+            // Prevent body scroll when mobile menu is open
+            useEffect(() => {
+                if (menuOpen) {
+                    document.body.style.overflow = 'hidden';
+                } else {
+                    document.body.style.overflow = '';
+                }
+                return () => {
+                    document.body.style.overflow = '';
+                };
+            }, [menuOpen]);
+
+            return (
+                <div className="relative min-h-screen bg-black text-white antialiased">
+                    <Navbar
+                        isScrolled={isScrolled}
+                        onMenuToggle={handleMenuToggle}
+                        menuOpen={menuOpen}
+                    />
+                    <MobileMenu isOpen={menuOpen} onClose={handleMenuClose} />
+                    <HeroSection />
+                    <ProjectsSection />
+                    <StudioSection />
+                    <OfferingsSection />
+                    <InquireSection />
+                    <Footer />
+                </div>
+            );
+        };
+
+        // ──────────────────────────────────────
+        // Render
+        // ──────────────────────────────────────
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>

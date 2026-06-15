@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Architectural Studio | Modern Design</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com">
+    </script>
+    <style>
+        :root {
+            --warm-bg: #FBF9F6;
+            --dark: #1a1a1a;
+            --accent: #C4A080;
+            --muted: #8C8279;
+            --light-border: #E8E3DC;
+            --card-bg: #ffffff;
+            --dark-surface: #1C1C1C;
+            --gold: #B8977E;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #FBF9F6;
+            color: #1a1a1a;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            margin: 0;
+        }
+
+        .serif {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* ============ LOADING SCREEN ============ */
+        #loading-screen {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            background: #3E3026;
+            /* warm brown */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.6s ease, visibility 0.6s ease;
+        }
+        #loading-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+        #loading-screen .loader-text {
+            color: #E8D5C4;
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            letter-spacing: 0.05em;
+            margin-bottom: 1.5rem;
+        }
+        #loading-screen .progress-bar {
+            width: 180px;
+            height: 2px;
+            background: rgba(232, 213, 196, 0.25);
+            border-radius: 1px;
+            overflow: hidden;
+        }
+        #loading-screen .progress-fill {
+            height: 100%;
+            width: 0%;
+            background: #D4B499;
+            transition: width 0.25s ease;
+            border-radius: 1px;
+        }
+
+        /* ============ HEADER (Glass morphism) ============ */
+        #site-header {
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+            transition: background 0.45s ease, box-shadow 0.45s ease, padding 0.4s ease;
+            z-index: 99;
+        }
+        #site-header.scrolled {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(28px);
+            -webkit-backdrop-filter: blur(28px);
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+        }
+        #site-header .logo-text {
+            color: #1a1a1a;
+            transition: color 0.4s;
+        }
+
+        /* ============ MOBILE MENU ============ */
+        #mobile-menu {
+            transform: translateY(-105%);
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            pointer-events: none;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+        }
+        #mobile-menu.active {
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+        #menu-toggle span {
+            display: block;
+            height: 2px;
+            background: #1a1a1a;
+            border-radius: 2px;
+            transition: all 0.35s ease;
+            transform-origin: center;
+        }
+        #menu-toggle.menu-open span:nth-child(1) {
+            transform: rotate(45deg) translateY(8px);
+        }
+        #menu-toggle.menu-open span:nth-child(2) {
+            opacity: 0;
+        }
+        #menu-toggle.menu-open span:nth-child(3) {
+            transform: rotate(-45deg) translateY(-8px);
+            width: 24px;
+        }
+
+        /* ============ HERO ============ */
+        #hero-section {
+            position: relative;
+            height: 100vh;
+            height: 100svh;
+            overflow: hidden;
+        }
+        #hero-canvas {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            z-index: 1;
+        }
+        #hero-section::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.08) 40%, rgba(0,0,0,0.0) 70%);
+            z-index: 2;
+            pointer-events: none;
+        }
+        #hero-text {
+            position: absolute;
+            z-index: 3;
+            bottom: 2rem;
+            left: 1.5rem;
+            color: #ffffff;
+            max-width: 90vw;
+        }
+        @media (min-width: 768px) {
+            #hero-text { bottom: 3.5rem; left: 3rem; max-width: 50vw; }
+        }
+        @media (min-width: 1024px) {
+            #hero-text { bottom: 4rem; left: 5rem; max-width: 45vw; }
+        }
+
+        /* ============ SECTION DIVIDERS ============ */
+        .section-divider {
+            width: 50px;
+            height: 2px;
+            background: #C4A080;
+            margin-bottom: 1.5rem;
+            border-radius: 1px;
+        }
+
+        /* ============ HOVER LINE ============ */
+        .hover-line {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+        }
+        .hover-line::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 0;
+            height: 1.5px;
+            background: currentColor;
+            transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .hover-line:hover::after {
+            width: 100%;
+        }
+
+        /* ============ PROJECT CARDS (Horizontal Scroll) ============ */
+        #projects-horizontal {
+            cursor: grab;
+            user-select: none;
+        }
+        #projects-horizontal:active {
+            cursor: grabbing;
+        }
+        .project-card {
+            flex-shrink: 0;
+            width: 75vw;
+            max-width: 420px;
+            border-radius: 8px;
+            overflow: hidden;
+            background: #fff;
+            border: 1px solid #E8E3DC;
+            transition: box-shadow 0.45s ease, transform 0.45s ease;
+            position: relative;
+        }
+        .project-card:hover {
+            box-shadow: 0 20px 50px rgba(0,0,0,0.12);
+            transform: translateY(-4px);
+        }
+        .project-card img {
+            width: 100%;
+            height: 260px;
+            object-fit: cover;
+            transition: transform 0.7s cubic-bezier(0.4,0,0.2,1);
+        }
+        .project-card:hover img {
+            transform: scale(1.06);
+        }
+        @media (min-width: 768px) {
+            .project-card { width: 380px; }
+            .project-card img { height: 300px; }
+        }
+        @media (min-width: 1200px) {
+            .project-card { width: 440px; }
+            .project-card img { height: 340px; }
+        }
+
+        /* ============ PROCESS CARDS ============ */
+        .process-card {
+            background: #fff;
+            border: 1px solid #E8E3DC;
+            border-radius: 10px;
+            padding: 2rem 1.8rem;
+            transition: all 0.45s cubic-bezier(0.4,0,0.2,1);
+            position: relative;
+            overflow: hidden;
+        }
+        .process-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: #C4A080;
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.5s cubic-bezier(0.4,0,0.2,1);
+        }
+        .process-card:hover::before {
+            transform: scaleX(1);
+        }
+        .process-card:hover {
+            border-color: #C4A080;
+            box-shadow: 0 16px 48px rgba(0,0,0,0.08);
+            transform: translateY(-6px);
+        }
+        .process-card .step-num {
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            font-weight: 700;
+            color: #E8E3DC;
+            line-height: 1;
+            transition: color 0.45s ease;
+        }
+        .process-card:hover .step-num {
+            color: #C4A080;
+        }
+
+        /* ============ TESTIMONIAL MARQUEE ============ */
+        #testimonial-track {
+            display: flex;
+            gap: 1.5rem;
+            width: max-content;
+            animation: marqueeScroll 35s linear infinite;
+        }
+        @media (min-width: 768px) {
+            #testimonial-track { gap: 2rem; animation-duration: 45s; }
+        }
+        @keyframes marqueeScroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        #testimonial-track:hover {
+            animation-play-state: paused;
+        }
+        .testimonial-card-marquee {
+            flex-shrink: 0;
+            width: 85vw;
+            max-width: 400px;
+            background: #fff;
+            border: 1px solid #E8E3DC;
+            border-radius: 10px;
+            padding: 1.8rem;
+            transition: box-shadow 0.4s ease;
+        }
+        .testimonial-card-marquee:hover {
+            box-shadow: 0 12px 36px rgba(0,0,0,0.09);
+        }
+        @media (min-width: 640px) {
+            .testimonial-card-marquee { width: 340px; }
+        }
+
+        /* ============ SCROLLBAR ============ */
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: #F0EDE8; }
+        ::-webkit-scrollbar-thumb { background: #C4A080; border-radius: 3px; }
+
+        section[id] {
+            scroll-margin-top: 80px;
+        }
+
+        .reveal-section {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        .reveal-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        body.no-scroll {
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body class="no-scroll">
+
+    <!-- ==================== LOADING SCREEN ==================== -->
+    <div id="loading-screen">
+        <div class="loader-text">STUDIO.</div>
+        <div class="progress-bar">
+            <div id="progress-fill" class="progress-fill"></div>
+        </div>
+        <p id="load-status" class="text-[#D4B499] text-xs mt-4 tracking-widest uppercase">Loading frames...</p>
+    </div>
+
+    <!-- ==================== HEADER (Glass) ==================== -->
+    <header id="site-header" class="fixed top-0 w-full z-50 py-3 md:py-4 px-4 md:px-8 flex justify-between items-center">
+        <a href="#" class="text-xl md:text-2xl font-bold tracking-tighter serif logo-text">
+            STUDIO<span class="text-[#B8977E]">.</span>
+        </a>
+
+        <nav class="hidden md:flex items-center space-x-8 text-sm uppercase tracking-[0.14em] font-medium text-[#1a1a1a]">
+            <a href="#about" class="hover-line">About</a>
+            <a href="#services" class="hover-line">Services</a>
+            <a href="#projects" class="hover-line">Work</a>
+            <a href="#process" class="hover-line">Process</a>
+            <a href="#contact" class="hover-line">Contact</a>
+            <a href="#contact" class="ml-2 px-5 py-2.5 border border-[#1a1a1a] text-xs tracking-[0.18em] uppercase rounded-full hover:bg-[#1a1a1a] hover:text-white transition-all duration-350 font-semibold">
+                Inquire
+            </a>
+        </nav>
+
+        <button id="menu-toggle" class="md:hidden flex flex-col gap-1.5 p-2 z-50 relative" aria-label="Menu">
+            <span class="w-6"></span>
+            <span class="w-6"></span>
+            <span class="w-4 ml-auto"></span>
+        </button>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="fixed inset-0 z-40 flex flex-col justify-center items-center space-y-7 text-2xl uppercase tracking-[0.14em] font-semibold serif text-[#1a1a1a] md:hidden">
+        <a href="#about" class="mobile-link hover:text-[#B8977E]">About</a>
+        <a href="#services" class="mobile-link hover:text-[#B8977E]">Services</a>
+        <a href="#projects" class="mobile-link hover:text-[#B8977E]">Work</a>
+        <a href="#process" class="mobile-link hover:text-[#B8977E]">Process</a>
+        <a href="#contact" class="mobile-link hover:text-[#B8977E]">Contact</a>
+        <a href="#contact" class="mt-4 px-8 py-3 border-2 border-[#1a1a1a] text-base rounded-full hover:bg-[#1a1a1a] hover:text-white">Inquire</a>
+    </div>
+
+    <!-- ==================== HERO SECTION ==================== -->
+    <section id="hero-section">
+        <canvas id="hero-canvas"></canvas>
+        <div id="hero-text">
+            <span class="text-xs md:text-sm uppercase tracking-[0.35em] font-medium opacity-80 block mb-3">Architecture &amp; Design Studio</span>
+            <h1 class="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter serif leading-[1.05]">
+                Precision<br>in Design<span class="text-[#C4A080]">.</span>
+            </h1>
+            <p class="mt-3 md:mt-5 text-sm md:text-base font-light opacity-85 max-w-sm leading-relaxed">
+                Crafting spaces that harmonize structure, light, and materiality.
+            </p>
+        </div>
+    </section>
+
+    <!-- ==================== ABOUT SECTION ==================== -->
+    <section id="about" class="py-16 md:py-28 px-5 md:px-10">
+        <div class="max-w-7xl mx-auto">
+            <div class="section-divider"></div>
+            <div class="grid md:grid-cols-12 gap-8 md:gap-16">
+                <div class="md:col-span-5">
+                    <span class="text-xs uppercase tracking-[0.3em] text-[#8C8279] font-medium">About the Studio</span>
+                    <h2 class="text-3xl md:text-5xl font-bold serif mt-4 leading-tight text-[#1a1a1a]">
+                        Architecture as<br>dialogue with<br>the environment.
+                    </h2>
+                </div>
+                <div class="md:col-span-7 space-y-5 text-[#5C554E] leading-relaxed text-base md:text-lg font-light">
+                    <p>Founded in 2010, our studio approaches each project as a unique opportunity to create meaningful spaces. We believe exceptional architecture emerges from deep understanding of context, materiality, and human experience.</p>
+                    <p>From intimate residences to large-scale urban interventions, our work is characterized by clean lines, natural materials, and an unwavering commitment to craft.</p>
+                    <p class="italic text-[#8C8279]">"We don't just design buildings — we shape the way people live, work, and connect."</p>
+                    <div class="grid grid-cols-3 gap-6 pt-6 border-t border-[#E8E3DC]">
+                        <div><span class="text-3xl md:text-4xl font-bold serif text-[#1a1a1a]">150+</span><p class="text-xs uppercase tracking-[0.15em] text-[#8C8279] mt-1">Projects</p></div>
+                        <div><span class="text-3xl md:text-4xl font-bold serif text-[#1a1a1a]">16</span><p class="text-xs uppercase tracking-[0.15em] text-[#8C8279] mt-1">Years</p></div>
+                        <div><span class="text-3xl md:text-4xl font-bold serif text-[#1a1a1a]">28</span><p class="text-xs uppercase tracking-[0.15em] text-[#8C8279] mt-1">Awards</p></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== SERVICES SECTION ==================== -->
+    <section id="services" class="py-16 md:py-28 px-5 md:px-10 bg-white">
+        <div class="max-w-7xl mx-auto">
+            <div class="section-divider"></div>
+            <span class="text-xs uppercase tracking-[0.3em] text-[#8C8279] font-medium">What We Offer</span>
+            <h2 class="text-3xl md:text-5xl font-bold serif mt-3 mb-12 md:mb-16 text-[#1a1a1a]">Comprehensive<br>Design Services.</h2>
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
+                <!-- service cards same as before, omitted for brevity but kept intact -->
+                <div class="group"><div class="w-10 h-10 rounded-full bg-[#F0EDE8] flex items-center justify-center mb-5 group-hover:bg-[#1a1a1a] transition-all duration-400"><svg class="w-4 h-4 text-[#1a1a1a] group-hover:text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg></div><h4 class="text-xl font-bold mb-3 text-[#1a1a1a] serif">Residential Design</h4><p class="text-[#6B6058] leading-relaxed font-light">Bespoke homes reflecting unique lifestyles — from urban apartments to countryside retreats.</p></div>
+                <div class="group"><div class="w-10 h-10 rounded-full bg-[#F0EDE8] flex items-center justify-center mb-5 group-hover:bg-[#1a1a1a] transition-all duration-400"><svg class="w-4 h-4 text-[#1a1a1a] group-hover:text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg></div><h4 class="text-xl font-bold mb-3 text-[#1a1a1a] serif">Commercial Spaces</h4><p class="text-[#6B6058] leading-relaxed font-light">Workplaces designed to inspire productivity and foster brand identity.</p></div>
+                <div class="group"><div class="w-10 h-10 rounded-full bg-[#F0EDE8] flex items-center justify-center mb-5 group-hover:bg-[#1a1a1a] transition-all duration-400"><svg class="w-4 h-4 text-[#1a1a1a] group-hover:text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l5.447 2.724A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/></svg></div><h4 class="text-xl font-bold mb-3 text-[#1a1a1a] serif">Urban Planning</h4><p class="text-[#6B6058] leading-relaxed font-light">Sustainable master plans shaping resilient, vibrant communities.</p></div>
+                <div class="group"><div class="w-10 h-10 rounded-full bg-[#F0EDE8] flex items-center justify-center mb-5 group-hover:bg-[#1a1a1a] transition-all duration-400"><svg class="w-4 h-4 text-[#1a1a1a] group-hover:text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z"/></svg></div><h4 class="text-xl font-bold mb-3 text-[#1a1a1a] serif">Interior Architecture</h4><p class="text-[#6B6058] leading-relaxed font-light">Seamless interiors where every texture contributes to a cohesive narrative.</p></div>
+                <div class="group"><div class="w-10 h-10 rounded-full bg-[#F0EDE8] flex items-center justify-center mb-5 group-hover:bg-[#1a1a1a] transition-all duration-400"><svg class="w-4 h-4 text-[#1a1a1a] group-hover:text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg></div><h4 class="text-xl font-bold mb-3 text-[#1a1a1a] serif">Heritage & Conservation</h4><p class="text-[#6B6058] leading-relaxed font-light">Sensitive restoration preserving cultural heritage for contemporary use.</p></div>
+                <div class="group"><div class="w-10 h-10 rounded-full bg-[#F0EDE8] flex items-center justify-center mb-5 group-hover:bg-[#1a1a1a] transition-all duration-400"><svg class="w-4 h-4 text-[#1a1a1a] group-hover:text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg></div><h4 class="text-xl font-bold mb-3 text-[#1a1a1a] serif">Design Consultation</h4><p class="text-[#6B6058] leading-relaxed font-light">Strategic advisory on feasibility, concept development, and design direction.</p></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== PROJECTS - HORIZONTAL SCROLL ==================== -->
+    <section id="projects" class="py-0 relative">
+        <div class="max-w-7xl mx-auto px-5 md:px-10 pt-16 md:pt-24 pb-6">
+            <div class="section-divider"></div>
+            <span class="text-xs uppercase tracking-[0.3em] text-[#8C8279] font-medium">Portfolio</span>
+            <h2 class="text-3xl md:text-5xl font-bold serif mt-3 text-[#1a1a1a]">
+                Selected Projects<span class="text-[#C4A080]">.</span>
+            </h2>
+            <p class="text-sm text-[#8C8279] mt-2 hidden md:block">Scroll horizontally → (faster now)</p>
+        </div>
+        <div id="projects-pin" class="overflow-hidden mt-6 md:mt-10">
+            <div id="projects-horizontal" class="flex gap-4 md:gap-6 px-5 md:px-10 pb-8 md:pb-12" style="width: max-content;">
+                <!-- Card 1 -->
+                <div class="project-card">
+                    <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1000" alt="Skyline Tower" loading="lazy">
+                    <div class="p-5"><span class="text-xs uppercase tracking-[0.2em] text-[#B8977E] font-medium">Commercial</span><h5 class="text-lg font-bold serif mt-1 text-[#1a1a1a]">Skyline Tower</h5><p class="text-sm text-[#6B6058] mt-1 font-light">Manhattan, NY</p></div>
+                </div>
+                <!-- Card 2 -->
+                <div class="project-card">
+                    <img src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?q=80&w=1000" alt="The Workspace" loading="lazy">
+                    <div class="p-5"><span class="text-xs uppercase tracking-[0.2em] text-[#B8977E] font-medium">Workplace</span><h5 class="text-lg font-bold serif mt-1 text-[#1a1a1a]">The Workspace</h5><p class="text-sm text-[#6B6058] mt-1 font-light">Austin, TX</p></div>
+                </div>
+                <!-- Card 3 -->
+                <div class="project-card">
+                    <img src="https://images.unsplash.com/photo-1536895058696-a69b1c7ba34f?w=600&auto=format&fit=crop&q=60" alt="Riverside Plan" loading="lazy">
+                    <div class="p-5"><span class="text-xs uppercase tracking-[0.2em] text-[#B8977E] font-medium">Urban Planning</span><h5 class="text-lg font-bold serif mt-1 text-[#1a1a1a]">Riverside Master Plan</h5><p class="text-sm text-[#6B6058] mt-1 font-light">Portland, OR</p></div>
+                </div>
+                <!-- Card 4 -->
+                <div class="project-card">
+                    <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1000" alt="The Pavilion" loading="lazy">
+                    <div class="p-5"><span class="text-xs uppercase tracking-[0.2em] text-[#B8977E] font-medium">Interior</span><h5 class="text-lg font-bold serif mt-1 text-[#1a1a1a]">The Pavilion</h5><p class="text-sm text-[#6B6058] mt-1 font-light">Los Angeles, CA</p></div>
+                </div>
+                <!-- Card 5 -->
+                <div class="project-card">
+                    <img src="https://images.unsplash.com/photo-1551711974-faf378be34b2?w=600&auto=format&fit=crop&q=60" alt="Artisan Lofts" loading="lazy">
+                    <div class="p-5"><span class="text-xs uppercase tracking-[0.2em] text-[#B8977E] font-medium">Residential</span><h5 class="text-lg font-bold serif mt-1 text-[#1a1a1a]">Artisan Lofts</h5><p class="text-sm text-[#6B6058] mt-1 font-light">Brooklyn, NY</p></div>
+                </div>
+                <!-- Card 6 -->
+                <div class="project-card">
+                    <img src="https://images.unsplash.com/photo-1527335988388-b40ee248d80c?w=600&auto=format&fit=crop&q=60" alt="Heritage Hall" loading="lazy">
+                    <div class="p-5"><span class="text-xs uppercase tracking-[0.2em] text-[#B8977E] font-medium">Heritage</span><h5 class="text-lg font-bold serif mt-1 text-[#1a1a1a]">Heritage Hall</h5><p class="text-sm text-[#6B6058] mt-1 font-light">Charleston, SC</p></div>
+                </div>
+                <!-- Card 7 - Spa -->
+                <div class="project-card">
+                    <img src="https://media.istockphoto.com/id/2156333625/photo/a-serene-spa-lounge-with-a-body-massage-table.webp?a=1&b=1&s=612x612&w=0&k=20&c=RB1yllBL0ND3z1eGucE0TJuqUh-yqvf2h3UheJDzz5E=" alt="Serene Spa" loading="lazy">
+                    <div class="p-5"><span class="text-xs uppercase tracking-[0.2em] text-[#B8977E] font-medium">Wellness</span><h5 class="text-lg font-bold serif mt-1 text-[#1a1a1a]">Serene Spa Retreat</h5><p class="text-sm text-[#6B6058] mt-1 font-light">Sedona, AZ</p></div>
+                </div>
+                <!-- Card 8 - Kitchen -->
+                <div class="project-card">
+                    <img src="https://media.istockphoto.com/id/1461412491/photo/modern-green-kitchen.webp?a=1&b=1&s=612x612&w=0&k=20&c=23D8zzbeIgjv5TRirBx_vi-7taH6fHAUqM7t0WkQ5KM=" alt="Modern Kitchen" loading="lazy">
+                    <div class="p-5"><span class="text-xs uppercase tracking-[0.2em] text-[#B8977E] font-medium">Interior</span><h5 class="text-lg font-bold serif mt-1 text-[#1a1a1a]">Culinary Atelier</h5><p class="text-sm text-[#6B6058] mt-1 font-light">San Francisco, CA</p></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== PROCESS SECTION ==================== -->
+    <section id="process" class="py-16 md:py-28 px-5 md:px-10 bg-[#1C1C1C] text-white">
+        <div class="max-w-7xl mx-auto">
+            <div class="section-divider" style="background:#C4A080;"></div>
+            <span class="text-xs uppercase tracking-[0.3em] text-[#C4A080] font-medium">How We Work</span>
+            <h2 class="text-3xl md:text-5xl font-bold serif mt-3 mb-12 md:mb-16 text-white">Our Design<br>Process.</h2>
+            <div id="process-grid" class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+                <div class="process-card bg-[#252220] border-[#33302D] text-white"><div class="step-num">01</div><h5 class="text-lg font-bold serif text-white mb-3 mt-1">Discovery</h5><p class="text-[#B0A89F] leading-relaxed font-light text-sm">We immerse ourselves in your vision, site context, and functional requirements to establish a clear brief.</p></div>
+                <div class="process-card bg-[#252220] border-[#33302D] text-white"><div class="step-num">02</div><h5 class="text-lg font-bold serif text-white mb-3 mt-1">Concept Design</h5><p class="text-[#B0A89F] leading-relaxed font-light text-sm">Ideas take form through sketches, models, and spatial studies — exploring multiple directions.</p></div>
+                <div class="process-card bg-[#252220] border-[#33302D] text-white"><div class="step-num">03</div><h5 class="text-lg font-bold serif text-white mb-3 mt-1">Development</h5><p class="text-[#B0A89F] leading-relaxed font-light text-sm">Detailed drawings, material selections, and technical coordination bring precision to every detail.</p></div>
+                <div class="process-card bg-[#252220] border-[#33302D] text-white"><div class="step-num">04</div><h5 class="text-lg font-bold serif text-white mb-3 mt-1">Execution</h5><p class="text-[#B0A89F] leading-relaxed font-light text-sm">On-site oversight and meticulous craft ensure the built reality matches the design intent.</p></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== TESTIMONIALS MARQUEE ==================== -->
+    <section id="testimonials" class="py-16 md:py-24 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-5 md:px-10 mb-10">
+            <div class="section-divider"></div>
+            <span class="text-xs uppercase tracking-[0.3em] text-[#8C8279] font-medium">Client Words</span>
+            <h2 class="text-3xl md:text-5xl font-bold serif mt-3 text-[#1a1a1a]">Trusted by<br>Remarkable People<span class="text-[#C4A080]">.</span></h2>
+        </div>
+        <div class="relative mt-6">
+            <div id="testimonial-track">
+                <!-- set 1 & duplicate omitted for brevity but included as before, keep all 12 cards -->
+                <div class="testimonial-card-marquee"><p class="text-[#5C554E] leading-relaxed italic font-light mb-5 text-sm">"The team transformed our vision into a home that exceeds every expectation."</p><div class="flex items-center gap-3"><div class="w-9 h-9 rounded-full bg-[#E8E3DC] flex items-center justify-center text-xs font-bold text-[#8C8279]">SM</div><div><p class="font-semibold text-sm">Sarah Mitchell</p><p class="text-xs text-[#8C8279]">Private Residence, London</p></div></div></div>
+                <div class="testimonial-card-marquee"><p class="text-[#5C554E] leading-relaxed italic font-light mb-5 text-sm">"A masterclass in collaborative design. They brought clarity and creativity to every phase."</p><div class="flex items-center gap-3"><div class="w-9 h-9 rounded-full bg-[#E8E3DC] flex items-center justify-center text-xs font-bold text-[#8C8279]">DC</div><div><p class="font-semibold text-sm">David Chen</p><p class="text-xs text-[#8C8279]">CEO, Innovate Workspaces</p></div></div></div>
+                <div class="testimonial-card-marquee"><p class="text-[#5C554E] leading-relaxed italic font-light mb-5 text-sm">"Their urban planning proposal was visionary yet grounded — a rare combination."</p><div class="flex items-center gap-3"><div class="w-9 h-9 rounded-full bg-[#E8E3DC] flex items-center justify-center text-xs font-bold text-[#8C8279]">ER</div><div><p class="font-semibold text-sm">Elena Rodriguez</p><p class="text-xs text-[#8C8279]">City Planning Director</p></div></div></div>
+                <div class="testimonial-card-marquee"><p class="text-[#5C554E] leading-relaxed italic font-light mb-5 text-sm">"From concept to completion, an unparalleled level of professionalism and creative flair."</p><div class="flex items-center gap-3"><div class="w-9 h-9 rounded-full bg-[#E8E3DC] flex items-center justify-center text-xs font-bold text-[#8C8279]">AK</div><div><p class="font-semibold text-sm">Anika Kapoor</p><p class="text-xs text-[#8C8279]">Founder, GreenBuild Co.</p></div></div></div>
+                <div class="testimonial-card-marquee"><p class="text-[#5C554E] leading-relaxed italic font-light mb-5 text-sm">"They understood our heritage building's soul and restored it with sensitivity."</p><div class="flex items-center gap-3"><div class="w-9 h-9 rounded-full bg-[#E8E3DC] flex items-center justify-center text-xs font-bold text-[#8C8279]">JW</div><div><p class="font-semibold text-sm">James Whitmore</p><p class="text-xs text-[#8C8279]">Heritage Trust Director</p></div></div></div>
+                <div class="testimonial-card-marquee"><p class="text-[#5C554E] leading-relaxed italic font-light mb-5 text-sm">"Every interaction felt collaborative. The final space perfectly captures our brand."</p><div class="flex items-center gap-3"><div class="w-9 h-9 rounded-full bg-[#E8E3DC] flex items-center justify-center text-xs font-bold text-[#8C8279]">ML</div><div><p class="font-semibold text-sm">Mia Laurent</p><p class="text-xs text-[#8C8279]">Creative Director, ModeAtelier</p></div></div></div>
+                <!-- duplicate set -->
+                <div class="testimonial-card-marquee"><p class="text-[#5C554E] leading-relaxed italic font-light mb-5 text-sm">"The team transformed our vision into a home that exceeds every expectation."</p><div class="flex items-center gap-3"><div class="w-9 h-9 rounded-full bg-[#E8E3DC] flex items-center justify-center text-xs font-bold text-[#8C8279]">SM</div><div><p class="font-semibold text-sm">Sarah Mitchell</p><p class="text-xs text-[#8C8279]">Private Residence, London</p></div></div></div>
+                <div class="testimonial-card-marquee"><p class="text-[#5C554E] leading-relaxed italic font-light mb-5 text-sm">"A masterclass in collaborative design. They brought clarity and creativity to every phase."</p><div class="flex items-center gap-3"><div class="w-9 h-9 rounded-full bg-[#E8E3DC] flex items-center justify-center text-xs font-bold text-[#8C8279]">DC</div><div><p class="font-semibold text-sm">David Chen</p><p class="text-xs text-[#8C8279]">CEO, Innovate Workspaces</p></div></div></div>
+                <div class="testimonial-card-marquee"><p class="text-[#5C554E] leading-relaxed italic font-light mb-5 text-sm">"Their urban planning proposal was visionary yet grounded — a rare combination."</p><div class="flex items-center gap-3"><div class="w-9 h-9 rounded-full bg-[#E8E3DC] flex items-center justify-center text-xs font-bold text-[#8C8279]">ER</div><div><p class="font-semibold text-sm">Elena Rodriguez</p><p class="text-xs text-[#8C8279]">City Planning Director</p></div></div></div>
+                <div class="testimonial-card-marquee"><p class="text-[#5C554E] leading-relaxed italic font-light mb-5 text-sm">"From concept to completion, an unparalleled level of professionalism and creative flair."</p><div class="flex items-center gap-3"><div class="w-9 h-9 rounded-full bg-[#E8E3DC] flex items-center justify-center text-xs font-bold text-[#8C8279]">AK</div><div><p class="font-semibold text-sm">Anika Kapoor</p><p class="text-xs text-[#8C8279]">Founder, GreenBuild Co.</p></div></div></div>
+                <div class="testimonial-card-marquee"><p class="text-[#5C554E] leading-relaxed italic font-light mb-5 text-sm">"They understood our heritage building's soul and restored it with sensitivity."</p><div class="flex items-center gap-3"><div class="w-9 h-9 rounded-full bg-[#E8E3DC] flex items-center justify-center text-xs font-bold text-[#8C8279]">JW</div><div><p class="font-semibold text-sm">James Whitmore</p><p class="text-xs text-[#8C8279]">Heritage Trust Director</p></div></div></div>
+                <div class="testimonial-card-marquee"><p class="text-[#5C554E] leading-relaxed italic font-light mb-5 text-sm">"Every interaction felt collaborative. The final space perfectly captures our brand."</p><div class="flex items-center gap-3"><div class="w-9 h-9 rounded-full bg-[#E8E3DC] flex items-center justify-center text-xs font-bold text-[#8C8279]">ML</div><div><p class="font-semibold text-sm">Mia Laurent</p><p class="text-xs text-[#8C8279]">Creative Director, ModeAtelier</p></div></div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA & Footer (same as before) -->
+    <section class="py-16 md:py-28 px-5 md:px-10 bg-[#F0EDE8]">
+        <div class="max-w-4xl mx-auto text-center">
+            <h2 class="text-3xl md:text-6xl font-bold serif text-[#1a1a1a] leading-tight">Let's build<br>something beautiful<span class="text-[#C4A080]">.</span></h2>
+            <p class="mt-5 text-[#6B6058] text-base md:text-lg font-light max-w-xl mx-auto">Whether you have a clear vision or are just beginning to explore possibilities, we're here to guide you through every step.</p>
+            <a href="#contact" class="inline-block mt-8 px-10 py-4 bg-[#1a1a1a] text-white text-sm uppercase tracking-[0.2em] font-semibold rounded-full hover:bg-[#333] transition-all duration-350 shadow-lg shadow-black/8">Start a Conversation</a>
+        </div>
+    </section>
+
+    <footer id="contact" class="py-16 md:py-24 px-5 md:px-10 bg-[#1C1C1C] text-white">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid md:grid-cols-3 gap-10 md:gap-16">
+                <div><h4 class="font-bold text-lg mb-5 text-[#C4A080] uppercase tracking-[0.15em] text-sm">Studio</h4><p class="text-[#B0A89F] leading-relaxed font-light">GGRQ+59H, Abu Ayyub Rd,<br>Gulshanabad, Malegaon,<br>MH 423203, India</p><p class="text-[#B0A89F] leading-relaxed font-light mt-4">Mon – Sat: 10:00 – 19:00<br>Sunday: By Appointment</p></div>
+                <div><h4 class="font-bold text-lg mb-5 text-[#C4A080] uppercase tracking-[0.15em] text-sm">Connect</h4><p class="text-[#B0A89F] leading-relaxed font-light"><a href="mailto:info@architectstudio.com" class="hover:text-white transition-colors">info@architectstudio.com</a><br><a href="tel:+910000000000" class="hover:text-white transition-colors">+91 00000 00000</a></p><div class="flex gap-4 mt-5"><a href="#" class="w-9 h-9 rounded-full border border-[#4A4540] flex items-center justify-center hover:bg-white hover:text-[#1C1C1C] transition-all text-xs">In</a><a href="#" class="w-9 h-9 rounded-full border border-[#4A4540] flex items-center justify-center hover:bg-white hover:text-[#1C1C1C] transition-all text-xs">Ig</a><a href="#" class="w-9 h-9 rounded-full border border-[#4A4540] flex items-center justify-center hover:bg-white hover:text-[#1C1C1C] transition-all text-xs">Be</a></div></div>
+                <div><h4 class="font-bold text-lg mb-5 text-[#C4A080] uppercase tracking-[0.15em] text-sm">Newsletter</h4><p class="text-[#B0A89F] leading-relaxed font-light text-sm mb-4">Subscribe for project updates and design insights.</p><form class="flex gap-2" onsubmit="event.preventDefault();"><input type="email" placeholder="Your email" class="flex-1 px-4 py-2.5 bg-transparent border border-[#4A4540] rounded-full text-white placeholder-[#6B6560] text-sm focus:outline-none focus:border-[#C4A080] transition-colors"><button type="submit" class="px-5 py-2.5 bg-[#C4A080] text-white text-sm font-semibold rounded-full hover:bg-[#A08068] transition-colors uppercase tracking-[0.1em]">Join</button></form></div>
+            </div>
+            <div class="mt-14 pt-8 border-t border-[#2E2A26] flex flex-col sm:flex-row justify-between items-center gap-4 text-sm text-[#6B6560]"><p>© 2026 Architectural Studio. All rights reserved.</p><div class="flex gap-6"><a href="#" class="hover:text-white transition-colors">Privacy Policy</a><a href="#" class="hover:text-white transition-colors">Terms of Service</a></div></div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+    <script>
+        (function() {
+            // ---------- LOADING SCREEN ----------
+            const loadingScreen = document.getElementById('loading-screen');
+            const progressFill = document.getElementById('progress-fill');
+            const loadStatus = document.getElementById('load-status');
+            const body = document.body;
+
+            const frameCount = 300;
+            const images = [];
+            let loadedCount = 0;
+
+            function getFrame(index) {
+                return `ar/ezgif-frame-${(index + 1).toString().padStart(3, '0')}.jpg`;
+            }
+
+            // Preload all images
+            for (let i = 0; i < frameCount; i++) {
+                const img = new Image();
+                img.onload = img.onerror = () => {
+                    loadedCount++;
+                    const progress = Math.round((loadedCount / frameCount) * 100);
+                    progressFill.style.width = progress + '%';
+                    loadStatus.textContent = `Loading frames... ${progress}%`;
+                    if (loadedCount === frameCount) {
+                        // All loaded
+                        setTimeout(() => {
+                            loadingScreen.classList.add('hidden');
+                            body.classList.remove('no-scroll');
+                            // Initialize everything after loading
+                            initLenis();
+                            initHeader();
+                            initMobileMenu();
+                            initHeroCanvas();
+                            initScrollTriggers();
+                        }, 400);
+                    }
+                };
+                img.src = getFrame(i);
+                images.push(img);
+            }
+
+            // ---------- LENIS ----------
+            let lenis;
+            function initLenis() {
+                lenis = new Lenis({
+                    duration: 1.2,
+                    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+                    smoothWheel: true,
+                    lerp: 0.08,
+                });
+                function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+                requestAnimationFrame(raf);
+                lenis.on('scroll', ScrollTrigger.update);
+                gsap.ticker.add((time) => lenis.raf(time * 1000));
+                gsap.ticker.lagSmoothing(0);
+            }
+
+            // ---------- HEADER SCROLL ----------
+            function initHeader() {
+                const header = document.getElementById('site-header');
+                function updateHeader() {
+                    const scrollY = window.scrollY || lenis?.scroll || 0;
+                    header.classList.toggle('scrolled', scrollY > 50);
+                }
+                window.addEventListener('scroll', updateHeader, { passive: true });
+                setInterval(updateHeader, 120);
+            }
+
+            // ---------- MOBILE MENU ----------
+            function initMobileMenu() {
+                const menuToggle = document.getElementById('menu-toggle');
+                const mobileMenu = document.getElementById('mobile-menu');
+                const mobileLinks = document.querySelectorAll('.mobile-link');
+                let menuOpen = false;
+
+                function toggleMenu() {
+                    menuOpen = !menuOpen;
+                    mobileMenu.classList.toggle('active', menuOpen);
+                    menuToggle.classList.toggle('menu-open', menuOpen);
+                    document.body.style.overflow = menuOpen ? 'hidden' : '';
+                    if (lenis) menuOpen ? lenis.stop() : lenis.start();
+                }
+                menuToggle.addEventListener('click', toggleMenu);
+                mobileLinks.forEach(link => link.addEventListener('click', () => { if (menuOpen) toggleMenu(); }));
+                document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && menuOpen) toggleMenu(); });
+            }
+
+            // ---------- HERO CANVAS ----------
+            let sequence = { frame: 0 };
+            let canvas, context, heroSection;
+            function initHeroCanvas() {
+                canvas = document.getElementById('hero-canvas');
+                heroSection = document.getElementById('hero-section');
+                context = canvas.getContext('2d');
+                resizeCanvas();
+                render();
+                setupHeroScroll();
+                window.addEventListener('resize', () => {
+                    resizeCanvas();
+                    render();
+                    ScrollTrigger.refresh();
+                });
+            }
+
+            function resizeCanvas() {
+                const rect = heroSection.getBoundingClientRect();
+                const dpr = Math.min(window.devicePixelRatio || 1, 2);
+                const w = rect.width, h = rect.height;
+                if (w > 0 && h > 0) {
+                    canvas.width = w * dpr;
+                    canvas.height = h * dpr;
+                    canvas.style.width = w + 'px';
+                    canvas.style.height = h + 'px';
+                    context.setTransform(1,0,0,1,0,0);
+                    context.scale(dpr, dpr);
+                    canvas._dw = w; canvas._dh = h;
+                }
+            }
+
+            function render() {
+                const dw = canvas._dw || canvas.width;
+                const dh = canvas._dh || canvas.height;
+                context.clearRect(0,0,dw,dh);
+                const img = images[sequence.frame];
+                if (img && img.complete && img.naturalWidth > 0) {
+                    const ir = img.naturalWidth / img.naturalHeight;
+                    const cr = dw / dh;
+                    let sx, sy, sw, sh;
+                    if (ir > cr) { sh = img.naturalHeight; sw = img.naturalHeight * cr; sx = (img.naturalWidth - sw)/2; sy = 0; }
+                    else { sw = img.naturalWidth; sh = img.naturalWidth / cr; sx = 0; sy = (img.naturalHeight - sh)/2; }
+                    context.drawImage(img, sx, sy, sw, sh, 0, 0, dw, dh);
+                }
+            }
+
+            let heroScrollTween;
+            function setupHeroScroll() {
+                if (heroScrollTween) heroScrollTween.kill();
+                sequence.frame = 0; render();
+                heroScrollTween = gsap.to(sequence, {
+                    frame: frameCount - 1,
+                    snap: { frame: 1 },
+                    ease: 'none',
+                    scrollTrigger: {
+                        trigger: heroSection,
+                        start: 'top top',
+                        end: '+=350%',
+                        scrub: 1.2,
+                        pin: true,
+                        pinSpacing: true,
+                        anticipatePin: 1,
+                        onUpdate: render,
+                    }
+                });
+            }
+
+            // ---------- PROJECTS HORIZONTAL SCROLL (FASTER) ----------
+            let projectsScrollTween;
+            function setupProjectsScroll() {
+                const projectsPin = document.getElementById('projects-pin');
+                const projectsHorizontal = document.getElementById('projects-horizontal');
+                if (!projectsPin || !projectsHorizontal) return;
+                if (projectsScrollTween) projectsScrollTween.kill();
+                gsap.set(projectsHorizontal, { x: 0 });
+                const totalWidth = projectsHorizontal.scrollWidth;
+                const viewWidth = window.innerWidth;
+                const scrollDistance = Math.max(0, totalWidth - viewWidth);
+                if (scrollDistance > 0) {
+                    projectsScrollTween = gsap.to(projectsHorizontal, {
+                        x: -scrollDistance,
+                        ease: 'none',
+                        scrollTrigger: {
+                            trigger: projectsPin,
+                            start: 'top top',
+                            end: () => '+=' + (scrollDistance * 0.45), // faster
+                            scrub: 1,
+                            pin: true,
+                            pinSpacing: true,
+                            anticipatePin: 1,
+                            invalidateOnRefresh: true,
+                        }
+                    });
+                }
+            }
+
+            function initScrollTriggers() {
+                setupProjectsScroll();
+                // Process cards
+                gsap.set('.process-card', { y: 50, opacity: 0 });
+                ScrollTrigger.batch('.process-card', {
+                    start: 'top 88%',
+                    onEnter: batch => gsap.to(batch, { y:0, opacity:1, duration:0.8, stagger:0.15, ease:'power3.out' }),
+                    once: true
+                });
+                // About stats
+                const stats = document.querySelector('#about .grid.grid-cols-3');
+                if(stats) gsap.fromTo(stats.children, { y:35, opacity:0 }, { y:0, opacity:1, duration:0.7, stagger:0.15, ease:'power2.out', scrollTrigger:{ trigger:stats, start:'top 90%' } });
+                // Services
+                const serviceItems = document.querySelectorAll('#services .grid > div');
+                if(serviceItems.length) {
+                    gsap.set(serviceItems, { y:40, opacity:0 });
+                    ScrollTrigger.batch(serviceItems, { start:'top 86%', onEnter: batch => gsap.to(batch, { y:0, opacity:1, duration:0.7, stagger:0.1, ease:'power3.out' }), once:true });
+                }
+                window.addEventListener('resize', () => { setupProjectsScroll(); });
+            }
+        })();
+    </script>
+</body>
+</html>
