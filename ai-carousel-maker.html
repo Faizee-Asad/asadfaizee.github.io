@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AI Carousel Maker — Noor Infotech</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
+    background: #0D0D0D;
+    color: #fff;
+    min-height: 100vh;
+    padding: 24px;
+  }
+  .container { max-width: 1200px; margin: 0 auto; }
+
+  /* Header */
+  .header {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 32px; padding-bottom: 16px; border-bottom: 1px solid #222;
+  }
+  .logo { font-size: 20px; font-weight: 900; letter-spacing: -0.5px; }
+  .logo span { color: #2563EB; }
+  .badge {
+    background: #2563EB; color: #fff; padding: 4px 12px;
+    border-radius: 100px; font-size: 12px; font-weight: 700;
+  }
+
+  /* Steps */
+  .steps { display: grid; gap: 16px; margin-bottom: 32px; }
+  .step {
+    background: #161616; border: 1px solid #262626; border-radius: 16px;
+    padding: 24px; transition: all 0.2s;
+  }
+  .step.active { border-color: #2563EB; box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15); }
+  .step.completed { border-color: #16a34a; }
+  .step-header {
+    display: flex; align-items: center; gap: 12px; margin-bottom: 16px;
+  }
+  .step-num {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: #262626; color: #999; display: flex; align-items: center;
+    justify-content: center; font-weight: 800; font-size: 14px;
+  }
+  .step.active .step-num { background: #2563EB; color: #fff; }
+  .step.completed .step-num { background: #16a34a; color: #fff; }
+  .step-title { font-size: 18px; font-weight: 700; }
+  .step-body { display: none; }
+  .step.active .step-body { display: block; }
+
+  /* Forms */
+  label { display: block; font-size: 13px; color: #999; margin-bottom: 6px; font-weight: 600; }
+  input[type="text"], input[type="color"], textarea, select {
+    width: 100%; padding: 12px 14px; background: #0D0D0D;
+    border: 1px solid #262626; border-radius: 8px; color: #fff;
+    font-size: 14px; font-family: inherit; margin-bottom: 14px;
+  }
+  input[type="color"] { height: 48px; cursor: pointer; }
+  textarea { min-height: 80px; resize: vertical; }
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  @media (max-width: 600px) { .form-grid { grid-template-columns: 1fr; } }
+
+  /* Upload */
+  .upload-zone {
+    border: 2px dashed #262626; border-radius: 12px; padding: 32px;
+    text-align: center; cursor: pointer; transition: all 0.2s;
+    background: #0D0D0D;
+  }
+  .upload-zone:hover { border-color: #2563EB; background: rgba(37, 99, 235, 0.05); }
+  .upload-zone.has-file { border-color: #16a34a; }
+  .upload-icon { font-size: 40px; margin-bottom: 8px; }
+  .upload-text { font-size: 14px; color: #999; }
+  .upload-text strong { color: #fff; }
+  #imagePreview { max-width: 100%; max-height: 200px; border-radius: 8px; margin-top: 12px; display: none; }
+
+  /* Buttons */
+  .btn {
+    padding: 12px 20px; border: none; border-radius: 8px;
+    font-size: 14px; font-weight: 700; cursor: pointer; transition: all 0.2s;
+    font-family: inherit;
+  }
+  .btn-primary { background: #2563EB; color: #fff; }
+  .btn-primary:hover { background: #1d4ed8; }
+  .btn-primary:disabled { background: #262626; color: #666; cursor: not-allowed; }
+  .btn-secondary { background: #262626; color: #fff; }
+  .btn-secondary:hover { background: #333; }
+  .btn-success { background: #16a34a; color: #fff; }
+  .btn-success:hover { background: #15803d; }
+  .btn-row { display: flex; gap: 10px; margin-top: 12px; flex-wrap: wrap; }
+
+  /* Style preview */
+  .style-preview {
+    background: #0D0D0D; border: 1px solid #262626; border-radius: 8px;
+    padding: 16px; margin-top: 12px; display: none;
+  }
+  .style-preview.show { display: block; }
+  .palette { display: flex; gap: 8px; margin-top: 8px; }
+  .swatch {
+    width: 40px; height: 40px; border-radius: 6px;
+    border: 1px solid #333; position: relative;
+  }
+  .swatch span {
+    position: absolute; bottom: -18px; left: 50%; transform: translateX(-50%);
+    font-size: 9px; color: #666; white-space: nowrap;
+  }
+
+  /* Carousel Output */
+  #carouselOutput { display: none; margin-top: 32px; }
+  .carousel-wrapper {
+    position: relative; background: #000; border-radius: 16px;
+    padding: 20px; overflow: hidden;
+  }
+  .slides-viewport {
+    overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory;
+    display: flex; gap: 16px; padding: 20px;
+    scrollbar-width: thin; scrollbar-color: #2563EB #161616;
+  }
+  .slides-viewport::-webkit-scrollbar { height: 8px; }
+  .slides-viewport::-webkit-scrollbar-track { background: #161616; border-radius: 4px; }
+  .slides-viewport::-webkit-scrollbar-thumb { background: #2563EB; border-radius: 4px; }
+
+  /* Slide */
+  .slide {
+    flex: 0 0 405px; height: 540px; scroll-snap-align: start;
+    border-radius: 12px; overflow: hidden; position: relative;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+  }
+  .slide-inner { width: 100%; height: 100%; padding: 48px 40px; display: flex; flex-direction: column; justify-content: space-between; }
+
+  /* Slide types */
+  .slide.cover .slide-inner { justify-content: center; }
+  .slide.cover .badge-top { position: absolute; top: 32px; left: 40px; }
+  .slide.cover .headline { font-size: 56px; line-height: 1.0; }
+  .slide.content .num-tag {
+    position: absolute; top: 32px; right: 40px;
+    font-size: 80px; font-weight: 900; opacity: 0.15; line-height: 1;
+  }
+  .slide.content .headline { font-size: 32px; line-height: 1.15; margin-top: auto; }
+  .slide.content .body { font-size: 16px; line-height: 1.5; margin-top: 16px; opacity: 0.85; }
+  .slide.cta .slide-inner { justify-content: center; text-align: center; align-items: center; }
+  .slide.cta .headline { font-size: 44px; }
+  .slide.cta .sub { font-size: 18px; margin-top: 16px; opacity: 0.85; }
+  .slide.cta .handle { margin-top: 32px; font-weight: 800; font-size: 20px; }
+
+  .badge-pill {
+    display: inline-block; padding: 6px 14px; border-radius: 100px;
+    font-size: 12px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase;
+  }
+  .keyword { font-style: italic; }
+
+  /* Slide counter */
+  .slide-counter {
+    position: absolute; bottom: 16px; right: 16px;
+    background: rgba(0,0,0,0.6); color: #fff; padding: 4px 10px;
+    border-radius: 100px; font-size: 11px; font-weight: 700;
+  }
+
+  /* Caption output */
+  .caption-box {
+    background: #161616; border: 1px solid #262626; border-radius: 12px;
+    padding: 20px; margin-top: 24px; white-space: pre-wrap;
+    font-size: 14px; line-height: 1.6; color: #ccc; max-height: 400px; overflow-y: auto;
+  }
+  .copy-btn { float: right; }
+
+  /* Toast */
+  .toast {
+    position: fixed; bottom: 24px; right: 24px;
+    background: #16a34a; color: #fff; padding: 12px 20px;
+    border-radius: 8px; font-weight: 700; font-size: 14px;
+    transform: translateY(100px); opacity: 0; transition: all 0.3s;
+    z-index: 9999;
+  }
+  .toast.show { transform: translateY(0); opacity: 1; }
+
+  /* Brand saved indicator */
+  .brand-saved {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(22, 163, 74, 0.15); color: #16a34a;
+    padding: 6px 12px; border-radius: 100px; font-size: 12px; font-weight: 700;
+  }
+  .new-design-link {
+    color: #2563EB; cursor: pointer; text-decoration: underline; font-size: 13px;
+    margin-left: 8px;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <div class="logo">Noor<span>Infotech</span> · Carousel Maker</div>
+    <div class="badge" id="brandStatus">Brand: Not Set</div>
+  </div>
+
+  <!-- STEP 1: Brand Setup -->
+  <div class="steps">
+    <div class="step active" id="step1">
+      <div class="step-header">
+        <div class="step-num">1</div>
+        <div class="step-title">Brand Details <span style="font-weight:400; color:#999; font-size:13px;" id="brandSavedLabel"></span></div>
+      </div>
+      <div class="step-body">
+        <p style="color:#999; font-size:13px; margin-bottom:16px;">Ek baar bharo — localStorage mein save ho jayega. <a class="new-design-link" onclick="resetBrand()">↻ Naya design set karo</a></p>
+        <div class="form-grid">
+          <div>
+            <label>Brand Name</label>
+            <input type="text" id="brandName" placeholder="Noor Infotech and Softwares Solutions" />
+          </div>
+          <div>
+            <label>Instagram Handle</label>
+            <input type="text" id="brandHandle" placeholder="@noorinfotech.co.in" />
+          </div>
+        </div>
+        <div class="form-grid">
+          <div>
+            <label>Primary Color</label>
+            <input type="color" id="brandColor" value="#2563EB" />
+          </div>
+          <div>
+            <label>Accent Color (optional)</label>
+            <input type="color" id="brandAccent" value="#E05C00" />
+          </div>
+        </div>
+        <div class="btn-row">
+          <button class="btn btn-primary" onclick="saveBrand()">Save Brand</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 2: Design Reference -->
+    <div class="step" id="step2">
+      <div class="step-header">
+        <div class="step-num">2</div>
+        <div class="step-title">Design Reference (Optional)</div>
+      </div>
+      <div class="step-body">
+        <p style="color:#999; font-size:13px; margin-bottom:16px;">Ek reference image upload karo — color palette aur style auto-extract ho jayega. Skip kar sakte ho.</p>
+        <div class="upload-zone" id="uploadZone" onclick="document.getElementById('fileInput').click()">
+          <div class="upload-icon">📸</div>
+          <div class="upload-text"><strong>Click to upload</strong> or drag & drop<br>PNG, JPG (max 5MB)</div>
+        </div>
+        <input type="file" id="fileInput" accept="image/*" style="display:none" onchange="handleImage(event)" />
+        <img id="imagePreview" />
+        <div class="style-preview" id="stylePreview">
+          <label>Detected Palette</label>
+          <div class="palette" id="palette"></div>
+        </div>
+        <div class="btn-row">
+          <button class="btn btn-secondary" onclick="skipDesign()">Skip — Use Default Style</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 3: Topic -->
+    <div class="step" id="step3">
+      <div class="step-header">
+        <div class="step-num">3</div>
+        <div class="step-title">Carousel Topic</div>
+      </div>
+      <div class="step-body">
+        <label>Topic / Title</label>
+        <input type="text" id="topic" placeholder="e.g., 10 Jobs Most Likely to Be Transformed by AI" />
+        <div class="form-grid">
+          <div>
+            <label>Number of Slides (excluding cover & CTA)</label>
+            <select id="slideCount">
+              <option value="5">5 slides</option>
+              <option value="7" selected>7 slides</option>
+              <option value="10">10 slides</option>
+            </select>
+          </div>
+          <div>
+            <label>Tone</label>
+            <select id="tone">
+              <option value="bold-editorial">Bold Editorial</option>
+              <option value="casual">Casual / Gen-Z</option>
+              <option value="professional">Professional</option>
+              <option value="educational">Educational</option>
+            </select>
+          </div>
+        </div>
+        <label>Key Points (one per line, optional — auto-generate bhi hoga)</label>
+        <textarea id="keyPoints" placeholder="Leave empty for auto-generation"></textarea>
+        <div class="btn-row">
+          <button class="btn btn-primary" onclick="generateCarousel()">Generate Carousel ⚡</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- OUTPUT -->
+  <div id="carouselOutput">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+      <h2 style="font-size:24px; font-weight:900;">Your Carousel</h2>
+      <div class="btn-row">
+        <button class="btn btn-secondary" onclick="downloadAll()">📦 Download All (ZIP)</button>
+        <button class="btn btn-primary" onclick="newCarousel()">+ New Carousel</button>
+      </div>
+    </div>
+    <div class="carousel-wrapper">
+      <div class="slides-viewport" id="slidesViewport"></div>
+    </div>
+
+    <h3 style="margin-top:32px; font-size:18px;">Caption + Hashtags</h3>
+    <div class="caption-box" id="captionBox"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast">Done!</div>
+
+<script>
+// ========== STATE ==========
+let brandData = { name: '', handle: '', color: '#2563EB', accent: '#E05C00' };
+let designStyle = null;
+let currentSlides = [];
+
+// ========== INIT ==========
+window.addEventListener('DOMContentLoaded', () => {
+  const saved = localStorage.getItem('noorBrand');
+  if (saved) {
+    brandData = JSON.parse(saved);
+    document.getElementById('brandName').value = brandData.name;
+    document.getElementById('brandHandle').value = brandData.handle;
+    document.getElementById('brandColor').value = brandData.color;
+    document.getElementById('brandAccent').value = brandData.accent;
+    document.getElementById('brandStatus').innerHTML = 'Brand: ' + brandData.name;
+    document.getElementById('brandSavedLabel').innerHTML = '<span class="brand-saved">✓ Saved</span>';
+    document.getElementById('step1').classList.add('completed');
+    document.getElementById('step1').classList.remove('active');
+    document.getElementById('step2').classList.add('active');
+  }
+});
+
+// ========== BRAND ==========
+function saveBrand() {
+  const name = document.getElementById('brandName').value.trim();
+  const handle = document.getElementById('brandHandle').value.trim();
+  const color = document.getElementById('brandColor').value;
+  const accent = document.getElementById('brandAccent').value;
+  if (!name || !handle) { toast('Brand name & handle required!'); return; }
+  brandData = { name, handle, color, accent };
+  localStorage.setItem('noorBrand', JSON.stringify(brandData));
+  document.getElementById('brandStatus').innerHTML = 'Brand: ' + name;
+  document.getElementById('brandSavedLabel').innerHTML = '<span class="brand-saved">✓ Saved</span>';
+  document.getElementById('step1').classList.add('completed');
+  document.getElementById('step1').classList.remove('active');
+  document.getElementById('step2').classList.add('active');
+  toast('Brand saved!');
+}
+
+function resetBrand() {
+  if (confirm('Naya design set karna hai? Saved brand clear ho jayega.')) {
+    localStorage.removeItem('noorBrand');
+    location.reload();
+  }
+}
+
+// ========== IMAGE ANALYZER ==========
+function handleImage(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (evt) => {
+    const img = document.getElementById('imagePreview');
+    img.src = evt.target.result;
+    img.style.display = 'block';
+    document.getElementById('uploadZone').classList.add('has-file');
+    document.querySelector('.upload-text').innerHTML = '<strong>✓ ' + file.name + '</strong>';
+    extractPalette(img);
+  };
+  reader.readAsDataURL(file);
+}
+
+function extractPalette(img) {
+  img.onload = () => {
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = img.naturalWidth;
+    canvas.height = img.naturalHeight;
+    ctx.drawImage(img, 0, 0);
+    try {
+      const data = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+      const colors = {};
+      for (let i = 0; i < data.length; i += 16) {
+        const r = data[i], g = data[i+1], b = data[i+2];
+        const key = `${Math.round(r/32)*32},${Math.round(g/32)*32},${Math.round(b/32)*32}`;
+        colors[key] = (colors[key] || 0) + 1;
+      }
+      const sorted = Object.entries(colors).sort((a,b) => b[1]-a[1]).slice(0, 5);
+      const palette = sorted.map(([k]) => {
+        const [r,g,b] = k.split(',').map(Number);
+        return rgbToHex(r,g,b);
+      });
+      designStyle = { palette, source: 'image' };
+      renderPalette(palette);
+      document.getElementById('stylePreview').classList.add('show');
+      toast('Palette extracted!');
+    } catch (err) {
+      toast('Could not analyze — using default style');
+    }
+  };
+  if (img.complete) img.onload();
+}
+
+function renderPalette(colors) {
+  const el = document.getElementById('palette');
+  el.innerHTML = colors.map(c => `<div class="swatch" style="background:${c}"><span>${c}</span></div>`).join('');
+}
+
+function rgbToHex(r,g,b) {
+  return '#' + [r,g,b].map(x => x.toString(16).padStart(2,'0')).join('').toUpperCase();
+}
+
+function skipDesign() {
+  designStyle = { palette: ['#2563EB', '#0D0D0D', '#FFFFFF', '#E05C00'], source: 'default' };
+  document.getElementById('step2').classList.add('completed');
+  document.getElementById('step2').classList.remove('active');
+  document.getElementById('step3').classList.add('active');
+  toast('Using default style');
+}
+
+// ========== CAROUSEL GENERATOR ==========
+function generateCarousel() {
+  const topic = document.getElementById('topic').value.trim();
+  if (!topic) { toast('Topic required!'); return; }
+  const count = parseInt(document.getElementById('slideCount').value);
+  const tone = document.getElementById('tone').value;
+  const keyPoints = document.getElementById('keyPoints').value
+    .split('\n').map(s => s.trim()).filter(Boolean);
+
+  // Generate slide content
+  const slides = buildSlides(topic, count, tone, keyPoints);
+  currentSlides = slides;
+  renderSlides(slides);
+  renderCaption(topic, slides);
+
+  document.getElementById('carouselOutput').style.display = 'block';
+  document.getElementById('carouselOutput').scrollIntoView({ behavior: 'smooth' });
+}
+
+function buildSlides(topic, count, tone, keyPoints) {
+  const palette = designStyle?.palette || ['#2563EB', '#0D0D0D', '#FFFFFF', '#E05C00'];
+  const slides = [];
+
+  // COVER SLIDE
+  slides.push({
+    type: 'cover',
+    bg: palette[1] || '#0D0D0D',
+    fg: palette[2] || '#FFFFFF',
+    accent: palette[0],
+    badge: 'CAROUSEL',
+    headline: topic,
+    sub: `Swipe → ${count + 2} slides`
+  });
+
+  // CONTENT SLIDES
+  const points = keyPoints.length === count
+    ? keyPoints
+    : autoGeneratePoints(topic, count, tone);
+
+  points.slice(0, count).forEach((point, i) => {
+    const { headline, body } = splitPoint(point, tone);
+    const bgChoice = i % 3 === 0 ? palette[0] : (i % 3 === 1 ? palette[1] : palette[2] || '#FFFFFF');
+    const fgChoice = bgChoice === palette[2] || bgChoice === '#FFFFFF' ? '#0D0D0D' : '#FFFFFF';
+    slides.push({
+      type: 'content',
+      bg: bgChoice,
+      fg: fgChoice,
+      accent: palette[3] || '#E05C00',
+      num: String(i + 1).padStart(2, '0'),
+      headline,
+      body
+    });
+  });
+
+  // CTA SLIDE
+  slides.push({
+    type: 'cta',
+    bg: palette[1] || '#0D0D0D',
+    fg: '#FFFFFF',
+    accent: palette[0],
+    headline: 'Save this for later 💾',
+    sub: `Follow ${brandData.name} for more insights like this.`,
+    handle: brandData.handle
+  });
+
+  return slides;
+}
+
+function autoGeneratePoints(topic, count, tone) {
+  // Pattern-based content generator (no LLM needed)
+  const patterns = {
+    'bold-editorial': p => [`${p} is changing fast.`, `Here's what you need to know.`, `The old way is dying.`, `New winners will emerge.`, `Speed > perfection now.`, `Data is the new oil.`, `Adapt or get left behind.`, `The rules have changed.`, `First movers win.`, `Attention is the currency.`],
+    'casual': p => [`Okay but real talk — ${p}?`, `Lowkey nobody's ready for this.`, `Plot twist: it already happened.`, `The future is kinda wild tbh.`, `Hot take alert 🚨`, `This one's gonna hit different.`, `Trust me on this one.`, `You're not ready.`, `Calling it now.`, `No cap, this is big.`],
+    'professional': p => [`${p} is evolving rapidly.`, `Key insight: data drives decisions.`, `Industry leaders are adapting.`, `Efficiency gains are significant.`, `Strategy must evolve.`, `Customer expectations are shifting.`, `Innovation is non-negotiable.`, `Talent is being redefined.`, `Investment patterns are changing.`, `The bottom line matters most.`],
+    'educational': p => [`Let's break it down.`, `First, the basics.`, `Here's how it works.`, `Why this matters.`, `A real-world example.`, `Common misconception.`, `The data backs this up.`, `Step-by-step approach.`, `What experts say.`, `Key takeaway.`]
+  };
+  return (patterns[tone] || patterns['bold-editorial']).call(null, topic);
+}
+
+function splitPoint(point, tone) {
+  // Try to split on punctuation for headline/body
+  const sentences = point.split(/[.!?]/).filter(Boolean);
+  if (sentences.length > 1) {
+    return { headline: sentences[0].trim() + '.', body: sentences.slice(1).join('. ').trim() };
+  }
+  return { headline: point, body: '' };
+}
+
+// ========== RENDER ==========
+function renderSlides(slides) {
+  const vp = document.getElementById('slidesViewport');
+  vp.innerHTML = slides.map((s, i) => buildSlideHTML(s, i)).join('');
+}
+
+function buildSlideHTML(s, idx) {
+  let content = '';
+  if (s.type === 'cover') {
+    content = `
+      <div class="slide-inner" style="background:${s.bg}; color:${s.fg};">
+        <div class="badge-top"><span class="badge-pill" style="background:${s.accent}; color:#fff;">${s.badge}</span></div>
+        <div>
+          <h1 class="headline" style="font-weight:900; letter-spacing:-1px;">${escapeHTML(s.headline)}</h1>
+          <p style="margin-top:24px; font-size:18px; opacity:0.7;">${escapeHTML(s.sub)}</p>
+        </div>
+        <div style="font-size:14px; opacity:0.6; font-weight:700;">${escapeHTML(brandData.handle)}</div>
+      </div>`;
+  } else if (s.type === 'content') {
+    content = `
+      <div class="slide-inner" style="background:${s.bg}; color:${s.fg};">
+        <div class="num-tag" style="color:${s.fg};">${s.num}</div>
+        <div>
+          <h2 class="headline" style="font-weight:900; letter-spacing:-0.8px;">${highlightKeyword(escapeHTML(s.headline), s.accent)}</h2>
+          ${s.body ? `<p class="body">${escapeHTML(s.body)}</p>` : ''}
+        </div>
+        <div style="font-size:12px; opacity:0.5; font-weight:700; letter-spacing:1px;">${escapeHTML(brandData.handle).toUpperCase()}</div>
+      </div>`;
+  } else if (s.type === 'cta') {
+    content = `
+      <div class="slide-inner" style="background:${s.bg}; color:${s.fg};">
+        <div>
+          <div class="badge-pill" style="background:${s.accent}; color:#fff; margin-bottom:24px;">FOLLOW FOR MORE</div>
+          <h2 class="headline" style="font-weight:900; letter-spacing:-1px;">${escapeHTML(s.headline)}</h2>
+          <p class="sub">${escapeHTML(s.sub)}</p>
+          <div class="handle">${escapeHTML(s.handle)}</div>
+        </div>
+      </div>`;
+  }
+  return `
+    <div class="slide ${s.type}" id="slide-${idx}">
+      ${content}
+      <div class="slide-counter">${idx + 1} / ${currentSlides.length || ''}</div>
+      <button class="btn btn-success" style="position:absolute; top:16px; right:16px; z-index:10; font-size:11px; padding:6px 12px;" onclick="downloadSlide(${idx})">⬇ PNG</button>
+    </div>`;
+}
+
+function highlightKeyword(text, color) {
+  // Highlight first noun-ish word with color
+  const words = text.split(' ');
+  if (words.length < 3) return text;
+  const target = words.find(w => w.length > 4) || words[1];
+  return text.replace(target, `<span class="keyword" style="color:${color};">${target}</span>`);
+}
+
+function escapeHTML(s) {
+  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+// ========== CAPTION ==========
+function renderCaption(topic, slides) {
+  const caption = `${topic} 🔥
+
+The game is changing faster than most people realize.
+
+Swipe through to see what's coming →
+
+Key takeaway: ${slides.find(s => s.type === 'content')?.headline || 'Stay ahead of the curve.'}
+
+💾 Save this post — you'll want to revisit it.
+📤 Share with someone who needs to see this.
+💬 Drop a comment with your thoughts.
+
+—
+${brandData.name}
+${brandData.handle}
+
+#${topic.replace(/[^a-zA-Z0-9]/g, '').toLowerCase()} #business #innovation #ai #future #trending #${(brandData.name || '').replace(/[^a-zA-Z0-9]/g, '').toLowerCase()} #digitalmarketing #growth #strategy`;
+  document.getElementById('captionBox').textContent = caption;
+}
+
+// ========== DOWNLOAD ==========
+async function downloadSlide(idx) {
+  const el = document.getElementById('slide-' + idx);
+  const btn = el.querySelector('button');
+  btn.disabled = true; btn.textContent = '⏳ ...';
+  try {
+    const canvas = await html2canvas(el, {
+      width: 405, height: 540, scale: 2,
+      backgroundColor: null, useCORS: true
+    });
+    const link = document.createElement('a');
+    link.download = `carousel-slide-${idx + 1}.png`;
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+    toast(`Slide ${idx + 1} downloaded!`);
+  } catch (err) {
+    toast('Download failed — try again');
+  }
+  btn.disabled = false; btn.textContent = '⬇ PNG';
+}
+
+async function downloadAll() {
+  toast('Generating all slides...');
+  for (let i = 0; i < currentSlides.length; i++) {
+    await new Promise(r => setTimeout(r, 600));
+    await downloadSlide(i);
+  }
+  toast('All slides downloaded!');
+}
+
+function newCarousel() {
+  document.getElementById('topic').value = '';
+  document.getElementById('keyPoints').value = '';
+  document.getElementById('carouselOutput').style.display = 'none';
+  document.getElementById('step3').classList.add('active');
+  document.getElementById('step3').scrollIntoView({ behavior: 'smooth' });
+}
+
+function copyCaption() {
+  const text = document.getElementById('captionBox').textContent;
+  navigator.clipboard.writeText(text).then(() => toast('Caption copied!'));
+}
+
+function toast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+</script>
+</body>
+</html>
