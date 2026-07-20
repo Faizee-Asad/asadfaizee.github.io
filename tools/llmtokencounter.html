@@ -4,18 +4,19 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <!-- <title>LLM Token Counter</title> -->
+    
     <!-- ✅ SEO Title -->
     <title>LLM Token Counter – Free Real-Time Token Calculator for GPT, Claude & Llama</title>
-    <!--<meta name="description"
-        content="LLMTokenCounter: Manage GPT-3, GPT-4, Claude, and other LLM tokens efficiently. Real-time, accurate counts for optimal language model usage."> -->
+    
     <!-- ✅ SEO Meta Description -->
     <meta name="description" content="Free LLM Token Counter by Asad Faizee: Instantly calculate tokens, words & characters for GPT-3.5, GPT-4, Claude, Llama and more. Built for prompt engineers.">
-    <!-- (Optional) Keywords meta – not necessary but can help slightly -->
+    
+    <!-- ✅ Keywords meta -->
     <meta name="keywords" content="LLM Token Counter, GPT Token Calculator, AI Token Counter, Count Tokens GPT, Token Estimator GPT-4, Llama Token Calculator, Claude Token Counter, Asad Faizee">
     
     <meta name="author" content="Asad Faizee">
-    <!-- ✅ FAQ Schema -->
+    
+    <!-- ✅ FAQ Schema (Helps with Google Rich Snippets) -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -49,19 +50,21 @@
     }
     </script>
 
-<!-- ✅ Open Graph / Social Media Preview Tags -->
-<meta property="og:title" content="LLM Token Counter – Free Real-Time Token Calculator for GPT, Claude & Llama">
-<meta property="og:description" content="Free LLM Token Counter by Asad Faizee: Instantly calculate tokens, words & characters for GPT-3.5, GPT-4, Claude, and Llama. Built for prompt engineers.">
-<meta property="og:image" content="https://asadfaizee.is-a.dev/tools/llmtokencounter-preview.png">
-<meta property="og:url" content="https://asadfaizee.is-a.dev/tools/llmtokencounter.html">
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="Asad Faizee Tools">
+    <!-- ✅ Open Graph / Social Media Preview Tags -->
+    <meta property="og:title" content="LLM Token Counter – Free Real-Time Token Calculator for GPT, Claude & Llama">
+    <meta property="og:description" content="Free LLM Token Counter by Asad Faizee: Instantly calculate tokens, words & characters for GPT-3.5, GPT-4, Claude, and Llama. Built for prompt engineers.">
+    <!-- Replace with your actual preview image URL -->
+    <meta property="og:image" content="https://asadfaizee.is-a.dev/tools/llmtokencounter-preview.png">
+    <meta property="og:url" content="https://asadfaizee.is-a.dev/tools/llmtokencounter.html">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Asad Faizee Tools">
 
-<!-- ✅ Twitter Card Tags -->
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="LLM Token Counter – Free Token Calculator for GPT, Claude & Llama">
-<meta name="twitter:description" content="Free LLM Token Counter by Asad Faizee for AI developers and prompt engineers.">
-<meta name="twitter:image" content="https://asadfaizee.is-a.dev/tools/llmtokencounter-preview.png">
+    <!-- ✅ Twitter Card Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="LLM Token Counter – Free Token Calculator for GPT, Claude & Llama">
+    <meta name="twitter:description" content="Free LLM Token Counter by Asad Faizee for AI developers and prompt engineers.">
+    <!-- Replace with your actual preview image URL -->
+    <meta name="twitter:image" content="https://asadfaizee.is-a.dev/tools/llmtokencounter-preview.png">
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -134,7 +137,7 @@
     </style>
 </head>
 
-<body class="bg-gray-50 min-h-screen">
+<body class="bg-gray-50 min-h-screen font-sans">
     <!-- Header Banner -->
     <div class="gradient-bg text-white py-3">
         <div class="max-w-4xl mx-auto px-4">
@@ -153,37 +156,37 @@
     </div>
 
     <!-- Main Content -->
-    <div class="max-w-4xl mx-auto px-4 py-8">
+    <main class="max-w-4xl mx-auto px-4 py-8">
         <!-- Header -->
-        <div class="text-center mb-8">
+        <header class="text-center mb-8">
             <h1 class="text-4xl md:text-5xl font-bold text-dark mb-4 text-shadow">
                 <i class="fas fa-calculator text-primary mr-3"></i>
                 LLM Token Counter
             </h1>
-            <p class="text-xl text-gray-600 mb-6">
-                Calculate token counts for GPT-3.5, GPT-4, Claude, and other large language models in real-time
-            </p>
-        </div>
+            <h2 class="text-xl text-gray-600 mb-6">
+                Accurately estimate token counts for GPT-3.5, GPT-4, Claude, and Llama 2 in real-time
+            </h2>
+        </header>
 
         <!-- Stats Cards -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <div class="bg-white rounded-xl p-6 shadow-lg card-hover text-center">
-                <div class="text-3xl font-bold text-primary count-badge" id="token-count">0</div>
-                <p class="text-gray-600 mt-2">Tokens</p>
+            <div class="bg-white rounded-xl p-6 shadow-lg card-hover text-center border-t-4 border-primary">
+                <div class="text-4xl font-bold text-primary count-badge" id="token-count">0</div>
+                <p class="text-gray-600 mt-2 font-medium">Estimated Tokens</p>
                 <div class="mt-4 bg-gray-200 rounded-full h-2">
                     <div class="bg-primary progress-bar h-2 rounded-full" style="width: 0%" id="token-progress"></div>
                 </div>
             </div>
-            <div class="bg-white rounded-xl p-6 shadow-lg card-hover text-center">
-                <div class="text-3xl font-bold text-secondary count-badge" id="character-count">0</div>
-                <p class="text-gray-600 mt-2">Characters</p>
+            <div class="bg-white rounded-xl p-6 shadow-lg card-hover text-center border-t-4 border-secondary">
+                <div class="text-4xl font-bold text-secondary count-badge" id="character-count">0</div>
+                <p class="text-gray-600 mt-2 font-medium">Characters</p>
                 <div class="mt-4 bg-gray-200 rounded-full h-2">
                     <div class="bg-secondary progress-bar h-2 rounded-full" style="width: 0%" id="char-progress"></div>
                 </div>
             </div>
-            <div class="bg-white rounded-xl p-6 shadow-lg card-hover text-center">
-                <div class="text-3xl font-bold text-accent count-badge" id="word-count">0</div>
-                <p class="text-gray-600 mt-2">Words</p>
+            <div class="bg-white rounded-xl p-6 shadow-lg card-hover text-center border-t-4 border-accent">
+                <div class="text-4xl font-bold text-accent count-badge" id="word-count">0</div>
+                <p class="text-gray-600 mt-2 font-medium">Words</p>
                 <div class="mt-4 bg-gray-200 rounded-full h-2">
                     <div class="bg-accent progress-bar h-2 rounded-full" style="width: 0%" id="word-progress"></div>
                 </div>
@@ -191,18 +194,18 @@
         </div>
 
         <!-- Text Area -->
-        <div class="bg-white rounded-xl p-6 shadow-lg mb-6">
-            <div class="flex items-center justify-between mb-4">
-                <h2 class="text-xl font-semibold text-dark">
+        <section class="bg-white rounded-xl p-6 shadow-lg mb-6">
+            <div class="flex items-center justify-between mb-4 flex-wrap gap-2">
+                <h3 class="text-xl font-semibold text-dark">
                     <i class="fas fa-keyboard text-primary mr-2"></i>
-                    Paste Your Text
-                </h2>
+                    Paste Your Prompt or Text
+                </h3>
                 <div class="flex space-x-2">
                     <button onclick="clearText()"
-                        class="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300 transition-colors">
+                        class="bg-gray-100 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-200 transition-colors border border-gray-300">
                         <i class="fas fa-trash mr-2"></i>Clear
                     </button>
-                    <button onclick="copyText()"
+                    <button onclick="copyText()" id="copy-btn"
                         class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors">
                         <i class="fas fa-copy mr-2"></i>Copy
                     </button>
@@ -210,134 +213,173 @@
             </div>
 
             <textarea id="text-box" rows="10"
-                class="w-full p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary resize-none"
-                placeholder="Paste your text here to calculate token counts for GPT-3.5, GPT-4, Claude, and other LLMs..."
+                class="w-full p-4 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary resize-y text-gray-800"
+                placeholder="Paste your prompt, code snippet, or article here to instantly calculate token counts for various LLMs..."
                 oninput="updateCount()"></textarea>
 
-            <div class="mt-4 flex items-center justify-between">
-                <div class="text-sm text-gray-500">
-                    <i class="fas fa-info-circle mr-1"></i>
+            <div class="mt-4 flex flex-col md:flex-row items-start md:items-center justify-between text-sm text-gray-500">
+                <div class="flex items-center mb-2 md:mb-0">
+                    <i class="fas fa-bolt text-yellow-500 mr-2"></i>
                     Real-time counting as you type
                 </div>
-                <div class="text-sm text-gray-500">
-                    <span id="text-length">0</span> characters
+                <div>
+                    Total Length: <span id="text-length" class="font-semibold text-dark">0</span> characters
                 </div>
             </div>
-        </div>
+        </section>
 
         <!-- Model Selection -->
-        <div class="bg-white rounded-xl p-6 shadow-lg mb-6">
-            <h2 class="text-xl font-semibold text-dark mb-4">
-                <i class="fas fa-robot text-primary mr-2"></i>
+        <section class="bg-white rounded-xl p-6 shadow-lg mb-6">
+            <h3 class="text-xl font-semibold text-dark mb-4">
+                <i class="fas fa-sliders-h text-primary mr-2"></i>
                 Language Model Settings
-            </h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Select Model</label>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Select Target LLM</label>
                     <select id="model-select"
-                        class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                        class="w-full p-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-primary bg-gray-50 cursor-pointer"
                         onchange="updateModel()">
+                        <option value="gpt-4">GPT-4 / GPT-4o (OpenAI)</option>
                         <option value="gpt-3.5">GPT-3.5 Turbo</option>
-                        <option value="gpt-4">GPT-4</option>
-                        <option value="claude">Claude</option>
-                        <option value="llama">Llama 2</option>
-                        <option value="custom">Custom Model</option>
+                        <option value="claude">Claude 3 (Anthropic)</option>
+                        <option value="llama">Llama 2 / 3 (Meta)</option>
+                        <option value="custom">Custom Ratio</option>
                     </select>
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Tokens per Character</label>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Tokens per Character Ratio</label>
                     <input type="number" id="token-ratio" value="0.25" step="0.01" min="0.1" max="1.0"
-                        class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                        class="w-full p-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-primary bg-gray-50"
                         onchange="updateCount()">
-                    <div class="text-xs text-gray-500 mt-1">1 token ≈ <span id="ratio-display">4</span> characters</div>
+                    <div class="text-xs text-gray-500 mt-2 bg-gray-100 p-2 rounded inline-block">
+                        <i class="fas fa-info-circle mr-1 text-primary"></i>
+                        Rule of thumb: 1 token ≈ <span id="ratio-display" class="font-bold">4.0</span> characters
+                    </div>
                 </div>
             </div>
-        </div>
+        </section>
 
         <!-- Disclaimer -->
-        <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+        <div class="bg-amber-50 border-l-4 border-amber-400 rounded-r-lg p-4 mb-8">
             <div class="flex items-start">
-                <i class="fas fa-exclamation-triangle text-yellow-500 text-lg mr-3 mt-1"></i>
+                <i class="fas fa-exclamation-circle text-amber-500 text-xl mr-3 mt-0.5"></i>
                 <div>
-                    <p class="text-sm text-yellow-800">
-                        <strong>Disclaimer:</strong> This tool estimates tokens based on character count. For precise
-                        token counts,
-                        please consult your specific language model's documentation. Different models may have varying
-                        tokenization methods.
+                    <h4 class="text-sm font-bold text-amber-800 mb-1">Estimation Disclaimer</h4>
+                    <p class="text-sm text-amber-800">
+                        This tool calculates an <em>estimate</em> based on character count ratios. Exact tokenization (like BPE used by OpenAI) depends on the specific API. Always refer to your provider's dashboard for billing.
                     </p>
                 </div>
             </div>
         </div>
 
         <!-- Quick Actions -->
-        <div class="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4">
-            <button onclick="insertSampleText('short')"
-                class="bg-blue-100 text-blue-800 p-4 rounded-lg hover:bg-blue-200 transition-colors">
-                <i class="fas fa-file-alt text-lg mb-2"></i>
-                <div>Short Text</div>
-            </button>
-            <button onclick="insertSampleText('medium')"
-                class="bg-green-100 text-green-800 p-4 rounded-lg hover:bg-green-200 transition-colors">
-                <i class="fas fa-file text-lg mb-2"></i>
-                <div>Medium Text</div>
-            </button>
-            <button onclick="insertSampleText('long')"
-                class="bg-purple-100 text-purple-800 p-4 rounded-lg hover:bg-purple-200 transition-colors">
-                <i class="fas fa-file-code text-lg mb-2"></i>
-                <div>Long Text</div>
-            </button>
-            <button onclick="insertSampleText('code')"
-                class="bg-orange-100 text-orange-800 p-4 rounded-lg hover:bg-orange-200 transition-colors">
-                <i class="fas fa-code text-lg mb-2"></i>
-                <div>Code Sample</div>
-            </button>
-        </div>
-    </div>
+        <section class="mb-12">
+            <h3 class="text-lg font-semibold text-gray-700 mb-4">Try with Sample Texts:</h3>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <button onclick="insertSampleText('short')"
+                    class="bg-blue-50 text-blue-700 p-4 rounded-xl hover:bg-blue-100 transition-colors border border-blue-200 shadow-sm flex flex-col items-center justify-center">
+                    <i class="fas fa-comment-dots text-2xl mb-2 text-blue-500"></i>
+                    <span class="font-medium">Short Prompt</span>
+                </button>
+                <button onclick="insertSampleText('medium')"
+                    class="bg-green-50 text-green-700 p-4 rounded-xl hover:bg-green-100 transition-colors border border-green-200 shadow-sm flex flex-col items-center justify-center">
+                    <i class="fas fa-file-alt text-2xl mb-2 text-green-500"></i>
+                    <span class="font-medium">Article Chunk</span>
+                </button>
+                <button onclick="insertSampleText('long')"
+                    class="bg-purple-50 text-purple-700 p-4 rounded-xl hover:bg-purple-100 transition-colors border border-purple-200 shadow-sm flex flex-col items-center justify-center">
+                    <i class="fas fa-book-open text-2xl mb-2 text-purple-500"></i>
+                    <span class="font-medium">Long Text</span>
+                </button>
+                <button onclick="insertSampleText('code')"
+                    class="bg-orange-50 text-orange-700 p-4 rounded-xl hover:bg-orange-100 transition-colors border border-orange-200 shadow-sm flex flex-col items-center justify-center">
+                    <i class="fas fa-code text-2xl mb-2 text-orange-500"></i>
+                    <span class="font-medium">Code Snippet</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- ✅ NEW SEO / FAQ Section -->
+        <section class="bg-white rounded-xl p-8 shadow-lg mb-8 border-t-4 border-dark">
+            <h2 class="text-2xl font-bold text-dark mb-6">Frequently Asked Questions (FAQ)</h2>
+            
+            <div class="space-y-6">
+                <div>
+                    <h3 class="text-lg font-bold text-gray-800 mb-2">What is an LLM Token?</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        In Large Language Models (LLMs) like ChatGPT, Claude, or Llama, a "token" is the basic unit of data processed by the AI. A token is not always a full word; it can be a single character, a chunk of a word, or an entire word depending on the language and context. A helpful rule of thumb for standard English text is that <strong>1 token is approximately 4 characters</strong> or 0.75 words.
+                    </p>
+                </div>
+                
+                <hr class="border-gray-100">
+
+                <div>
+                    <h3 class="text-lg font-bold text-gray-800 mb-2">Why do I need a Token Counter?</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        AI APIs charge based on token usage (input and output). Additionally, every model has a maximum context window (e.g., GPT-4 has up to 128k tokens). Using an <strong>LLM Token Calculator</strong> helps prompt engineers and developers estimate API costs, ensure their prompts fit within the model's limits, and optimize their text before sending expensive API calls.
+                    </p>
+                </div>
+
+                <hr class="border-gray-100">
+
+                <div>
+                    <h3 class="text-lg font-bold text-gray-800 mb-2">Are tokens calculated differently across models?</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        Yes. OpenAI's models (GPT-3.5, GPT-4) use a specific tokenizer called <code>tiktoken</code> (using Byte-Pair Encoding). Anthropic's Claude and Meta's Llama use their own distinct tokenization dictionaries. While the exact count may vary slightly between them, the ratio-based estimation provided in this tool offers a very close approximation for general text.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </main>
 
     <!-- Footer -->
-    <footer class="bg-dark text-white py-8 mt-12">
+    <footer class="bg-dark text-white py-10 mt-auto">
         <div class="max-w-4xl mx-auto px-4 text-center">
-            <p class="text-lg mb-4">
-                <i class="fas fa-brain mr-2"></i>
-                Optimize your LLM usage with precise token counting
+            <p class="text-xl mb-6 font-light">
+                <i class="fas fa-rocket text-primary mr-2"></i>
+                Optimize your AI prompts with precise token estimation.
             </p>
-            <div class="flex justify-center space-x-6 mb-4">
-                <a href="#" class="hover:text-primary transition-colors">
-                    <i class="fab fa-github text-xl"></i>
+            <div class="flex justify-center space-x-6 mb-8">
+                <a href="https://github.com/asadfaizee" target="_blank" class="text-gray-400 hover:text-white transition-colors">
+                    <i class="fab fa-github text-2xl"></i>
                 </a>
-                <a href="#" class="hover:text-primary transition-colors">
-                    <i class="fab fa-twitter text-xl"></i>
+                <a href="#" class="text-gray-400 hover:text-blue-400 transition-colors">
+                    <i class="fab fa-twitter text-2xl"></i>
                 </a>
-                <a href="#" class="hover:text-primary transition-colors">
-                    <i class="fas fa-envelope text-xl"></i>
+                <a href="mailto:contact@asadfaizee.is-a.dev" class="text-gray-400 hover:text-red-400 transition-colors">
+                    <i class="fas fa-envelope text-2xl"></i>
                 </a>
             </div>
-            <p class="text-sm text-gray-400">
-                © 2024 LLM Token Counter. Built with ❤️ by <a href="#">Asad Faizee</a> for the AI community.
-            </p>
+            <div class="border-t border-gray-700 pt-6">
+                <p class="text-sm text-gray-400">
+                    © 2024 LLM Token Counter. Built with ❤️ by <a href="https://asad-faizee.vercel.app/" target="_blank" class="text-primary hover:underline">Asad Faizee</a> for the developer community.
+                </p>
+            </div>
         </div>
     </footer>
 
     <script>
         // Sample texts for quick insertion
         const sampleTexts = {
-            short: "This is a short sample text to test token counting.",
-            medium: "Large language models like GPT-3.5 and GPT-4 process text in tokens. Each token represents a sequence of characters. This tool helps you estimate how many tokens your text will consume, allowing you to optimize your usage and stay within model limits.",
-            long: `Artificial intelligence and machine learning have revolutionized how we interact with technology. Large language models like GPT-4 represent the cutting edge of natural language processing, capable of understanding context, generating human-like text, and performing complex tasks. 
+            short: "Write a short summary of how machine learning works.",
+            medium: "Large language models like GPT-4 process text in tokens. Each token represents a sequence of characters. This tool helps you estimate how many tokens your text will consume, allowing you to optimize your usage and stay within API limits.",
+            long: `Artificial intelligence and machine learning have revolutionized how we interact with technology. Large language models (LLMs) represent the cutting edge of natural language processing, capable of understanding context, generating human-like text, and performing complex logical tasks. 
 
-These models process information using tokens - chunks of text that can be as short as one character or as long as one word. Understanding token usage is crucial for optimizing API costs and ensuring your prompts fit within model constraints.
+These models process information using tokens - chunks of text that can be as short as one character or as long as a full word. Understanding token usage is crucial for optimizing API costs, maintaining conversational memory, and ensuring your prompts fit within the model's maximum context window constraints.
 
-This token counter provides real-time estimates to help you manage your LLM usage effectively. Remember that different models may tokenize text differently, so always refer to official documentation for precise calculations.`,
+This token counter provides real-time estimates to help developers and prompt engineers manage their LLM usage effectively. Remember that different models (like Claude vs GPT) may tokenize the exact same string of text differently based on their underlying vocabulary dictionaries.`,
             code: `function calculateTokens(text) {
-    // Simple token estimation based on character count
-    const characters = text.replace(/\\s+/g, ' ').trim().length;
+    // Basic ratio estimation based on character count
+    const characters = text.trim().length;
+    // Assuming roughly 4 characters per token for standard English
     const tokens = Math.ceil(characters / 4);
     return tokens;
 }
 
-// Example usage
-const sampleText = "Hello, world! This is a test.";
-console.log("Estimated tokens:", calculateTokens(sampleText));`
+const promptText = "Analyze this dataset and return JSON.";
+console.log("Estimated tokens:", calculateTokens(promptText));`
         };
 
         function updateCount() {
@@ -351,8 +393,8 @@ console.log("Estimated tokens:", calculateTokens(sampleText));`
         }
 
         function updateCharacterCount(text) {
-            const cleanText = text.trim().replace(/\s+/g, ' ');
-            const characterCount = cleanText.length;
+            // Count actual characters including spaces, as spaces cost tokens too
+            const characterCount = text.length;
             document.getElementById('character-count').textContent = characterCount.toLocaleString();
             document.getElementById('text-length').textContent = characterCount.toLocaleString();
         }
@@ -364,21 +406,21 @@ console.log("Estimated tokens:", calculateTokens(sampleText));`
         }
 
         function updateTokenCount(text, ratio) {
-            const cleanText = text.trim().replace(/\s+/g, ' ');
-            const characterCount = cleanText.length;
+            // Using actual length for token calc, spaces matter in LLMs
+            const characterCount = text.length;
             const tokenCount = Math.ceil(characterCount * ratio);
             document.getElementById('token-count').textContent = tokenCount.toLocaleString();
         }
 
         function updateProgressBars(text) {
-            const maxChars = 4000; // Reasonable max for progress bars
-            const charCount = text.trim().replace(/\s+/g, ' ').length;
+            const maxChars = 8000; // Adjusted for visual scaling
+            const charCount = text.length;
             const wordCount = text.trim().split(/\s+/).filter(word => word.length > 0).length;
             const tokenCount = Math.ceil(charCount * parseFloat(document.getElementById("token-ratio").value));
 
             const charPercent = Math.min((charCount / maxChars) * 100, 100);
-            const wordPercent = Math.min((wordCount / 1000) * 100, 100);
-            const tokenPercent = Math.min((tokenCount / 1000) * 100, 100);
+            const wordPercent = Math.min((wordCount / 2000) * 100, 100);
+            const tokenPercent = Math.min((tokenCount / 2000) * 100, 100);
 
             document.getElementById('char-progress').style.width = charPercent + '%';
             document.getElementById('word-progress').style.width = wordPercent + '%';
@@ -389,21 +431,20 @@ console.log("Estimated tokens:", calculateTokens(sampleText));`
             const model = document.getElementById("model-select").value;
             const ratioInput = document.getElementById("token-ratio");
 
+            // Slightly adjusted ratios based on actual tokenizer behavior
             switch (model) {
-                case 'gpt-3.5':
-                    ratioInput.value = '0.25';
-                    break;
                 case 'gpt-4':
-                    ratioInput.value = '0.25';
+                case 'gpt-3.5':
+                    ratioInput.value = '0.25'; // ~4 chars per token
                     break;
                 case 'claude':
-                    ratioInput.value = '0.28';
+                    ratioInput.value = '0.28'; // Claude tends to use slightly more tokens
                     break;
                 case 'llama':
-                    ratioInput.value = '0.22';
+                    ratioInput.value = '0.24';
                     break;
                 case 'custom':
-                    ratioInput.value = '0.25';
+                    // Keep current value
                     break;
             }
             updateRatioDisplay();
@@ -412,31 +453,43 @@ console.log("Estimated tokens:", calculateTokens(sampleText));`
 
         function updateRatioDisplay() {
             const ratio = parseFloat(document.getElementById("token-ratio").value);
-            document.getElementById("ratio-display").textContent = (1 / ratio).toFixed(1);
+            const charsPerToken = (1 / ratio).toFixed(1);
+            document.getElementById("ratio-display").textContent = charsPerToken;
         }
 
         function clearText() {
             document.getElementById("text-box").value = "";
+            document.getElementById("text-box").focus();
             updateCount();
         }
 
         function copyText() {
             const textarea = document.getElementById("text-box");
+            if(textarea.value.length === 0) return;
+            
             textarea.select();
             document.execCommand("copy");
 
             // Show feedback
-            const button = event.currentTarget;
-            const originalText = button.innerHTML;
+            const button = document.getElementById("copy-btn");
+            const originalHTML = button.innerHTML;
             button.innerHTML = '<i class="fas fa-check mr-2"></i>Copied!';
+            button.classList.replace('bg-primary', 'bg-green-500');
+            button.classList.replace('hover:bg-blue-600', 'hover:bg-green-600');
+            
             setTimeout(() => {
-                button.innerHTML = originalText;
+                button.innerHTML = originalHTML;
+                button.classList.replace('bg-green-500', 'bg-primary');
+                button.classList.replace('hover:bg-green-600', 'hover:bg-blue-600');
             }, 2000);
         }
 
         function insertSampleText(type) {
             document.getElementById("text-box").value = sampleTexts[type];
             updateCount();
+            
+            // Smooth scroll to text area
+            document.getElementById("text-box").scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
 
         // Initialize
@@ -446,6 +499,7 @@ console.log("Estimated tokens:", calculateTokens(sampleText));`
 
             // Add keyboard shortcuts
             document.addEventListener('keydown', function (e) {
+                // Ctrl/Cmd + L to clear
                 if ((e.ctrlKey || e.metaKey) && e.key === 'l') {
                     e.preventDefault();
                     clearText();
