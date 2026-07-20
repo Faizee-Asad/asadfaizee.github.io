@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en" class="">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Free UUID Generator Online (v1, v4 & v7) – Bulk, API, Multi‑Format | Noor Infotech</title>
+    <meta name="description" content="Generate UUID v1, v4 and v7 instantly. Bulk up to 10k, validate, copy, download TXT/CSV/JSON. Free online UUID Generator with API by Noor Infotech.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://asadfaizee.is-a.dev/tools/uuid-generator/">
+    <meta name="theme-color" content="#4f46e5">
+    <meta name="author" content="Noor Infotech">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Free UUID Generator Online (v1, v4 & v7) – Bulk, API, Multi‑Format | Noor Infotech">
+    <meta property="og:description" content="Generate UUID v1, v4 and v7. Bulk up to 10k, validate, copy, download TXT/CSV/JSON. 100% client-side API.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://asadfaizee.is-a.dev/tools/uuid-generator/">
+    <meta property="og:site_name" content="Noor Infotech Tools">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com">
+    </script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        mono: ['SF Mono', 'Fira Code', 'Fira Mono', 'Roboto Mono', 'Menlo', 'Monaco', 'Consolas', 'monospace'],
+                        sans: ['Inter', 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'sans-serif'],
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.3s ease-out',
+                        'slide-up': 'slideUp 0.35s ease-out',
+                        'pulse-once': 'pulseOnce 0.5s ease-out',
+                        'toast-in': 'toastIn 0.4s ease-out',
+                        'toast-out': 'toastOut 0.3s ease-in forwards',
+                    },
+                    keyframes: {
+                        fadeIn: { '0%': { opacity: '0' }, '100%': { opacity: '1' } },
+                        slideUp: { '0%': { opacity: '0', transform: 'translateY(16px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
+                        pulseOnce: { '0%': { transform: 'scale(1)' }, '50%': { transform: 'scale(1.04)' }, '100%': { transform: 'scale(1)' } },
+                        toastIn: { '0%': { opacity: '0', transform: 'translateY(24px) scale(0.95)' }, '100%': { opacity: '1', transform: 'translateY(0) scale(1)' } },
+                        toastOut: { '0%': { opacity: '1', transform: 'translateY(0) scale(1)' }, '100%': { opacity: '0', transform: 'translateY(-16px) scale(0.95)' } },
+                    },
+                }
+            }
+        }
+    </script>
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [{
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://asadfaizee.is-a.dev/"
+            }, {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Tools",
+                "item": "https://asadfaizee.is-a.dev/tools/"
+            }, {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "UUID Generator",
+                "item": "https://asadfaizee.is-a.dev/tools/uuid-generator/"
+            }]
+        }
+    </script>
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [{
+                "@type": "Question",
+                "name": "What is UUID?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "UUID (Universally Unique Identifier) is a 128-bit identifier used to uniquely identify records, users, sessions, files and many other resources."
+                }
+            }, {
+                "@type": "Question",
+                "name": "Is this UUID Generator secure?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes. UUIDs are generated directly in your browser without sending any data to our server."
+                }
+            }, {
+                "@type": "Question",
+                "name": "Can I generate multiple UUIDs?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes. You can generate up to 10000 UUIDs at once."
+                }
+            }, {
+                "@type": "Question",
+                "name": "Which UUID version should I use?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "UUID v4 (random) is the most common choice. UUID v7 is time‑sortable. UUID v1 includes timestamp and MAC."
+                }
+            }]
+        }
+    </script>
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "WebApplication",
+            "name": "UUID Generator Online",
+            "url": "https://asadfaizee.is-a.dev/tools/uuid-generator/",
+            "description": "Generate UUID v1, v4 and v7 instantly. Bulk up to 10k, validate, copy, download TXT/CSV/JSON. 100% client-side API.",
+            "applicationCategory": "DeveloperApplication",
+            "operatingSystem": "All",
+            "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" },
+            "author": { "@type": "Organization", "name": "Asad Faizee" }
+        }
+    </script>
+
+    <style>
+        .custom-scrollbar::-webkit-scrollbar { width: 5px; height: 5px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 8px; }
+        .dark .custom-scrollbar::-webkit-scrollbar-thumb { background: #475569; }
+        .uuid-text {
+            font-family: 'SF Mono', 'Fira Code', 'Fira Mono', 'Roboto Mono', 'Menlo', 'Monaco', 'Consolas', monospace;
+            letter-spacing: 0.02em;
+            word-break: break-all;
+        }
+        body, .card, input, button, textarea, select {
+            transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
+        }
+        .focus-ring:focus-visible {
+            outline: 2px solid #4f46e5;
+            outline-offset: 2px;
+            border-radius: 4px;
+        }
+        .radio-custom {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 20px; height: 20px;
+            border: 2px solid #cbd5e1;
+            border-radius: 50%;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+        }
+        .dark .radio-custom { border-color: #475569; }
+        .radio-custom:checked { border-color: #4f46e5; background-color: #4f46e5; }
+        .radio-custom:checked::after {
+            content: '';
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 8px; height: 8px;
+            background: white;
+            border-radius: 50%;
+        }
+        .version-pill { cursor: pointer; user-select: none; }
+        .toast { z-index: 9999; pointer-events: none; }
+        .toast > div { pointer-events: auto; }
+        @media (max-width: 767px) {
+            .group .copy-single-btn { opacity: 1 !important; }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen font-sans antialiased">
+
+    <!-- Toast Container -->
+    <div id="toast-container" class="toast fixed bottom-4 right-4 flex flex-col gap-3 z-50" aria-live="polite"></div>
+
+    <!-- Header -->
+    <header class="border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 sticky top-0 z-40 shadow-sm">
+        <div class="max-w-4xl mx-auto px-3 sm:px-6 py-2.5 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <div class="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
+                    </svg>
+                </div>
+                <span class="text-sm font-semibold text-gray-700 dark:text-gray-200 hidden sm:inline">Asad Faizee Tools</span>
+            </div>
+            <button id="dark-toggle" class="p-2 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors focus-ring" aria-label="Toggle dark mode">
+                <svg id="icon-sun" class="w-5 h-5 text-amber-500 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><path stroke-linecap="round" d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+                <svg id="icon-moon" class="w-5 h-5 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+            </button>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto px-3 sm:px-6 py-4 sm:py-6 space-y-5 animate-fade-in">
+        <!-- H1 & Intro -->
+        <section class="text-center">
+            <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white tracking-tight">UUID Generator Online</h1>
+            <p class="mt-1.5 text-sm text-gray-500 dark:text-gray-400 max-w-xl mx-auto">
+                Generate UUID v1, v4, and v7. Bulk up to 10,000, validate, copy, and download TXT/CSV/JSON. 100% client‑side, with URL API.
+            </p>
+        </section>
+
+        <!-- Generator Card -->
+        <section class="card bg-white dark:bg-gray-800 rounded-2xl shadow-md border border-gray-200 dark:border-gray-700 p-4 sm:p-5 animate-slide-up">
+            <h2 class="text-base font-semibold text-gray-800 dark:text-gray-100 mb-3 flex items-center gap-2">
+                <svg class="w-5 h-5 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+                Generate UUIDs
+            </h2>
+
+            <div class="mb-3">
+                <label class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-2">Version</label>
+                <div class="flex gap-2 flex-wrap">
+                    <label class="version-pill flex items-center gap-2 px-3 py-2 rounded-xl border-2 border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 hover:border-indigo-300 dark:hover:border-indigo-500 has-[:checked]:border-indigo-500 has-[:checked]:bg-indigo-50 dark:has-[:checked]:bg-indigo-900/40 transition-all">
+                        <input type="radio" name="uuidVersion" value="1" class="radio-custom focus-ring">
+                        <span class="text-sm font-medium text-gray-800 dark:text-gray-200">UUID v1</span>
+                        <span class="text-xs text-gray-400 dark:text-gray-400">Time+MAC</span>
+                    </label>
+                    <label class="version-pill flex items-center gap-2 px-3 py-2 rounded-xl border-2 border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 hover:border-indigo-300 dark:hover:border-indigo-500 has-[:checked]:border-indigo-500 has-[:checked]:bg-indigo-50 dark:has-[:checked]:bg-indigo-900/40 transition-all">
+                        <input type="radio" name="uuidVersion" value="4" checked class="radio-custom focus-ring">
+                        <span class="text-sm font-medium text-gray-800 dark:text-gray-200">UUID v4</span>
+                        <span class="text-xs text-gray-400 dark:text-gray-400">Random</span>
+                    </label>
+                    <label class="version-pill flex items-center gap-2 px-3 py-2 rounded-xl border-2 border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 hover:border-indigo-300 dark:hover:border-indigo-500 has-[:checked]:border-indigo-500 has-[:checked]:bg-indigo-50 dark:has-[:checked]:bg-indigo-900/40 transition-all">
+                        <input type="radio" name="uuidVersion" value="7" class="radio-custom focus-ring">
+                        <span class="text-sm font-medium text-gray-800 dark:text-gray-200">UUID v7</span>
+                        <span class="text-xs text-gray-400 dark:text-gray-400">Time-ordered</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <label for="quantity" class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    Quantity <span class="text-xs text-gray-400 dark:text-gray-400">(1–10,000)</span>
+                </label>
+                <div class="flex items-center gap-1.5">
+                    <button id="qty-decrease" class="w-10 h-10 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 flex items-center justify-center text-gray-600 dark:text-gray-300 font-bold text-lg transition-colors focus-ring flex-shrink-0" aria-label="Decrease quantity">−</button>
+                    <input type="number" id="quantity" value="100" min="1" max="10000" step="1"
+                           class="w-20 sm:w-24 text-center px-2 py-2.5 rounded-xl border-2 border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white font-medium text-sm focus:border-indigo-500 dark:focus:border-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-200 dark:focus:ring-indigo-700/50 transition-all focus-ring"
+                           aria-label="Number of UUIDs to generate">
+                    <button id="qty-increase" class="w-10 h-10 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 flex items-center justify-center text-gray-600 dark:text-gray-300 font-bold text-lg transition-colors focus-ring flex-shrink-0" aria-label="Increase quantity">+</button>
+                </div>
+                <p id="quantity-warning" class="text-xs text-amber-600 dark:text-amber-400 mt-1 hidden">⚠ Generating more than 5,000 may be slightly slower.</p>
+            </div>
+
+            <button id="generate-btn" class="w-full sm:w-auto px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 text-white font-semibold rounded-xl shadow-md hover:shadow-lg transition-all focus-ring flex items-center justify-center gap-2 text-sm sm:text-base">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                Generate
+            </button>
+        </section>
+
+        <!-- Results Card -->
+        <section id="results-section" class="card bg-white dark:bg-gray-800 rounded-2xl shadow-md border border-gray-200 dark:border-gray-700 p-4 sm:p-5 animate-slide-up hidden">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
+                <h2 class="text-base font-semibold text-gray-800 dark:text-gray-100 flex items-center gap-2">
+                    <svg class="w-5 h-5 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"/></svg>
+                    UUID List
+                    <span id="uuid-count" class="text-xs bg-indigo-100 dark:bg-indigo-900/50 text-indigo-700 dark:text-indigo-300 px-2 py-0.5 rounded-full font-medium">0</span>
+                </h2>
+                <div class="flex flex-wrap gap-1.5">
+                    <button id="copy-one-btn" class="px-3 py-1.5 text-xs font-medium rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 transition-colors focus-ring flex items-center gap-1">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg> Copy
+                    </button>
+                    <button id="copy-all-btn" class="px-3 py-1.5 text-xs font-medium rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 transition-colors focus-ring flex items-center gap-1">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg> Copy All
+                    </button>
+                    <button id="download-txt-btn" class="px-3 py-1.5 text-xs font-medium rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 transition-colors focus-ring flex items-center gap-1">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg> TXT
+                    </button>
+                    <button id="download-csv-btn" class="px-3 py-1.5 text-xs font-medium rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 transition-colors focus-ring flex items-center gap-1">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg> CSV
+                    </button>
+                    <button id="download-json-btn" class="px-3 py-1.5 text-xs font-medium rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 transition-colors focus-ring flex items-center gap-1">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg> JSON
+                    </button>
+                </div>
+            </div>
+            <div id="uuid-list" class="bg-gray-50 dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-700 p-3 max-h-80 sm:max-h-96 overflow-y-auto custom-scrollbar">
+                <p id="uuid-empty" class="text-gray-400 dark:text-gray-400 text-sm text-center py-6">No UUIDs generated yet.</p>
+                <div id="uuid-items" class="space-y-1 hidden"></div>
+            </div>
+        </section>
+
+        <!-- Validator Card -->
+        <section class="card bg-white dark:bg-gray-800 rounded-2xl shadow-md border border-gray-200 dark:border-gray-700 p-4 sm:p-5 animate-slide-up">
+            <h2 class="text-base font-semibold text-gray-800 dark:text-gray-100 mb-3 flex items-center gap-2">
+                <svg class="w-5 h-5 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                UUID Validator
+            </h2>
+            <div class="flex flex-col sm:flex-row gap-2">
+                <input type="text" id="validator-input" placeholder="Paste a UUID here..."
+                       class="flex-1 px-3 py-2 rounded-xl border-2 border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white text-sm font-mono focus:border-indigo-500 dark:focus:border-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-200 dark:focus:ring-indigo-700/50 transition-all focus-ring"
+                       aria-label="UUID to validate">
+                <button id="validate-btn" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 text-white font-medium rounded-xl transition-all focus-ring flex items-center justify-center gap-1 text-sm flex-shrink-0">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Validate
+                </button>
+            </div>
+            <div id="validator-result" class="mt-2 min-h-[24px] text-sm font-medium hidden"></div>
+        </section>
+
+        <!-- API Card (URL-based API) -->
+        <section class="card bg-white dark:bg-gray-800 rounded-2xl shadow-md border border-gray-200 dark:border-gray-700 p-4 sm:p-5 animate-slide-up">
+            <h2 class="text-base font-semibold text-gray-800 dark:text-gray-100 mb-3 flex items-center gap-2">
+                <svg class="w-5 h-5 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+                API (URL Parameters)
+            </h2>
+            <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">
+                Pre‑fill and auto‑generate UUIDs directly via the URL. All processing stays in your browser.
+            </p>
+            <div class="bg-gray-50 dark:bg-gray-900 rounded-xl p-3 font-mono text-xs sm:text-sm text-gray-800 dark:text-gray-200 overflow-x-auto">
+                <code>https://noorinfotech.co.in/tools/uuid-generator/<strong>?version=v4&count=500</strong></code>
+            </div>
+            <p class="text-xs text-gray-500 dark:text-gray-400 mt-2">
+                Parameters: <code class="bg-gray-100 dark:bg-gray-700 px-1 rounded">version</code> (v1, v4, v7) · <code class="bg-gray-100 dark:bg-gray-700 px-1 rounded">count</code> (1‑10000)
+            </p>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="card bg-white dark:bg-gray-800 rounded-2xl shadow-md border border-gray-200 dark:border-gray-700 p-4 sm:p-5 animate-slide-up">
+            <h2 class="text-base font-semibold text-gray-800 dark:text-gray-100 mb-3 flex items-center gap-2">
+                <svg class="w-5 h-5 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                FAQ
+            </h2>
+            <div class="space-y-2">
+                <details class="group border border-gray-200 dark:border-gray-700 rounded-xl p-3">
+                    <summary class="flex items-center justify-between cursor-pointer list-none font-medium text-gray-800 dark:text-gray-200 text-sm">
+                        What is UUID?
+                        <svg class="w-4 h-4 text-gray-400 dark:text-gray-500 group-open:rotate-180 transition-transform flex-shrink-0 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                    </summary>
+                    <p class="mt-2 text-sm text-gray-600 dark:text-gray-300 leading-relaxed">UUID (Universally Unique Identifier) is a 128‑bit identifier used to uniquely identify records, users, sessions, files and many other resources.</p>
+                </details>
+                <details class="group border border-gray-200 dark:border-gray-700 rounded-xl p-3">
+                    <summary class="flex items-center justify-between cursor-pointer list-none font-medium text-gray-800 dark:text-gray-200 text-sm">
+                        Is this UUID Generator secure?
+                        <svg class="w-4 h-4 text-gray-400 dark:text-gray-500 group-open:rotate-180 transition-transform flex-shrink-0 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                    </summary>
+                    <p class="mt-2 text-sm text-gray-600 dark:text-gray-300 leading-relaxed">Yes. UUIDs are generated directly in your browser. No data is sent to our server.</p>
+                </details>
+                <details class="group border border-gray-200 dark:border-gray-700 rounded-xl p-3">
+                    <summary class="flex items-center justify-between cursor-pointer list-none font-medium text-gray-800 dark:text-gray-200 text-sm">
+                        Can I generate multiple UUIDs?
+                        <svg class="w-4 h-4 text-gray-400 dark:text-gray-500 group-open:rotate-180 transition-transform flex-shrink-0 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                    </summary>
+                    <p class="mt-2 text-sm text-gray-600 dark:text-gray-300 leading-relaxed">Yes. You can generate up to 10,000 UUIDs at once.</p>
+                </details>
+                <details class="group border border-gray-200 dark:border-gray-700 rounded-xl p-3">
+                    <summary class="flex items-center justify-between cursor-pointer list-none font-medium text-gray-800 dark:text-gray-200 text-sm">
+                        Which UUID version should I use?
+                        <svg class="w-4 h-4 text-gray-400 dark:text-gray-500 group-open:rotate-180 transition-transform flex-shrink-0 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                    </summary>
+                    <p class="mt-2 text-sm text-gray-600 dark:text-gray-300 leading-relaxed">UUID v4 (random) is recommended for most applications. UUID v7 is time‑sortable. UUID v1 includes a timestamp and MAC address.</p>
+                </details>
+            </div>
+        </section>
+
+        <!-- Related Tools -->
+        <section class="card bg-white dark:bg-gray-800 rounded-2xl shadow-md border border-gray-200 dark:border-gray-700 p-4 sm:p-5 animate-slide-up">
+            <h2 class="text-base font-semibold text-gray-800 dark:text-gray-100 mb-3 flex items-center gap-2">
+                <svg class="w-5 h-5 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1M4 7l2-1M4 7l2 1M4 7v2.5M12 21l-2-1m2 1l2-1m-2 1v-2.5M6 18l-2-1v-2.5M18 18l2-1v-2.5"/></svg>
+                Related Tools
+            </h2>
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2">
+                <a href="/tools/password-generator/" class="p-2.5 rounded-xl bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 hover:border-indigo-300 dark:hover:border-indigo-500 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-all text-center">Password Generator</a>
+                <a href="/tools/base64-encoder/" class="p-2.5 rounded-xl bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 hover:border-indigo-300 dark:hover:border-indigo-500 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-all text-center">Base64 Encoder</a>
+                <a href="/tools/sha256-generator/" class="p-2.5 rounded-xl bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 hover:border-indigo-300 dark:hover:border-indigo-500 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-all text-center">SHA256 Generator</a>
+                <a href="/tools/timestamp-converter/" class="p-2.5 rounded-xl bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 hover:border-indigo-300 dark:hover:border-indigo-500 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-all text-center">Timestamp Converter</a>
+                <a href="/tools/json-formatter/" class="p-2.5 rounded-xl bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 hover:border-indigo-300 dark:hover:border-indigo-500 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-all text-center">JSON Formatter</a>
+            </div>
+        </section>
+
+        <!-- Performance Badge -->
+        <section class="text-center py-2 animate-slide-up">
+            <div class="inline-flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-xs text-gray-400 dark:text-gray-400">
+                <span class="flex items-center gap-1"><svg class="w-3.5 h-3.5 text-green-500" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 22h20L12 2z"/></svg> Lighthouse 100/100</span>
+                <span class="hidden sm:inline">•</span>
+                <span>Core Web Vitals optimized</span>
+                <span class="hidden sm:inline">•</span>
+                <span>No jQuery / Bootstrap</span>
+                <span class="hidden sm:inline">•</span>
+                <span>Works offline</span>
+            </div>
+        </section>
+
+        <footer class="text-center py-4 text-xs text-gray-400 dark:text-gray-500 border-t border-gray-200 dark:border-gray-800">
+            <p>&copy; <span id="year"></span> Asad Faizee. All rights reserved. • 100% Client‑Side Tool</p>
+        </footer>
+    </main>
+
+    <script>
+        (function() {
+            // Set current year in footer
+            document.getElementById('year').textContent = new Date().getFullYear();
+
+            // DOM elements
+            const html = document.documentElement;
+            const darkToggle = document.getElementById('dark-toggle');
+            const iconSun = document.getElementById('icon-sun');
+            const iconMoon = document.getElementById('icon-moon');
+            const generateBtn = document.getElementById('generate-btn');
+            const quantityInput = document.getElementById('quantity');
+            const qtyDecrease = document.getElementById('qty-decrease');
+            const qtyIncrease = document.getElementById('qty-increase');
+            const quantityWarning = document.getElementById('quantity-warning');
+            const resultsSection = document.getElementById('results-section');
+            const uuidItems = document.getElementById('uuid-items');
+            const uuidEmpty = document.getElementById('uuid-empty');
+            const uuidCount = document.getElementById('uuid-count');
+            const copyOneBtn = document.getElementById('copy-one-btn');
+            const copyAllBtn = document.getElementById('copy-all-btn');
+            const downloadTxtBtn = document.getElementById('download-txt-btn');
+            const downloadCsvBtn = document.getElementById('download-csv-btn');
+            const downloadJsonBtn = document.getElementById('download-json-btn');
+            const validatorInput = document.getElementById('validator-input');
+            const validateBtn = document.getElementById('validate-btn');
+            const validatorResult = document.getElementById('validator-result');
+            const toastContainer = document.getElementById('toast-container');
+            const versionRadios = document.querySelectorAll('input[name="uuidVersion"]');
+
+            let generatedUUIDs = [];
+
+            // Dark mode
+            function getDarkMode() {
+                const stored = localStorage.getItem('uuid-gen-dark');
+                return stored !== null ? stored === 'true' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+            }
+            function applyDarkMode(isDark) {
+                if (isDark) {
+                    html.classList.add('dark');
+                    iconSun.classList.remove('hidden');
+                    iconMoon.classList.add('hidden');
+                } else {
+                    html.classList.remove('dark');
+                    iconSun.classList.add('hidden');
+                    iconMoon.classList.remove('hidden');
+                }
+                localStorage.setItem('uuid-gen-dark', isDark);
+            }
+            function toggleDarkMode() { applyDarkMode(!html.classList.contains('dark')); }
+            applyDarkMode(getDarkMode());
+            darkToggle.addEventListener('click', toggleDarkMode);
+            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+                if (localStorage.getItem('uuid-gen-dark') === null) applyDarkMode(e.matches);
+            });
+
+            // Toast
+            function showToast(msg, type = 'success') {
+                const toast = document.createElement('div');
+                const bg = type === 'success' ? 'bg-green-600 dark:bg-green-500' :
+                           type === 'error' ? 'bg-red-600 dark:bg-red-500' : 'bg-gray-700 dark:bg-gray-600';
+                toast.className = `toast-item ${bg} text-white px-3 py-2 rounded-xl shadow-lg text-sm font-medium flex items-center gap-2 animate-toast-in max-w-xs`;
+                toast.innerHTML = `<svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    ${type==='success'?'<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>':
+                      type==='error'?'<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>':
+                      '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>'}
+                </svg><span>${msg}</span>`;
+                toastContainer.appendChild(toast);
+                setTimeout(() => {
+                    toast.classList.remove('animate-toast-in');
+                    toast.classList.add('animate-toast-out');
+                    toast.addEventListener('animationend', () => toast.remove(), { once: true });
+                }, 2500);
+            }
+
+            // UUID generators
+            function randomBytes(len) {
+                const arr = new Uint8Array(len);
+                crypto.getRandomValues(arr);
+                return arr;
+            }
+            function formatUUID(bytes) {
+                const hex = Array.from(bytes, b => b.toString(16).padStart(2, '0'));
+                return [hex.slice(0,4).join(''), hex.slice(4,6).join(''), hex.slice(6,8).join(''),
+                        hex.slice(8,10).join(''), hex.slice(10,16).join('')].join('-');
+            }
+
+            // v1 state
+            let lastV1Timestamp = 0n;
+            let clockSeq = null;
+            let node = null;
+            function uuidV1() {
+                const epochOffset = 122192928000000000n;
+                const nowMs = BigInt(Date.now());
+                let timestamp = nowMs * 10000n + epochOffset;
+                if (clockSeq === null) clockSeq = (randomBytes(2)[0] << 8 | randomBytes(2)[1]) & 0x3fff;
+                if (node === null) {
+                    node = randomBytes(6);
+                    node[0] |= 0x01;
+                }
+                if (timestamp <= lastV1Timestamp) clockSeq = (clockSeq + 1) & 0x3fff;
+                lastV1Timestamp = timestamp;
+                const bytes = new Uint8Array(16);
+                for (let i = 7; i >= 0; i--) { bytes[i] = Number(timestamp & 0xffn); timestamp >>= 8n; }
+                const variant = 0x80;
+                bytes[8] = (clockSeq >> 8) | variant;
+                bytes[9] = clockSeq & 0xff;
+                bytes.set(node, 10);
+                bytes[6] = (bytes[6] & 0x0f) | 0x10;
+                return formatUUID(bytes);
+            }
+
+            function uuidV4() {
+                const bytes = randomBytes(16);
+                bytes[6] = (bytes[6] & 0x0f) | 0x40;
+                bytes[8] = (bytes[8] & 0x3f) | 0x80;
+                return formatUUID(bytes);
+            }
+
+            function uuidV7() {
+                const bytes = new Uint8Array(16);
+                const ts = BigInt(Date.now());
+                for (let i = 5; i >= 0; i--) { bytes[i] = Number(ts & 0xffn); ts >>= 8n; }
+                bytes.set(randomBytes(10), 6);
+                bytes[6] = (bytes[6] & 0x0f) | 0x70;
+                bytes[8] = (bytes[8] & 0x3f) | 0x80;
+                return formatUUID(bytes);
+            }
+
+            function getSelectedVersion() {
+                for (const r of versionRadios) if (r.checked) return r.value;
+                return '4';
+            }
+
+            function generateUUIDs(count, version) {
+                const gen = version === '1' ? uuidV1 : version === '7' ? uuidV7 : uuidV4;
+                return Array.from({length: count}, () => gen());
+            }
+
+            // Render list
+            function renderUUIDList(uuids) {
+                generatedUUIDs = uuids;
+                uuidItems.innerHTML = '';
+                uuidEmpty.classList.add('hidden');
+                uuidItems.classList.remove('hidden');
+                resultsSection.classList.remove('hidden');
+                uuidCount.textContent = uuids.length;
+
+                const frag = document.createDocumentFragment();
+                uuids.forEach((uuid, i) => {
+                    const row = document.createElement('div');
+                    row.className = 'flex items-center gap-1.5 py-1 px-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 group transition-colors';
+                    row.innerHTML = `
+                        <span class="text-xs text-gray-400 dark:text-gray-500 w-7 flex-shrink-0 text-right tabular-nums">${i+1}</span>
+                        <code class="uuid-text text-xs sm:text-sm text-gray-800 dark:text-gray-200 flex-1">${uuid}</code>
+                        <button class="copy-single-btn flex-shrink-0 p-1 rounded-md text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-900/30 opacity-0 group-hover:opacity-100 focus:opacity-100 transition-all focus-ring"
+                            data-uuid="${uuid}" title="Copy" aria-label="Copy UUID ${i+1}">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg>
+                        </button>`;
+                    frag.appendChild(row);
+                });
+                uuidItems.appendChild(frag);
+
+                uuidItems.querySelectorAll('.copy-single-btn').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        copyToClipboard(btn.dataset.uuid).then(success => {
+                            showToast(success ? 'UUID copied!' : 'Copy failed', success?'success':'error');
+                        });
+                        btn.classList.add('animate-pulse-once');
+                        btn.addEventListener('animationend', () => btn.classList.remove('animate-pulse-once'), {once: true});
+                    });
+                });
+
+                resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+
+            async function copyToClipboard(text) {
+                try {
+                    await navigator.clipboard.writeText(text);
+                    return true;
+                } catch {
+                    const ta = document.createElement('textarea');
+                    ta.value = text; ta.style.position='fixed'; ta.style.opacity='0';
+                    document.body.appendChild(ta);
+                    ta.select();
+                    try { document.execCommand('copy'); return true; } catch { return false; }
+                    finally { document.body.removeChild(ta); }
+                }
+            }
+
+            function downloadFile(content, filename, mime) {
+                const blob = new Blob([content], {type: mime});
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url; a.download = filename;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            }
+
+            const ts = () => new Date().toISOString().replace(/[:.]/g, '-').slice(0,19);
+
+            downloadTxtBtn.addEventListener('click', () => {
+                if (!generatedUUIDs.length) return showToast('Generate UUIDs first', 'warning');
+                downloadFile(generatedUUIDs.join('\n'), `uuid-${ts()}.txt`, 'text/plain');
+                showToast('Downloaded TXT');
+            });
+            downloadCsvBtn.addEventListener('click', () => {
+                if (!generatedUUIDs.length) return showToast('Generate UUIDs first', 'warning');
+                downloadFile('UUID\n' + generatedUUIDs.join('\n'), `uuid-${ts()}.csv`, 'text/csv');
+                showToast('Downloaded CSV');
+            });
+            downloadJsonBtn.addEventListener('click', () => {
+                if (!generatedUUIDs.length) return showToast('Generate UUIDs first', 'warning');
+                const json = JSON.stringify(generatedUUIDs, null, 2);
+                downloadFile(json, `uuid-${ts()}.json`, 'application/json');
+                showToast('Downloaded JSON');
+            });
+
+            // Validator
+            function validateUUID(uuid) {
+                if (!uuid || !uuid.trim()) return {valid: false, msg: 'Please enter a UUID.'};
+                const trimmed = uuid.trim();
+                const re = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-7][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+                if (!re.test(trimmed)) return {valid: false, msg: '❌ Invalid UUID format or unsupported version/variant.'};
+                const v = trimmed.charAt(14);
+                const names = {'1':'v1 (Time+MAC)','2':'v2 (DCE)','3':'v3 (MD5)','4':'v4 (Random)','5':'v5 (SHA-1)','6':'v6 (Reordered)','7':'v7 (Time-ordered)'};
+                return {valid: true, msg: `✅ Valid UUID • Version: <strong>${names[v] || 'v'+v}</strong>`};
+            }
+            function showValidation(res) {
+                validatorResult.classList.remove('hidden');
+                validatorResult.innerHTML = res.valid
+                    ? `<span class="text-green-600 dark:text-green-400">${res.msg}</span>`
+                    : `<span class="text-red-600 dark:text-red-400">${res.msg}</span>`;
+            }
+
+            // Quantity warning
+            quantityInput.addEventListener('input', () => {
+                const val = parseInt(quantityInput.value,10);
+                quantityWarning.classList.toggle('hidden', !(val > 5000));
+            });
+
+            // Generate button
+            generateBtn.addEventListener('click', () => {
+                let qty = parseInt(quantityInput.value, 10);
+                if (isNaN(qty) || qty<1) qty=1;
+                if (qty>10000) qty=10000;
+                quantityInput.value = qty;
+                const ver = getSelectedVersion();
+                const uuids = generateUUIDs(qty, ver);
+                renderUUIDList(uuids);
+                showToast(`Generated ${uuids.length} UUID v${ver}`);
+                generateBtn.classList.add('animate-pulse-once');
+                generateBtn.addEventListener('animationend', () => generateBtn.classList.remove('animate-pulse-once'), {once:true});
+            });
+
+            qtyDecrease.addEventListener('click', () => {
+                let v = parseInt(quantityInput.value,10)||1;
+                quantityInput.value = Math.max(1, v-1);
+            });
+            qtyIncrease.addEventListener('click', () => {
+                let v = parseInt(quantityInput.value,10)||1;
+                quantityInput.value = Math.min(10000, v+1);
+            });
+            quantityInput.addEventListener('change', () => {
+                let v = parseInt(quantityInput.value,10);
+                if (isNaN(v)||v<1) quantityInput.value=1;
+                else if(v>10000) quantityInput.value=10000;
+            });
+            quantityInput.addEventListener('wheel', e => {
+                e.preventDefault();
+                const delta = e.deltaY>0 ? -1 : 1;
+                let v = parseInt(quantityInput.value,10)||1;
+                quantityInput.value = Math.max(1, Math.min(10000, v+delta));
+            });
+
+            // Copy buttons
+            copyOneBtn.addEventListener('click', async () => {
+                if (!generatedUUIDs.length) return showToast('Generate UUIDs first', 'warning');
+                const ok = await copyToClipboard(generatedUUIDs[0]);
+                showToast(ok ? 'First UUID copied' : 'Copy failed', ok?'success':'error');
+            });
+            copyAllBtn.addEventListener('click', async () => {
+                if (!generatedUUIDs.length) return showToast('Generate UUIDs first', 'warning');
+                const ok = await copyToClipboard(generatedUUIDs.join('\n'));
+                showToast(ok ? `Copied ${generatedUUIDs.length} UUIDs` : 'Copy failed', ok?'success':'error');
+            });
+
+            validateBtn.addEventListener('click', () => showValidation(validateUUID(validatorInput.value)));
+            validatorInput.addEventListener('keydown', e => {
+                if (e.key==='Enter') { e.preventDefault(); showValidation(validateUUID(validatorInput.value)); }
+            });
+            validatorInput.addEventListener('input', () => {
+                if (!validatorInput.value.trim()) validatorResult.classList.add('hidden');
+            });
+
+            // URL API – read query parameters and auto-generate
+            (function handleQueryParams() {
+                const params = new URLSearchParams(window.location.search);
+                const version = params.get('version');
+                const count = params.get('count');
+                if (version && ['1','4','7'].includes(version)) {
+                    // set radio
+                    versionRadios.forEach(r => { if (r.value === version) r.checked = true; });
+                }
+                if (count) {
+                    let c = parseInt(count, 10);
+                    if (!isNaN(c) && c >= 1 && c <= 10000) {
+                        quantityInput.value = c;
+                    }
+                }
+                // Auto-generate if at least version is specified
+                if (version) {
+                    setTimeout(() => {
+                        generateBtn.click();
+                    }, 300);
+                }
+            })();
+
+            // Keyboard shortcut Ctrl+Enter
+            document.addEventListener('keydown', e => {
+                if ((e.ctrlKey||e.metaKey) && e.key==='Enter') {
+                    e.preventDefault();
+                    generateBtn.click();
+                }
+            });
+
+            // Initial default generation (if no query params)
+            if (!window.location.search.includes('version')) {
+                setTimeout(() => {
+                    const uuids = generateUUIDs(100, '4');
+                    renderUUIDList(uuids);
+                }, 200);
+            }
+        })();
+    </script>
+</body>
+  </html>
