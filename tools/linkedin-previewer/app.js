@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Hookline — LinkedIn Post Previewer
+   LinkedIn Post Previewer
    Real-time preview engine, Unicode formatter, templates
    ========================================================================== */
 (() => {
