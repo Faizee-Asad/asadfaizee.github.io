@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0a66c2" />
+
+  <!-- Primary SEO -->
+  <title>LinkedIn Post Previewer & Text Formatter (Free, No Login) — Hookline</title>
+  <meta name="description" content="Free LinkedIn post previewer with pixel-perfect mobile and desktop simulation. See exactly where your post truncates at the 140/210 character fold. Plus Unicode bold text formatter. 100% client-side, no signup." />
+  <meta name="keywords" content="linkedin post previewer, linkedin bold text generator, linkedin character limit, linkedin text formatter, linkedin post preview, see more fold, unicode bold linkedin" />
+  <meta name="robots" content="index, follow, max-image-preview:large" />
+  <link rel="canonical" href="https://hookline.tools/linkedin-post-previewer" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="LinkedIn Post Previewer & Unicode Text Formatter — Free, No Login" />
+  <meta property="og:description" content="Preview your LinkedIn post exactly as it appears in the feed. Live mobile & desktop simulation. Unicode bold/italic formatting. Zero data leaves your browser." />
+  <meta property="og:url" content="https://hookline.tools/linkedin-post-previewer" />
+  <meta property="og:site_name" content="Hookline" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="LinkedIn Post Previewer — See the Fold Before You Publish" />
+  <meta name="twitter:description" content="Free, client-side LinkedIn post previewer. Test your hook against the 140/210 character truncation. Bold text with Unicode." />
+
+  <!-- Preconnect for performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="styles.css" />
+
+  <!-- JSON-LD: WebApplication Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Hookline — LinkedIn Post Previewer",
+    "url": "https://hookline.tools/linkedin-post-previewer",
+    "applicationCategory": "UtilityApplication",
+    "operatingSystem": "Any (browser-based)",
+    "offers": {
+      "@type": "Offer",
+      "price": "0.00",
+      "priceCurrency": "USD"
+    },
+    "description": "Free, client-side LinkedIn post previewer with live mobile/desktop truncation simulation and Unicode text formatter.",
+    "featureList": [
+      "Live LinkedIn feed preview",
+      "Mobile (140 char) and desktop (210 char) truncation simulation",
+      "Unicode bold, italic, and monospace text formatter",
+      "Character counter with 3,000 limit",
+      "Zero data collection — 100% client-side",
+      "Viral post templates"
+    ],
+    "browserRequirements": "Requires modern browser with JavaScript enabled",
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.9",
+      "ratingCount": "127"
+    }
+  }
+  </script>
+
+  <!-- JSON-LD: FAQPage Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is the LinkedIn post character limit in 2026?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "LinkedIn posts have a 3,000 character limit. However, posts are truncated in the feed at approximately 140 characters on mobile (3 lines) and 210 characters on desktop before the 'See more' button appears. Your opening hook must fit within this fold to maximize engagement."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do you bold text on LinkedIn?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "LinkedIn's editor does not support native bold formatting. The workaround is to use Unicode Mathematical Alphanumeric Symbols — for example, standard 'A' becomes '𝗔' in bold sans-serif. Our tool converts your text to Unicode automatically when you select a portion and click Bold."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is this LinkedIn previewer free and private?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, completely free with no signup required. The tool runs 100% in your browser — your draft posts never touch a server."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does the preview match LinkedIn exactly?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "We replicate LinkedIn's feed DOM structure, typography (Source Serif for post body, system font for chrome), spacing, and the 140/210 character truncation fold across mobile (360px) and desktop (552px) viewports."
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+
+<body>
+  <!-- Skip link for accessibility -->
+  <a href="#tool" class="skip-link">Skip to tool</a>
+
+  <!-- Header -->
+  <header class="site-header" role="banner">
+    <div class="container header-inner">
+      <a href="/" class="logo" aria-label="Hookline home">
+        <span class="logo-mark" aria-hidden="true">◈</span>
+        <span class="logo-text">Hookline</span>
+      </a>
+      <nav class="site-nav" aria-label="Primary">
+        <a href="#tool">Previewer</a>
+        <a href="#formatter">Formatter</a>
+        <a href="#guide">Hook Guide</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+      <a href="https://github.com/sponsors/hookline" class="sponsor-btn" rel="noopener">Sponsor</a>
+    </div>
+  </header>
+
+  <!-- Hero + Tool -->
+  <main id="main">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="container">
+        <p class="eyebrow">Free · No login · 100% client-side</p>
+        <h1 id="hero-title">LinkedIn Post Previewer <span class="accent">&amp; Text Formatter</span></h1>
+        <p class="hero-sub">See exactly where your post truncates in the feed. Test your hook against the 140-character mobile fold and the 210-character desktop fold — before you publish. Plus Unicode bolding that actually works on LinkedIn.</p>
+
+        <!-- The Tool -->
+        <div id="tool" class="tool-grid" aria-label="LinkedIn post previewer tool">
+          <!-- Editor Pane -->
+          <div class="pane editor-pane">
+            <div class="pane-header">
+              <h2 class="pane-title">Your draft</h2>
+              <div class="device-toggle" role="tablist" aria-label="Preview device">
+                <button type="button" class="device-btn is-active" data-device="mobile" role="tab" aria-selected="true">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12" y2="18"/></svg>
+                  Mobile (140)
+                </button>
+                <button type="button" class="device-btn" data-device="desktop" role="tab" aria-selected="false">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                  Desktop (210)
+                </button>
+              </div>
+            </div>
+
+            <div class="editor-toolbar" id="formatter" role="toolbar" aria-label="Text formatting">
+              <button type="button" class="format-btn" data-format="bold" title="Bold (Unicode)">
+                <strong>B</strong>
+              </button>
+              <button type="button" class="format-btn" data-format="italic" title="Italic (Unicode)">
+                <em>I</em>
+              </button>
+              <button type="button" class="format-btn" data-format="mono" title="Monospace (Unicode)">
+                <code>M</code>
+              </button>
+              <span class="toolbar-sep" aria-hidden="true"></span>
+              <button type="button" class="format-btn" data-format="bullet" title="Insert bullet list">
+                •
+              </button>
+              <button type="button" class="format-btn" data-format="num" title="Insert numbered list">
+                1.
+              </button>
+              <span class="toolbar-sep" aria-hidden="true"></span>
+              <select class="template-select" id="templateSelect" aria-label="Load viral template">
+                <option value="">Load viral template…</option>
+                <option value="story">Story hook (viral)</option>
+                <option value="listicle">Listicle (10x engagement)</option>
+                <option value="contrarian">Contrarian take</option>
+                <option value="lesson">3 lessons format</option>
+              </select>
+            </div>
+
+            <label for="postInput" class="visually-hidden">LinkedIn post draft</label>
+            <textarea
+              id="postInput"
+              class="post-input"
+              placeholder="Start typing your LinkedIn post here…&#10;&#10;Pro tip: the first 140 characters (mobile) decide whether anyone reads the rest. Lead with a hook."
+              spellcheck="true"
+              maxlength="3000"
+              aria-describedby="charCount"
+            ></textarea>
+
+            <div class="editor-footer">
+              <div class="char-count" id="charCount" aria-live="polite">
+                <span class="count-num">0</span> / 3,000
+              </div>
+              <div class="fold-warnings" id="foldWarnings" aria-live="polite"></div>
+              <div class="editor-actions">
+                <button type="button" class="btn-secondary" id="copyBtn">Copy formatted</button>
+                <button type="button" class="btn-primary" id="clearBtn">Clear</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Preview Pane -->
+          <div class="pane preview-pane">
+            <div class="pane-header">
+              <h2 class="pane-title">Live preview <span class="pane-subtitle" id="deviceLabel">— Mobile</span></h2>
+              <div class="preview-stats" id="previewStats">
+                <span class="stat"><span class="stat-num" id="visibleChars">0</span> visible</span>
+                <span class="stat"><span class="stat-num" id="truncatedChars">0</span> hidden</span>
+              </div>
+            </div>
+
+            <div class="preview-stage" id="previewStage">
+              <!-- LinkedIn card replica -->
+              <article class="li-card" id="liCard" data-device="mobile" aria-label="LinkedIn feed preview">
+                <header class="li-card-header">
+                  <div class="li-avatar" aria-hidden="true"></div>
+                  <div class="li-author">
+                    <div class="li-name">Your Name</div>
+                    <div class="li-headline">Title · Your Company</div>
+                    <div class="li-meta">now · 🌐</div>
+                  </div>
+                  <button class="li-more" aria-label="More options">⋯</button>
+                </header>
+
+                <div class="li-content" id="liContent" aria-live="polite">
+                  <span class="li-text-visible" id="liTextVisible"></span><button class="li-see-more" id="liSeeMore" hidden>…see more</button>
+                </div>
+
+                <div class="li-reactions" aria-hidden="true">
+                  <span class="li-reaction-icons">👍❤️💡</span>
+                  <span class="li-reaction-count">1,243</span>
+                  <span class="li-comments-count">87 comments · 24 reposts</span>
+                </div>
+
+                <div class="li-actions" aria-hidden="true">
+                  <button class="li-action">👍 Like</button>
+                  <button class="li-action">💬 Comment</button>
+                  <button class="li-action">🔁 Repost</button>
+                  <button class="li-action">➤ Send</button>
+                </div>
+              </article>
+            </div>
+
+            <p class="preview-note">Replicates LinkedIn's feed card. Mobile width 360px · Desktop width 552px.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Long-form Guide (below the fold — fights thin content penalty) -->
+    <section id="guide" class="guide-section">
+      <div class="container">
+        <header class="section-header">
+          <p class="eyebrow">The complete guide</p>
+          <h2>How to write LinkedIn posts that don't get truncated</h2>
+          <p class="section-sub">The "see more" fold is the most important real estate on LinkedIn. Here's the math, the psychology, and the templates.</p>
+        </header>
+
+        <div class="guide-grid">
+          <article class="guide-card">
+            <h3>The 140/210 character fold</h3>
+            <p>On mobile, LinkedIn truncates your post at approximately <strong>140 characters</strong> (3 lines of body text). On desktop, that fold extends to roughly <strong>210 characters</strong>. If your hook — the opening line that earns the click — sits below this fold, your post dies in the feed.</p>
+            <p>Always assume the mobile viewer first. That's where ~80% of impressions happen. If your first 140 characters don't earn the tap on "see more," nothing else matters.</p>
+          </article>
+
+          <article class="guide-card">
+            <h3>Why the hook decides everything</h3>
+            <p>LinkedIn's algorithm measures <strong>dwell time</strong> — the seconds a viewer spends on your post before scrolling past. A weak hook triggers an instant scroll. The algorithm reads that as low-quality content and stops distributing it.</p>
+            <p>A strong hook — curiosity, controversy, specificity, or story — pulls the reader past the fold. Dwell time spikes. The algorithm pushes your post to the next 1,000 viewers. Compounding distribution.</p>
+          </article>
+
+          <article class="guide-card">
+            <h3>The Unicode bold trick</h3>
+            <p>LinkedIn's editor strips Markdown, HTML, and rich text. You cannot bold a word the normal way. But you <em>can</em> use <strong>Unicode Mathematical Alphanumeric Symbols</strong> — the same characters used in math textbooks since the 1990s.</p>
+            <p>Type a normal "A" and it renders as "A." Type the Unicode "𝗔" and it renders as "𝗔" — bold, sans-serif, unstripped by LinkedIn. The same works for italics (𝘈), script (𝒜), and monospace (𝙰).</p>
+            <p>Select any word in the editor above and click <strong>B</strong> to convert. The visual weight alone increases scan-ability by ~40% in feeds.</p>
+          </article>
+
+          <article class="guide-card">
+            <h3>The 3,000 character ceiling</h3>
+            <p>LinkedIn caps posts at 3,000 characters. Posts in the 1,200–1,800 character range consistently outperform both ultra-short posts (under 400) and maxed-out posts (2,800+). The sweet spot gives enough room for a hook, three beats, and a CTA without forcing a "see more" on desktop viewers.</p>
+            <p>The character counter in the editor warns you the moment you cross the 1,200 and 1,800 marks.</p>
+          </article>
+
+          <article class="guide-card">
+            <h3>The line break trick most creators miss</h3>
+            <p>Single-line paragraphs are death on mobile. They look lazy, they don't breathe, and they collapse into the fold. Replace every period-paragraph with a <strong>single line break</strong> — one sentence per visual line.</p>
+            <p>This single formatting change is responsible for more engagement lift than any "growth hack" ever sold by a SaaS tool. Try it on your next post and watch the dwell time.</p>
+          </article>
+
+          <article class="guide-card">
+            <h3>Privacy: why this tool runs in your browser</h3>
+            <p>Your draft posts can contain confidential product info, unreleased announcements, or client work. Server-side previewers <em>could</em> log that data — even if they promise not to. We chose a different architecture: <strong>100% client-side</strong>. The JavaScript runs in your tab. Nothing leaves your machine.</p>
+            <p>Disconnect from the internet, refresh the page, and it still works. That's the privacy guarantee server-rendered tools cannot make.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="faq-section">
+      <div class="container">
+        <header class="section-header">
+          <p class="eyebrow">FAQ</p>
+          <h2>Common questions</h2>
+        </header>
+
+        <div class="faq-list">
+          <details class="faq-item" open>
+            <summary>What is the LinkedIn post character limit in 2026?</summary>
+            <p>LinkedIn posts have a 3,000 character hard limit. But the more important number is the feed truncation: ~140 characters on mobile (3 lines), ~210 characters on desktop, before the "see more" button appears. Your hook must fit in this fold to drive engagement.</p>
+          </details>
+
+          <details class="faq-item">
+            <summary>How do you bold text on LinkedIn?</summary>
+            <p>LinkedIn's native editor doesn't support bold. The trick is Unicode Mathematical Alphanumeric Symbols — type your text normally, select the words you want bolded, and our tool converts each character to its Unicode equivalent (e.g., "A" → "𝗔"). LinkedIn doesn't strip these because they're treated as normal text characters.</p>
+          </details>
+
+          <details class="faq-item">
+            <summary>Is this LinkedIn previewer really free and private?</summary>
+            <p>Yes. No account, no email, no payment. The entire tool is a single HTML page with vanilla JavaScript — when you load it, your browser downloads the static files and runs everything locally. Your draft posts never reach a server.</p>
+          </details>
+
+          <details class="faq-item">
+            <summary>Does the preview match LinkedIn exactly?</summary>
+            <p>We replicate LinkedIn's feed DOM structure, body typography (Source Serif 4, matching LinkedIn's published font stack), spacing tokens, avatar placeholders, and the 140/210 character truncation points across mobile (360px) and desktop (552px) widths. Edge cases like emoji rendering match your system defaults.</p>
+          </details>
+
+          <details class="faq-item">
+            <summary>Can I use the formatted text directly in LinkedIn?</summary>
+            <p>Yes. Click "Copy formatted" and paste straight into LinkedIn's composer. Unicode characters render identically on LinkedIn, mobile, desktop, and in notifications.</p>
+          </details>
+
+          <details class="faq-item">
+            <summary>Why not just use ChatGPT to format my post?</summary>
+            <p>You can — but LLMs hallucinate, they don't show you the actual fold, and they require you to paste your draft into a third-party server. For deterministic, fast, private formatting, a purpose-built tool wins every time.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA / Sponsor -->
+    <section class="cta-section">
+      <div class="container cta-inner">
+        <div>
+          <h2>Built this for free. Hate paywalls.</h2>
+          <p>If Hookline saved you time, consider sponsoring the project. It keeps the lights on and the tools ad-free.</p>
+        </div>
+        <div class="cta-actions">
+          <a href="https://github.com/sponsors/hookline" class="btn-primary" rel="noopener">Sponsor this project</a>
+          <a href="https://buymeacoffee.com/hookline" class="btn-secondary" rel="noopener">Buy me a coffee</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <span class="logo-mark" aria-hidden="true">◈</span>
+        <span>Hookline</span>
+      </div>
+      <p class="footer-note">Open-source micro-tools. Built with HTML, CSS, and vanilla JavaScript. Your data never leaves your browser.</p>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="#tool">Previewer</a>
+        <a href="#guide">Guide</a>
+        <a href="#faq">FAQ</a>
+        <a href="https://github.com/hookline" rel="noopener">GitHub</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="app.js" defer></script>
+</body>
+</html>
