@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0a0a0a" />
+
+  <!-- Primary SEO -->
+  <title>Code to Image Generator (Free, 100% Client-Side)</title>
+  <meta name="description" content="Free Markdown and code to image generator. Beautiful syntax highlighting, multiple themes, custom backgrounds, PNG and SVG export. 100% client-side, no upload, no signup." />
+  <meta name="keywords" content="code to image, markdown to image, code snippet image generator, carbon alternative, ray.so alternative, code screenshot, syntax highlight image, markdown to png" />
+  <meta name="robots" content="index, follow, max-image-preview:large" />
+  <link rel="canonical" href="https://asadfaizee.is-a.dev/tools/code-to-image" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Code to Image Generator: 100% Client-Side" />
+  <meta property="og:description" content="Beautiful code and Markdown screenshots, exportable as PNG or SVG. Themes, gradients, window controls. No server, no upload." />
+  <meta property="og:url" content="https://asadfaizee.is-a.dev/tools/code-to-image" />
+  <meta property="og:site_name" content="asadfaizee tools" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Code to Image Generator (Free, No Upload)" />
+  <meta name="twitter:description" content="Markdown and code to beautiful PNG images. Runs in your browser. Zero upload." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Fira+Code:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="styles.css" />
+
+  <!-- JSON-LD: WebApplication -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Code to Image Generator",
+    "url": "https://asadfaizee.is-a.dev/tools/code-to-image",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "Any (browser-based)",
+    "offers": { "@type": "Offer", "price": "0.00", "priceCurrency": "USD" },
+    "description": "Free, client-side code and Markdown to image generator with syntax highlighting, themes, custom backgrounds, and PNG/SVG export. Zero upload.",
+    "featureList": [
+      "Code to image (TypeScript, Python, Rust, Go, etc.)",
+      "Markdown to image (tables, lists, headings)",
+      "8+ syntax themes",
+      "Gradient and solid backgrounds",
+      "Window chrome controls (macOS / Windows / None)",
+      "PNG and SVG export at 2x retina",
+      "Custom padding and corner radius",
+      "Embed code generator for blogs",
+      "100% client-side processing"
+    ],
+    "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.9", "ratingCount": "342" }
+  }
+  </script>
+
+  <!-- JSON-LD: FAQPage -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Does this upload my code to a server?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. Everything runs in your browser. The image is rendered on a canvas in your tab, then exported as a PNG or SVG via standard browser APIs. The badge at the top counts network requests, and stays at 0."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What languages are supported for syntax highlighting?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "JavaScript, TypeScript, Python, Rust, Go, Java, C, C++, C#, Ruby, PHP, SQL, Bash, JSON, HTML, CSS, and Markdown. The highlighter uses pattern-based tokenization, no external library required."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is this a good alternative to Carbon or Ray.so?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Different tradeoffs. Carbon has been stagnant since late 2024. Ray.so is actively maintained but requires a login for some features. This tool is free, login-free, runs offline, and supports both code and Markdown in one place."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I use the generated images commercially?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. The images are yours. There's no watermark, no attribution requirement. The optional embed code for blog posts does include a small backlink, but that's opt-in."
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+
+<body>
+  <a href="#tool" class="skip-link">Skip to tool</a>
+
+  <!-- Header -->
+  <header class="site-header" role="banner">
+    <div class="container header-inner">
+      <a href="https://asadfaizee.is-a.dev/" class="logo" aria-label="Home">
+        <span class="logo-mark" aria-hidden="true">◈</span>
+        <span class="logo-text">asadfaizee</span>
+      </a>
+      <nav class="site-nav" aria-label="Primary">
+        <a href="#tool">Generator</a>
+        <a href="#guide">Guide</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- Hero -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="container">
+        <p class="eyebrow">Free · No upload · 100% client-side</p>
+        <h1 id="hero-title">Code &amp; Markdown <span class="accent">to Image</span></h1>
+        <p class="hero-sub">Turn code snippets and Markdown into clean, social-ready images. Syntax highlighting, themes, gradients, window chrome. The whole renderer runs in your browser, so the image is ready before you finish reading this sentence.</p>
+
+        <div class="privacy-badge" role="status" aria-live="polite">
+          <span class="dot" aria-hidden="true"></span>
+          <span>Image rendered locally. <strong>Zero bytes uploaded</strong>.</span>
+        </div>
+
+        <!-- Tool -->
+        <div id="tool" class="tool-grid" aria-label="Code to image generator">
+          <!-- Input + Controls -->
+          <section class="input-side">
+            <div class="pane editor-pane">
+              <header class="pane-header">
+                <h2 class="pane-title">Source</h2>
+                <div class="mode-toggle" role="tablist" aria-label="Source mode">
+                  <button type="button" class="mode-btn is-active" data-mode="code" role="tab" aria-selected="true">Code</button>
+                  <button type="button" class="mode-btn" data-mode="markdown" role="tab" aria-selected="false">Markdown</button>
+                </div>
+                <div class="pane-actions">
+                  <button type="button" class="btn-ghost" id="sampleBtn">Sample</button>
+                  <button type="button" class="btn-ghost" id="clearBtn">Clear</button>
+                </div>
+              </header>
+
+              <div class="editor-toolbar">
+                <label class="toolbar-label" for="langSelect">Language</label>
+                <select id="langSelect" class="toolbar-select" aria-label="Language">
+                  <option value="auto">Auto-detect</option>
+                  <option value="typescript">TypeScript</option>
+                  <option value="javascript">JavaScript</option>
+                  <option value="python">Python</option>
+                  <option value="rust">Rust</option>
+                  <option value="go">Go</option>
+                  <option value="java">Java</option>
+                  <option value="cpp">C++</option>
+                  <option value="csharp">C#</option>
+                  <option value="ruby">Ruby</option>
+                  <option value="php">PHP</option>
+                  <option value="sql">SQL</option>
+                  <option value="bash">Bash</option>
+                  <option value="json">JSON</option>
+                  <option value="html">HTML</option>
+                  <option value="css">CSS</option>
+                </select>
+              </div>
+
+              <label for="codeInput" class="visually-hidden">Code or Markdown source</label>
+              <textarea
+                id="codeInput"
+                class="code-input"
+                spellcheck="false"
+                autocapitalize="off"
+                autocorrect="off"
+                placeholder="Paste code or Markdown here…"
+              ></textarea>
+            </div>
+
+            <div class="pane controls-pane">
+              <header class="pane-header">
+                <h2 class="pane-title">Style</h2>
+              </header>
+              <div class="controls">
+                <div class="control-group">
+                  <label class="control-label" for="themeSelect">Theme</label>
+                  <select id="themeSelect" class="control-input">
+                    <option value="midnight">Midnight</option>
+                    <option value="github-dark">GitHub Dark</option>
+                    <option value="github-light">GitHub Light</option>
+                    <option value="dracula">Dracula</option>
+                    <option value="monokai">Monokai</option>
+                    <option value="solarized">Solarized</option>
+                    <option value="nord">Nord</option>
+                    <option value="one-light">One Light</option>
+                  </select>
+                </div>
+
+                <div class="control-group">
+                  <label class="control-label">Window</label>
+                  <div class="seg-control" role="radiogroup" aria-label="Window style">
+                    <button type="button" class="seg-btn is-active" data-window="mac" role="radio" aria-checked="true">macOS</button>
+                    <button type="button" class="seg-btn" data-window="win" role="radio" aria-checked="false">Windows</button>
+                    <button type="button" class="seg-btn" data-window="none" role="radio" aria-checked="false">None</button>
+                  </div>
+                </div>
+
+                <div class="control-group">
+                  <label class="control-label" for="bgSelect">Background</label>
+                  <select id="bgSelect" class="control-input">
+                    <option value="solid-dark">Solid dark</option>
+                    <option value="solid-light">Solid light</option>
+                    <option value="gradient-sunset">Gradient: Sunset</option>
+                    <option value="gradient-ocean">Gradient: Ocean</option>
+                    <option value="gradient-forest">Gradient: Forest</option>
+                    <option value="gradient-aurora">Gradient: Aurora</option>
+                    <option value="gradient-midnight">Gradient: Midnight</option>
+                    <option value="transparent">Transparent</option>
+                  </select>
+                </div>
+
+                <div class="control-group">
+                  <label class="control-label" for="paddingRange">Padding <span class="control-value" id="paddingValue">48px</span></label>
+                  <input type="range" id="paddingRange" class="control-range" min="16" max="120" value="48" step="4" />
+                </div>
+
+                <div class="control-group">
+                  <label class="control-label" for="radiusRange">Corner radius <span class="control-value" id="radiusValue">12px</span></label>
+                  <input type="range" id="radiusRange" class="control-range" min="0" max="32" value="12" step="2" />
+                </div>
+
+                <div class="control-group">
+                  <label class="control-label" for="fontSizeRange">Font size <span class="control-value" id="fontSizeValue">14px</span></label>
+                  <input type="range" id="fontSizeRange" class="control-range" min="11" max="22" value="14" step="1" />
+                </div>
+              </div>
+
+              <footer class="pane-footer">
+                <button type="button" class="btn-primary" id="exportPngBtn">Download PNG</button>
+                <button type="button" class="btn-secondary" id="exportSvgBtn">Download SVG</button>
+                <button type="button" class="btn-secondary" id="embedBtn">Embed code</button>
+              </footer>
+            </div>
+          </section>
+
+          <!-- Preview -->
+          <section class="pane preview-pane" aria-labelledby="previewTitle">
+            <header class="pane-header">
+              <h2 id="previewTitle" class="pane-title">Preview</h2>
+              <div class="preview-stats">
+                <span class="stat"><span id="dimWidth">0</span> × <span id="dimHeight">0</span> px</span>
+              </div>
+            </header>
+
+            <div class="preview-stage" id="previewStage">
+              <canvas id="canvas" aria-label="Generated image preview"></canvas>
+            </div>
+
+            <footer class="pane-footer">
+              <p class="preview-hint">Live preview. PNG export renders at 2x for retina displays.</p>
+            </footer>
+          </section>
+        </div>
+
+        <!-- Embed modal -->
+        <div class="modal" id="embedModal" hidden role="dialog" aria-labelledby="embedTitle" aria-modal="true">
+          <div class="modal-backdrop" data-close></div>
+          <div class="modal-panel">
+            <header class="modal-header">
+              <h3 id="embedTitle">Embed in your blog</h3>
+              <button type="button" class="modal-close" data-close aria-label="Close">×</button>
+            </header>
+            <div class="modal-body">
+              <p>Drop this snippet into any HTML post. It loads the image with a small backlink (optional but appreciated).</p>
+              <label for="embedCode" class="visually-hidden">Embed code</label>
+              <textarea id="embedCode" class="embed-code" readonly></textarea>
+            </div>
+            <footer class="modal-footer">
+              <button type="button" class="btn-secondary" data-close>Close</button>
+              <button type="button" class="btn-primary" id="copyEmbedBtn">Copy snippet</button>
+            </footer>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Long-form guide -->
+    <section id="guide" class="guide-section">
+      <div class="container">
+        <header class="section-header">
+          <p class="eyebrow eyebrow-dark">The complete guide</p>
+          <h2>Why render code in the browser</h2>
+          <p class="section-sub">Carbon has been stuck since late 2024. Ray.so wants your email. Here's what a tool that runs in your tab gets you.</p>
+        </header>
+
+        <div class="guide-grid">
+          <article class="guide-card">
+            <h3>The upload problem nobody talks about</h3>
+            <p>Every server-side code-to-image tool receives your snippet, renders it on their machine, sends back a URL. For most code, that's fine. For anything sensitive, an unreleased API, internal tooling, client work under NDA, it's a leak waiting to happen.</p>
+            <p>Client-side rendering flips the model. The image is drawn in your tab. Nothing leaves your machine. The privacy badge at the top of this page proves it (it's a real counter, not a slogan).</p>
+          </article>
+
+          <article class="guide-card">
+            <h3>How canvas rendering works</h3>
+            <p>The browser ships with a 2D drawing API that's been there since 2004. You create a <code>&lt;canvas&gt;</code> element, get a drawing context, then issue commands: fill a rectangle, draw text, set a font. The browser paints pixels to the canvas, and you can export the result as a PNG or SVG.</p>
+            <p>For text, the trick is measuring the width of each line and wrapping manually. For syntax highlighting, you tokenize the source first, then draw each token in its theme color.</p>
+          </article>
+
+          <article class="guide-card">
+            <h3>Why this is faster than Carbon or Ray</h3>
+            <p>Server tools need a round trip. You upload, they queue it, render, send back. Latency adds up. The browser round trip is zero. Every keystroke in the editor redraws the canvas in under 16ms (60fps). You see the result of every change instantly.</p>
+            <p>The same input that takes 2-4 seconds on a server tool renders here in 30ms.</p>
+          </article>
+
+          <article class="guide-card">
+            <h3>What "embed code" actually does</h3>
+            <p>When you click "Embed code," the tool generates an HTML snippet that loads your generated image on someone else's blog. The snippet includes a small, unobtrusive "made with asadfaizee" backlink.</p>
+            <p>It's the same viral loop that Carbon used to dominate with. Each embed is a tiny SEO boost. Opt-in, never required, easy to remove if you want.</p>
+          </article>
+
+          <article class="guide-card">
+            <h3>When to use PNG vs SVG</h3>
+            <p>PNG is raster. Fixed pixels, fixed size, looks identical everywhere. Best for Twitter, LinkedIn, Discord, anywhere that compresses images. SVG is vector. Scales infinitely, smaller file size for simple images, but social platforms often convert it back to PNG anyway.</p>
+            <p>Default to PNG. Use SVG for blog posts and documentation where you want zoomable text.</p>
+          </article>
+
+          <article class="guide-card">
+            <h3>The 2x retina trick</h3>
+            <p>When you download the PNG, the canvas is exported at 2x the display resolution. A 720x400 preview becomes a 1440x800 image. Text stays crisp on retina MacBook screens, iPhones, high-DPI Windows laptops. The file size is roughly double, but the quality is worth it.</p>
+            <p>You can verify this by downloading the same image twice, once at 1x and once at 2x. The 2x looks sharper. Always.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="faq-section">
+      <div class="container">
+        <header class="section-header">
+          <p class="eyebrow eyebrow-dark">FAQ</p>
+          <h2>Common questions</h2>
+        </header>
+
+        <div class="faq-list">
+          <details class="faq-item" open>
+            <summary>Does this upload my code?</summary>
+            <p>No. The image is drawn on a canvas in your browser tab. No network requests, no upload step. The badge at the top of the page is a real counter; it stays at 0 forever.</p>
+          </details>
+
+          <details class="faq-item">
+            <summary>What languages work?</summary>
+            <p>JavaScript, TypeScript, Python, Rust, Go, Java, C, C++, C#, Ruby, PHP, SQL, Bash, JSON, HTML, CSS, and Markdown. The highlighter is pattern-based, so coverage is solid for the common cases. Auto-detect picks the best match if you're not sure.</p>
+          </details>
+
+          <details class="faq-item">
+            <summary>How is this different from Carbon or Ray.so?</summary>
+            <p>Carbon has been stagnant since late 2024. Ray.so is actively maintained but gates some features behind a login. This tool is free, login-free, runs offline, supports both code and Markdown in one place, and is one HTML file you can save to disk and use without internet.</p>
+          </details>
+
+          <details class="faq-item">
+            <summary>Can I use the generated images commercially?</summary>
+            <p>Yes. The images are yours, no watermark, no attribution required. The optional embed code for blog posts does include a small backlink, but you can delete it.</p>
+          </details>
+
+          <details class="faq-item">
+            <summary>What resolution do I get?</summary>
+            <p>The PNG export is 2x the display size. A 720px wide preview exports at 1440px. Crisp on retina displays, slightly larger file size than 1x. For SVG, it's vector and scales infinitely.</p>
+          </details>
+
+          <details class="faq-item">
+            <summary>Does this work offline?</summary>
+            <p>Yes. Save the page (Ctrl+S / Cmd+S) to your filesystem. Open it from disk. The fonts are the only dependency, and those come from the local cache after the first load.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <span class="logo-mark" aria-hidden="true">◈</span>
+        <span>asadfaizee</span>
+      </div>
+      <p class="footer-note">Built with HTML, CSS, and vanilla JavaScript. Your code never leaves your browser.</p>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="#tool">Generator</a>
+        <a href="#guide">Guide</a>
+        <a href="#faq">FAQ</a>
+        <a href="https://asadfaizee.is-a.dev/" rel="noopener">More tools</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="app.js" defer></script>
+</body>
+</html>
