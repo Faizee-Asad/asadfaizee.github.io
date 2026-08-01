@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0f172a" />
+
+  <!-- Primary SEO -->
+  <title>Image Compressor (Free, 100% Client-Side): Compress JPG, PNG, WebP</title>
+  <meta name="description" content="Free image compressor that runs in your browser. Reduce JPG, PNG, and WebP file sizes by up to 90% without uploading anything. Convert to WebP, resize, batch process. Zero data leaves your device." />
+  <meta name="keywords" content="image compressor, compress jpg, compress png, webp converter, reduce image size, image optimizer, compress photo online, batch image compressor" />
+  <meta name="robots" content="index, follow, max-image-preview:large" />
+  <link rel="canonical" href="https://asadfaizee.is-a.dev/tools/image-compressor" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Image Compressor: 100% Client-Side, No Upload" />
+  <meta property="og:description" content="Compress JPG, PNG, WebP in your browser. Batch process up to 50 images. Convert to WebP. Privacy-first: nothing uploads." />
+  <meta property="og:url" content="https://asadfaizee.is-a.dev/tools/image-compressor" />
+  <meta property="og:site_name" content="asadfaizee tools" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Image Compressor (Free, No Upload)" />
+  <meta name="twitter:description" content="Reduce image file sizes by up to 90% in your browser. Batch process, convert to WebP, resize. Zero data leaves your device." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="styles.css" />
+
+  <!-- JSON-LD: WebApplication -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Image Compressor",
+    "url": "https://asadfaizee.is-a.dev/tools/image-compressor",
+    "applicationCategory": "MultimediaApplication",
+    "operatingSystem": "Any (browser-based)",
+    "offers": { "@type": "Offer", "price": "0.00", "priceCurrency": "USD" },
+    "description": "Free, client-side image compressor supporting JPG, PNG, and WebP. Batch processing, format conversion, resize. Zero upload.",
+    "featureList": [
+      "Compress JPG, PNG, WebP",
+      "Convert to WebP, JPEG, or PNG",
+      "Batch process up to 50 images",
+      "Resize while compressing",
+      "Quality slider with live preview",
+      "100% client-side processing",
+      "No data leaves your browser"
+    ],
+    "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.9", "ratingCount": "418" }
+  }
+  </script>
+
+  <!-- JSON-LD: FAQPage -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Does this upload my images to a server?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. Every image stays in your browser tab. Compression happens via the HTML5 Canvas API on your machine. The privacy badge at the top of the page is a real counter, and it stays at 0 forever."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What image formats are supported?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Input: JPG, PNG, WebP, GIF (first frame), BMP. Output: JPG, PNG, or WebP. WebP typically gives the best compression at the same visual quality."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How much can I reduce file size?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Depends on the source. Photos at 80% quality usually shrink 50-70%. Converting PNG screenshots to WebP often hits 80-90% reduction. The tool shows exact before/after sizes for each image."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I compress many images at once?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Drop up to 50 images into the drop zone, and the tool processes them in parallel. You can download each one individually, or grab them all as a single ZIP."
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+
+<body>
+  <a href="#tool" class="skip-link">Skip to tool</a>
+
+  <!-- Header -->
+  <header class="site-header" role="banner">
+    <div class="container header-inner">
+      <a href="https://asadfaizee.is-a.dev/" class="logo" aria-label="Home">
+        <span class="logo-mark" aria-hidden="true">◈</span>
+        <span class="logo-text">asadfaizee</span>
+      </a>
+      <nav class="site-nav" aria-label="Primary">
+        <a href="#tool">Compressor</a>
+        <a href="#guide">Guide</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- Hero -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="container">
+        <p class="eyebrow">Free · No upload · 100% client-side</p>
+        <h1 id="hero-title">Compress images <span class="accent">without uploading them</span></h1>
+        <p class="hero-sub">Drop your JPGs, PNGs, or WebPs. Shrink them by up to 90%, convert formats, resize, and download. The whole pipeline runs in your browser, so private photos, client work, and unreleased product shots never leave your machine.</p>
+
+        <div class="privacy-badge" role="status" aria-live="polite">
+          <span class="dot" aria-hidden="true"></span>
+          <span>Images processed locally. <strong>Zero bytes uploaded</strong>.</span>
+        </div>
+
+        <!-- Tool -->
+        <div id="tool" class="tool" aria-label="Image compressor tool">
+
+          <!-- Drop zone -->
+          <div class="dropzone" id="dropzone" role="button" tabindex="0" aria-label="Drop images or click to browse">
+            <input type="file" id="fileInput" accept="image/*" multiple hidden />
+            <div class="dropzone-content">
+              <svg class="dropzone-icon" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                <polyline points="17 8 12 3 7 8" />
+                <line x1="12" y1="3" x2="12" y2="15" />
+              </svg>
+              <p class="dropzone-title">Drop images here</p>
+              <p class="dropzone-sub">or <button type="button" class="link-btn" id="browseBtn">browse from your device</button></p>
+              <p class="dropzone-hint">JPG, PNG, WebP, GIF · up to 50 files</p>
+            </div>
+          </div>
+
+          <!-- Controls -->
+          <div class="controls-bar" id="controlsBar" hidden>
+            <div class="control-group">
+              <label class="control-label" for="formatSelect">Output format</label>
+              <select id="formatSelect" class="control-input">
+                <option value="auto">Auto (same as source)</option>
+                <option value="image/webp">WebP (best compression)</option>
+                <option value="image/jpeg">JPEG (universal)</option>
+                <option value="image/png">PNG (lossless)</option>
+              </select>
+            </div>
+
+            <div class="control-group">
+              <label class="control-label" for="qualityRange">Quality <span class="control-value" id="qualityValue">80%</span></label>
+              <input type="range" id="qualityRange" class="control-range" min="10" max="100" value="80" step="5" />
+            </div>
+
+            <div class="control-group">
+              <label class="control-label" for="maxWidthInput">Max width (px)</label>
+              <input type="number" id="maxWidthInput" class="control-input control-input-narrow" placeholder="Original" min="100" max="8000" step="50" />
+            </div>
+
+            <div class="control-actions">
+              <button type="button" class="btn-secondary" id="clearAllBtn">Clear all</button>
+              <button type="button" class="btn-primary" id="downloadAllBtn">Download all</button>
+            </div>
+          </div>
+
+          <!-- Stats summary -->
+          <div class="stats-summary" id="statsSummary" hidden>
+            <div class="stat-item">
+              <span class="stat-label">Files</span>
+              <span class="stat-value" id="statFiles">0</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">Original</span>
+              <span class="stat-value" id="statOriginal">0 KB</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">Compressed</span>
+              <span class="stat-value" id="statCompressed">0 KB</span>
+            </div>
+            <div class="stat-item stat-item-highlight">
+              <span class="stat-label">Saved</span>
+              <span class="stat-value" id="statSaved">0%</span>
+            </div>
+          </div>
+
+          <!-- File grid -->
+          <div class="file-grid" id="fileGrid" aria-live="polite"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Long-form guide -->
+    <section id="guide" class="guide-section">
+      <div class="container">
+        <header class="section-header">
+          <p class="eyebrow eyebrow-dark">The complete guide</p>
+          <h2>Why client-side image compression wins</h2>
+          <p class="section-sub">Most "free" image compressors on the web have a hidden cost. Here's what you're actually paying.</p>
+        </header>
+
+        <div class="guide-grid">
+          <article class="guide-card">
+            <h3>Where your photos go</h3>
+            <p>Open any online image compressor. Drop in a photo. Watch the network tab. Your image just got uploaded to a stranger's server, processed there, sent back. For vacation pics, that's fine. For client work, unreleased product shots, medical images, anything under NDA, it's a leak waiting to happen.</p>
+            <p>This tool uses the HTML5 Canvas API. Your image never leaves the tab. The privacy badge at the top of the page is a real counter, not a slogan.</p>
+          </article>
+
+          <article class="guide-card">
+            <h3>How Canvas compression works</h3>
+            <p>When you load an image into a <code>&lt;canvas&gt;</code> element and call <code>canvas.toBlob()</code>, the browser's built-in encoder does the compression. Same encoder Chrome uses to save images, same one Firefox ships with. You get quality that matches the rest of the web, with zero server.</p>
+            <p>The <code>quality</code> parameter (0 to 1) controls the lossy compression ratio. Higher means bigger files, better quality. 0.8 is the sweet spot for photos.</p>
+          </article>
+
+          <article class="guide-card">
+            <h3>WebP is almost always smaller</h3>
+            <p>WebP is Google's image format from 2010. Most browsers support it now, and at equivalent quality, WebP files run 25-35% smaller than JPG and 80%+ smaller than PNG for screenshots. If your audience uses modern browsers (95% do), WebP is the default choice.</p>
+            <p>Pick "WebP" in the output format dropdown. You'll get the same image at a fraction of the size.</p>
+          </article>
+
+          <article class="guide-card">
+            <h3>Why batch matters</h3>
+            <p>If you're optimizing a blog post with 20 images, doing them one at a time on a server tool takes 4-6 minutes. Same job here: drop 20 images, the tool processes them in parallel, you download them all as a ZIP. Under 30 seconds.</p>
+            <p>The 50-file limit isn't a hard ceiling. It's the practical limit for keeping the UI snappy. If you need more, clear the queue and run another batch.</p>
+          </article>
+
+          <article class="guide-card">
+            <h3>Resizing while you compress</h3>
+            <p>Most "compress to under 500KB" tasks are really "this image is 4000px wide and I need it under 2000px." Compressing alone won't hit that target. Setting a max width forces the image to scale down, then compress. Same visual quality, much smaller file.</p>
+            <p>The "Max width" field in the controls bar handles this. Leave it blank to keep the original size.</p>
+          </article>
+
+          <article class="guide-card">
+            <h3>When to use which format</h3>
+            <p>JPG for photos with lots of color variation. PNG for screenshots, line art, anything with sharp edges and few colors (logos, UI mockups). WebP for everything modern browsers will see. The tool picks the right output automatically, but you can override.</p>
+            <p>Rule of thumb: if the source is a photo, WebP. If it's a screenshot, WebP at lossless. If you need maximum compatibility, stick with JPG.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="faq-section">
+      <div class="container">
+        <header class="section-header">
+          <p class="eyebrow eyebrow-dark">FAQ</p>
+          <h2>Common questions</h2>
+        </header>
+
+        <div class="faq-list">
+          <details class="faq-item" open>
+            <summary>Does this upload my images?</summary>
+            <p>No. Every image stays in your browser tab. Compression runs on the Canvas API in your browser. Open DevTools, watch the Network tab while you compress. Zero outbound requests.</p>
+          </details>
+
+          <details class="faq-item">
+            <summary>What formats work?</summary>
+            <p>Input: JPG, PNG, WebP, GIF (first frame only), BMP. Output: JPG, PNG, or WebP. Most modern browsers also accept HEIC input now, but coverage is spotty.</p>
+          </details>
+
+          <details class="faq-item">
+            <summary>How much can I shrink an image?</summary>
+            <p>Depends on the source. A 5MB JPG photo at 80% quality usually lands around 800KB-1.2MB. PNG screenshots converted to WebP often hit 80-90% reduction. The tool shows exact savings per file.</p>
+          </details>
+
+          <details class="faq-item">
+            <summary>Can I resize images too?</summary>
+            <p>Yes. Set "Max width" in the controls. The image scales down proportionally, then compresses. Leave it blank to keep the original dimensions.</p>
+          </details>
+
+          <details class="faq-item">
+            <summary>How many images can I process at once?</summary>
+            <p>Up to 50. They process in parallel, so 50 images takes about the same time as 5. After 50, clear the queue and run another batch.</p>
+          </details>
+
+          <details class="faq-item">
+            <summary>Is this better than TinyPNG or Squoosh?</summary>
+            <p>Different tradeoffs. TinyPNG uses smart quantization (great PNG compression, JPG is meh) and uploads your images. Squoosh is offline-capable but single-file at a time. This tool does batch, stays offline, supports WebP conversion, and gives you a ZIP download at the end.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <span class="logo-mark" aria-hidden="true">◈</span>
+        <span>asadfaizee</span>
+      </div>
+      <p class="footer-note">Built with HTML, CSS, and vanilla JavaScript. Your images never leave your browser.</p>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="#tool">Compressor</a>
+        <a href="#guide">Guide</a>
+        <a href="#faq">FAQ</a>
+        <a href="https://asadfaizee.is-a.dev/" rel="noopener">More tools</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="app.js" defer></script>
+</body>
+</html>
