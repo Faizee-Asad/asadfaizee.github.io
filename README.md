@@ -16,3 +16,4 @@
 * https://asadfaizee.is-a.dev/tools/shodan-dorks
 * https://asadfaizee.is-a.dev/tools/google-dorks
 * https://asadfaizee.is-a.dev/tools/github-dorks
+* Live at: https://asadfaizee.is-a.dev/tools/regex-tester
