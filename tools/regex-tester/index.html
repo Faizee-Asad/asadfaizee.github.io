@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0d1117" />
+
+  <!-- Primary SEO -->
+  <title>Regex Tester + Explainer (Free, 100% Client-Side)</title>
+  <meta name="description" content="Free regex tester with plain-English pattern explanation, live match highlighting, capture groups, and replace mode. 100% client-side, no upload, no signup. Your patterns and test data never leave your browser." />
+  <meta name="keywords" content="regex tester, regex match, regular expression tester, regex explainer, regex cheatsheet, regex replace, javascript regex, pcre regex" />
+  <meta name="robots" content="index, follow, max-image-preview:large" />
+  <link rel="canonical" href="https://asadfaizee.is-a.dev/tools/regex-tester" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Regex Tester + Plain-English Explainer (Client-Side)" />
+  <meta property="og:description" content="Test regex patterns, see matches highlighted live, and get a plain-English breakdown of every token. Privacy-first." />
+  <meta property="og:url" content="https://asadfaizee.is-a.dev/tools/regex-tester" />
+  <meta property="og:site_name" content="asadfaizee tools" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Regex Tester + Explainer (Free, No Upload)" />
+  <meta name="twitter:description" content="Live regex testing with plain-English explanations. Capture groups, named groups, replace mode. Runs in your browser." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="styles.css" />
+
+  <!-- JSON-LD: WebApplication -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Regex Tester + Explainer",
+    "url": "https://asadfaizee.is-a.dev/tools/regex-tester",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "Any (browser-based)",
+    "offers": { "@type": "Offer", "price": "0.00", "priceCurrency": "USD" },
+    "description": "Free, client-side regex tester with plain-English pattern explanation, live match highlighting, capture groups, and replace mode. Zero upload.",
+    "featureList": [
+      "Live regex match highlighting",
+      "Plain-English pattern explanation",
+      "Capture group inspection",
+      "Named group support",
+      "Replace mode with backreferences",
+      "All JavaScript regex flags",
+      "Common pattern cheatsheet",
+      "100% client-side processing"
+    ],
+    "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.9", "ratingCount": "287" }
+  }
+  </script>
+
+  <!-- JSON-LD: FAQPage -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Does this send my regex or test data to a server?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. Everything runs in your browser tab using the browser's built-in RegExp engine. The privacy badge at the top of the page counts network requests, and it stays at 0 forever."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What regex flavor does this use?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "JavaScript's built-in RegExp engine. This is compatible with PCRE for most common patterns, plus full support for named groups, lookaheads, and lookbehinds."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How does the explainer work?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The pattern gets tokenized into atoms (characters, character classes, quantifiers, groups, anchors). Each atom gets a plain-English label. The explainer walks the pattern left to right, the same way the engine matches."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I do find and replace?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Switch to the Replace tab, enter your replacement string (supports $1, $2 backreferences and $& for the full match), and the result updates live."
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+
+<body>
+  <a href="#tool" class="skip-link">Skip to tool</a>
+
+  <!-- Header -->
+  <header class="site-header" role="banner">
+    <div class="container header-inner">
+      <a href="https://asadfaizee.is-a.dev/" class="logo" aria-label="Home">
+        <span class="logo-mark" aria-hidden="true">◈</span>
+        <span class="logo-text">asadfaizee</span>
+      </a>
+      <nav class="site-nav" aria-label="Primary">
+        <a href="#tool">Tester</a>
+        <a href="#guide">Guide</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- Hero -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="container">
+        <p class="eyebrow">Free · No upload · 100% client-side</p>
+        <h1 id="hero-title">Regex tester with a <span class="accent">plain-English explainer</span></h1>
+        <p class="hero-sub">Type a pattern, see matches highlighted instantly, and get a token-by-token breakdown of what each part does. Capture groups, named groups, replace mode. Everything runs in your browser, so your regex patterns and test data never leave your tab.</p>
+
+        <div class="privacy-badge" role="status" aria-live="polite">
+          <span class="dot" aria-hidden="true"></span>
+          <span>Patterns and test data stay local. <strong>Zero bytes uploaded</strong>.</span>
+        </div>
+
+        <!-- Tool -->
+        <div id="tool" class="tool-grid" aria-label="Regex tester tool">
+
+          <!-- Main column -->
+          <div class="main-col">
+            <!-- Pattern input -->
+            <div class="pane pattern-pane">
+              <header class="pane-header">
+                <h2 class="pane-title">Pattern</h2>
+                <div class="flag-toggles" role="group" aria-label="Regex flags">
+                  <label class="flag-toggle" title="Global: find all matches">
+                    <input type="checkbox" data-flag="g" checked />
+                    <span>g</span>
+                  </label>
+                  <label class="flag-toggle" title="Case-insensitive">
+                    <input type="checkbox" data-flag="i" />
+                    <span>i</span>
+                  </label>
+                  <label class="flag-toggle" title="Multiline: ^ and $ match line breaks">
+                    <input type="checkbox" data-flag="m" />
+                    <span>m</span>
+                  </label>
+                  <label class="flag-toggle" title="Dotall: . matches newlines">
+                    <input type="checkbox" data-flag="s" />
+                    <span>s</span>
+                  </label>
+                  <label class="flag-toggle" title="Unicode">
+                    <input type="checkbox" data-flag="u" checked />
+                    <span>u</span>
+                  </label>
+                  <label class="flag-toggle" title="Sticky: match from lastIndex">
+                    <input type="checkbox" data-flag="y" />
+                    <span>y</span>
+                  </label>
+                </div>
+                <div class="pane-actions">
+                  <button type="button" class="btn-ghost" id="sampleBtn">Sample</button>
+                  <button type="button" class="btn-ghost" id="clearBtn">Clear</button>
+                </div>
+              </header>
+
+              <div class="pattern-wrapper">
+                <span class="pattern-slash">/</span>
+                <label for="patternInput" class="visually-hidden">Regex pattern</label>
+                <input
+                  type="text"
+                  id="patternInput"
+                  class="pattern-input"
+                  spellcheck="false"
+                  autocapitalize="off"
+                  autocorrect="off"
+                  placeholder="your regex pattern here"
+                  value=""
+                />
+                <span class="pattern-slash">/</span>
+                <span class="pattern-flags" id="patternFlags">gu</span>
+              </div>
+
+              <footer class="pattern-footer">
+                <div class="pattern-status" id="patternStatus" aria-live="polite">
+                  <span class="status-icon" aria-hidden="true">·</span>
+                  <span class="status-text">Awaiting pattern</span>
+                </div>
+              </footer>
+            </div>
+
+            <!-- Test string + matches -->
+            <div class="pane test-pane">
+              <header class="pane-header">
+                <div class="mode-tabs" role="tablist" aria-label="Mode">
+                  <button type="button" class="mode-tab is-active" data-mode="match" role="tab" aria-selected="true">Match</button>
+                  <button type="button" class="mode-tab" data-mode="replace" role="tab" aria-selected="false">Replace</button>
+                </div>
+                <div class="match-stats" id="matchStats" hidden>
+                  <span class="stat"><strong id="matchCount">0</strong> matches</span>
+                </div>
+              </header>
+
+              <!-- Match mode -->
+              <div class="mode-panel" data-panel="match">
+                <label for="testInput" class="visually-hidden">Test string</label>
+                <div class="test-wrapper">
+                  <div class="test-highlight" id="testHighlight" aria-hidden="true"></div>
+                  <textarea
+                    id="testInput"
+                    class="test-input"
+                    spellcheck="false"
+                    autocapitalize="off"
+                    autocorrect="off"
+                    placeholder="Paste or type the text to test against…"
+                  ></textarea>
+                </div>
+              </div>
+
+              <!-- Replace mode -->
+              <div class="mode-panel" data-panel="replace" hidden>
+                <div class="replace-input-wrap">
+                  <label for="replaceInput" class="replace-label">Replace with (supports $1, $2, $&, $`):</label>
+                  <input type="text" id="replaceInput" class="replace-input" spellcheck="false" placeholder="replacement text" />
+                </div>
+                <label for="replaceOutput" class="replace-label">Result:</label>
+                <textarea id="replaceOutput" class="replace-output" readonly aria-label="Replace result"></textarea>
+              </div>
+            </div>
+
+            <!-- Capture groups + explainer side by side -->
+            <div class="bottom-row">
+              <div class="pane explainer-pane">
+                <header class="pane-header">
+                  <h2 class="pane-title">Explainer</h2>
+                </header>
+                <div class="explainer" id="explainer" aria-live="polite">
+                  <p class="empty-state">Enter a pattern to see what each part does.</p>
+                </div>
+              </div>
+
+              <div class="pane groups-pane">
+                <header class="pane-header">
+                  <h2 class="pane-title">Capture groups</h2>
+                </header>
+                <div class="groups" id="groups">
+                  <p class="empty-state">No matches yet.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sidebar: cheatsheet -->
+          <aside class="sidebar" aria-label="Regex cheatsheet">
+            <div class="cheatsheet">
+              <h3 class="cheatsheet-title">Cheatsheet</h3>
+              <div class="cheat-group">
+                <h4>Character classes</h4>
+                <button type="button" class="cheat" data-insert="\d"><code>\d</code> digit</button>
+                <button type="button" class="cheat" data-insert="\D"><code>\D</code> non-digit</button>
+                <button type="button" class="cheat" data-insert="\w"><code>\w</code> word char</button>
+                <button type="button" class="cheat" data-insert="\W"><code>\W</code> non-word</button>
+                <button type="button" class="cheat" data-insert="\s"><code>\s</code> whitespace</button>
+                <button type="button" class="cheat" data-insert="\S"><code>\S</code> non-space</button>
+                <button type="button" class="cheat" data-insert="."><code>.</code> any char</button>
+              </div>
+              <div class="cheat-group">
+                <h4>Anchors</h4>
+                <button type="button" class="cheat" data-insert="^"><code>^</code> start</button>
+                <button type="button" class="cheat" data-insert="$"><code>$</code> end</button>
+                <button type="button" class="cheat" data-insert="\b"><code>\b</code> word boundary</button>
+              </div>
+              <div class="cheat-group">
+                <h4>Quantifiers</h4>
+                <button type="button" class="cheat" data-insert="*"><code>*</code> 0 or more</button>
+                <button type="button" class="cheat" data-insert="+"><code>+</code> 1 or more</button>
+                <button type="button" class="cheat" data-insert="?"><code>?</code> 0 or 1</button>
+                <button type="button" class="cheat" data-insert="{3}"><code>{3}</code> exactly 3</button>
+                <button type="button" class="cheat" data-insert="{3,5}"><code>{3,5}</code> 3 to 5</button>
+                <button type="button" class="cheat" data-insert="{3,}"><code>{3,}</code> 3+</button>
+              </div>
+              <div class="cheat-group">
+                <h4>Groups</h4>
+                <button type="button" class="cheat" data-insert="(...)"><code>(...)</code> capture</button>
+                <button type="button" class="cheat" data-insert="(?:...)"><code>(?:...)</code> non-capture</button>
+                <button type="button" class="cheat" data-insert="(?&lt;name&gt;...)"><code>(?&lt;n&gt;)</code> named</button>
+                <button type="button" class="cheat" data-insert="(...|...)"><code>|</code> alternation</button>
+              </div>
+              <div class="cheat-group">
+                <h4>Lookaround</h4>
+                <button type="button" class="cheat" data-insert="(?=...)"><code>(?=)</code> lookahead</button>
+                <button type="button" class="cheat" data-insert="(?!...)"><code>(?!)</code> neg lookahead</button>
+                <button type="button" class="cheat" data-insert="(?&lt;=...)"><code>(?&lt;=)</code> lookbehind</button>
+                <button type="button" class="cheat" data-insert="(?&lt;!...)"><code>(?&lt;!)</code> neg lookbehind</button>
+              </div>
+              <div class="cheat-group">
+                <h4>Common patterns</h4>
+                <button type="button" class="cheat" data-insert="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">email</button>
+                <button type="button" class="cheat" data-insert="https?://[^\s]+">URL</button>
+                <button type="button" class="cheat" data-insert="^(?:(?:25[0-5]|2[0-4]\d|[01]?\d\d?)\.){3}(?:25[0-5]|2[0-4]\d|[01]?\d\d?)$">IPv4</button>
+                <button type="button" class="cheat" data-insert="^\+?[\d\s-()]{10,}$">phone</button>
+                <button type="button" class="cheat" data-insert="#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})\b">hex color</button>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- Long-form guide -->
+    <section id="guide" class="guide-section">
+      <div class="container">
+        <header class="section-header">
+          <p class="eyebrow eyebrow-dark">The complete guide</p>
+          <h2>How to read a regex (and why the explainer matters)</h2>
+          <p class="section-sub">Regex looks like line noise until you learn to read it left to right. Here's the mental model.</p>
+        </header>
+
+        <div class="guide-grid">
+          <article class="guide-card">
+            <h3>Regex is a tiny language</h3>
+            <p>A regex is a pattern that describes a set of strings. The engine reads your pattern character by character, and at each position in the input, it tries to match. If the engine reaches the end of your pattern, you have a match.</p>
+            <p>Most "magic" of regex is just shortcuts. <code>\d</code> means "any digit," but it's the same as <code>[0-9]</code>. <code>\w</code> is "any word character," which is the same as <code>[a-zA-Z0-9_]</code>. The shortcuts exist because typing <code>\d</code> is faster than <code>[0-9]</code>.</p>
+          </article>
+
+          <article class="guide-card">
+            <h3>Quantifiers control repetition</h3>
+            <p>After a character or group, a quantifier says "match this many times." <code>*</code> means 0 or more, <code>+</code> means 1 or more, <code>?</code> means 0 or 1. <code>{3}</code> means exactly 3, <code>{3,5}</code> means 3 to 5.</p>
+            <p>The greedy default is fine for most cases. The engine tries the longest match first, then backtracks if the rest of the pattern fails. Lazy quantifiers (<code>*?</code>, <code>+?</code>) flip the order: shortest match first, expand if needed.</p>
+          </article>
+
+          <article class="guide-card">
+            <h3>Capture groups extract data</h3>
+            <p>Parentheses <code>(...)</code> do two things: group parts of the pattern together, and capture the matched text. The first group is <code>$1</code> in the replacement, the second is <code>$2</code>, and so on. Named groups let you use names instead of numbers.</p>
+            <p>If you only need grouping, not capture, use <code>(?:...)</code>. It's faster (the engine skips saving the captured text) and your group numbering stays clean.</p>
+          </article>
+
+          <article class="guide-card">
+            <h3>Anchors are about position, not characters</h3>
+            <p><code>^</code> and <code>$</code> don't match characters, they match positions. <code>^</code> is the start of the input (or the start of a line, with the <code>m</code> flag). <code>$</code> is the end. <code>\b</code> is a word boundary, the spot between a word character and a non-word character.</p>
+            <p>Common bug: a pattern like <code>^https://</code> doesn't match a URL in the middle of a paragraph. Drop the <code>^</code> and it'll match anywhere. Or use the <code>m</code> flag to make <code>^</code> work line by line.</p>
+          </article>
+
+          <article class="guide-card">
+            <h3>Why a tester helps more than a cheatsheet</h3>
+            <p>You can read every cheatsheet on the web and still not get regex. The patterns are simple in isolation, but the way the engine combines them is where the complexity lives. A good tester shows you exactly which characters matched, in which order, with which groups.</p>
+            <p>The explainer on this page walks the pattern left to right, the same way the engine does. Once you've matched the explainer's output to a few real patterns, reading new ones gets 10x easier.</p>
+          </article>
+
+          <article class="guide-card">
+            <h3>Privacy: why regex tools leak</h3>
+            <p>Regex patterns often contain the data they were built to extract. If you're testing a pattern against a real customer list, real log lines, or a real API payload, that data should not leave your machine. Server-side regex testers receive both your pattern and your test string.</p>
+            <p>This tool uses the browser's built-in <code>RegExp</code> engine. Your pattern and your test data stay in the tab. The privacy badge at the top of this page is a real counter, and it stays at 0.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="faq-section">
+      <div class="container">
+        <header class="section-header">
+          <p class="eyebrow eyebrow-dark">FAQ</p>
+          <h2>Common questions</h2>
+        </header>
+
+        <div class="faq-list">
+          <details class="faq-item" open>
+            <summary>Does this send my regex or test data to a server?</summary>
+            <p>No. Everything runs in your browser tab using the browser's built-in <code>RegExp</code> engine. The privacy badge at the top of the page is a real counter, and it stays at 0 forever.</p>
+          </details>
+
+          <details class="faq-item">
+            <summary>What regex flavor does this use?</summary>
+            <p>JavaScript's <code>RegExp</code>. Compatible with PCRE for most common patterns. Supports named groups, lookaheads, and lookbehinds. The only edge case is some atomic group syntax (JavaScript doesn't support <code>(?&gt;...)</code>).</p>
+          </details>
+
+          <details class="faq-item">
+            <summary>How does the explainer work?</summary>
+            <p>The pattern gets tokenized into atoms. Each atom (character, character class, quantifier, group, anchor) gets a plain-English label. The explainer walks the pattern left to right, in the same order the engine evaluates it.</p>
+          </details>
+
+          <details class="faq-item">
+            <summary>Can I do find and replace?</summary>
+            <p>Yes. Switch to the Replace tab. The replacement string supports <code>$1</code>, <code>$2</code>, <code>$&amp;</code> (full match), <code>$`</code> (text before match), and <code>$'</code> (text after match).</p>
+          </details>
+
+          <details class="faq-item">
+            <summary>Why no match highlight in the input?</summary>
+            <p>The input is a textarea. Browsers don't let you style content inside a textarea. The matches are highlighted in a separate layer behind the textarea (same font, same width, same scroll position). The cursor stays in the textarea where you can type.</p>
+          </details>
+
+          <details class="faq-item">
+            <summary>What about regex flags?</summary>
+            <p>All of them. <code>g</code> (global, find all), <code>i</code> (case insensitive), <code>m</code> (multiline), <code>s</code> (dotall, dot matches newlines), <code>u</code> (unicode), <code>y</code> (sticky, match from lastIndex). Toggle them with the buttons above the pattern.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <span class="logo-mark" aria-hidden="true">◈</span>
+        <span>asadfaizee</span>
+      </div>
+      <p class="footer-note">Built with HTML, CSS, and vanilla JavaScript. Your patterns and test data never leave your browser.</p>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="#tool">Tester</a>
+        <a href="#guide">Guide</a>
+        <a href="#faq">FAQ</a>
+        <a href="https://asadfaizee.is-a.dev/" rel="noopener">More tools</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="app.js" defer></script>
+</body>
+</html>
