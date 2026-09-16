@@ -1,0 +1,2753 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SEVERIN HALBE — A Monograph, Vol. III</title>
+<link rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap'>
+<script src='https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js'></script>
+<script src='https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js'></script>
+<script src='https://cdn.jsdelivr.net/npm/lenis@1.3.13/dist/lenis.min.js'></script>
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --jungle-deep:    #05140A;
+  --jungle-primary: #0D2818;
+  --jungle-mid:     #0a1f12;
+  --jungle-secondary: #1A4D2E;
+  --gold:           #C9A227;
+  --gold-light:     #D4AF37;
+  --gold-dark:      #B8860B;
+  --ivory:          #F5F5DC;
+  --moss:           #8FBC8F;
+  --serif: 'Cormorant Garamond', 'Times New Roman', serif;
+  --sans: 'Inter', system-ui, sans-serif;
+  --mono: 'JetBrains Mono', monospace;
+  --ease-quiet:    cubic-bezier(.22, 1, .36, 1);
+  --ease-precise:  cubic-bezier(.4, 0, .2, 1);
+  --ease-emphasis: cubic-bezier(.16, 1, .3, 1);
+  --ease-settle:   cubic-bezier(.34, 1.56, .64, 1);
+}
+
+html { scroll-behavior: auto; }
+
+body {
+  background: var(--jungle-deep);
+  color: var(--ivory);
+  font-family: var(--sans);
+  font-weight: 300;
+  line-height: 1.6;
+  font-size: 16px;
+  overflow-x: hidden;
+  cursor: none;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+@media (pointer: coarse) { body { cursor: auto; } }
+
+::selection { background: var(--gold); color: var(--jungle-deep); }
+
+img { max-width: 100%; display: block; }
+
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background:
+    radial-gradient(ellipse at 15% 5%, rgba(26, 77, 46, 0.10), transparent 55%),
+    radial-gradient(ellipse at 85% 95%, rgba(201, 162, 39, 0.05), transparent 55%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+body::after {
+  content: '';
+  position: fixed; inset: 0;
+  background-image: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(245, 245, 220, 0.012) 2px, rgba(245, 245, 220, 0.012) 3px);
+  pointer-events: none;
+  z-index: 2;
+  mix-blend-mode: overlay;
+}
+
+.cursor-canvas {
+  position: fixed; inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* Typography utilities */
+.eyebrow {
+  font-family: var(--sans);
+  font-size: 11px; font-weight: 500;
+  letter-spacing: 0.3em; text-transform: uppercase;
+  color: var(--gold);
+  display: inline-block;
+}
+
+.hairline {
+  display: inline-block;
+  width: 2rem; height: 1px;
+  background: var(--gold);
+  vertical-align: middle;
+  margin: 0 1rem;
+}
+
+.running-head {
+  position: fixed;
+  top: 1.5rem; left: 0; right: 0;
+  display: flex; justify-content: space-between;
+  padding: 0 2rem;
+  font-family: var(--sans);
+  font-size: 10px; font-weight: 500;
+  letter-spacing: 0.25em; text-transform: uppercase;
+  color: var(--ivory); opacity: 0.4;
+  z-index: 100;
+  pointer-events: none;
+  mix-blend-mode: difference;
+}
+
+/* SECTION DIVIDER */
+.divider {
+  display: flex; align-items: center; justify-content: center;
+  gap: 1.5rem;
+  padding: 5rem 2rem 3rem;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1rem;
+  color: var(--gold);
+  letter-spacing: 0.05em;
+  position: relative;
+  z-index: 3;
+}
+
+.divider::before, .divider::after {
+  content: '';
+  display: block;
+  width: 4rem; height: 1px;
+  background: var(--gold);
+  opacity: 0.4;
+}
+
+.divider__roman {
+  font-family: var(--serif);
+  font-size: 1.6rem;
+  font-style: normal;
+  color: var(--ivory);
+  letter-spacing: 0.15em;
+  padding: 0 0.5rem;
+}
+
+/* HERO */
+.hero {
+  min-height: 100vh;
+  display: flex; flex-direction: column;
+  justify-content: space-between;
+  padding: 5rem 2rem 2rem;
+  position: relative;
+  z-index: 3;
+}
+
+.hero__meta-top, .hero__meta-bottom {
+  display: flex; justify-content: space-between; align-items: center;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ivory); opacity: 0.6;
+}
+
+.hero__meta-top span:last-child { color: var(--gold); opacity: 1; }
+
+.hero__title {
+  flex: 1;
+  display: flex; flex-direction: column;
+  justify-content: center; align-items: center;
+  position: relative;
+  padding: 4rem 0;
+}
+
+.hero__name {
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: clamp(4rem, 17vw, 16rem);
+  line-height: 0.85;
+  letter-spacing: -0.04em;
+  color: var(--ivory);
+  display: flex;
+  text-align: center;
+  perspective: 800px;
+}
+
+.hero__name span {
+  display: inline-block;
+  transform-origin: center center;
+  will-change: transform, opacity;
+}
+
+.hero__name--line2 {
+  color: var(--gold);
+  font-style: italic;
+  font-weight: 500;
+}
+
+.hero__byline {
+  display: flex; align-items: center; justify-content: center;
+  gap: 1.5rem;
+  margin-top: 3rem;
+  font-family: var(--sans);
+  font-size: 12px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--ivory); opacity: 0.75;
+  flex-wrap: wrap;
+}
+
+.hero__rule {
+  display: inline-block;
+  width: 3rem; height: 1px;
+  background: var(--gold);
+}
+
+.hero__scroll-cue {
+  color: var(--gold);
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  animation: nudge 2.4s var(--ease-quiet) infinite;
+}
+
+@keyframes nudge {
+  0%, 100% { transform: translateY(0); opacity: 0.7; }
+  50% { transform: translateY(4px); opacity: 1; }
+}
+
+/* MANIFESTO */
+.manifesto {
+  padding: 8rem 2rem 6rem;
+  max-width: 860px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 3;
+}
+
+.manifesto__header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.manifesto__header .eyebrow { margin-bottom: 1.5rem; }
+
+.manifesto__title {
+  font-family: var(--serif);
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 400;
+  font-style: italic;
+  line-height: 1.05;
+  color: var(--ivory);
+}
+
+.manifesto__title em { color: var(--gold); font-style: normal; }
+
+.manifesto__body {
+  font-family: var(--serif);
+  font-size: clamp(1.1rem, 1.6vw, 1.4rem);
+  line-height: 1.65;
+  color: var(--ivory);
+  text-align: justify;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+}
+
+.manifesto__body p { margin-bottom: 1.5rem; }
+
+.manifesto__body p:first-of-type::first-letter {
+  font-family: var(--serif);
+  font-size: 5.5em;
+  line-height: 0.82;
+  float: left;
+  padding: 0.05em 0.12em 0 0;
+  color: var(--gold);
+  font-weight: 700;
+}
+
+.manifesto__body em {
+  color: var(--gold-light);
+  font-style: italic;
+}
+
+.manifesto__sig {
+  margin-top: 4rem;
+  text-align: right;
+  font-family: var(--serif);
+  font-style: italic;
+  color: var(--gold);
+  font-size: 1.3rem;
+  line-height: 1.4;
+}
+
+.manifesto__sig::before {
+  content: '';
+  display: inline-block;
+  width: 3rem; height: 1px;
+  background: var(--gold);
+  vertical-align: middle;
+  margin-right: 1rem;
+  opacity: 0.5;
+}
+
+/* INDEX */
+.index {
+  padding: 6rem 2rem 8rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 3;
+}
+
+.index__header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.index__title {
+  font-family: var(--serif);
+  font-size: clamp(3rem, 7vw, 5rem);
+  font-weight: 400;
+  line-height: 1;
+  margin: 1rem 0 0;
+  color: var(--ivory);
+  font-style: italic;
+}
+
+.index__list {
+  list-style: none;
+  border-top: 1px solid rgba(245, 245, 220, 0.18);
+}
+
+.index__entry {
+  display: grid;
+  grid-template-columns: 70px 1fr 220px 80px;
+  align-items: baseline;
+  padding: 1.75rem 0;
+  border-bottom: 1px solid rgba(245, 245, 220, 0.18);
+  transition: padding 0.5s var(--ease-quiet), background 0.5s var(--ease-quiet);
+  cursor: none;
+}
+
+.index__entry:hover {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  background: linear-gradient(90deg, transparent, rgba(201, 162, 39, 0.06), transparent);
+}
+
+.index__entry:hover .index__name { color: var(--gold); }
+
+.index__num {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--gold);
+}
+
+.index__name {
+  font-family: var(--serif);
+  font-size: clamp(1.4rem, 2.5vw, 2rem);
+  font-weight: 400;
+  color: var(--ivory);
+  transition: color 0.4s var(--ease-quiet);
+}
+
+.index__cat {
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ivory);
+  opacity: 0.55;
+}
+
+.index__page {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--ivory);
+  opacity: 0.55;
+  text-align: right;
+}
+
+@media (max-width: 700px) {
+  .index__entry { grid-template-columns: 50px 1fr 60px; }
+  .index__cat { display: none; }
+}
+
+/* SPREAD */
+.spread {
+  min-height: 100vh;
+  padding: 4rem 2rem 8rem;
+  position: relative;
+  z-index: 3;
+  opacity: 0;
+  transform: translateX(80px);
+  transition: opacity 1.4s var(--ease-quiet), transform 1.4s var(--ease-quiet);
+  will-change: transform, opacity;
+}
+
+.spread.is-in {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.spread.is-past {
+  opacity: 0.45;
+  transform: translateX(-60px);
+}
+
+.spread__inner {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.spread__head {
+  display: flex; justify-content: space-between; align-items: center;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(245, 245, 220, 0.15);
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ivory); opacity: 0.55;
+  margin-bottom: 3rem;
+}
+
+.spread__head span:nth-child(2) { color: var(--gold); opacity: 0.9; }
+
+.spread__chapter-wrap {
+  display: flex; align-items: flex-end; gap: 1.5rem;
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.spread__chapter {
+  font-family: var(--serif);
+  font-size: clamp(7rem, 18vw, 14rem);
+  font-weight: 400;
+  line-height: 0.82;
+  color: var(--gold);
+  letter-spacing: -0.04em;
+}
+
+.spread__chapter-label {
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--ivory);
+  opacity: 0.65;
+  padding-bottom: 1.2rem;
+  border-left: 1px solid var(--gold);
+  padding-left: 1rem;
+}
+
+.spread__chapter-label small {
+  display: block;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  opacity: 0.6;
+  margin-top: 0.4rem;
+}
+
+.spread__title {
+  font-family: var(--serif);
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 400;
+  line-height: 1.02;
+  color: var(--ivory);
+  margin-bottom: 1.5rem;
+  max-width: 1000px;
+  letter-spacing: -0.015em;
+}
+
+.spread__sub {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(1.1rem, 1.7vw, 1.5rem);
+  color: var(--gold);
+  margin-bottom: 3rem;
+  max-width: 760px;
+  line-height: 1.4;
+}
+
+.spread__meta {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+  margin-bottom: 4rem;
+  padding: 1.5rem 0;
+  border-top: 1px solid rgba(245, 245, 220, 0.15);
+  border-bottom: 1px solid rgba(245, 245, 220, 0.15);
+}
+
+.spread__meta-item .label {
+  display: block;
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--ivory); opacity: 0.5;
+  margin-bottom: 0.5rem;
+}
+
+.spread__meta-item .value {
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  color: var(--ivory);
+}
+
+@media (max-width: 700px) {
+  .spread__meta { grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+}
+
+.spread__body {
+  font-family: var(--serif);
+  font-size: clamp(1.05rem, 1.3vw, 1.25rem);
+  line-height: 1.7;
+  color: var(--ivory);
+  max-width: 660px;
+  margin-bottom: 3rem;
+}
+
+.spread__body p { margin-bottom: 1.2rem; }
+
+.spread__body em {
+  color: var(--gold-light);
+  font-style: italic;
+}
+
+.spread__pullquote {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(1.5rem, 2.8vw, 2.3rem);
+  line-height: 1.25;
+  color: var(--gold);
+  margin: 3rem 0;
+  padding-left: 2rem;
+  border-left: 1px solid var(--gold);
+  max-width: 760px;
+}
+
+.spread__pullquote::before { content: '"'; }
+.spread__pullquote::after { content: '"'; }
+
+.spread__caption {
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ivory); opacity: 0.55;
+  margin-top: 0.75rem;
+  display: flex; justify-content: space-between;
+}
+
+/* ====== SPREAD 01 — KUNSTHAUS NORD ====== */
+.spread--kunsthaus .spread__layout {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 4rem;
+  align-items: stretch;
+}
+
+@media (max-width: 950px) {
+  .spread--kunsthaus .spread__layout { grid-template-columns: 1fr; }
+}
+
+.spread--kunsthaus .spread__col-text {
+  display: flex; flex-direction: column;
+}
+
+.spread--kunsthaus .logo-display {
+  border: 1px solid rgba(201, 162, 39, 0.2);
+  background: var(--jungle-mid);
+  padding: 3rem 2rem;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  min-height: 480px;
+  position: relative;
+}
+
+.logo-display__corner {
+  position: absolute;
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  color: var(--gold); opacity: 0.6;
+}
+.logo-display__corner--tl { top: 1rem; left: 1rem; }
+.logo-display__corner--tr { top: 1rem; right: 1rem; }
+.logo-display__corner--bl { bottom: 1rem; left: 1rem; }
+.logo-display__corner--br { bottom: 1rem; right: 1rem; }
+
+.logo-display__svg {
+  width: 100%;
+  max-width: 360px;
+  height: auto;
+}
+
+.logo-grid {
+  margin-top: 2rem;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(201, 162, 39, 0.2);
+}
+
+.logo-grid__item {
+  aspect-ratio: 1;
+  border: 1px solid rgba(245, 245, 220, 0.1);
+  display: flex; align-items: center; justify-content: center;
+  padding: 0.5rem;
+}
+
+.logo-grid__item svg { width: 100%; height: 100%; }
+
+.logo-paths path,
+.logo-paths line,
+.logo-paths polygon,
+.logo-paths circle,
+.logo-paths rect {
+  stroke-dasharray: 800;
+  stroke-dashoffset: 800;
+  transition: stroke-dashoffset 2.2s var(--ease-emphasis);
+}
+
+.spread.is-in .logo-paths > * {
+  stroke-dashoffset: 0;
+}
+
+/* ====== SPREAD 02 — HEX & OAK ====== */
+.spread--hex .spread__layout {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 0;
+  align-items: stretch;
+}
+
+@media (max-width: 950px) {
+  .spread--hex .spread__layout { grid-template-columns: 1fr; }
+}
+
+.spread--hex .spread__image-block {
+  position: relative;
+  background: var(--jungle-primary);
+  overflow: hidden;
+  min-height: 600px;
+  border-right: 1px solid rgba(201, 162, 39, 0.2);
+}
+
+.spread--hex .spread__image-block img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  filter: brightness(0.8) contrast(1.1) saturate(0.85);
+}
+
+.spread--hex .spread__image-meta {
+  position: absolute;
+  bottom: 1.5rem; left: 1.5rem; right: 1.5rem;
+  display: flex; justify-content: space-between;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ivory);
+}
+
+.spread--hex .spread__image-meta span {
+  background: rgba(5, 20, 10, 0.7);
+  padding: 0.4rem 0.7rem;
+  backdrop-filter: blur(4px);
+}
+
+.spread--hex .spread__col-text {
+  padding: 3rem 3rem 3rem 3rem;
+  background: var(--jungle-mid);
+}
+
+.bottle-spec {
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(201, 162, 39, 0.25);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.bottle-spec__item .label {
+  display: block;
+  font-family: var(--sans);
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  opacity: 0.55;
+  margin-bottom: 0.4rem;
+}
+.bottle-spec__item .value {
+  font-family: var(--serif);
+  font-size: 1rem;
+  color: var(--gold);
+}
+
+/* ====== SPREAD 03 — FREQUENZ ====== */
+.spread--frequenz .poster-wall {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-bottom: 3rem;
+}
+
+@media (max-width: 950px) {
+  .spread--frequenz .poster-wall { grid-template-columns: repeat(2, 1fr); }
+}
+
+.poster-card {
+  aspect-ratio: 2 / 3;
+  background: var(--jungle-primary);
+  border: 1px solid rgba(245, 245, 220, 0.08);
+  padding: 1.5rem 1rem;
+  display: flex; flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.6s var(--ease-quiet);
+}
+
+.poster-card:hover { transform: translateY(-4px); }
+
+.poster-card__num {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--gold);
+  letter-spacing: 0.2em;
+}
+
+.poster-card__type {
+  font-family: var(--sans);
+  font-weight: 500;
+  color: var(--ivory);
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+
+.poster-card__footer {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  color: var(--ivory);
+  opacity: 0.5;
+  display: flex; justify-content: space-between;
+}
+
+/* ====== SPREAD 04 — RAUHBART TYPEFACE ====== */
+.spread--rauhbart .specimen-stage {
+  background: var(--jungle-mid);
+  border: 1px solid rgba(201, 162, 39, 0.2);
+  padding: 4rem 3rem;
+  margin: 2rem 0 4rem;
+  text-align: center;
+  position: relative;
+}
+
+.specimen-stage__corner {
+  position: absolute;
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  color: var(--gold); opacity: 0.6;
+}
+.specimen-stage__corner--tl { top: 1rem; left: 1rem; }
+.specimen-stage__corner--br { bottom: 1rem; right: 1rem; }
+
+.specimen-stage__glyph {
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: clamp(10rem, 30vw, 28rem);
+  line-height: 0.85;
+  color: var(--ivory);
+  letter-spacing: -0.06em;
+}
+
+.specimen-stage__glyph em {
+  color: var(--gold);
+  font-style: italic;
+  font-weight: 500;
+}
+
+.specimen-stage__caption {
+  margin-top: 2rem;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1.2rem;
+  color: var(--gold);
+}
+
+.type-features {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+  margin-top: 3rem;
+  padding-top: 3rem;
+  border-top: 1px solid rgba(245, 245, 220, 0.15);
+}
+
+@media (max-width: 700px) {
+  .type-features { grid-template-columns: repeat(2, 1fr); }
+}
+
+.type-features__item .num {
+  font-family: var(--serif);
+  font-size: 3.5rem;
+  font-weight: 400;
+  color: var(--gold);
+  line-height: 1;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.type-features__item .label {
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--ivory); opacity: 0.7;
+}
+
+/* ====== SPREAD 05 — DAS BUCH ====== */
+.spread--buch .spread__layout {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 4rem;
+  align-items: start;
+}
+
+@media (max-width: 950px) {
+  .spread--buch .spread__layout { grid-template-columns: 1fr; }
+}
+
+.book-mockup {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  background: var(--jungle-mid);
+  border: 1px solid rgba(201, 162, 39, 0.25);
+  padding: 2.5rem 2rem 2rem;
+  display: flex; flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+}
+
+.book-mockup::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 1rem;
+  background: linear-gradient(90deg, rgba(0,0,0,0.5), transparent);
+  pointer-events: none;
+}
+
+.book-mockup__title {
+  font-family: var(--serif);
+  font-size: 2.4rem;
+  font-weight: 400;
+  line-height: 1;
+  color: var(--ivory);
+  letter-spacing: -0.02em;
+}
+
+.book-mockup__title em { color: var(--gold); font-style: italic; }
+
+.book-mockup__sub {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1rem;
+  color: var(--gold);
+  margin-top: 1rem;
+}
+
+.book-mockup__spread {
+  flex: 1;
+  margin: 2rem 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  font-family: var(--serif);
+  font-size: 0.55rem;
+  line-height: 1.4;
+  color: var(--ivory);
+  opacity: 0.7;
+}
+
+.book-mockup__col {
+  column-count: 2;
+  column-gap: 0.5rem;
+  column-fill: auto;
+  height: 100%;
+}
+
+.book-mockup__footer {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  color: var(--ivory); opacity: 0.5;
+  display: flex; justify-content: space-between;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(245, 245, 220, 0.1);
+}
+
+/* SECTION HEADER (for non-spread sections) */
+.section-head {
+  padding: 8rem 2rem 4rem;
+  text-align: center;
+  position: relative;
+  z-index: 3;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.section-head__num {
+  font-family: var(--serif);
+  font-size: 1.4rem;
+  font-style: italic;
+  color: var(--gold);
+  margin-bottom: 1rem;
+}
+
+.section-head__title {
+  font-family: var(--serif);
+  font-size: clamp(2.8rem, 7vw, 5.5rem);
+  font-weight: 400;
+  line-height: 1;
+  color: var(--ivory);
+  letter-spacing: -0.02em;
+}
+
+.section-head__title em {
+  color: var(--gold);
+  font-style: italic;
+}
+
+.section-head__sub {
+  margin-top: 1.5rem;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1.15rem;
+  color: var(--ivory); opacity: 0.7;
+  max-width: 540px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* TYPE SPECIMENS — DRAGGABLE DESK */
+.specimens {
+  position: relative;
+  z-index: 3;
+  padding: 0 2rem 6rem;
+}
+
+.specimens__desk {
+  position: relative;
+  max-width: 1400px;
+  margin: 0 auto;
+  height: 720px;
+  background:
+    radial-gradient(ellipse at center, rgba(13, 40, 24, 0.6), transparent 70%),
+    var(--jungle-deep);
+  border: 1px solid rgba(201, 162, 39, 0.15);
+  overflow: hidden;
+  touch-action: none;
+}
+
+.specimens__desk::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(201, 162, 39, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(201, 162, 39, 0.04) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+}
+
+.specimens__hint {
+  position: absolute;
+  bottom: 1.5rem; left: 1.5rem;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ivory); opacity: 0.45;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.specimens__hint span { color: var(--gold); }
+
+.specimen {
+  position: absolute;
+  width: 280px;
+  background: var(--ivory);
+  color: var(--jungle-deep);
+  cursor: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: none;
+  box-shadow:
+    0 1px 0 rgba(0,0,0,0.3),
+    0 30px 60px -20px rgba(0,0,0,0.6),
+    0 12px 24px -8px rgba(0,0,0,0.4);
+  transition: box-shadow 0.4s var(--ease-quiet);
+  transform-origin: center center;
+  will-change: transform;
+}
+
+@media (pointer: coarse) { .specimen { cursor: grab; } }
+.specimen.is-dragging { cursor: none; box-shadow: 0 40px 80px -10px rgba(0,0,0,0.7), 0 16px 32px -4px rgba(0,0,0,0.5); }
+@media (pointer: coarse) { .specimen.is-dragging { cursor: grabbing; } }
+
+.specimen__paper {
+  padding: 1.5rem 1.5rem 1.25rem;
+  position: relative;
+}
+
+.specimen__paper::before {
+  content: '';
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+  background-image: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(5, 20, 10, 0.02) 3px, rgba(5, 20, 10, 0.02) 4px);
+  pointer-events: none;
+}
+
+.specimen__head {
+  display: flex; justify-content: space-between; align-items: baseline;
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--jungle-deep); opacity: 0.65;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid rgba(5, 20, 10, 0.2);
+  margin-bottom: 1rem;
+}
+
+.specimen__head span:last-child { color: var(--gold-dark); opacity: 1; }
+
+.specimen__aa {
+  font-family: var(--serif);
+  font-size: 8rem;
+  font-weight: 700;
+  line-height: 0.85;
+  color: var(--jungle-deep);
+  letter-spacing: -0.05em;
+  text-align: center;
+  padding: 1rem 0;
+}
+
+.specimen__aa em {
+  color: var(--gold-dark);
+  font-style: italic;
+  font-weight: 500;
+}
+
+.specimen__alphabet {
+  font-family: var(--serif);
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--jungle-deep);
+  text-align: center;
+  letter-spacing: 0.05em;
+  padding: 0.75rem 0;
+  border-top: 1px solid rgba(5, 20, 10, 0.15);
+  border-bottom: 1px solid rgba(5, 20, 10, 0.15);
+  margin-bottom: 0.75rem;
+}
+
+.specimen__footer {
+  display: flex; justify-content: space-between;
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--jungle-deep); opacity: 0.7;
+}
+
+.specimen__download {
+  color: var(--gold-dark);
+  font-weight: 500;
+  cursor: none;
+}
+@media (pointer: coarse) { .specimen__download { cursor: pointer; } }
+
+.specimen__download::after { content: ' ↓'; }
+
+/* COLOR PALETTE — FILM STRIP */
+.palette {
+  position: relative;
+  z-index: 3;
+  min-height: 100vh;
+  display: flex; align-items: center;
+  overflow: hidden;
+  padding: 6rem 0;
+}
+
+.palette__head {
+  position: absolute;
+  top: 4rem; left: 2rem; right: 2rem;
+  display: flex; justify-content: space-between; align-items: end;
+  z-index: 4;
+}
+
+.palette__title {
+  font-family: var(--serif);
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 400;
+  font-style: italic;
+  color: var(--ivory);
+  line-height: 1;
+}
+
+.palette__title em { color: var(--gold); font-style: normal; }
+
+.palette__count {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  text-align: right;
+}
+
+.palette__progress {
+  position: absolute;
+  bottom: 3rem; left: 2rem; right: 2rem;
+  height: 1px;
+  background: rgba(245, 245, 220, 0.15);
+  z-index: 4;
+}
+
+.palette__progress-bar {
+  position: absolute;
+  top: 0; left: 0;
+  height: 100%;
+  background: var(--gold);
+  width: 0%;
+  transition: width 0.1s linear;
+}
+
+.palette__progress-label {
+  position: absolute;
+  bottom: 1.5rem; left: 2rem;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ivory); opacity: 0.5;
+}
+
+.palette__progress-label--right {
+  left: auto;
+  right: 2rem;
+}
+
+.filmstrip {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  padding: 4rem 0;
+  will-change: transform;
+}
+
+.filmstrip__sprockets {
+  position: absolute;
+  left: 0; right: 0;
+  height: 24px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.filmstrip__sprockets--top { top: 4rem; }
+.filmstrip__sprockets--bottom { bottom: 4rem; }
+
+.filmstrip__sprockets::before, .filmstrip__sprockets::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: rgba(201, 162, 39, 0.2);
+}
+
+.sprocket {
+  width: 14px; height: 14px;
+  background: var(--jungle-deep);
+  border: 1px solid rgba(201, 162, 39, 0.3);
+  margin: 0 0.5rem;
+}
+
+.filmframe {
+  flex-shrink: 0;
+  width: 320px;
+  height: 440px;
+  margin: 0 0.5rem;
+  background: var(--jungle-primary);
+  border: 1px solid rgba(201, 162, 39, 0.2);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 2rem 1.5rem;
+}
+
+.filmframe__swatch {
+  width: 100%;
+  height: 200px;
+  background: var(--swatch);
+  margin-bottom: 1.5rem;
+  border: 1px solid rgba(245, 245, 220, 0.1);
+}
+
+.filmframe__num {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.25em;
+  color: var(--gold);
+  margin-bottom: 0.75rem;
+}
+
+.filmframe__name {
+  font-family: var(--serif);
+  font-size: 1.5rem;
+  font-weight: 400;
+  font-style: italic;
+  color: var(--ivory);
+  line-height: 1.1;
+  margin-bottom: 0.5rem;
+}
+
+.filmframe__hex {
+  font-family: var(--mono);
+  font-size: 0.85rem;
+  color: var(--ivory); opacity: 0.7;
+  margin-bottom: 1rem;
+}
+
+.filmframe__pant {
+  font-family: var(--sans);
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--ivory); opacity: 0.5;
+  margin-top: auto;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(245, 245, 220, 0.1);
+  display: flex;
+  justify-content: space-between;
+}
+
+/* LECTURES */
+.lectures {
+  padding: 8rem 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 3;
+}
+
+.lectures__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+@media (max-width: 950px) {
+  .lectures__grid { grid-template-columns: 1fr; }
+}
+
+.talk {
+  display: flex;
+  flex-direction: column;
+}
+
+.talk__video {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  background: var(--jungle-primary);
+  overflow: hidden;
+  cursor: none;
+  border: 1px solid rgba(201, 162, 39, 0.15);
+}
+
+@media (pointer: coarse) { .talk__video { cursor: pointer; } }
+
+.talk__poster {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  filter: brightness(0.55) contrast(1.1) saturate(0.7);
+  transition: filter 0.6s var(--ease-quiet), transform 0.8s var(--ease-quiet);
+}
+
+.talk__video:hover .talk__poster {
+  filter: brightness(0.7) contrast(1.05);
+  transform: scale(1.03);
+}
+
+.talk__play {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 70px; height: 70px;
+  border-radius: 50%;
+  border: 1px solid var(--gold);
+  background: rgba(5, 20, 10, 0.5);
+  backdrop-filter: blur(8px);
+  display: flex; align-items: center; justify-content: center;
+  cursor: none;
+  transition: transform 0.4s var(--ease-quiet), background 0.4s var(--ease-quiet);
+}
+
+@media (pointer: coarse) { .talk__play { cursor: pointer; } }
+
+.talk__video:hover .talk__play {
+  transform: translate(-50%, -50%) scale(1.08);
+  background: var(--gold);
+}
+
+.talk__play::after {
+  content: '';
+  display: block;
+  width: 0; height: 0;
+  border-left: 12px solid var(--gold);
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid transparent;
+  margin-left: 4px;
+  transition: border-left-color 0.4s var(--ease-quiet);
+}
+
+.talk__video:hover .talk__play::after {
+  border-left-color: var(--jungle-deep);
+}
+
+.talk__corner {
+  position: absolute;
+  top: 1rem; left: 1rem;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  background: rgba(5, 20, 10, 0.6);
+  padding: 0.4rem 0.7rem;
+  backdrop-filter: blur(4px);
+}
+
+.talk__duration {
+  position: absolute;
+  bottom: 1rem; right: 1rem;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  color: var(--ivory);
+  background: rgba(5, 20, 10, 0.6);
+  padding: 0.4rem 0.7rem;
+  backdrop-filter: blur(4px);
+}
+
+.talk__meta {
+  margin-top: 1.5rem;
+  display: flex; justify-content: space-between;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ivory); opacity: 0.6;
+}
+
+.talk__title {
+  font-family: var(--serif);
+  font-size: 1.8rem;
+  font-weight: 400;
+  font-style: italic;
+  line-height: 1.15;
+  color: var(--ivory);
+  margin-top: 0.75rem;
+}
+
+.talk__title em { color: var(--gold); font-style: normal; }
+
+.talk__blurb {
+  font-family: var(--serif);
+  font-size: 1rem;
+  line-height: 1.55;
+  color: var(--ivory); opacity: 0.75;
+  margin-top: 0.75rem;
+}
+
+/* CONTACT / COLOPHON */
+.contact {
+  padding: 10rem 2rem 6rem;
+  position: relative;
+  z-index: 3;
+  text-align: center;
+}
+
+.contact__pre {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1.3rem;
+  color: var(--gold);
+  margin-bottom: 1rem;
+}
+
+.contact__name {
+  font-family: var(--serif);
+  font-size: clamp(3rem, 9vw, 8rem);
+  font-weight: 700;
+  line-height: 0.9;
+  color: var(--ivory);
+  letter-spacing: -0.03em;
+  margin-bottom: 2rem;
+}
+
+.contact__name em {
+  color: var(--gold);
+  font-style: italic;
+  font-weight: 500;
+}
+
+.contact__email {
+  font-family: var(--serif);
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
+  font-style: italic;
+  color: var(--gold);
+  display: inline-block;
+  padding: 1rem 0;
+  border-top: 1px solid var(--gold);
+  border-bottom: 1px solid var(--gold);
+  margin-bottom: 3rem;
+  text-decoration: none;
+  transition: opacity 0.3s var(--ease-quiet);
+}
+
+.contact__email:hover { opacity: 0.7; }
+
+.contact__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 3rem;
+  max-width: 900px;
+  margin: 0 auto 5rem;
+}
+
+@media (max-width: 700px) {
+  .contact__grid { grid-template-columns: 1fr; gap: 2rem; }
+}
+
+.contact__col .label {
+  display: block;
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 0.75rem;
+}
+
+.contact__col .value {
+  font-family: var(--serif);
+  font-size: 1.1rem;
+  line-height: 1.5;
+  color: var(--ivory);
+}
+
+.colophon {
+  max-width: 700px;
+  margin: 4rem auto 0;
+  padding: 3rem 2rem 0;
+  border-top: 1px solid rgba(245, 245, 220, 0.15);
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: var(--ivory); opacity: 0.65;
+  text-align: center;
+}
+
+.colophon em { color: var(--gold); font-style: normal; }
+
+.colophon__sig {
+  margin-top: 2rem;
+  font-family: var(--mono);
+  font-size: 10px;
+  font-style: normal;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--gold);
+  opacity: 0.8;
+}
+
+/* REVEAL */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 1.1s var(--ease-quiet), transform 1.1s var(--ease-quiet);
+}
+
+.reveal.is-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal--delay-1 { transition-delay: 0.15s; }
+.reveal--delay-2 { transition-delay: 0.3s; }
+.reveal--delay-3 { transition-delay: 0.45s; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+  .spread, .reveal { opacity: 1; transform: none; }
+  .cursor-canvas { display: none; }
+}
+
+@media (max-width: 700px) {
+  .hero { padding: 4rem 1.5rem 2rem; }
+  .manifesto, .index, .spread__inner, .lectures, .contact { padding-left: 1.5rem; padding-right: 1.5rem; }
+  .specimens { padding: 0 1rem 4rem; }
+  .specimens__desk { height: 900px; }
+  .running-head { padding: 0 1rem; font-size: 9px; }
+  .spread { padding: 3rem 1rem 5rem; }
+  .spread__head { font-size: 9px; }
+  .spread--hex .spread__col-text { padding: 2rem 1.5rem; }
+  .palette__head { left: 1rem; right: 1rem; }
+  .palette__progress { left: 1rem; right: 1rem; }
+  .palette__progress-label { left: 1rem; }
+  .palette__progress-label--right { right: 1rem; }
+  .filmframe { width: 260px; height: 360px; }
+}
+</style>
+</head>
+<body>
+
+<canvas class="cursor-canvas" id="cursor-canvas"></canvas>
+
+<header class="running-head">
+  <span>SEVERIN HALBE</span>
+  <span>MONOGRAPH III · MMXXIV</span>
+  <span>P. <span id="page-num">008</span></span>
+</header>
+
+<!-- ========== HERO ========== -->
+<section class="hero" id="hero">
+  <div class="hero__meta-top">
+    <span>VOL. III / MONOGRAPH</span>
+    <span>FIRST EDITION · 1 OF 800</span>
+    <span>MMXIV — MMXXIV</span>
+  </div>
+
+  <div class="hero__title">
+    <div class="hero__name hero__name--line1" data-word="SEVERIN">
+      <span>S</span><span>E</span><span>V</span><span>E</span><span>R</span><span>I</span><span>N</span>
+    </div>
+    <div class="hero__name hero__name--line2" data-word="HALBE">
+      <span>H</span><span>A</span><span>L</span><span>B</span><span>E</span>
+    </div>
+    <div class="hero__byline">
+      <span class="hero__rule"></span>
+      <span>Brand · Editorial · Type · Packaging</span>
+      <span class="hero__rule"></span>
+    </div>
+  </div>
+
+  <div class="hero__meta-bottom">
+    <span>ISBN 978-1-9999-0317-4</span>
+    <span class="hero__scroll-cue">↓ BEGIN READING</span>
+    <span>SET IN CORMORANT &amp; INTER</span>
+  </div>
+</section>
+
+<!-- ========== DIVIDER I ========== -->
+<div class="divider">
+  <span class="divider__roman">I</span>
+  <span>— Preface —</span>
+</div>
+
+<!-- ========== MANIFESTO ========== -->
+<section class="manifesto reveal">
+  <div class="manifesto__header">
+    <span class="eyebrow">A NOTE FROM THE STUDIO</span>
+    <h2 class="manifesto__title">A decade of refusing <em>the brief</em> as written.</h2>
+  </div>
+
+  <div class="manifesto__body">
+    <p>This volume collects ten years of work that, strictly speaking, should not have been made. The clients came with briefs. The briefs asked for clarity, friendliness, approachability — words that mean nothing and prohibit everything. We answered with systems that refuse to settle, with marks that change between meetings, with type that is, in places, deliberately difficult to read. The work collected here is what survived that refusal.</p>
+
+    <p>There is no house style. There are house <em>habits</em>: a preference for the slow reveal over the loud announcement, for the serif over the sans, for the debossed edge over the spot-varnish. We have, in eleven years, used the colour gold perhaps too readily. We have not, in eleven years, used a single gradient. These are not principles. They are observations, made in hindsight, of the work that finally left the studio.</p>
+
+    <p>The pages that follow are arranged not by chronology, nor by client prestige, but by the order in which the studio learned to stop apologising for the work. The first project collected here was the moment we understood that a logo could be a <em>language</em> and not a signature. The last was the moment we understood that a book can disagree with its reader and still be loved. Everything between is the long argument between those two positions.</p>
+
+    <p>What follows is offered without apology and without instruction. The work is not for everyone. It was never meant to be.</p>
+  </div>
+
+  <div class="manifesto__sig">
+    Severin Halbe<br>
+    <span style="font-size: 0.85rem; opacity: 0.6; font-style: normal; font-family: var(--mono); letter-spacing: 0.2em; text-transform: uppercase; color: var(--ivory);">Studio Halbe · Leipzig · March 2024</span>
+  </div>
+</section>
+
+<!-- ========== DIVIDER II ========== -->
+<div class="divider">
+  <span class="divider__roman">II</span>
+  <span>— Contents —</span>
+</div>
+
+<!-- ========== INDEX ========== -->
+<section class="index reveal">
+  <div class="index__header">
+    <span class="eyebrow">FIVE PROJECTS, 2019–2024</span>
+    <h2 class="index__title">Contents</h2>
+  </div>
+
+  <ul class="index__list">
+    <li class="index__entry">
+      <span class="index__num">01 ——</span>
+      <span class="index__name">Kunsthaus Nord</span>
+      <span class="index__cat">Identity / Wayfinding</span>
+      <span class="index__page">P. 042</span>
+    </li>
+    <li class="index__entry">
+      <span class="index__num">02 ——</span>
+      <span class="index__name">Hex &amp; Oak Distillery</span>
+      <span class="index__cat">Packaging / Art Direction</span>
+      <span class="index__page">P. 068</span>
+    </li>
+    <li class="index__entry">
+      <span class="index__num">03 ——</span>
+      <span class="index__name">Frequenz 24</span>
+      <span class="index__cat">Poster Series</span>
+      <span class="index__page">P. 094</span>
+    </li>
+    <li class="index__entry">
+      <span class="index__num">04 ——</span>
+      <span class="index__name">Rauhbart (Typeface)</span>
+      <span class="index__cat">Type Design</span>
+      <span class="index__page">P. 122</span>
+    </li>
+    <li class="index__entry">
+      <span class="index__num">05 ——</span>
+      <span class="index__name">Das Buch der Geräte</span>
+      <span class="index__cat">Editorial / Book Design</span>
+      <span class="index__page">P. 158</span>
+    </li>
+  </ul>
+</section>
+
+<!-- ========== DIVIDER III ========== -->
+<div class="divider">
+  <span class="divider__roman">III</span>
+  <span>— Selected Work —</span>
+</div>
+
+<!-- ========== SPREAD 01: KUNSTHAUS NORD ========== -->
+<section class="spread spread--kunsthaus" data-spread="01">
+  <div class="spread__inner">
+    <div class="spread__head">
+      <span>SEVERIN HALBE / MONOGRAPH III</span>
+      <span>CHAPTER 01 — KUNSTHAUS NORD</span>
+      <span>P. 042—067</span>
+    </div>
+
+    <div class="spread__chapter-wrap">
+      <div class="spread__chapter">01</div>
+      <div class="spread__chapter-label">
+        Kunsthaus Nord
+        <small>Identity &amp; Wayfinding System · 2023</small>
+      </div>
+    </div>
+
+    <h3 class="spread__title">A museum that refuses to settle on a single face.</h3>
+    <p class="spread__sub">A regional museum of contemporary craft asked for "a logo." We delivered a generative system of 64 marks — one for each wing, donor tier, and rotating exhibition — that the museum continues, four years later, to expand.</p>
+
+    <div class="spread__meta">
+      <div class="spread__meta-item">
+        <span class="label">Client</span>
+        <span class="value">Kunsthaus Nord, Rostock</span>
+      </div>
+      <div class="spread__meta-item">
+        <span class="label">Year</span>
+        <span class="value">2023</span>
+      </div>
+      <div class="spread__meta-item">
+        <span class="label">Scope</span>
+        <span class="value">Identity, signage, type</span>
+      </div>
+      <div class="spread__meta-item">
+        <span class="label">Award</span>
+        <span class="value">TDC NY · Bronze</span>
+      </div>
+    </div>
+
+    <div class="spread__layout">
+      <div class="spread__col-text">
+        <div class="spread__body">
+          <p>The brief was modest: <em>a mark for a regional museum of contemporary craft</em>. The answer was less so. We built the identity from a single eight-by-eight grid that yields sixty-four possible glyphs — one for each permanent collection wing, each rotating exhibition, each donor tier, each educational program.</p>
+
+          <p>The mark never appears the same way twice. Visitors learn to read it as language, not logo. Members write us letters complaining when a particular favourite glyph is rotated out of circulation. That, we feel, is the correct relationship between an institution and its public.</p>
+
+          <div class="spread__pullquote">A logo is a sentence the institution keeps finishing.</div>
+
+          <p>The wordmark, by contrast, is fixed: a single weight of Stempel Garamond redrawn at 7 degrees of optical correction, set always at the same size, always in the same gold. The system's stillness sits inside its own noise.</p>
+        </div>
+      </div>
+
+      <div class="spread__col-visual">
+        <div class="logo-display">
+          <span class="logo-display__corner logo-display__corner--tl">— PL. 01.A</span>
+          <span class="logo-display__corner logo-display__corner--tr">KUNSTHAUS / NORD</span>
+          <span class="logo-display__corner logo-display__corner--bl">PRIMARY MARK</span>
+          <span class="logo-display__corner logo-display__corner--br">2023</span>
+
+          <svg class="logo-display__svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <g class="logo-paths" stroke="#C9A227" stroke-width="1.2" fill="none" stroke-linecap="square">
+              <polygon points="100,15 175,57.5 175,142.5 100,185 25,142.5 25,57.5" />
+              <polygon points="100,40 153,70 153,130 100,160 47,130 47,70" />
+              <line x1="100" y1="15" x2="100" y2="185" />
+              <line x1="25" y1="57.5" x2="175" y2="142.5" />
+              <line x1="175" y1="57.5" x2="25" y2="142.5" />
+              <line x1="25" y1="100" x2="175" y2="100" />
+              <line x1="62.5" y1="36.25" x2="62.5" y2="163.75" />
+              <line x1="137.5" y1="36.25" x2="137.5" y2="163.75" />
+              <circle cx="100" cy="100" r="5" fill="#C9A227" stroke="none" />
+              <circle cx="62.5" cy="78.125" r="2" fill="#C9A227" stroke="none" />
+              <circle cx="137.5" cy="78.125" r="2" fill="#C9A227" stroke="none" />
+              <circle cx="62.5" cy="121.875" r="2" fill="#C9A227" stroke="none" />
+              <circle cx="137.5" cy="121.875" r="2" fill="#C9A227" stroke="none" />
+            </g>
+          </svg>
+
+          <div class="logo-grid">
+            <div class="logo-grid__item">
+              <svg viewBox="0 0 60 60"><g class="logo-paths" stroke="#C9A227" stroke-width="1" fill="none"><polygon points="30,8 52,21 52,39 30,52 8,39 8,21" /><line x1="30" y1="8" x2="30" y2="52" /></g></svg>
+            </div>
+            <div class="logo-grid__item">
+              <svg viewBox="0 0 60 60"><g class="logo-paths" stroke="#C9A227" stroke-width="1" fill="none"><polygon points="30,8 52,21 52,39 30,52 8,39 8,21" /><line x1="8" y1="21" x2="52" y2="39" /></g></svg>
+            </div>
+            <div class="logo-grid__item">
+              <svg viewBox="0 0 60 60"><g class="logo-paths" stroke="#C9A227" stroke-width="1" fill="none"><polygon points="30,8 52,21 52,39 30,52 8,39 8,21" /><line x1="8" y1="39" x2="52" y2="21" /></g></svg>
+            </div>
+            <div class="logo-grid__item">
+              <svg viewBox="0 0 60 60"><g class="logo-paths" stroke="#C9A227" stroke-width="1" fill="none"><polygon points="30,8 52,21 52,39 30,52 8,39 8,21" /><circle cx="30" cy="30" r="6" /><circle cx="30" cy="30" r="2" fill="#C9A227" /></g></svg>
+            </div>
+          </div>
+        </div>
+
+        <div class="spread__caption">
+          <span>Pl. 01.A — Primary hexagonal mark, eight generating axes</span>
+          <span>Photograph: Studio Halbe</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== SPREAD 02: HEX & OAK ========== -->
+<section class="spread spread--hex" data-spread="02">
+  <div class="spread__inner">
+    <div class="spread__head">
+      <span>SEVERIN HALBE / MONOGRAPH III</span>
+      <span>CHAPTER 02 — HEX &amp; OAK</span>
+      <span>P. 068—093</span>
+    </div>
+
+    <div class="spread__chapter-wrap">
+      <div class="spread__chapter">02</div>
+      <div class="spread__chapter-label">
+        Hex &amp; Oak Distillery
+        <small>Packaging &amp; Art Direction · 2022</small>
+      </div>
+    </div>
+
+    <h3 class="spread__title">How to make a three-hundred-and-forty dollar bottle feel like an heirloom.</h3>
+    <p class="spread__sub">Hex &amp; Oak came to us with one barrel of single-malt and the question of how to make a luxury bottle feel inherited rather than purchased. We answered with paper, wax, and the deliberate refusal of every available finishing technique.</p>
+
+    <div class="spread__meta">
+      <div class="spread__meta-item">
+        <span class="label">Client</span>
+        <span class="value">Hex &amp; Oak, Highland</span>
+      </div>
+      <div class="spread__meta-item">
+        <span class="label">Year</span>
+        <span class="value">2022</span>
+      </div>
+      <div class="spread__meta-item">
+        <span class="label">Edition</span>
+        <span class="value">312 bottles</span>
+      </div>
+      <div class="spread__meta-item">
+        <span class="label">Stock</span>
+        <span class="value">240gsm Cotton, Hahnemühle</span>
+      </div>
+    </div>
+
+    <div class="spread__layout">
+      <div class="spread__image-block">
+        <img src="https://picsum.photos/seed/hex-oak-bottle/900/1100" alt="Hex & Oak bottle photograph">
+        <div class="spread__image-meta">
+          <span>PL. 02.A — BOTTLE NO. 137 / 312</span>
+          <span>FULL COLOUR · DEBOSSED</span>
+        </div>
+      </div>
+
+      <div class="spread__col-text">
+        <div class="spread__body">
+          <p>Hex &amp; Oak came to us with one barrel of single-malt and the question of how to make a $340 bottle feel like an heirloom rather than a luxury. We answered with paper — not embossing, not foil, not the spot-UV that every other distillery of that price point had reached for.</p>
+
+          <p>A 240gsm cotton stock from a Bavarian mill founded in 1883. Debossed with a steel die cut from the same drawing that produced the wordmark. Hand-waxed at the edge in a colour mixed to match the whisky itself, sampled from cask number one.</p>
+
+          <div class="spread__pullquote">The label is the bottle's only ornament. The wax is the seal. Everything else is restraint.</div>
+
+          <p>The result, when held, has the slight give of an old book cover. The result, when read, has the slight difficulty of one. We were asked, twice, to make the wordmark "friendlier." We declined, twice. The whisky sold out in eleven weeks.</p>
+        </div>
+
+        <div class="bottle-spec">
+          <div class="bottle-spec__item">
+            <span class="label">Bottle</span>
+            <span class="value">700ml · Hand-blown</span>
+          </div>
+          <div class="bottle-spec__item">
+            <span class="label">Wax</span>
+            <span class="value">Cask-toned · Beeswax</span>
+          </div>
+          <div class="bottle-spec__item">
+            <span class="label">Type</span>
+            <span class="value">Hex &amp; Oak Antiqua</span>
+          </div>
+          <div class="bottle-spec__item">
+            <span class="label">Finish</span>
+            <span class="value">Deboss · No Foil</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== SPREAD 03: FREQUENZ ========== -->
+<section class="spread spread--frequenz" data-spread="03">
+  <div class="spread__inner">
+    <div class="spread__head">
+      <span>SEVERIN HALBE / MONOGRAPH III</span>
+      <span>CHAPTER 03 — FREQUENZ 24</span>
+      <span>P. 094—121</span>
+    </div>
+
+    <div class="spread__chapter-wrap">
+      <div class="spread__chapter">03</div>
+      <div class="spread__chapter-label">
+        Frequenz 24
+        <small>Poster Series · 2024</small>
+      </div>
+    </div>
+
+    <h3 class="spread__title">Twelve nights of music, twelve typographic arguments.</h3>
+    <p class="spread__sub">A poster series for an avant-garde electronic festival in which the tracking of each headline is set, mechanically, by the BPM of that night's headline act. Slow music reads wide. Fast music reads compressed. The fastest night is nearly unreadable. That is the point.</p>
+
+    <div class="spread__meta">
+      <div class="spread__meta-item">
+        <span class="label">Client</span>
+        <span class="value">Frequenz Festival, Berlin</span>
+      </div>
+      <div class="spread__meta-item">
+        <span class="label">Year</span>
+        <span class="value">2024</span>
+      </div>
+      <div class="spread__meta-item">
+        <span class="label">Output</span>
+        <span class="value">12 posters · A1</span>
+      </div>
+      <div class="spread__meta-item">
+        <span class="label">Print</span>
+        <span class="value">Risograph · 2 colour</span>
+      </div>
+    </div>
+
+    <div class="spread__body">
+      <p>Twelve posters for twelve nights of avant-garde electronic music. We commissioned no photography. The brief became a typographic system: a single weight of Akzidenz Grotesk, set always at forty-eight point, modulated only by the beats-per-minute of each night's headline act.</p>
+    </div>
+
+    <div class="poster-wall">
+      <div class="poster-card">
+        <span class="poster-card__num">N. 01 / 66 BPM</span>
+        <div class="poster-card__type" style="font-size: 1.4rem; letter-spacing: 0.18em;">SLOW</div>
+        <div class="poster-card__type" style="font-size: 1.4rem; letter-spacing: 0.18em;">CHOIR</div>
+        <div class="poster-card__footer"><span>NIGHT 01</span><span>02.MAR</span></div>
+      </div>
+      <div class="poster-card">
+        <span class="poster-card__num">N. 02 / 88 BPM</span>
+        <div class="poster-card__type" style="font-size: 1.5rem; letter-spacing: 0.1em;">DUB</div>
+        <div class="poster-card__type" style="font-size: 1.5rem; letter-spacing: 0.1em;">PLATE</div>
+        <div class="poster-card__footer"><span>NIGHT 02</span><span>09.MAR</span></div>
+      </div>
+      <div class="poster-card">
+        <span class="poster-card__num">N. 03 / 102 BPM</span>
+        <div class="poster-card__type" style="font-size: 1.7rem; letter-spacing: 0.04em;">HOUSE</div>
+        <div class="poster-card__type" style="font-size: 1.7rem; letter-spacing: 0.04em;">HOUR</div>
+        <div class="poster-card__footer"><span>NIGHT 03</span><span>16.MAR</span></div>
+      </div>
+      <div class="poster-card">
+        <span class="poster-card__num">N. 04 / 120 BPM</span>
+        <div class="poster-card__type" style="font-size: 1.9rem; letter-spacing: -0.01em;">TECHNO</div>
+        <div class="poster-card__type" style="font-size: 1.9rem; letter-spacing: -0.01em;">NOIR</div>
+        <div class="poster-card__footer"><span>NIGHT 04</span><span>23.MAR</span></div>
+      </div>
+      <div class="poster-card">
+        <span class="poster-card__num">N. 05 / 138 BPM</span>
+        <div class="poster-card__type" style="font-size: 2.1rem; letter-spacing: -0.04em;">BREAK</div>
+        <div class="poster-card__type" style="font-size: 2.1rem; letter-spacing: -0.04em;">CORE</div>
+        <div class="poster-card__footer"><span>NIGHT 05</span><span>30.MAR</span></div>
+      </div>
+      <div class="poster-card">
+        <span class="poster-card__num">N. 06 / 152 BPM</span>
+        <div class="poster-card__type" style="font-size: 2.3rem; letter-spacing: -0.06em;">JUNGLE</div>
+        <div class="poster-card__type" style="font-size: 2.3rem; letter-spacing: -0.06em;">CUT</div>
+        <div class="poster-card__footer"><span>NIGHT 06</span><span>06.APR</span></div>
+      </div>
+      <div class="poster-card">
+        <span class="poster-card__num">N. 07 / 160 BPM</span>
+        <div class="poster-card__type" style="font-size: 2.5rem; letter-spacing: -0.08em;">DRUM</div>
+        <div class="poster-card__type" style="font-size: 2.5rem; letter-spacing: -0.08em;">FIRE</div>
+        <div class="poster-card__footer"><span>NIGHT 07</span><span>13.APR</span></div>
+      </div>
+      <div class="poster-card">
+        <span class="poster-card__num">N. 09 / 174 BPM</span>
+        <div class="poster-card__type" style="font-size: 2.9rem; letter-spacing: -0.12em;">HARDCORE</div>
+        <div class="poster-card__type" style="font-size: 2.9rem; letter-spacing: -0.12em;">RIOT</div>
+        <div class="poster-card__footer"><span>NIGHT 09</span><span>27.APR</span></div>
+      </div>
+    </div>
+
+    <div class="spread__pullquote">The poster for Night 09 — at one hundred and seventy-four beats per minute — is almost unreadable. That is the point. A poster for noise music that is easy to read is, in some quiet way, lying.</div>
+
+    <div class="spread__caption">
+      <span>Pl. 03.A–H — Selected posters from the series of twelve</span>
+      <span>A1, 2-colour risograph, 2024</span>
+    </div>
+  </div>
+</section>
+
+<!-- ========== SPREAD 04: RAUHBART ========== -->
+<section class="spread spread--rauhbart" data-spread="04">
+  <div class="spread__inner">
+    <div class="spread__head">
+      <span>SEVERIN HALBE / MONOGRAPH III</span>
+      <span>CHAPTER 04 — RAUHBART</span>
+      <span>P. 122—157</span>
+    </div>
+
+    <div class="spread__chapter-wrap">
+      <div class="spread__chapter">04</div>
+      <div class="spread__chapter-label">
+        Rauhbart
+        <small>Typeface · 2023</small>
+      </div>
+    </div>
+
+    <h3 class="spread__title">A typeface rescued from a defunct East German sign-painter's manual.</h3>
+    <p class="spread__sub">Rauhbart began as a salvage job: digitising the chopped, awkward display letters of a 1962 Saxon sign-painter's reference. We spent eleven months deciding what to add. The answer, in the end, was almost nothing.</p>
+
+    <div class="spread__meta">
+      <div class="spread__meta-item">
+        <span class="label">Released</span>
+        <span class="value">Spring 2023</span>
+      </div>
+      <div class="spread__meta-item">
+        <span class="label">Weights</span>
+        <span class="value">One (Display)</span>
+      </div>
+      <div class="spread__meta-item">
+        <span class="label">Glyphs</span>
+        <span class="value">472, Latin Extended</span>
+      </div>
+      <div class="spread__meta-item">
+        <span class="label">Foundry</span>
+        <span class="value">Halbe Type</span>
+      </div>
+    </div>
+
+    <div class="specimen-stage">
+      <span class="specimen-stage__corner specimen-stage__corner--tl">— PLATE 04.A —</span>
+      <span class="specimen-stage__corner specimen-stage__corner--br">RAUHBART · 240PT</span>
+      <div class="specimen-stage__glyph">R<em>a</em></div>
+      <div class="specimen-stage__caption">— one weight, one alternate, one opinion —</div>
+    </div>
+
+    <div class="spread__body" style="max-width: 760px;">
+      <p>Rauhbart began as a rescue mission: the cut-by-hand display letters of a defunct East German sign-painter's manual, photographed at the Brno Moravian Archive in the spring of 2022. We digitised 242 characters from rubbings, then spent eleven months deciding what to add.</p>
+
+      <p>The answer was: <em>almost nothing</em>. Rauhbart ships in a single weight, with exactly one alternate (a long-s), and a deliberately small glyph set of 472 characters. It refuses most languages. It will not be expanded into a family. It does not have a "matching italic." The italic is Rauhbart tilted five degrees to the right, because that is what the original sign-painter did, and we are not smarter than him.</p>
+
+      <p>It is finished. The release notes contain the sentence: <em>"We will not be revisiting this."</em></p>
+    </div>
+
+    <div class="type-features">
+      <div class="type-features__item">
+        <span class="num">472</span>
+        <span class="label">Glyphs Included</span>
+      </div>
+      <div class="type-features__item">
+        <span class="num">1</span>
+        <span class="label">Weight, Refusing More</span>
+      </div>
+      <div class="type-features__item">
+        <span class="num">11</span>
+        <span class="label">Months In Production</span>
+      </div>
+      <div class="type-features__item">
+        <span class="num">0</span>
+        <span class="label">Future Updates Planned</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== SPREAD 05: DAS BUCH ========== -->
+<section class="spread spread--buch" data-spread="05">
+  <div class="spread__inner">
+    <div class="spread__head">
+      <span>SEVERIN HALBE / MONOGRAPH III</span>
+      <span>CHAPTER 05 — DAS BUCH DER GERÄTE</span>
+      <span>P. 158—197</span>
+    </div>
+
+    <div class="spread__chapter-wrap">
+      <div class="spread__chapter">05</div>
+      <div class="spread__chapter-label">
+        Das Buch der Geräte
+        <small>Editorial &amp; Book Design · 2021</small>
+      </div>
+    </div>
+
+    <h3 class="spread__title">A four-hundred-and-eighty page argument with its own reader.</h3>
+    <p class="spread__sub">A hardback on the history of household tools, written by an academic who hates the word "designer." We set it in 9.4 point Stempel Garamond on a 14 point leading, with deliberately uneven margins, because the book wants to be held, and it wants, gently, to be disagreed with.</p>
+
+    <div class="spread__meta">
+      <div class="spread__meta-item">
+        <span class="label">Author</span>
+        <span class="value">Dr. K. Wieland</span>
+      </div>
+      <div class="spread__meta-item">
+        <span class="label">Pages</span>
+        <span class="value">480, sewn-bound</span>
+      </div>
+      <div class="spread__meta-item">
+        <span class="label">Year</span>
+        <span class="value">2021</span>
+      </div>
+      <div class="spread__meta-item">
+        <span class="label">Print Run</span>
+        <span class="value">2,000 copies</span>
+      </div>
+    </div>
+
+    <div class="spread__layout">
+      <div class="spread__col-visual">
+        <div class="book-mockup">
+          <div>
+            <div class="book-mockup__title">Das Buch<br>der <em>Geräte</em></div>
+            <div class="book-mockup__sub">— Eine Geschichte der Werkzeuge im Hause —</div>
+          </div>
+          <div class="book-mockup__spread">
+            <div class="book-mockup__col">
+              Ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris. Duis aute irure dolor in reprehenderit. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis.
+            </div>
+            <div class="book-mockup__col">
+              Et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt.
+            </div>
+          </div>
+          <div class="book-mockup__footer">
+            <span>K. WIELAND</span>
+            <span>P. 248</span>
+          </div>
+        </div>
+        <div class="spread__caption">
+          <span>Pl. 05.A — Front cover &amp; opening spread</span>
+          <span>240 × 160mm · Sewn-bound</span>
+        </div>
+      </div>
+
+      <div class="spread__col-text">
+        <div class="spread__body">
+          <p>A 480-page hardback on the history of household tools, written by an academic who hates the word "designer." We were the third studio to take the project. The first two had been fired for proposing, respectively, a "modern minimalist cover" and a "playful typographic system." Both were correct proposals. Both missed the book.</p>
+
+          <p>We set it in 9.4pt Stempel Garamond on a 14pt leading, with a 92mm measure. The margins are deliberately uneven — wider at the foot than the head, wider at the thumb than the spine. The book wants to be held in the right hand. The book also wants, gently, to be disagreed with.</p>
+
+          <div class="spread__pullquote">The margins are uneven because the hand that holds the book is uneven. A book that ignores the hand that holds it is not designed. It is merely typeset.</div>
+
+          <p>The cover carries no photograph, no illustration, no blurb. Only the title, set in a single weight of foundry type, debossed into a clay-toned cloth. The author's name appears, in 9 point, on the inside front flap. He preferred it that way. So did we.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== DIVIDER IV ========== -->
+<div class="divider">
+  <span class="divider__roman">IV</span>
+  <span>— Type Specimens —</span>
+</div>
+
+<!-- ========== TYPE SPECIMENS — DRAGGABLE ========== -->
+<div class="section-head reveal">
+  <div class="section-head__num">— IV —</div>
+  <h2 class="section-head__title">Specimens, <em>loose on the desk.</em></h2>
+  <p class="section-head__sub">Four working typefaces from the studio archive. Drag to rearrange. Pinch — or scroll while holding — to scale.</p>
+</div>
+
+<section class="specimens">
+  <div class="specimens__desk" id="specimens-desk">
+    <span class="specimens__hint">↑ <span>DRAG</span> · PINCH TO SCALE · ↓</span>
+
+    <div class="specimen" style="left: 5%; top: 12%;" data-id="01">
+      <div class="specimen__paper">
+        <div class="specimen__head"><span>NO. 01 / DISPLAY</span><span>RAUHBART</span></div>
+        <div class="specimen__aa">R<em>a</em></div>
+        <div class="specimen__alphabet">ABCDE FGHIJK<br>abcde fghijk<br>01234 56789<br>&amp;!?.,—""</div>
+        <div class="specimen__footer"><span>HALBE TYPE · 2023</span><span class="specimen__download">SPEC.PDF</span></div>
+      </div>
+    </div>
+
+    <div class="specimen" style="left: 35%; top: 8%;" data-id="02">
+      <div class="specimen__paper">
+        <div class="specimen__head"><span>NO. 02 / TEXT</span><span>HALBE ANTIQUA</span></div>
+        <div class="specimen__aa">H<em>a</em></div>
+        <div class="specimen__alphabet">ABCDE FGHIJK<br>abcde fghijk<br>01234 56789<br>&amp;!?.,—""</div>
+        <div class="specimen__footer"><span>HALBE TYPE · 2021</span><span class="specimen__download">SPEC.PDF</span></div>
+      </div>
+    </div>
+
+    <div class="specimen" style="left: 64%; top: 18%;" data-id="03">
+      <div class="specimen__paper">
+        <div class="specimen__head"><span>NO. 03 / MONO</span><span>KALK MONO</span></div>
+        <div class="specimen__aa">K<em>m</em></div>
+        <div class="specimen__alphabet">ABCDE FGHIJK<br>abcde fghijk<br>01234 56789<br>&amp;!?.,—""</div>
+        <div class="specimen__footer"><span>HALBE TYPE · 2022</span><span class="specimen__download">SPEC.PDF</span></div>
+      </div>
+    </div>
+
+    <div class="specimen" style="left: 18%; top: 48%;" data-id="04">
+      <div class="specimen__paper">
+        <div class="specimen__head"><span>NO. 04 / DISPLAY</span><span>SEVERUS ITALIC</span></div>
+        <div class="specimen__aa"><em>Se</em></div>
+        <div class="specimen__alphabet">ABCDE FGHIJK<br>abcde fghijk<br>01234 56789<br>&amp;!?.,—""</div>
+        <div class="specimen__footer"><span>HALBE TYPE · 2024</span><span class="specimen__download">SPEC.PDF</span></div>
+      </div>
+    </div>
+
+    <div class="specimen" style="left: 50%; top: 52%;" data-id="05">
+      <div class="specimen__paper">
+        <div class="specimen__head"><span>NO. 05 / ORNAMENT</span><span>EICHENBLATT</span></div>
+        <div class="specimen__aa">✦<em>❦</em></div>
+        <div class="specimen__alphabet">✦ ✧ ❦ ❧ ❀ ✺<br>※ ❂ ✤ ✥ ❡ ❢<br>1. 2. 3. 4. 5.<br>§ ¶ † ‡ *</div>
+        <div class="specimen__footer"><span>HALBE TYPE · 2020</span><span class="specimen__download">SPEC.PDF</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== DIVIDER V ========== -->
+<div class="divider">
+  <span class="divider__roman">V</span>
+  <span>— Palette —</span>
+</div>
+
+<!-- ========== COLOR PALETTE — FILM STRIP ========== -->
+<section class="palette" id="palette">
+  <div class="palette__head">
+    <div>
+      <span class="eyebrow">FILM STRIP · 10 FRAMES</span>
+      <h2 class="palette__title">The studio <em>palette</em>.</h2>
+    </div>
+    <div class="palette__count">
+      <span id="palette-current">01</span> / 10
+      <br>
+      <span style="opacity:0.6">SCROLL TO ADVANCE</span>
+    </div>
+  </div>
+
+  <div class="palette__progress">
+    <div class="palette__progress-bar" id="palette-bar"></div>
+  </div>
+  <div class="palette__progress-label">FRAME 01 — JUNGLE DEEP</div>
+  <div class="palette__progress-label palette__progress-label--right" id="palette-frame-name">JUNGLE DEEP</div>
+
+  <div class="filmstrip" id="filmstrip">
+    <div class="filmframe" style="--swatch: #05140A">
+      <div class="filmframe__swatch"></div>
+      <div class="filmframe__num">FRAME 01</div>
+      <div class="filmframe__name">Jungle Deep</div>
+      <div class="filmframe__hex">#05140A</div>
+      <div class="filmframe__pant"><span>PAPER · NIGHT</span><span>00-01</span></div>
+    </div>
+    <div class="filmframe" style="--swatch: #0D2818">
+      <div class="filmframe__swatch"></div>
+      <div class="filmframe__num">FRAME 02</div>
+      <div class="filmframe__name">Jungle Primary</div>
+      <div class="filmframe__hex">#0D2818</div>
+      <div class="filmframe__pant"><span>BASE COAT</span><span>00-02</span></div>
+    </div>
+    <div class="filmframe" style="--swatch: #1A4D2E">
+      <div class="filmframe__swatch"></div>
+      <div class="filmframe__num">FRAME 03</div>
+      <div class="filmframe__name">Jungle Secondary</div>
+      <div class="filmframe__hex">#1A4D2E</div>
+      <div class="filmframe__pant"><span>DEEP ACCENT</span><span>00-03</span></div>
+    </div>
+    <div class="filmframe" style="--swatch: #8FBC8F">
+      <div class="filmframe__swatch"></div>
+      <div class="filmframe__num">FRAME 04</div>
+      <div class="filmframe__name">Moss</div>
+      <div class="filmframe__hex">#8FBC8F</div>
+      <div class="filmframe__pant"><span>SOFT ACCENT</span><span>00-04</span></div>
+    </div>
+    <div class="filmframe" style="--swatch: #B8860B">
+      <div class="filmframe__swatch"></div>
+      <div class="filmframe__num">FRAME 05</div>
+      <div class="filmframe__name">Gold Dark</div>
+      <div class="filmframe__hex">#B8860B</div>
+      <div class="filmframe__pant"><span>FOIL · DEBOSSED</span><span>00-05</span></div>
+    </div>
+    <div class="filmframe" style="--swatch: #C9A227">
+      <div class="filmframe__swatch"></div>
+      <div class="filmframe__num">FRAME 06</div>
+      <div class="filmframe__name">Gold</div>
+      <div class="filmframe__hex">#C9A227</div>
+      <div class="filmframe__pant"><span>FOIL · PRIMARY</span><span>00-06</span></div>
+    </div>
+    <div class="filmframe" style="--swatch: #D4AF37">
+      <div class="filmframe__swatch"></div>
+      <div class="filmframe__num">FRAME 07</div>
+      <div class="filmframe__name">Gold Light</div>
+      <div class="filmframe__hex">#D4AF37</div>
+      <div class="filmframe__pant"><span>HIGHLIGHT</span><span>00-07</span></div>
+    </div>
+    <div class="filmframe" style="--swatch: #F5F5DC">
+      <div class="filmframe__swatch"></div>
+      <div class="filmframe__num">FRAME 08</div>
+      <div class="filmframe__name">Ivory</div>
+      <div class="filmframe__hex">#F5F5DC</div>
+      <div class="filmframe__pant"><span>TYPE · BODY</span><span>00-08</span></div>
+    </div>
+    <div class="filmframe" style="--swatch: #8B4513">
+      <div class="filmframe__swatch"></div>
+      <div class="filmframe__num">FRAME 09</div>
+      <div class="filmframe__name">Burnt Umber</div>
+      <div class="filmframe__hex">#8B4513</div>
+      <div class="filmframe__pant"><span>SPOT · RARE</span><span>00-09</span></div>
+    </div>
+    <div class="filmframe" style="--swatch: #2F4F4F">
+      <div class="filmframe__swatch"></div>
+      <div class="filmframe__num">FRAME 10</div>
+      <div class="filmframe__name">Slate</div>
+      <div class="filmframe__hex">#2F4F4F</div>
+      <div class="filmframe__pant"><span>SUPPORTING</span><span>00-10</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== DIVIDER VI ========== -->
+<div class="divider">
+  <span class="divider__roman">VI</span>
+  <span>— Lectures —</span>
+</div>
+
+<!-- ========== LECTURES & TALKS ========== -->
+<div class="section-head reveal">
+  <div class="section-head__num">— VI —</div>
+  <h2 class="section-head__title">Lectures &amp; <em>Talks.</em></h2>
+  <p class="section-head__sub">Three on-the-record appearances from 2022–2024. The arguments have not, in the intervening months, been retracted.</p>
+</div>
+
+<section class="lectures">
+  <div class="lectures__grid">
+
+    <div class="talk reveal">
+      <div class="talk__video" data-video="brand-new-2024">
+        <img class="talk__poster" src="https://picsum.photos/seed/talk-refusal/800/500" alt="">
+        <span class="talk__corner">BERLIN · 2024</span>
+        <button class="talk__play" aria-label="Play"></button>
+        <span class="talk__duration">47:22</span>
+      </div>
+      <div class="talk__meta"><span>BRAND NEW CONF.</span><span>14 SEP 2024</span></div>
+      <h3 class="talk__title">On the discipline of <em>refusal</em>.</h3>
+      <p class="talk__blurb">Forty-seven minutes on why the most useful sentence in a designer's vocabulary is "we would prefer not to." Includes three case studies of briefs that improved once the client was told no.</p>
+    </div>
+
+    <div class="talk reveal reveal--delay-1">
+      <div class="talk__video" data-video="typo-talks-2023">
+        <img class="talk__poster" src="https://picsum.photos/seed/talk-grid/800/500" alt="">
+        <span class="talk__corner">LEIPZIG · 2023</span>
+        <button class="talk__play" aria-label="Play"></button>
+        <span class="talk__duration">52:08</span>
+      </div>
+      <div class="talk__meta"><span>TYPO TALKS</span><span>06 MAY 2023</span></div>
+      <h3 class="talk__title">Against the <em>modular</em> grid.</h3>
+      <p class="talk__blurb">A deliberately provocative argument that the twelve-column grid has, over twenty years, made digital design measurably more boring. Proposes, with examples, six alternatives — none of them scalable.</p>
+    </div>
+
+    <div class="talk reveal reveal--delay-2">
+      <div class="talk__video" data-video="offf-2022">
+        <img class="talk__poster" src="https://picsum.photos/seed/talk-print/800/500" alt="">
+        <span class="talk__corner">BARCELONA · 2022</span>
+        <button class="talk__play" aria-label="Play"></button>
+        <span class="talk__duration">38:44</span>
+      </div>
+      <div class="talk__meta"><span>OFFF FESTIVAL</span><span>13 APR 2022</span></div>
+      <h3 class="talk__title">The last good year for <em>print</em>.</h3>
+      <p class="talk__blurb">A eulogy, delivered half in earnest, for the year 2011 — the last year, by the studio's count, in which a printed object could credibly claim to be the primary medium of an idea. Ends with a list of things we miss.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ========== DIVIDER VII ========== -->
+<div class="divider">
+  <span class="divider__roman">VII</span>
+  <span>— Colophon —</span>
+</div>
+
+<!-- ========== CONTACT / COLOPHON ========== -->
+<section class="contact reveal">
+  <p class="contact__pre">— Studio open to selected commissions from —</p>
+  <h2 class="contact__name">Severin <em>Halbe</em></h2>
+
+  <a href="mailto:studio@severinhalbe.de" class="contact__email">studio@severinhalbe.de</a>
+
+  <div class="contact__grid">
+    <div class="contact__col">
+      <span class="label">Studio</span>
+      <span class="value">
+        Studio Halbe<br>
+        Karl-Heine-Straße 87<br>
+        04229 Leipzig<br>
+        Germany
+      </span>
+    </div>
+    <div class="contact__col">
+      <span class="label">Press &amp; Lectures</span>
+      <span class="value">
+        Vera Lindqvist<br>
+        press@severinhalbe.de<br>
+        +49 341 9988 2202
+      </span>
+    </div>
+    <div class="contact__col">
+      <span class="label">New Work</span>
+      <span class="value">
+        By introduction only.<br>
+        Brief, in writing, to<br>
+        new@severinhalbe.de
+      </span>
+    </div>
+  </div>
+
+  <div class="colophon">
+    <p>This monograph was set in <em>Cormorant Garamond</em> by Christian Thalmann and <em>Inter</em> by Rasmus Andersson, with capture-monospace accents in JetBrains Mono. Designed and art-directed by the studio. Printed in an edition of eight hundred copies on Munken Pure 120gsm, case-bound by Buch- und Werksdruck, Leipzig. The gold appearing throughout is a single ink, mixed by Handermann &amp; Söhne, Halle, to the studio's 2017 specification.</p>
+
+    <p>No part of this publication was generated by automated means. Every line was placed, weighed, and — where necessary — argued over, by hand, for the better part of a year.</p>
+
+    <div class="colophon__sig">— END · MONOGRAPH III · SEVERIN HALBE · MMXXIV —</div>
+  </div>
+</section>
+
+<script>
+/* ========== LENIS SMOOTH SCROLL ========== */
+const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const isTouch = window.matchMedia('(pointer: coarse)').matches;
+
+if (typeof Lenis !== 'undefined' && !reduced) {
+  const lenis = new Lenis({
+    duration: 1.1,
+    easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+    smoothWheel: true,
+    smoothTouch: false,
+  });
+  function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+  requestAnimationFrame(raf);
+  lenis.on('scroll', () => { if (window.ScrollTrigger) ScrollTrigger.update(); });
+}
+
+/* ========== GSAP REGISTER ========== */
+if (window.gsap && window.ScrollTrigger) {
+  gsap.registerPlugin(ScrollTrigger);
+}
+
+/* ========== RISOGRAPH CURSOR DOT TRAIL ========== */
+(function cursorTrail() {
+  if (isTouch || reduced) return;
+  const canvas = document.getElementById('cursor-canvas');
+  const ctx = canvas.getContext('2d');
+  let dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+  function resize() {
+    canvas.width = window.innerWidth * dpr;
+    canvas.height = window.innerHeight * dpr;
+    canvas.style.width = window.innerWidth + 'px';
+    canvas.style.height = window.innerHeight + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  const dots = [];
+  let lastX = window.innerWidth / 2, lastY = window.innerHeight / 2;
+
+  window.addEventListener('mousemove', e => {
+    lastX = e.clientX; lastY = e.clientY;
+    // spawn 2-3 dots with offset
+    const count = 2 + Math.floor(Math.random() * 2);
+    for (let i = 0; i < count; i++) {
+      dots.push({
+        x: e.clientX + (Math.random() - 0.5) * 6,
+        y: e.clientY + (Math.random() - 0.5) * 6,
+        r: 0.8 + Math.random() * 2.2,
+        life: 1,
+        decay: 0.012 + Math.random() * 0.022,
+        hue: 42 + Math.random() * 12, // gold range
+        sat: 55 + Math.random() * 20,
+        lig: 50 + Math.random() * 15,
+      });
+    }
+    if (dots.length > 600) dots.splice(0, dots.length - 600);
+  });
+
+  function tick() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    for (let i = dots.length - 1; i >= 0; i--) {
+      const d = dots[i];
+      d.life -= d.decay;
+      if (d.life <= 0) { dots.splice(i, 1); continue; }
+      const alpha = d.life * 0.55;
+      ctx.fillStyle = `hsla(${d.hue}, ${d.sat}%, ${d.lig}%, ${alpha})`;
+      ctx.beginPath();
+      ctx.arc(d.x, d.y, d.r * Math.max(0.2, d.life), 0, Math.PI * 2);
+      ctx.fill();
+    }
+    // Bright cursor-position dot
+    ctx.fillStyle = 'rgba(201, 162, 39, 0.85)';
+    ctx.beginPath();
+    ctx.arc(lastX, lastY, 2, 0, Math.PI * 2);
+    ctx.fill();
+    requestAnimationFrame(tick);
+  }
+  tick();
+})();
+
+/* ========== HERO KINETIC TYPOGRAPHY ========== */
+(function heroKinetic() {
+  if (reduced) return;
+  const letters = document.querySelectorAll('.hero__name span');
+  if (!letters.length) return;
+
+  const motions = [
+    { y: -120, opacity: 0, rotate: -8 },
+    { y: 120, opacity: 0, rotate: 6 },
+    { x: -100, opacity: 0, rotate: -4 },
+    { x: 100, opacity: 0, rotate: 5 },
+    { scale: 0, opacity: 0, rotate: 180 },
+    { y: -80, opacity: 0, rotate: 12 },
+  ];
+
+  letters.forEach((letter, i) => {
+    const m = motions[i % motions.length];
+    gsap.from(letter, {
+      ...m,
+      duration: 1.4,
+      ease: 'expo.out',
+      delay: 0.3 + i * 0.07,
+      clearProps: 'transform',
+    });
+  });
+
+  // Byline reveal
+  gsap.from('.hero__byline', {
+    opacity: 0, y: 20,
+    duration: 1.2,
+    ease: 'power3.out',
+    delay: 1.4,
+  });
+
+  // Meta lines
+  gsap.from('.hero__meta-top span, .hero__meta-bottom span', {
+    opacity: 0,
+    duration: 1,
+    ease: 'power2.out',
+    stagger: 0.1,
+    delay: 1.8,
+  });
+})();
+
+/* ========== SPREAD CROSS-FADE WITH HORIZONTAL SLIDE ========== */
+(function spreads() {
+  const els = document.querySelectorAll('.spread');
+  if (!els.length) return;
+
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      const el = entry.target;
+      if (entry.isIntersecting && entry.intersectionRatio > 0.15) {
+        el.classList.add('is-in');
+        el.classList.remove('is-past');
+      } else if (!entry.isIntersecting && entry.boundingClientRect.top < 0) {
+        el.classList.add('is-past');
+      }
+    });
+  }, {
+    threshold: [0, 0.15, 0.4, 0.7],
+    rootMargin: '-5% 0px -5% 0px'
+  });
+
+  els.forEach(el => obs.observe(el));
+})();
+
+/* ========== REVEAL ON SCROLL ========== */
+(function reveals() {
+  const els = document.querySelectorAll('.reveal');
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-in');
+        obs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.18, rootMargin: '0px 0px -8% 0px' });
+  els.forEach(el => obs.observe(el));
+})();
+
+/* ========== RUNNING HEAD PAGE NUMBER ========== */
+(function pageNumber() {
+  const numEl = document.getElementById('page-num');
+  if (!numEl) return;
+  const total = 220;
+  function update() {
+    const progress = Math.max(0, Math.min(1, window.scrollY / (document.body.scrollHeight - window.innerHeight)));
+    const page = 8 + Math.floor(progress * (total - 8));
+    numEl.textContent = String(page).padStart(3, '0');
+  }
+  window.addEventListener('scroll', update, { passive: true });
+  update();
+})();
+
+/* ========== TYPE SPECIMEN — DRAG + PINCH ========== */
+(function specimenDrag() {
+  const desk = document.getElementById('specimens-desk');
+  if (!desk) return;
+  const cards = desk.querySelectorAll('.specimen');
+
+  cards.forEach(card => {
+    let scale = 1;
+    let dragX = 0, dragY = 0;
+    let startX, startY;
+    let isDragging = false;
+    let activePointerId = null;
+    let zIndex = 5;
+
+    function applyTransform() {
+      card.style.transform = `translate(${dragX}px, ${dragY}px) scale(${scale})`;
+    }
+
+    function bringFront() {
+      zIndex += 1;
+      card.style.zIndex = zIndex;
+    }
+
+    // Pointer events (mouse + touch single-finger)
+    card.addEventListener('pointerdown', e => {
+      if (e.pointerType === 'mouse' && e.button !== 0) return;
+      // If two pointers already down, ignore
+      if (activePointerId !== null && activePointerId !== e.pointerId) return;
+      isDragging = true;
+      activePointerId = e.pointerId;
+      startX = e.clientX;
+      startY = e.clientY;
+      card.classList.add('is-dragging');
+      bringFront();
+      card.setPointerCapture(e.pointerId);
+    });
+
+    card.addEventListener('pointermove', e => {
+      if (!isDragging || e.pointerId !== activePointerId) return;
+      const dx = e.clientX - startX;
+      const dy = e.clientY - startY;
+      dragX += dx;
+      dragY += dy;
+      startX = e.clientX;
+      startY = e.clientY;
+      applyTransform();
+    });
+
+    function endDrag(e) {
+      if (e.pointerId !== activePointerId) return;
+      isDragging = false;
+      activePointerId = null;
+      card.classList.remove('is-dragging');
+      try { card.releasePointerCapture(e.pointerId); } catch(_){}
+    }
+    card.addEventListener('pointerup', endDrag);
+    card.addEventListener('pointercancel', endDrag);
+
+    // Wheel to scale (desktop "pinch")
+    card.addEventListener('wheel', e => {
+      e.preventDefault();
+      const delta = -e.deltaY * 0.0015;
+      scale = Math.max(0.55, Math.min(2.2, scale + delta));
+      applyTransform();
+    }, { passive: false });
+
+    // Touch pinch (two-finger)
+    let pinchInitialDist = 0;
+    let pinchInitialScale = 1;
+    const touchState = {};
+
+    card.addEventListener('touchstart', e => {
+      if (e.touches.length === 2) {
+        e.preventDefault();
+        const t1 = e.touches[0], t2 = e.touches[1];
+        pinchInitialDist = Math.hypot(t2.clientX - t1.clientX, t2.clientY - t1.clientY);
+        pinchInitialScale = scale;
+        isDragging = false;
+      }
+    }, { passive: false });
+
+    card.addEventListener('touchmove', e => {
+      if (e.touches.length === 2) {
+        e.preventDefault();
+        const t1 = e.touches[0], t2 = e.touches[1];
+        const dist = Math.hypot(t2.clientX - t1.clientX, t2.clientY - t1.clientY);
+        scale = Math.max(0.55, Math.min(2.2, pinchInitialScale * (dist / Math.max(20, pinchInitialDist))));
+        applyTransform();
+      }
+    }, { passive: false });
+
+    // Download link (decorative)
+    const dl = card.querySelector('.specimen__download');
+    if (dl) {
+      dl.addEventListener('click', e => {
+        e.stopPropagation();
+        dl.textContent = '✓ REQUESTED';
+        setTimeout(() => { dl.innerHTML = 'SPEC.PDF'; }, 1800);
+      });
+    }
+  });
+})();
+
+/* ========== COLOR PALETTE — FILM STRIP SCRUB ========== */
+(function filmstrip() {
+  const strip = document.getElementById('filmstrip');
+  const section = document.getElementById('palette');
+  const bar = document.getElementById('palette-bar');
+  const current = document.getElementById('palette-current');
+  const frameName = document.getElementById('palette-frame-name');
+  const label = document.querySelector('.palette__progress-label:not(.palette__progress-label--right)');
+
+  if (!strip || !section) return;
+
+  const frames = section.querySelectorAll('.filmframe');
+  const frameNames = ['Jungle Deep', 'Jungle Primary', 'Jungle Secondary', 'Moss', 'Gold Dark', 'Gold', 'Gold Light', 'Ivory', 'Burnt Umber', 'Slate'];
+
+  function getTotalScroll() {
+    return Math.max(0, strip.scrollWidth - window.innerWidth + 200);
+  }
+
+  let progress = 0;
+  let targetProgress = 0;
+
+  function setStrip() {
+    const total = getTotalScroll();
+    const x = -progress * total;
+    strip.style.transform = `translateX(${x}px)`;
+    if (bar) bar.style.width = (progress * 100) + '%';
+
+    const idx = Math.min(frames.length - 1, Math.floor(progress * frames.length));
+    if (current) current.textContent = String(idx + 1).padStart(2, '0');
+    if (frameName) frameName.textContent = frameNames[idx] ? frameNames[idx].toUpperCase() : '';
+    if (label) label.textContent = `FRAME ${String(idx + 1).padStart(2, '0')} — ${(frameNames[idx] || '').toUpperCase()}`;
+  }
+
+  // Use a ScrollTrigger pinned section
+  if (window.ScrollTrigger && window.gsap && !reduced) {
+    ScrollTrigger.create({
+      trigger: section,
+      start: 'top top',
+      end: () => '+=' + (window.innerHeight * 2.5),
+      pin: true,
+      scrub: 1,
+      onUpdate: self => {
+        targetProgress = self.progress;
+      },
+      onLeaveBack: () => { targetProgress = 0; }
+    });
+  } else {
+    // Fallback: just horizontal layout, no scrub
+    section.style.padding = '4rem 0';
+    strip.style.overflowX = 'auto';
+  }
+
+  function loop() {
+    progress += (targetProgress - progress) * 0.09;
+    setStrip();
+    requestAnimationFrame(loop);
+  }
+  loop();
+
+  window.addEventListener('resize', setStrip);
+})();
+
+/* ========== TALK VIDEO CLICK — PLACEHOLDER BEHAVIOUR ========== */
+document.querySelectorAll('.talk__video').forEach(vid => {
+  const play = vid.querySelector('.talk__play');
+  const poster = vid.querySelector('.talk__poster');
+  if (!play) return;
+  play.addEventListener('click', e => {
+    e.preventDefault();
+    // Replace play button visually with "now playing" state
+    play.style.transform = 'translate(-50%, -50%) scale(0.85)';
+    play.style.background = 'var(--gold)';
+    play.querySelector ? null : null;
+    if (poster) poster.style.filter = 'brightness(0.45) contrast(1.1) saturate(0.6)';
+    // Append a fake "now playing" overlay
+    if (!vid.querySelector('.talk__now-playing')) {
+      const overlay = document.createElement('div');
+      overlay.className = 'talk__now-playing';
+      overlay.style.cssText = 'position:absolute;bottom:1rem;left:1rem;font-family:var(--mono);font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);background:rgba(5,20,10,0.7);padding:0.4rem 0.7rem;backdrop-filter:blur(4px);';
+      overlay.textContent = '▶ NOW PLAYING';
+      vid.appendChild(overlay);
+    }
+  });
+});
+
+/* ========== INDEX ENTRY CLICK — SCROLL TO SPREAD ========== */
+document.querySelectorAll('.index__entry').forEach((entry, i) => {
+  entry.addEventListener('click', () => {
+    const spreads = document.querySelectorAll('.spread');
+    const target = spreads[i];
+    if (target) {
+      window.scrollTo({ top: target.offsetTop - 40, behavior: 'smooth' });
+    }
+  });
+  entry.style.cursor = isTouch ? 'pointer' : 'none';
+});
+
+</script>
+</body>
+</html>
