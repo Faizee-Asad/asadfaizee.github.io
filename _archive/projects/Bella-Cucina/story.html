@@ -1,0 +1,1143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- ═══════════════════════════════════════
+       META & SEO
+  ═══════════════════════════════════════ -->
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="The story of Bella Cucina — how a Calabrian family brought their Nonna's recipes from Southern Italy to the heart of downtown Chicago. Meet our team and discover our philosophy."/>
+  <meta name="keywords" content="Bella Cucina story, Italian restaurant Chicago history, Calabrian restaurant, chef bio, family restaurant Chicago"/>
+  <meta name="robots" content="index, follow"/>
+  <meta property="og:type"        content="website"/>
+  <meta property="og:title"       content="Our Story — Bella Cucina · Authentic Southern Italian · Chicago"/>
+  <meta property="og:description" content="From a Calabrian village kitchen to downtown Chicago — discover the family story, values, and people behind Bella Cucina."/>
+  <meta property="og:url"         content="https://www.bellacucinachicago.com/story"/>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Restaurant",
+    "name": "Bella Cucina",
+    "foundingDate": "2009",
+    "founder": { "@type": "Person", "name": "The Esposito Family" },
+    "description": "Authentic Southern Italian restaurant in downtown Chicago founded by the Esposito family in 2009, serving traditional Calabrian and Sicilian cuisine.",
+    "url": "https://www.bellacucinachicago.com/story"
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+
+  <title>Our Story — Bella Cucina · Authentic Southern Italian · Chicago</title>
+
+  <style>
+    /* ═══════════════════════════════════════
+       DESIGN TOKENS
+    ═══════════════════════════════════════ */
+    :root {
+      --bg:          #0E0C0A;
+      --bg-2:        #141210;
+      --bg-3:        #1A1714;
+      --bg-card:     #1E1A16;
+      --gold:        #C9A96E;
+      --gold-light:  #E2C98A;
+      --gold-dim:    #8A6D40;
+      --cream:       #F5EDD9;
+      --cream-dim:   #B5A88A;
+      --white:       #FDFAF4;
+      --text:        #D4C9B4;
+      --text-dim:    #7A7060;
+      --border:      rgba(201,169,110,0.18);
+      --border-soft: rgba(201,169,110,0.08);
+      --radius:      4px;
+      --radius-lg:   8px;
+      --transition:  0.35s cubic-bezier(0.4,0,0.2,1);
+      --nav-h:       80px;
+    }
+
+    /* ═══════════════════════════════════════
+       RESET & BASE
+    ═══════════════════════════════════════ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Jost', sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+    img { display: block; width: 100%; object-fit: cover; }
+    a { text-decoration: none; color: inherit; }
+    button { font-family: inherit; cursor: pointer; border: none; background: none; }
+    ul { list-style: none; }
+
+    .skip-nav { position: absolute; top: -100%; left: 16px; background: var(--gold); color: var(--bg); padding: 10px 18px; border-radius: var(--radius); font-weight: 600; font-size: 14px; z-index: 9999; transition: top 0.2s; }
+    .skip-nav:focus { top: 16px; }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+    }
+
+    /* ═══════════════════════════════════════
+       TYPOGRAPHY
+    ═══════════════════════════════════════ */
+    .display { font-family: 'Cormorant Garamond', serif; font-weight: 300; line-height: 1.1; letter-spacing: -0.01em; }
+    h1 { font-size: clamp(52px, 7vw, 96px); }
+    h2 { font-size: clamp(34px, 4.5vw, 58px); }
+    h3 { font-size: clamp(20px, 2.5vw, 28px); }
+    .eyebrow { font-family: 'Jost', sans-serif; font-size: 11px; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); }
+    .body-text { font-size: 16px; color: var(--text-dim); line-height: 1.9; }
+    .body-text + .body-text { margin-top: 20px; }
+
+    /* ═══════════════════════════════════════
+       LAYOUT
+    ═══════════════════════════════════════ */
+    .container { max-width: 1280px; margin: 0 auto; padding: 0 40px; }
+    .container-narrow { max-width: 800px; margin: 0 auto; padding: 0 40px; }
+    .section    { padding: 110px 0; }
+    .section-sm { padding: 80px 0; }
+    .gold-line        { display: block; width: 48px; height: 1px; background: var(--gold); margin: 20px 0; }
+    .gold-line-center { display: block; width: 48px; height: 1px; background: var(--gold); margin: 20px auto; }
+
+    /* ═══════════════════════════════════════
+       BUTTONS
+    ═══════════════════════════════════════ */
+    .btn { display: inline-flex; align-items: center; gap: 10px; font-size: 12px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; padding: 16px 36px; border-radius: var(--radius); cursor: pointer; transition: var(--transition); font-family: 'Jost', sans-serif; border: none; }
+    .btn:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+    .btn-primary { background: var(--gold); color: var(--bg); }
+    .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 12px 40px rgba(201,169,110,0.28); }
+    .btn-outline { background: transparent; color: var(--cream); border: 1px solid rgba(245,237,217,0.3); }
+    .btn-outline:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-2px); }
+
+    /* ═══════════════════════════════════════
+       NAVBAR
+    ═══════════════════════════════════════ */
+    .navbar { position: fixed; top: 0; left: 0; right: 0; z-index: 999; height: var(--nav-h); display: flex; align-items: center; background: rgba(14,12,10,0.97); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); box-shadow: 0 4px 30px rgba(0,0,0,0.4); transition: var(--transition); }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; width: 100%; }
+    .nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 600; color: var(--cream); letter-spacing: 0.04em; transition: color 0.25s; }
+    .nav-logo span { color: var(--gold); }
+    .nav-logo:hover { color: var(--white); }
+    .nav-logo:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; border-radius: 2px; }
+    .nav-links { display: flex; align-items: center; gap: 44px; }
+    .nav-link { font-size: 12px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream-dim); transition: color 0.25s; position: relative; padding-bottom: 2px; }
+    .nav-link::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 0; height: 1px; background: var(--gold); transition: width 0.3s; }
+    .nav-link:hover { color: var(--gold); }
+    .nav-link:hover::after { width: 100%; }
+    .nav-link.active { color: var(--gold); }
+    .nav-link.active::after { width: 100%; }
+    .nav-link:focus-visible { outline: 2px solid var(--gold); outline-offset: 4px; border-radius: 2px; }
+    .nav-cta { font-size: 11px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; padding: 12px 26px; background: var(--gold); color: var(--bg); border-radius: var(--radius); transition: var(--transition); font-family: 'Jost', sans-serif; }
+    .nav-cta:hover { background: var(--gold-light); box-shadow: 0 8px 28px rgba(201,169,110,0.3); }
+    .hamburger { display: none; flex-direction: column; justify-content: center; gap: 5px; width: 36px; height: 36px; padding: 4px; border-radius: var(--radius); }
+    .hamburger span { display: block; height: 1.5px; background: var(--cream); border-radius: 2px; transition: var(--transition); }
+    .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+    .hamburger:focus-visible { outline: 2px solid var(--gold); }
+    .mobile-nav { display: none; position: fixed; top: var(--nav-h); left: 0; right: 0; bottom: 0; background: rgba(14,12,10,0.98); backdrop-filter: blur(20px); flex-direction: column; align-items: center; justify-content: center; gap: 40px; z-index: 998; opacity: 0; transition: opacity 0.3s; pointer-events: none; }
+    .mobile-nav.open { display: flex; opacity: 1; pointer-events: all; }
+    .mobile-nav-link { font-family: 'Cormorant Garamond', serif; font-size: 36px; font-weight: 300; color: var(--cream-dim); letter-spacing: 0.04em; transition: color 0.25s; }
+    .mobile-nav-link:hover { color: var(--gold); }
+
+    /* ═══════════════════════════════════════
+       PAGE HERO — CINEMATIC FULL-BLEED
+    ═══════════════════════════════════════ */
+    .page-hero {
+      position: relative; min-height: 100vh;
+      display: flex; align-items: center;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background:
+        linear-gradient(to right, rgba(14,12,10,0.96) 40%, rgba(14,12,10,0.55) 80%, rgba(14,12,10,0.3) 100%),
+        linear-gradient(to bottom, transparent 60%, rgba(14,12,10,0.9) 100%),
+        url('https://images.unsplash.com/photo-1466978913421-dad2ebd01d17?w=1920&q=85') center/cover no-repeat;
+    }
+    /* Grain texture overlay */
+    .hero-bg::before {
+      content: ''; position: absolute; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none; opacity: 0.5;
+    }
+    .hero-content {
+      position: relative; z-index: 2;
+      padding-top: var(--nav-h);
+      max-width: 660px;
+    }
+    .breadcrumb { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--text-dim); letter-spacing: 0.08em; margin-bottom: 28px; }
+    .breadcrumb a { color: var(--text-dim); transition: color 0.25s; }
+    .breadcrumb a:hover { color: var(--gold); }
+    .hero-content h1 {
+      color: var(--white); margin: 14px 0 24px;
+      opacity: 0; animation: fadeUp 1s 0.3s cubic-bezier(0.4,0,0.2,1) forwards;
+    }
+    .hero-content h1 em { font-style: italic; color: var(--gold); }
+    .hero-pull-quote {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(18px, 2.2vw, 24px); font-style: italic;
+      font-weight: 300; color: var(--cream-dim);
+      line-height: 1.65; max-width: 520px;
+      border-left: 2px solid var(--gold);
+      padding-left: 24px; margin: 28px 0 44px;
+      opacity: 0; animation: fadeUp 1s 0.55s cubic-bezier(0.4,0,0.2,1) forwards;
+    }
+    .hero-actions {
+      display: flex; gap: 14px; flex-wrap: wrap;
+      opacity: 0; animation: fadeUp 1s 0.75s cubic-bezier(0.4,0,0.2,1) forwards;
+    }
+    /* Floating image on right side */
+    .hero-float {
+      position: absolute; right: 80px; top: 50%;
+      transform: translateY(-45%);
+      width: 340px; height: 460px;
+      border-radius: var(--radius-lg); overflow: hidden;
+      border: 1px solid var(--border);
+      box-shadow: 0 40px 100px rgba(0,0,0,0.6);
+      opacity: 0; animation: fadeUp 1.1s 0.9s cubic-bezier(0.4,0,0.2,1) forwards;
+    }
+    .hero-float img { height: 100%; }
+    .hero-float-caption {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      background: linear-gradient(to top, rgba(14,12,10,0.95), transparent);
+      padding: 28px 20px 20px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 14px; font-style: italic; color: var(--cream-dim);
+      text-align: center;
+    }
+
+    /* ═══════════════════════════════════════
+       ORIGIN STORY (narrative section)
+    ═══════════════════════════════════════ */
+    .origin-section { background: var(--bg-2); }
+    .origin-inner {
+      display: grid; grid-template-columns: 1fr 1.2fr;
+      gap: 100px; align-items: center;
+    }
+    .origin-img-stack { position: relative; }
+    .origin-img-main { height: 600px; border-radius: var(--radius-lg); overflow: hidden; border: 1px solid var(--border); }
+    .origin-img-main img { height: 100%; }
+    .origin-img-secondary {
+      position: absolute; bottom: -36px; right: -36px;
+      width: 210px; height: 260px;
+      border-radius: var(--radius-lg); overflow: hidden;
+      border: 4px solid var(--bg-2);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+    }
+    .origin-img-secondary img { height: 100%; }
+    /* Floating quote badge */
+    .origin-badge {
+      position: absolute; top: 32px; left: -36px;
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); padding: 24px 28px;
+      max-width: 220px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+    }
+    .origin-badge-quote {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 15px; font-style: italic;
+      color: var(--cream-dim); line-height: 1.65;
+      margin-bottom: 12px;
+    }
+    .origin-badge-attr { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); }
+
+    .origin-content h2 { color: var(--white); margin: 12px 0 28px; }
+    .origin-content .body-text { max-width: 540px; }
+    .origin-highlights {
+      display: flex; gap: 36px; margin: 40px 0;
+      padding: 32px 0; border-top: 1px solid var(--border-soft);
+    }
+    .origin-highlight { text-align: center; }
+    .origin-highlight-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 46px; font-weight: 600; color: var(--gold); line-height: 1;
+    }
+    .origin-highlight-label { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-dim); margin-top: 6px; }
+
+    /* ═══════════════════════════════════════
+       PHILOSOPHY / VALUES
+    ═══════════════════════════════════════ */
+    .philosophy-section { background: var(--bg); position: relative; overflow: hidden; }
+    .philosophy-section::before {
+      content: '"';
+      font-family: 'Cormorant Garamond', serif; font-size: 600px;
+      line-height: 1; position: absolute; top: -120px; right: -80px;
+      color: rgba(201,169,110,0.025); pointer-events: none; user-select: none;
+    }
+    .philosophy-header { text-align: center; margin-bottom: 72px; }
+    .philosophy-header h2 { color: var(--white); margin: 12px 0 20px; }
+    .philosophy-header .lead {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(18px, 2vw, 22px); font-style: italic;
+      color: var(--cream-dim); max-width: 640px; margin: 0 auto; line-height: 1.75;
+    }
+    .values-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .value-card {
+      background: var(--bg-card); border: 1px solid var(--border-soft);
+      border-radius: var(--radius-lg); padding: 40px 36px;
+      transition: var(--transition); position: relative; overflow: hidden;
+    }
+    .value-card:hover { border-color: var(--border); transform: translateY(-5px); box-shadow: 0 20px 55px rgba(0,0,0,0.45); }
+    .value-card::before {
+      content: attr(data-number);
+      font-family: 'Cormorant Garamond', serif; font-size: 100px; font-weight: 300;
+      color: rgba(201,169,110,0.06); position: absolute;
+      top: -20px; right: 16px; line-height: 1;
+      pointer-events: none; user-select: none;
+    }
+    .value-icon { font-size: 32px; margin-bottom: 22px; display: block; }
+    .value-title { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 600; color: var(--white); margin-bottom: 12px; }
+    .value-desc { font-size: 14px; color: var(--text-dim); line-height: 1.8; }
+
+    /* ═══════════════════════════════════════
+       CHEF BIO
+    ═══════════════════════════════════════ -->
+    /* ═══════════════════════════════════════
+       CHEF BIO
+    ═══════════════════════════════════════ */
+    .chef-section { background: var(--bg-3); }
+    .chef-inner {
+      display: grid; grid-template-columns: 1.1fr 1fr;
+      gap: 100px; align-items: center;
+    }
+    .chef-content { order: 2; }
+    .chef-content h2 { color: var(--white); margin: 12px 0 6px; }
+    .chef-role { font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); margin-bottom: 24px; }
+    .chef-content .body-text { max-width: 520px; }
+    .chef-accolades {
+      display: flex; flex-direction: column; gap: 14px;
+      margin: 36px 0; padding: 32px;
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+    }
+    .chef-accolade { display: flex; align-items: center; gap: 14px; }
+    .chef-accolade-icon { font-size: 20px; flex-shrink: 0; }
+    .chef-accolade-text { font-size: 14px; color: var(--cream-dim); line-height: 1.55; }
+    .chef-accolade-text strong { color: var(--cream); font-weight: 500; display: block; font-size: 13px; }
+    .chef-img-wrap { order: 1; position: relative; }
+    .chef-img {
+      height: 580px; border-radius: var(--radius-lg); overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    .chef-img img { height: 100%; }
+    /* Floating signature block */
+    .chef-signature {
+      position: absolute; bottom: -20px; left: -28px;
+      background: var(--gold); color: var(--bg);
+      border-radius: var(--radius-lg); padding: 24px 28px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    }
+    .chef-sig-name { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 700; line-height: 1; margin-bottom: 6px; }
+    .chef-sig-title { font-size: 10px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; opacity: 0.75; }
+
+    /* ═══════════════════════════════════════
+       TIMELINE
+    ═══════════════════════════════════════ */
+    .timeline-section { background: var(--bg-2); }
+    .timeline-header { text-align: center; margin-bottom: 72px; }
+    .timeline-header h2 { color: var(--white); margin: 12px 0 20px; }
+    .timeline {
+      position: relative; max-width: 820px; margin: 0 auto;
+    }
+    /* Vertical line */
+    .timeline::before {
+      content: ''; position: absolute;
+      left: 50%; top: 0; bottom: 0; width: 1px;
+      background: var(--border);
+      transform: translateX(-50%);
+    }
+    .timeline-item {
+      display: flex; gap: 60px; align-items: flex-start;
+      margin-bottom: 60px; position: relative;
+    }
+    .timeline-item:last-child { margin-bottom: 0; }
+
+    /* Alternating sides */
+    .timeline-item:nth-child(odd)  { flex-direction: row; }
+    .timeline-item:nth-child(even) { flex-direction: row-reverse; }
+
+    .timeline-item-content {
+      flex: 1; background: var(--bg-card);
+      border: 1px solid var(--border-soft);
+      border-radius: var(--radius-lg);
+      padding: 28px 32px;
+      transition: var(--transition);
+    }
+    .timeline-item-content:hover { border-color: var(--border); box-shadow: 0 10px 40px rgba(0,0,0,0.3); }
+
+    /* Dot on the line */
+    .timeline-dot {
+      position: absolute; left: 50%; top: 28px;
+      transform: translateX(-50%);
+      width: 44px; height: 44px; border-radius: 50%;
+      border: 1px solid var(--border);
+      background: var(--bg-2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; z-index: 2; flex-shrink: 0;
+      transition: var(--transition);
+    }
+    .timeline-item:hover .timeline-dot { background: var(--gold); border-color: var(--gold); }
+
+    .timeline-spacer { flex: 1; } /* invisible spacer for the other side */
+    .timeline-year { font-family: 'Cormorant Garamond', serif; font-size: 13px; font-weight: 600; letter-spacing: 0.1em; color: var(--gold); margin-bottom: 8px; }
+    .timeline-title { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 600; color: var(--white); margin-bottom: 10px; }
+    .timeline-desc { font-size: 13px; color: var(--text-dim); line-height: 1.75; }
+
+    /* ═══════════════════════════════════════
+       TEAM SECTION
+    ═══════════════════════════════════════ */
+    .team-section { background: var(--bg); }
+    .team-header { text-align: center; margin-bottom: 64px; }
+    .team-header h2 { color: var(--white); margin: 12px 0 20px; }
+    .team-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+    .team-card {
+      background: var(--bg-card); border: 1px solid var(--border-soft);
+      border-radius: var(--radius-lg); overflow: hidden;
+      transition: var(--transition);
+    }
+    .team-card:hover { border-color: var(--border); transform: translateY(-5px); box-shadow: 0 20px 50px rgba(0,0,0,0.4); }
+    .team-card-img { height: 260px; overflow: hidden; position: relative; }
+    .team-card-img img { height: 100%; transition: transform 0.65s cubic-bezier(0.4,0,0.2,1); }
+    .team-card:hover .team-card-img img { transform: scale(1.05); }
+    .team-card-body { padding: 24px; }
+    .team-card-name { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 600; color: var(--white); margin-bottom: 4px; }
+    .team-card-role { font-size: 11px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; }
+    .team-card-bio { font-size: 13px; color: var(--text-dim); line-height: 1.7; }
+
+    /* ═══════════════════════════════════════
+       SOURCING / INGREDIENTS
+    ═══════════════════════════════════════ */
+    .sourcing-section {
+      background: var(--bg-3); position: relative; overflow: hidden;
+    }
+    .sourcing-section::before {
+      content: ''; position: absolute; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Cg fill='%23C9A96E' fill-opacity='0.025'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      pointer-events: none;
+    }
+    .sourcing-inner {
+      position: relative; z-index: 2;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 80px; align-items: center;
+    }
+    .sourcing-content h2 { color: var(--white); margin: 12px 0 24px; }
+    .sourcing-content .body-text { max-width: 480px; }
+    .sourcing-list { display: flex; flex-direction: column; gap: 16px; margin-top: 36px; }
+    .sourcing-item { display: flex; align-items: flex-start; gap: 18px; }
+    .sourcing-flag { font-size: 24px; flex-shrink: 0; margin-top: 2px; }
+    .sourcing-item-title { font-size: 14px; font-weight: 500; color: var(--cream); margin-bottom: 2px; }
+    .sourcing-item-desc { font-size: 13px; color: var(--text-dim); line-height: 1.6; }
+    .sourcing-imgs {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+    }
+    .sourcing-img { border-radius: var(--radius-lg); overflow: hidden; border: 1px solid var(--border); }
+    .sourcing-img:first-child { grid-column: 1 / -1; height: 220px; }
+    .sourcing-img:not(:first-child) { height: 150px; }
+    .sourcing-img img { height: 100%; transition: transform 0.6s ease; }
+    .sourcing-img:hover img { transform: scale(1.04); }
+
+    /* ═══════════════════════════════════════
+       CTA BANNER
+    ═══════════════════════════════════════ */
+    .cta-banner {
+      background: var(--bg-2); border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 100px 0; text-align: center;
+      position: relative; overflow: hidden;
+    }
+    .cta-banner::before {
+      content: ''; position: absolute;
+      top: -150px; left: 50%; transform: translateX(-50%);
+      width: 600px; height: 600px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(201,169,110,0.05) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .cta-banner-content { position: relative; z-index: 2; }
+    .cta-banner h2 { color: var(--white); margin: 12px 0 20px; }
+    .cta-banner p { font-size: 16px; color: var(--text-dim); max-width: 480px; margin: 0 auto 44px; line-height: 1.8; }
+    .cta-banner-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+    /* ═══════════════════════════════════════
+       FOOTER
+    ═══════════════════════════════════════ */
+    .footer { background: var(--bg-2); border-top: 1px solid var(--border); padding: 80px 0 0; }
+    .footer-inner { display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: 60px; padding-bottom: 60px; border-bottom: 1px solid var(--border-soft); }
+    .footer-brand-name { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 600; color: var(--cream); margin-bottom: 16px; }
+    .footer-brand-name span { color: var(--gold); }
+    .footer-tagline { font-size: 14px; color: var(--text-dim); line-height: 1.8; margin-bottom: 28px; }
+    .footer-social { display: flex; gap: 10px; }
+    .social-btn { width: 36px; height: 36px; border: 1px solid var(--border); border-radius: var(--radius); display: flex; align-items: center; justify-content: center; font-size: 14px; color: var(--text-dim); transition: var(--transition); }
+    .social-btn:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-2px); }
+    .footer-col-title { font-size: 11px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--cream-dim); margin-bottom: 24px; }
+    .footer-links { display: flex; flex-direction: column; gap: 12px; }
+    .footer-link { font-size: 14px; color: var(--text-dim); transition: color 0.25s; }
+    .footer-link:hover { color: var(--gold); }
+    .footer-hours-row { display: flex; justify-content: space-between; font-size: 13px; color: var(--text-dim); margin-bottom: 8px; gap: 8px; }
+    .footer-hours-row strong { color: var(--cream-dim); font-weight: 400; }
+    .footer-contact-item { font-size: 13px; color: var(--text-dim); margin-bottom: 8px; }
+    .footer-contact-item a { transition: color 0.25s; }
+    .footer-contact-item a:hover { color: var(--gold); }
+    .newsletter-label { font-size: 12px; color: var(--text-dim); margin-bottom: 12px; line-height: 1.7; }
+    .newsletter-wrap { display: flex; }
+    .newsletter-input { flex: 1; background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-right: none; border-radius: var(--radius) 0 0 var(--radius); padding: 12px 16px; font-size: 13px; color: var(--cream); outline: none; }
+    .newsletter-input::placeholder { color: var(--text-dim); }
+    .newsletter-btn { background: var(--gold); color: var(--bg); padding: 12px 20px; font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; border-radius: 0 var(--radius) var(--radius) 0; font-family: 'Jost', sans-serif; border: none; cursor: pointer; transition: background 0.25s; }
+    .newsletter-btn:hover { background: var(--gold-light); }
+    .footer-bottom { padding: 24px 0; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+    .footer-copy { font-size: 12px; color: var(--text-dim); }
+    .footer-legal { display: flex; gap: 24px; }
+    .footer-legal a { font-size: 12px; color: var(--text-dim); transition: color 0.25s; }
+    .footer-legal a:hover { color: var(--gold); }
+
+    .back-to-top { position: fixed; bottom: 32px; right: 32px; z-index: 500; width: 44px; height: 44px; background: var(--gold); color: var(--bg); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; cursor: pointer; opacity: 0; pointer-events: none; transform: translateY(12px); transition: opacity 0.35s, transform 0.35s, background 0.25s; border: none; }
+    .back-to-top.show { opacity: 1; pointer-events: all; transform: translateY(0); }
+    .back-to-top:hover { background: var(--gold-light); }
+
+    /* ═══════════════════════════════════════
+       SCROLL ANIMATIONS
+    ═══════════════════════════════════════ */
+    .fade-up { opacity: 0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+    .fade-up-d1 { transition-delay: 0.1s; }
+    .fade-up-d2 { transition-delay: 0.2s; }
+    .fade-up-d3 { transition-delay: 0.3s; }
+    .fade-up-d4 { transition-delay: 0.4s; }
+
+    @keyframes fadeUp { from { opacity:0; transform:translateY(28px); } to { opacity:1; transform:translateY(0); } }
+
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--gold-dim); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--gold); }
+
+    /* ═══════════════════════════════════════
+       RESPONSIVE
+    ═══════════════════════════════════════ */
+    @media (max-width: 1200px) {
+      .hero-float { right: 40px; width: 280px; height: 380px; }
+    }
+    @media (max-width: 1100px) {
+      .container { padding: 0 28px; }
+      .container-narrow { padding: 0 28px; }
+      .origin-inner { grid-template-columns: 1fr; gap: 60px; }
+      .chef-inner { grid-template-columns: 1fr; gap: 52px; }
+      .chef-content { order: 1; }
+      .chef-img-wrap { order: 2; }
+      .sourcing-inner { grid-template-columns: 1fr; gap: 52px; }
+      .sourcing-imgs { display: none; }
+      .footer-inner { grid-template-columns: 1fr 1fr; gap: 40px; }
+      .hero-float { display: none; }
+      .origin-badge { display: none; }
+      .origin-img-secondary { right: -12px; bottom: -12px; }
+    }
+    @media (max-width: 820px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .values-grid { grid-template-columns: 1fr 1fr; }
+      .team-grid { grid-template-columns: 1fr 1fr; }
+      .timeline::before { left: 20px; }
+      .timeline-item, .timeline-item:nth-child(even) { flex-direction: column; padding-left: 60px; }
+      .timeline-dot { left: 20px; top: 0; }
+      .timeline-spacer { display: none; }
+      .footer-inner { grid-template-columns: 1fr; gap: 32px; }
+    }
+    @media (max-width: 540px) {
+      .container { padding: 0 16px; }
+      .container-narrow { padding: 0 16px; }
+      .section { padding: 72px 0; }
+      h1 { font-size: 46px; }
+      h2 { font-size: 30px; }
+      .values-grid { grid-template-columns: 1fr; }
+      .team-grid { grid-template-columns: 1fr; max-width: 360px; margin: 0 auto; }
+      .hero-actions { flex-direction: column; }
+      .origin-highlights { flex-wrap: wrap; }
+      .origin-img-secondary { display: none; }
+      .chef-signature { left: 0; }
+      .cta-banner-actions { flex-direction: column; align-items: center; }
+      .footer-bottom { flex-direction: column; text-align: center; }
+      .footer-legal { justify-content: center; }
+      .back-to-top { bottom: 20px; right: 20px; }
+    }
+
+    @media print {
+      .navbar, .back-to-top { display: none !important; }
+      body { background: white; color: black; }
+    }
+  </style>
+</head>
+
+<body>
+  <a href="#main-content" class="skip-nav">Skip to main content</a>
+
+  <!-- ══════════════════════════════════════
+       NAVBAR
+  ══════════════════════════════════════ -->
+  <header>
+    <nav class="navbar" id="navbar" aria-label="Main navigation">
+      <div class="container">
+        <div class="nav-inner">
+          <a href="index.html" class="nav-logo" aria-label="Bella Cucina Home">Bella <span>Cucina</span></a>
+          <ul class="nav-links" role="menubar">
+            <li role="none"><a href="menu.html"              class="nav-link" role="menuitem">Menu</a></li>
+            <li role="none"><a href="story.html"             class="nav-link active" role="menuitem" aria-current="page">Our Story</a></li>
+            <li role="none"><a href="catering.html"          class="nav-link" role="menuitem">Catering</a></li>
+            <li role="none"><a href="index.html#location"    class="nav-link" role="menuitem">Contact</a></li>
+            <li role="none"><a href="index.html#reservation" class="nav-cta"  role="menuitem">Reserve a Table</a></li>
+          </ul>
+          <button class="hamburger" id="hamburger" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobile-nav">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+          </button>
+        </div>
+      </div>
+    </nav>
+    <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation" aria-hidden="true">
+      <a href="menu.html"              class="mobile-nav-link" tabindex="-1">Menu</a>
+      <a href="story.html"             class="mobile-nav-link" tabindex="-1">Our Story</a>
+      <a href="catering.html"          class="mobile-nav-link" tabindex="-1">Catering</a>
+      <a href="index.html#location"    class="mobile-nav-link" tabindex="-1">Contact</a>
+      <a href="index.html#reservation" class="btn btn-primary" style="margin-top:16px;" tabindex="-1">Reserve a Table</a>
+    </nav>
+  </header>
+
+  <main id="main-content">
+
+    <!-- ══════════════════════════════════════
+         PAGE HERO
+    ══════════════════════════════════════ -->
+    <section class="page-hero" aria-label="Our Story hero">
+      <div class="hero-bg" role="img" aria-label="Warm Italian restaurant interior"></div>
+      <div class="container">
+        <div class="hero-content">
+          <nav class="breadcrumb" style="opacity:0;animation:fadeUp 0.9s 0.1s forwards;" aria-label="Breadcrumb">
+            <a href="index.html">Home</a>
+            <span aria-hidden="true">›</span>
+            <span aria-current="page">Our Story</span>
+          </nav>
+          <span class="eyebrow" style="opacity:0;animation:fadeUp 0.9s 0.2s forwards;">Our Story</span>
+          <h1 class="display">
+            From <em>Calabria</em><br/>to Chicago
+          </h1>
+          <blockquote class="hero-pull-quote">
+            "Nonna always said — a table set with love feeds more than hunger. It feeds the soul."
+            <footer style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);font-style:normal;margin-top:12px;">— Marco Esposito, Founder</footer>
+          </blockquote>
+          <div class="hero-actions">
+            <a href="#story"   class="btn btn-primary">Read Our Story</a>
+            <a href="#chef"    class="btn btn-outline">Meet the Chef</a>
+          </div>
+        </div>
+      </div>
+      <!-- Floating image -->
+      <div class="hero-float" aria-hidden="true">
+        <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=700&q=85" alt="Bella Cucina interior"/>
+        <div class="hero-float-caption">Bella Cucina dining room, Chicago</div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════
+         ORIGIN STORY
+    ══════════════════════════════════════ -->
+    <section class="origin-section section" id="story" aria-labelledby="story-heading">
+      <div class="container">
+        <div class="origin-inner">
+
+          <!-- Images -->
+          <div class="origin-img-stack fade-up">
+            <div class="origin-img-main">
+              <img src="https://images.unsplash.com/photo-1595295333158-4742f28fbd85?w=800&q=80" alt="Fresh pasta being hand-rolled in Bella Cucina kitchen" loading="lazy"/>
+            </div>
+            <div class="origin-img-secondary" aria-hidden="true">
+              <img src="https://images.unsplash.com/photo-1551183053-bf91798d765d?w=400&q=80" alt="Italian food close-up" loading="lazy"/>
+            </div>
+            <div class="origin-badge" aria-hidden="true">
+              <p class="origin-badge-quote">"Every recipe in this kitchen began on a handwritten card from Calabria."</p>
+              <span class="origin-badge-attr">— Rosa Esposito, Matriarch</span>
+            </div>
+          </div>
+
+          <!-- Text -->
+          <div class="origin-content fade-up fade-up-d2">
+            <span class="eyebrow">Where It Began</span>
+            <h2 class="display" id="story-heading">A Family Recipe,<br/>A Chicago Dream</h2>
+            <span class="gold-line" aria-hidden="true"></span>
+
+            <p class="body-text">Bella Cucina was born in 2009 from a simple, fierce conviction — that the food of Southern Italy, specifically the bold, rustic, sun-soaked traditions of Calabria and Sicily, deserved a permanent home in Chicago.</p>
+            <p class="body-text">Marco Esposito grew up in a small village outside Cosenza, where Sunday meant the whole family gathered around his Nonna Rosa's table. The pasta was always hand-rolled. The tomatoes always came from her garden. The wine was always poured generously.</p>
+            <p class="body-text">In 2003, Marco moved to Chicago to pursue a culinary education. But nothing he found quite captured the spirit of his grandmother's cooking. So in 2009, with his wife Sofia and a collection of handwritten recipe cards, he opened Bella Cucina on a quiet corner of downtown Chicago.</p>
+            <p class="body-text">Fifteen years later, the family has grown — in the restaurant and beyond. But the philosophy has never changed: every dish must taste like it was made by someone who loves you.</p>
+
+            <div class="origin-highlights" aria-label="Key milestones">
+              <div class="origin-highlight">
+                <div class="origin-highlight-num">2009</div>
+                <div class="origin-highlight-label">Founded</div>
+              </div>
+              <div class="origin-highlight">
+                <div class="origin-highlight-num">15+</div>
+                <div class="origin-highlight-label">Years Open</div>
+              </div>
+              <div class="origin-highlight">
+                <div class="origin-highlight-num">4.9★</div>
+                <div class="origin-highlight-label">Avg Rating</div>
+              </div>
+              <div class="origin-highlight">
+                <div class="origin-highlight-num">60+</div>
+                <div class="origin-highlight-label">Recipes</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════
+         OUR PHILOSOPHY
+    ══════════════════════════════════════ -->
+    <section class="philosophy-section section" aria-labelledby="philosophy-heading">
+      <div class="container">
+        <div class="philosophy-header fade-up">
+          <span class="eyebrow">What We Believe</span>
+          <h2 class="display" id="philosophy-heading">Our Philosophy</h2>
+          <span class="gold-line-center" aria-hidden="true"></span>
+          <p class="lead">"Food is not fuel. It is memory, culture, love, and community — served on a plate."</p>
+        </div>
+
+        <div class="values-grid">
+          <article class="value-card fade-up" data-number="1">
+            <span class="value-icon" aria-hidden="true">🌿</span>
+            <h3 class="value-title">Tradition First</h3>
+            <p class="value-desc">We don't reinvent Southern Italian cuisine — we honour it. Our recipes are rooted in generations of Calabrian and Sicilian tradition, adapted only where the finest local ingredients demand it.</p>
+          </article>
+          <article class="value-card fade-up fade-up-d2" data-number="2">
+            <span class="value-icon" aria-hidden="true">🫱</span>
+            <h3 class="value-title">Made by Hand</h3>
+            <p class="value-desc">Every pasta shape, every sauce, every bread in this kitchen is made by hand, every day. There are no shortcuts. There is no substitute for a cook who cares about what they're making.</p>
+          </article>
+          <article class="value-card fade-up fade-up-d4" data-number="3">
+            <span class="value-icon" aria-hidden="true">🧑‍🤝‍🧑</span>
+            <h3 class="value-title">Family Atmosphere</h3>
+            <p class="value-desc">Whether you're celebrating a birthday, a first date, or simply Tuesday — you are a guest in our home. We treat every table with the same warmth we'd give our own family.</p>
+          </article>
+          <article class="value-card fade-up" data-number="4">
+            <span class="value-icon" aria-hidden="true">🌾</span>
+            <h3 class="value-title">Honest Ingredients</h3>
+            <p class="value-desc">We partner with local farms for seasonal produce and import only the DOP ingredients that can't be replicated — San Marzano tomatoes, Parmigiano Reggiano, Sicilian olive oil, and more.</p>
+          </article>
+          <article class="value-card fade-up fade-up-d2" data-number="5">
+            <span class="value-icon" aria-hidden="true">🌍</span>
+            <h3 class="value-title">Sustainability</h3>
+            <p class="value-desc">We reduce food waste through nose-to-tail cooking philosophy, compost all kitchen waste, source from sustainable fisheries, and run our dining room using renewable energy.</p>
+          </article>
+          <article class="value-card fade-up fade-up-d4" data-number="6">
+            <span class="value-icon" aria-hidden="true">🎓</span>
+            <h3 class="value-title">Growing Our Team</h3>
+            <p class="value-desc">We invest heavily in our people. Every cook in this kitchen receives ongoing training, mentorship, and fair pay. Many of our senior staff started as apprentices and have grown with us for over a decade.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════
+         CHEF BIO
+    ══════════════════════════════════════ -->
+    <section class="chef-section section" id="chef" aria-labelledby="chef-heading">
+      <div class="container">
+        <div class="chef-inner">
+
+          <!-- Chef image -->
+          <div class="chef-img-wrap fade-up">
+            <div class="chef-img">
+              <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&q=80" alt="Head Chef Marco Esposito in the Bella Cucina kitchen" loading="lazy"/>
+            </div>
+            <div class="chef-signature" aria-hidden="true">
+              <div class="chef-sig-name">Marco E.</div>
+              <div class="chef-sig-title">Founder &amp; Head Chef</div>
+            </div>
+          </div>
+
+          <!-- Chef bio -->
+          <div class="chef-content fade-up fade-up-d2">
+            <span class="eyebrow">The Chef Behind the Kitchen</span>
+            <h2 class="display" id="chef-heading">Marco Esposito</h2>
+            <div class="chef-role">Founder · Head Chef · Calabrian Native</div>
+
+            <p class="body-text">Marco grew up in a small village in the Calabrian mountains, where food was not a luxury but a language. His grandmother Rosa taught him to make pasta at age seven, his grandfather taught him to tend a garden, and the village taught him that the best meals are the ones that take all day to prepare and last all evening to eat.</p>
+            <p class="body-text">After studying at the Culinary Institute of Milan and spending three formative years in Naples and Palermo, Marco moved to Chicago in 2003. He spent six years in some of Chicago's finest kitchens before opening Bella Cucina in 2009 — the restaurant he always wished he could find in America.</p>
+            <p class="body-text">Today, Marco personally oversees every menu, trains every cook, and still rolls pasta by hand every Tuesday and Friday morning.</p>
+
+            <div class="chef-accolades" role="list" aria-label="Chef's achievements">
+              <div class="chef-accolade" role="listitem">
+                <span class="chef-accolade-icon" aria-hidden="true">🏆</span>
+                <div class="chef-accolade-text">
+                  <strong>Chicago Magazine "Best Italian Chef" 2018 &amp; 2022</strong>
+                  Recognized for commitment to authentic Southern Italian technique
+                </div>
+              </div>
+              <div class="chef-accolade" role="listitem">
+                <span class="chef-accolade-icon" aria-hidden="true">⭐</span>
+                <div class="chef-accolade-text">
+                  <strong>James Beard Award Nominee 2021</strong>
+                  Best Chef: Great Lakes category
+                </div>
+              </div>
+              <div class="chef-accolade" role="listitem">
+                <span class="chef-accolade-icon" aria-hidden="true">📺</span>
+                <div class="chef-accolade-text">
+                  <strong>Featured in "Taste of Italy" — Food Network 2020</strong>
+                  One of three American chefs featured for authentic Italian cooking
+                </div>
+              </div>
+              <div class="chef-accolade" role="listitem">
+                <span class="chef-accolade-icon" aria-hidden="true">🎓</span>
+                <div class="chef-accolade-text">
+                  <strong>Culinary Institute of Milan · Naples · Palermo</strong>
+                  Trained under Michelin-starred Chef Luca Ferretti in Naples
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════
+         TIMELINE
+    ══════════════════════════════════════ -->
+    <section class="timeline-section section" aria-labelledby="timeline-heading">
+      <div class="container">
+        <div class="timeline-header fade-up">
+          <span class="eyebrow">Our Journey</span>
+          <h2 class="display" id="timeline-heading">Fifteen Years of<br/>Good Food &amp; Stories</h2>
+          <span class="gold-line-center" aria-hidden="true"></span>
+        </div>
+
+        <div class="timeline" role="list">
+
+          <div class="timeline-item fade-up" role="listitem">
+            <div class="timeline-item-content">
+              <div class="timeline-year">2009</div>
+              <div class="timeline-title">Bella Cucina Opens Its Doors</div>
+              <p class="timeline-desc">Marco and Sofia Esposito open Bella Cucina on a quiet corner of downtown Chicago with 40 seats, a wood-fired oven, and Nonna Rosa's handwritten recipe book. The first review calls it "Chicago's most soulful Italian table."</p>
+            </div>
+            <div class="timeline-dot" aria-hidden="true">🍝</div>
+            <div class="timeline-spacer"></div>
+          </div>
+
+          <div class="timeline-item fade-up" role="listitem">
+            <div class="timeline-spacer"></div>
+            <div class="timeline-dot" aria-hidden="true">📰</div>
+            <div class="timeline-item-content">
+              <div class="timeline-year">2011</div>
+              <div class="timeline-title">Chicago Tribune "Best New Restaurant"</div>
+              <p class="timeline-desc">After two years of growing word-of-mouth, the Chicago Tribune names Bella Cucina one of the city's best new restaurants, describing the rigatoni alla 'nduja as "the most authentic Southern Italian dish in Chicago."</p>
+            </div>
+          </div>
+
+          <div class="timeline-item fade-up" role="listitem">
+            <div class="timeline-item-content">
+              <div class="timeline-year">2013</div>
+              <div class="timeline-title">Expansion — New Dining Room & Bar</div>
+              <p class="timeline-desc">Growing demand leads to a full expansion — the restaurant doubles in size to 90 seats, a full Italian wine bar is added, and the catering program launches. The family also hires its first dedicated pastry chef, Chef Lucia Romano.</p>
+            </div>
+            <div class="timeline-dot" aria-hidden="true">🏗️</div>
+            <div class="timeline-spacer"></div>
+          </div>
+
+          <div class="timeline-item fade-up" role="listitem">
+            <div class="timeline-spacer"></div>
+            <div class="timeline-dot" aria-hidden="true">🏆</div>
+            <div class="timeline-item-content">
+              <div class="timeline-year">2018</div>
+              <div class="timeline-title">Marco Named "Best Italian Chef" in Chicago</div>
+              <p class="timeline-desc">Chicago Magazine recognizes Marco with its Best Italian Chef award, citing his unwavering dedication to Calabrian technique and his passionate mentorship of young cooks. The catering arm now serves 100+ events per year.</p>
+            </div>
+          </div>
+
+          <div class="timeline-item fade-up" role="listitem">
+            <div class="timeline-item-content">
+              <div class="timeline-year">2021</div>
+              <div class="timeline-title">James Beard Award Nomination</div>
+              <p class="timeline-desc">Marco is nominated for a James Beard Award in the "Best Chef: Great Lakes" category — a milestone for a self-described family cook who simply wanted to serve Nonna Rosa's food to Chicago. The restaurant celebrates with a special tasting menu.</p>
+            </div>
+            <div class="timeline-dot" aria-hidden="true">⭐</div>
+            <div class="timeline-spacer"></div>
+          </div>
+
+          <div class="timeline-item fade-up" role="listitem">
+            <div class="timeline-spacer"></div>
+            <div class="timeline-dot" aria-hidden="true">🎂</div>
+            <div class="timeline-item-content">
+              <div class="timeline-year">2024</div>
+              <div class="timeline-title">15th Anniversary — Back to Our Roots</div>
+              <p class="timeline-desc">To celebrate 15 years, Bella Cucina introduces a special "Nonna Rosa Menu" featuring the original 12 dishes from the 2009 opening night — a tribute to the woman whose handwritten recipes started it all. The occasion brings Nonna Rosa herself to Chicago for the first time.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════
+         TEAM
+    ══════════════════════════════════════ -->
+    <section class="team-section section" aria-labelledby="team-heading">
+      <div class="container">
+        <div class="team-header fade-up">
+          <span class="eyebrow">Our People</span>
+          <h2 class="display" id="team-heading">The Heart of<br/>Bella Cucina</h2>
+          <span class="gold-line-center" aria-hidden="true"></span>
+          <p class="body-text" style="text-align:center;max-width:520px;margin:0 auto;">Behind every dish and every memorable evening is a team of passionate people who give everything they have to this place.</p>
+        </div>
+
+        <div class="team-grid">
+
+          <article class="team-card fade-up">
+            <div class="team-card-img">
+              <img src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=500&q=80" alt="Marco Esposito, Founder and Head Chef" loading="lazy"/>
+            </div>
+            <div class="team-card-body">
+              <div class="team-card-name">Marco Esposito</div>
+              <div class="team-card-role">Founder &amp; Head Chef</div>
+              <p class="team-card-bio">Born in Calabria. Trained in Milan, Naples, and Palermo. Has been rolling pasta in Chicago since 2009. Still does it by hand every Tuesday.</p>
+            </div>
+          </article>
+
+          <article class="team-card fade-up fade-up-d1">
+            <div class="team-card-img">
+              <img src="https://images.unsplash.com/photo-1607631568010-a87245c0daf8?w=500&q=80" alt="Sofia Esposito, Co-founder and General Manager" loading="lazy"/>
+            </div>
+            <div class="team-card-body">
+              <div class="team-card-name">Sofia Esposito</div>
+              <div class="team-card-role">Co-Founder &amp; GM</div>
+              <p class="team-card-bio">The warmth you feel when you walk in is Sofia's doing. She runs front-of-house with effortless grace and remembers every regular's name and favourite dish.</p>
+            </div>
+          </article>
+
+          <article class="team-card fade-up fade-up-d2">
+            <div class="team-card-img">
+              <img src="https://images.unsplash.com/photo-1581299894007-aaa50297cf16?w=500&q=80" alt="Lucia Romano, Head Pastry Chef" loading="lazy"/>
+            </div>
+            <div class="team-card-body">
+              <div class="team-card-name">Lucia Romano</div>
+              <div class="team-card-role">Head Pastry Chef</div>
+              <p class="team-card-bio">Sicilian-born Lucia joined in 2013 and promptly made our cannoli the most talked-about dessert in Chicago. She also makes Nonna Rosa cry with her torta di ricotta.</p>
+            </div>
+          </article>
+
+          <article class="team-card fade-up fade-up-d3">
+            <div class="team-card-img">
+              <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?w=500&q=80" alt="Antonio Ricci, Sommelier" loading="lazy"/>
+            </div>
+            <div class="team-card-body">
+              <div class="team-card-name">Antonio Ricci</div>
+              <div class="team-card-role">Head Sommelier</div>
+              <p class="team-card-bio">Antonio curates our 140-bottle Italian wine list with the precision of a scholar and the passion of a poet. Ask him about Calabrian reds and prepare to stay for a while.</p>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════
+         SOURCING
+    ══════════════════════════════════════ -->
+    <section class="sourcing-section section" aria-labelledby="sourcing-heading">
+      <div class="container">
+        <div class="sourcing-inner">
+
+          <div class="sourcing-content fade-up">
+            <span class="eyebrow">What We Use</span>
+            <h2 class="display" id="sourcing-heading">Ingredients with<br/>a Story</h2>
+            <span class="gold-line" aria-hidden="true"></span>
+            <p class="body-text">We believe food tastes better when you know where it comes from. Every week we source from the same trusted producers we've worked with for over a decade — local when possible, Italian when irreplaceable.</p>
+
+            <ul class="sourcing-list" role="list">
+              <li class="sourcing-item" role="listitem">
+                <span class="sourcing-flag" aria-hidden="true">🇮🇹</span>
+                <div>
+                  <div class="sourcing-item-title">San Marzano DOP Tomatoes</div>
+                  <p class="sourcing-item-desc">Grown in the volcanic soil of the Agro Sarnese-Nocerino valley, imported from our partners in Campania every season.</p>
+                </div>
+              </li>
+              <li class="sourcing-item" role="listitem">
+                <span class="sourcing-flag" aria-hidden="true">🇮🇹</span>
+                <div>
+                  <div class="sourcing-item-title">Parmigiano Reggiano DOP (30-month)</div>
+                  <p class="sourcing-item-desc">From a small family-run caseificio in Reggio Emilia. The same producer since our second year of business.</p>
+                </div>
+              </li>
+              <li class="sourcing-item" role="listitem">
+                <span class="sourcing-flag" aria-hidden="true">🇺🇸</span>
+                <div>
+                  <div class="sourcing-item-title">Seasonal Produce — Local Illinois Farms</div>
+                  <p class="sourcing-item-desc">We partner with three Illinois farms for seasonal vegetables, micro-herbs, and heirloom tomatoes. The menu changes with the harvest.</p>
+                </div>
+              </li>
+              <li class="sourcing-item" role="listitem">
+                <span class="sourcing-flag" aria-hidden="true">🇮🇹</span>
+                <div>
+                  <div class="sourcing-item-title">Sicilian Extra-Virgin Olive Oil</div>
+                  <p class="sourcing-item-desc">Cold-pressed Nocellara del Belice from a small estate outside Trapani. We use it as both a cooking medium and a finishing oil.</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <div class="sourcing-imgs fade-up fade-up-d2" aria-hidden="true">
+            <div class="sourcing-img">
+              <img src="https://images.unsplash.com/photo-1473093295043-cdd812d0e601?w=900&q=80" alt="Italian ingredients" loading="lazy"/>
+            </div>
+            <div class="sourcing-img">
+              <img src="https://images.unsplash.com/photo-1467003909585-2f8a72700288?w=500&q=80" alt="Fresh produce" loading="lazy"/>
+            </div>
+            <div class="sourcing-img">
+              <img src="https://images.unsplash.com/photo-1551183053-bf91798d765d?w=500&q=80" alt="Pasta ingredients" loading="lazy"/>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════
+         CTA BANNER
+    ══════════════════════════════════════ -->
+    <section class="cta-banner" aria-labelledby="cta-heading">
+      <div class="container">
+        <div class="cta-banner-content fade-up">
+          <span class="eyebrow">Come Visit Us</span>
+          <h2 class="display" id="cta-heading">Experience the<br/><em>Bella Cucina</em> Story</h2>
+          <p>The best way to understand who we are is to sit at one of our tables, let us pour you a glass of something Calabrian, and taste what 15 years of passion looks like.</p>
+          <div class="cta-banner-actions">
+            <a href="index.html#reservation" class="btn btn-primary">Reserve a Table</a>
+            <a href="menu.html"              class="btn btn-outline">Explore the Menu</a>
+            <a href="catering.html"          class="btn btn-outline">Catering Enquiries</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ══════════════════════════════════════
+       FOOTER
+  ══════════════════════════════════════ -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-inner">
+        <div>
+          <div class="footer-brand-name">Bella <span>Cucina</span></div>
+          <p class="footer-tagline">Authentic Southern Italian cuisine in the heart of downtown Chicago. Open every day from 8 AM to midnight.</p>
+          <nav class="footer-social" aria-label="Social media">
+            <a href="#" class="social-btn" aria-label="Facebook">f</a>
+            <a href="#" class="social-btn" aria-label="Instagram">📷</a>
+            <a href="#" class="social-btn" aria-label="TripAdvisor">★</a>
+          </nav>
+        </div>
+        <nav aria-label="Footer navigation">
+          <div class="footer-col-title">Navigate</div>
+          <ul class="footer-links">
+            <li><a href="index.html"             class="footer-link">Home</a></li>
+            <li><a href="menu.html"              class="footer-link">Menu</a></li>
+            <li><a href="index.html#reservation" class="footer-link">Reservations</a></li>
+            <li><a href="story.html"             class="footer-link">Our Story</a></li>
+            <li><a href="catering.html"          class="footer-link">Catering</a></li>
+            <li><a href="index.html#location"    class="footer-link">Contact</a></li>
+          </ul>
+        </nav>
+        <div>
+          <div class="footer-col-title">Hours</div>
+          <div class="footer-hours-row"><strong>Monday – Sunday</strong></div>
+          <div class="footer-hours-row"><span>Restaurant</span><strong>8AM – 12AM</strong></div>
+          <div class="footer-hours-row"><span>Kitchen</span><strong>Until 11PM</strong></div>
+          <div class="footer-hours-row"><span>Bar</span><strong>Until Midnight</strong></div>
+        </div>
+        <div>
+          <div class="footer-col-title">Stay in Touch</div>
+          <div class="footer-contact-item">📍 [Address, Chicago IL]</div>
+          <div class="footer-contact-item">📞 <a href="tel:[PHONE]">[Phone]</a></div>
+          <div class="footer-contact-item">✉️ <a href="mailto:[EMAIL]">[Email]</a></div>
+          <p class="newsletter-label" style="margin-top:20px;">Subscribe for seasonal menus &amp; events.</p>
+          <form class="newsletter-wrap" id="newsletter-form" novalidate aria-label="Newsletter signup">
+            <input type="email" class="newsletter-input" id="newsletter-email" placeholder="your@email.com" aria-label="Email" required/>
+            <button type="submit" class="newsletter-btn">Join</button>
+          </form>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span class="footer-copy">© 2025 Bella Cucina. All rights reserved.</span>
+        <nav class="footer-legal" aria-label="Legal">
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="terms.html">Terms of Service</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+  <button class="back-to-top" id="back-to-top" aria-label="Back to top">↑</button>
+
+  <!-- ══════════════════════════════════════
+       JAVASCRIPT
+  ══════════════════════════════════════ -->
+  <script>
+    // ─── Hamburger ──────────────────────────────────
+    const hamburger = document.getElementById('hamburger');
+    const mobileNav = document.getElementById('mobile-nav');
+    const mobileLinks = mobileNav.querySelectorAll('a');
+    let menuOpen = false;
+    function openMenu() {
+      menuOpen = true; hamburger.classList.add('open'); mobileNav.classList.add('open');
+      mobileNav.setAttribute('aria-hidden','false'); hamburger.setAttribute('aria-expanded','true');
+      hamburger.setAttribute('aria-label','Close menu');
+      mobileLinks.forEach(l => l.setAttribute('tabindex','0'));
+      document.body.style.overflow = 'hidden';
+    }
+    function closeMenu() {
+      menuOpen = false; hamburger.classList.remove('open'); mobileNav.classList.remove('open');
+      mobileNav.setAttribute('aria-hidden','true'); hamburger.setAttribute('aria-expanded','false');
+      hamburger.setAttribute('aria-label','Open menu');
+      mobileLinks.forEach(l => l.setAttribute('tabindex','-1'));
+      document.body.style.overflow = '';
+    }
+    hamburger.addEventListener('click', () => menuOpen ? closeMenu() : openMenu());
+    mobileLinks.forEach(l => l.addEventListener('click', closeMenu));
+    document.addEventListener('keydown', e => { if (e.key === 'Escape' && menuOpen) closeMenu(); });
+
+    // ─── Smooth scroll ───────────────────────────────
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        const target = document.querySelector(a.getAttribute('href'));
+        if (!target) return;
+        e.preventDefault();
+        const top = target.getBoundingClientRect().top + window.scrollY - 96;
+        window.scrollTo({ top, behavior: 'smooth' });
+      });
+    });
+
+    // ─── Scroll animations ──────────────────────────
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+    // ─── Back to top ─────────────────────────────────
+    const backToTop = document.getElementById('back-to-top');
+    window.addEventListener('scroll', () => {
+      backToTop.classList.toggle('show', window.scrollY > 400);
+    }, { passive: true });
+    backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+    // ─── Newsletter ──────────────────────────────────
+    document.getElementById('newsletter-form').addEventListener('submit', e => {
+      e.preventDefault();
+      const input = document.getElementById('newsletter-email');
+      if (input.value && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.value)) {
+        input.value = ''; input.placeholder = '✓ Subscribed! Thank you.';
+        setTimeout(() => { input.placeholder = 'your@email.com'; }, 3500);
+      }
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,1385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- ═══════════════════════════════════════
+       META & SEO
+  ═══════════════════════════════════════ -->
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Bella Cucina Catering — Authentic Southern Italian catering for corporate events, weddings, private dinners and parties throughout Chicago. Request a custom quote."/>
+  <meta name="keywords" content="Italian catering Chicago, corporate catering Chicago, wedding catering Chicago, private dining Chicago, Bella Cucina catering"/>
+  <meta name="robots" content="index, follow"/>
+  <meta property="og:type"        content="website"/>
+  <meta property="og:title"       content="Catering & Events — Bella Cucina · Chicago"/>
+  <meta property="og:description" content="From intimate dinners to 500-guest corporate events — Bella Cucina brings authentic Southern Italian cuisine to your occasion anywhere in Chicago."/>
+  <meta property="og:url"         content="https://www.bellacucinachicago.com/catering"/>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FoodEstablishment",
+    "name": "Bella Cucina Catering",
+    "url": "https://www.bellacucinachicago.com/catering",
+    "telephone": "[PHONE NUMBER]",
+    "email": "[CATERING EMAIL]",
+    "servesCuisine": ["Italian","Southern Italian"],
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Catering Services",
+      "itemListElement": [
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Corporate Catering"}},
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Wedding Catering"}},
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Private Dining"}},
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Cocktail Receptions"}}
+      ]
+    }
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+
+  <title>Catering & Events — Bella Cucina · Authentic Southern Italian · Chicago</title>
+
+  <style>
+    /* ═══════════════════════════════════════
+       DESIGN TOKENS
+    ═══════════════════════════════════════ */
+    :root {
+      --bg:          #0E0C0A;
+      --bg-2:        #141210;
+      --bg-3:        #1A1714;
+      --bg-card:     #1E1A16;
+      --gold:        #C9A96E;
+      --gold-light:  #E2C98A;
+      --gold-dim:    #8A6D40;
+      --cream:       #F5EDD9;
+      --cream-dim:   #B5A88A;
+      --white:       #FDFAF4;
+      --text:        #D4C9B4;
+      --text-dim:    #7A7060;
+      --border:      rgba(201,169,110,0.18);
+      --border-soft: rgba(201,169,110,0.08);
+      --radius:      4px;
+      --radius-lg:   8px;
+      --transition:  0.35s cubic-bezier(0.4,0,0.2,1);
+      --nav-h:       80px;
+    }
+
+    /* ═══════════════════════════════════════
+       RESET & BASE
+    ═══════════════════════════════════════ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Jost', sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+    img { display: block; width: 100%; object-fit: cover; }
+    a { text-decoration: none; color: inherit; }
+    button { font-family: inherit; cursor: pointer; border: none; background: none; }
+    ul { list-style: none; }
+
+    .skip-nav { position: absolute; top: -100%; left: 16px; background: var(--gold); color: var(--bg); padding: 10px 18px; border-radius: var(--radius); font-weight: 600; font-size: 14px; z-index: 9999; transition: top 0.2s; }
+    .skip-nav:focus { top: 16px; }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+    }
+
+    /* ═══════════════════════════════════════
+       TYPOGRAPHY
+    ═══════════════════════════════════════ */
+    .display { font-family: 'Cormorant Garamond', serif; font-weight: 300; line-height: 1.1; letter-spacing: -0.01em; }
+    h1 { font-size: clamp(48px, 7vw, 88px); }
+    h2 { font-size: clamp(32px, 4vw, 54px); }
+    h3 { font-size: clamp(18px, 2vw, 24px); }
+    .eyebrow { font-family: 'Jost', sans-serif; font-size: 11px; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); }
+
+    /* ═══════════════════════════════════════
+       LAYOUT
+    ═══════════════════════════════════════ */
+    .container { max-width: 1280px; margin: 0 auto; padding: 0 40px; }
+    .section    { padding: 110px 0; }
+    .section-sm { padding: 80px 0; }
+    .gold-line        { display: block; width: 48px; height: 1px; background: var(--gold); margin: 20px 0; }
+    .gold-line-center { display: block; width: 48px; height: 1px; background: var(--gold); margin: 20px auto; }
+
+    /* ═══════════════════════════════════════
+       BUTTONS
+    ═══════════════════════════════════════ */
+    .btn { display: inline-flex; align-items: center; gap: 10px; font-size: 12px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; padding: 16px 36px; border-radius: var(--radius); cursor: pointer; transition: var(--transition); font-family: 'Jost', sans-serif; border: none; }
+    .btn:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+    .btn-primary { background: var(--gold); color: var(--bg); }
+    .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 12px 40px rgba(201,169,110,0.28); }
+    .btn-outline { background: transparent; color: var(--cream); border: 1px solid rgba(245,237,217,0.3); }
+    .btn-outline:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-2px); }
+
+    /* ═══════════════════════════════════════
+       NAVBAR
+    ═══════════════════════════════════════ */
+    .navbar { position: fixed; top: 0; left: 0; right: 0; z-index: 999; height: var(--nav-h); display: flex; align-items: center; background: rgba(14,12,10,0.97); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); box-shadow: 0 4px 30px rgba(0,0,0,0.4); transition: var(--transition); }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; width: 100%; }
+    .nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 600; color: var(--cream); letter-spacing: 0.04em; transition: color 0.25s; }
+    .nav-logo span { color: var(--gold); }
+    .nav-logo:hover { color: var(--white); }
+    .nav-logo:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; border-radius: 2px; }
+    .nav-links { display: flex; align-items: center; gap: 44px; }
+    .nav-link { font-size: 12px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream-dim); transition: color 0.25s; position: relative; padding-bottom: 2px; }
+    .nav-link::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 0; height: 1px; background: var(--gold); transition: width 0.3s; }
+    .nav-link:hover { color: var(--gold); }
+    .nav-link:hover::after { width: 100%; }
+    .nav-link.active { color: var(--gold); }
+    .nav-link.active::after { width: 100%; }
+    .nav-link:focus-visible { outline: 2px solid var(--gold); outline-offset: 4px; border-radius: 2px; }
+    .nav-cta { font-size: 11px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; padding: 12px 26px; background: var(--gold); color: var(--bg); border-radius: var(--radius); transition: var(--transition); font-family: 'Jost', sans-serif; }
+    .nav-cta:hover { background: var(--gold-light); box-shadow: 0 8px 28px rgba(201,169,110,0.3); }
+    .hamburger { display: none; flex-direction: column; justify-content: center; gap: 5px; width: 36px; height: 36px; background: none; border: none; cursor: pointer; padding: 4px; border-radius: var(--radius); }
+    .hamburger span { display: block; height: 1.5px; background: var(--cream); border-radius: 2px; transition: var(--transition); }
+    .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+    .hamburger:focus-visible { outline: 2px solid var(--gold); }
+    .mobile-nav { display: none; position: fixed; top: var(--nav-h); left: 0; right: 0; bottom: 0; background: rgba(14,12,10,0.98); backdrop-filter: blur(20px); flex-direction: column; align-items: center; justify-content: center; gap: 40px; z-index: 998; opacity: 0; transition: opacity 0.3s; pointer-events: none; }
+    .mobile-nav.open { display: flex; opacity: 1; pointer-events: all; }
+    .mobile-nav-link { font-family: 'Cormorant Garamond', serif; font-size: 36px; font-weight: 300; color: var(--cream-dim); letter-spacing: 0.04em; transition: color 0.25s; }
+    .mobile-nav-link:hover { color: var(--gold); }
+
+    /* ═══════════════════════════════════════
+       PAGE HERO — CATERING (immersive split)
+    ═══════════════════════════════════════ */
+    .page-hero {
+      padding-top: var(--nav-h);
+      min-height: 92vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-left {
+      display: flex; flex-direction: column;
+      justify-content: center; padding: 80px 60px 80px 0;
+      position: relative; z-index: 2;
+    }
+    .hero-left::before {
+      content: ''; position: absolute;
+      top: 0; left: -200px; right: 0; bottom: 0;
+      background: var(--bg); z-index: -1;
+    }
+    .breadcrumb { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--text-dim); letter-spacing: 0.08em; margin-bottom: 28px; }
+    .breadcrumb a { color: var(--text-dim); transition: color 0.25s; }
+    .breadcrumb a:hover { color: var(--gold); }
+    .hero-left h1 { color: var(--white); margin: 12px 0 20px; }
+    .hero-left h1 em { font-style: italic; color: var(--gold); }
+    .hero-sub { font-size: 16px; color: var(--cream-dim); max-width: 460px; line-height: 1.85; margin-bottom: 44px; }
+    .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 52px; }
+    .hero-stats { display: flex; gap: 36px; padding-top: 36px; border-top: 1px solid var(--border-soft); }
+    .hero-stat-num { font-family: 'Cormorant Garamond', serif; font-size: 38px; font-weight: 600; color: var(--gold); line-height: 1; }
+    .hero-stat-label { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-dim); margin-top: 5px; }
+
+    .hero-right {
+      position: relative; overflow: hidden;
+    }
+    .hero-right-img {
+      position: absolute; inset: 0;
+      background: url('https://images.unsplash.com/photo-1530062845289-9109b2c9c868?w=1200&q=85') center/cover no-repeat;
+    }
+    .hero-right-img::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(to right, var(--bg) 0%, transparent 30%);
+    }
+
+    /* ═══════════════════════════════════════
+       INTRO STRIP
+    ═══════════════════════════════════════ */
+    .intro-strip {
+      background: var(--bg-2);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 52px 0;
+    }
+    .intro-strip-inner {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 0;
+    }
+    .intro-item {
+      display: flex; flex-direction: column; align-items: center;
+      text-align: center; padding: 0 32px;
+      border-right: 1px solid var(--border-soft);
+    }
+    .intro-item:last-child { border-right: none; }
+    .intro-icon { font-size: 30px; margin-bottom: 14px; }
+    .intro-title { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 600; color: var(--cream); margin-bottom: 6px; }
+    .intro-desc { font-size: 12px; color: var(--text-dim); line-height: 1.7; }
+
+    /* ═══════════════════════════════════════
+       EVENT TYPES
+    ═══════════════════════════════════════ */
+    .events-section { background: var(--bg); }
+    .section-header { text-align: center; margin-bottom: 64px; }
+    .section-header h2 { color: var(--white); margin: 12px 0 20px; }
+    .section-header p { font-size: 16px; color: var(--text-dim); max-width: 500px; margin: 0 auto; line-height: 1.8; }
+
+    .event-types-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+    .event-card {
+      position: relative; overflow: hidden;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-soft);
+      min-height: 340px;
+      display: flex; align-items: flex-end;
+      cursor: pointer; transition: var(--transition);
+    }
+    .event-card:hover { border-color: var(--border); transform: translateY(-4px); box-shadow: 0 24px 60px rgba(0,0,0,0.5); }
+    .event-card-bg {
+      position: absolute; inset: 0;
+      transition: transform 0.65s cubic-bezier(0.4,0,0.2,1);
+    }
+    .event-card:hover .event-card-bg { transform: scale(1.04); }
+    .event-card-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(14,12,10,0.95) 0%, rgba(14,12,10,0.3) 60%, transparent 100%);
+      transition: background 0.35s;
+    }
+    .event-card:hover .event-card-overlay {
+      background: linear-gradient(to top, rgba(14,12,10,0.98) 0%, rgba(14,12,10,0.45) 65%, rgba(14,12,10,0.1) 100%);
+    }
+    .event-card-body {
+      position: relative; z-index: 2;
+      padding: 32px; width: 100%;
+    }
+    .event-card-icon { font-size: 24px; margin-bottom: 10px; display: block; }
+    .event-card-title { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 600; color: var(--white); margin-bottom: 10px; }
+    .event-card-desc { font-size: 13px; color: var(--cream-dim); line-height: 1.7; max-width: 380px; margin-bottom: 16px; }
+    .event-card-capacity { display: flex; align-items: center; gap: 8px; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); }
+    .event-card-capacity::before { content: ''; display: block; width: 20px; height: 1px; background: var(--gold); }
+
+    /* Large card */
+    .event-card.large { grid-column: 1 / -1; min-height: 420px; }
+    .event-card.large .event-card-body { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: end; }
+    .event-card.large .event-card-title { font-size: 38px; }
+
+    /* ═══════════════════════════════════════
+       PACKAGES
+    ═══════════════════════════════════════ */
+    .packages-section { background: var(--bg-2); }
+    .packages-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .package-card {
+      background: var(--bg-card); border: 1px solid var(--border-soft);
+      border-radius: var(--radius-lg); padding: 40px 36px;
+      transition: var(--transition); position: relative; overflow: hidden;
+    }
+    .package-card:hover { border-color: var(--border); transform: translateY(-5px); box-shadow: 0 20px 55px rgba(0,0,0,0.45); }
+    .package-card.featured {
+      border-color: var(--gold-dim);
+      background: linear-gradient(135deg, rgba(201,169,110,0.07) 0%, var(--bg-card) 60%);
+    }
+    .package-card.featured::before {
+      content: 'Most Popular';
+      position: absolute; top: 20px; right: -28px;
+      background: var(--gold); color: var(--bg);
+      font-size: 10px; font-weight: 600; letter-spacing: 0.14em;
+      text-transform: uppercase; padding: 5px 40px;
+      transform: rotate(45deg);
+    }
+    .package-icon { font-size: 32px; margin-bottom: 20px; display: block; }
+    .package-name { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 600; color: var(--white); margin-bottom: 6px; }
+    .package-subtitle { font-size: 13px; color: var(--text-dim); margin-bottom: 24px; }
+    .package-price { font-family: 'Cormorant Garamond', serif; font-size: 38px; font-weight: 600; color: var(--gold); line-height: 1; margin-bottom: 4px; }
+    .package-price-note { font-size: 12px; color: var(--text-dim); margin-bottom: 28px; }
+    .package-divider { height: 1px; background: var(--border-soft); margin-bottom: 24px; }
+    .package-features { display: flex; flex-direction: column; gap: 12px; margin-bottom: 36px; }
+    .package-feature { display: flex; align-items: flex-start; gap: 12px; font-size: 13px; color: var(--cream-dim); line-height: 1.55; }
+    .package-feature-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); margin-top: 7px; flex-shrink: 0; }
+    .package-cta { width: 100%; padding: 14px; font-size: 12px; letter-spacing: 0.18em; }
+
+    /* ═══════════════════════════════════════
+       PROCESS / HOW IT WORKS
+    ═══════════════════════════════════════ */
+    .process-section { background: var(--bg-3); position: relative; overflow: hidden; }
+    .process-section::before {
+      content: ''; position: absolute; top: -200px; left: -200px;
+      width: 700px; height: 700px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(201,169,110,0.04) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .process-steps {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 0; margin-top: 64px; position: relative;
+    }
+    .process-steps::before {
+      content: ''; position: absolute;
+      top: 28px; left: calc(12.5% + 20px); right: calc(12.5% + 20px);
+      height: 1px; background: var(--border);
+    }
+    .process-step { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 0 24px; }
+    .process-num {
+      width: 56px; height: 56px; border-radius: 50%;
+      border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px; font-weight: 600; color: var(--gold);
+      background: var(--bg-3); margin-bottom: 24px;
+      position: relative; z-index: 2;
+      transition: var(--transition);
+    }
+    .process-step:hover .process-num { background: var(--gold); color: var(--bg); border-color: var(--gold); }
+    .process-step-title { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 600; color: var(--white); margin-bottom: 10px; }
+    .process-step-desc { font-size: 13px; color: var(--text-dim); line-height: 1.75; }
+
+    /* ═══════════════════════════════════════
+       GALLERY STRIP
+    ═══════════════════════════════════════ */
+    .catering-gallery { background: var(--bg); padding: 0 0 100px; }
+    .gallery-masonry {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr;
+      grid-template-rows: 260px 260px;
+      gap: 8px; margin-top: 52px;
+    }
+    .gallery-cell { overflow: hidden; border-radius: var(--radius); position: relative; }
+    .gallery-cell:first-child { grid-row: 1 / 3; }
+    .gallery-cell img { height: 100%; transition: transform 0.65s cubic-bezier(0.4,0,0.2,1); }
+    .gallery-cell:hover img { transform: scale(1.05); }
+    .gallery-cell-overlay {
+      position: absolute; inset: 0;
+      background: rgba(14,12,10,0); transition: background 0.3s;
+    }
+    .gallery-cell:hover .gallery-cell-overlay { background: rgba(14,12,10,0.2); }
+
+    /* ═══════════════════════════════════════
+       TESTIMONIALS (catering-specific)
+    ═══════════════════════════════════════ */
+    .catering-reviews { background: var(--bg-2); }
+    .reviews-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .review-card {
+      background: var(--bg-card); border: 1px solid var(--border-soft);
+      border-radius: var(--radius-lg); padding: 36px;
+      transition: var(--transition); position: relative;
+    }
+    .review-card:hover { border-color: var(--border); transform: translateY(-4px); }
+    .review-card::before {
+      content: '\201C'; font-family: 'Cormorant Garamond', serif;
+      font-size: 90px; line-height: 1; color: var(--gold); opacity: 0.18;
+      position: absolute; top: 14px; left: 22px; pointer-events: none;
+    }
+    .review-stars { display: flex; gap: 3px; margin-bottom: 18px; }
+    .review-stars span { color: var(--gold); font-size: 14px; }
+    .review-event-type {
+      display: inline-block; font-size: 10px; font-weight: 500;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--gold); border: 1px solid var(--border);
+      border-radius: 20px; padding: 4px 12px; margin-bottom: 14px;
+    }
+    .review-text { font-family: 'Cormorant Garamond', serif; font-size: 17px; font-style: italic; color: var(--cream-dim); line-height: 1.75; margin-bottom: 24px; }
+    .review-author { display: flex; align-items: center; gap: 14px; padding-top: 18px; border-top: 1px solid var(--border-soft); }
+    .review-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--bg-3); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-family: 'Cormorant Garamond', serif; font-size: 18px; color: var(--gold); flex-shrink: 0; }
+    .review-name { font-size: 14px; font-weight: 500; color: var(--cream); }
+    .review-company { font-size: 11px; color: var(--text-dim); margin-top: 2px; }
+
+    /* ═══════════════════════════════════════
+       INQUIRY FORM SECTION
+    ═══════════════════════════════════════ */
+    .inquiry-section { background: var(--bg-3); position: relative; overflow: hidden; }
+    .inquiry-section::before {
+      content: ''; position: absolute; top: -100px; right: -100px;
+      width: 500px; height: 500px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(201,169,110,0.05) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .inquiry-inner { display: grid; grid-template-columns: 1fr 1.3fr; gap: 80px; align-items: start; }
+    .inquiry-info h2 { color: var(--white); margin: 12px 0 22px; }
+    .inquiry-info p { font-size: 15px; color: var(--text-dim); line-height: 1.9; margin-bottom: 36px; }
+    .inquiry-details { display: flex; flex-direction: column; gap: 20px; }
+    .inquiry-detail-item { display: flex; align-items: flex-start; gap: 16px; }
+    .inquiry-detail-icon { width: 40px; height: 40px; border: 1px solid var(--border); border-radius: var(--radius); display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; background: rgba(201,169,110,0.04); }
+    .inquiry-detail-label { font-size: 10px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 3px; }
+    .inquiry-detail-value { font-size: 14px; color: var(--cream-dim); line-height: 1.55; }
+
+    /* Form */
+    .inquiry-form-wrap { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 48px 44px; }
+    .inquiry-form-wrap h3 { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 600; color: var(--white); margin-bottom: 8px; }
+    .inquiry-form-subtitle { font-size: 13px; color: var(--text-dim); margin-bottom: 32px; }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-group { display: flex; flex-direction: column; gap: 8px; }
+    .form-group.full { grid-column: 1 / -1; }
+    .form-label { font-size: 10px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold-dim); }
+    .form-input { background: rgba(255,255,255,0.03); border: 1px solid var(--border-soft); border-radius: var(--radius); padding: 13px 16px; font-size: 14px; color: var(--cream); outline: none; transition: border-color 0.25s, background 0.25s; width: 100%; appearance: none; -webkit-appearance: none; font-family: 'Jost', sans-serif; }
+    .form-input::placeholder { color: var(--text-dim); }
+    .form-input:focus { border-color: var(--gold-dim); background: rgba(201,169,110,0.03); }
+    .form-input.error { border-color: #F87171; }
+    .form-input option { background: #1E1A16; color: var(--cream); }
+    .form-textarea { resize: vertical; min-height: 110px; }
+    .select-wrap { position: relative; }
+    .select-wrap::after { content: '▾'; position: absolute; right: 14px; top: 50%; transform: translateY(-50%); color: var(--text-dim); font-size: 12px; pointer-events: none; }
+    .form-error { font-size: 11px; color: #F87171; margin-top: 4px; display: none; }
+    .form-error.show { display: block; }
+    .form-submit { width: 100%; margin-top: 8px; padding: 18px; font-size: 12px; letter-spacing: 0.2em; }
+    .form-success { display: none; text-align: center; padding: 40px 20px; }
+    .form-success.show { display: block; }
+    .form-success-icon { font-size: 48px; display: block; margin-bottom: 16px; }
+    .form-success-title { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 600; color: var(--gold); margin-bottom: 12px; }
+    .form-success-msg { font-size: 14px; color: var(--text-dim); line-height: 1.8; }
+
+    /* ═══════════════════════════════════════
+       FAQ
+    ═══════════════════════════════════════ */
+    .faq-section { background: var(--bg); }
+    .faq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; max-width: 960px; margin: 0 auto; }
+    .faq-item {
+      background: var(--bg-card); border: 1px solid var(--border-soft);
+      border-radius: var(--radius-lg); overflow: hidden;
+      transition: border-color 0.25s;
+    }
+    .faq-item:hover { border-color: var(--border); }
+    .faq-item.open { border-color: var(--gold-dim); }
+    .faq-question {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 16px; padding: 24px 28px; cursor: pointer;
+      font-size: 15px; font-weight: 500; color: var(--cream);
+      transition: color 0.25s; user-select: none;
+    }
+    .faq-question:hover { color: var(--white); }
+    .faq-item.open .faq-question { color: var(--gold); }
+    .faq-chevron {
+      width: 22px; height: 22px; border: 1px solid var(--border);
+      border-radius: 50%; display: flex; align-items: center;
+      justify-content: center; font-size: 12px; flex-shrink: 0;
+      transition: transform 0.3s, background 0.25s;
+      color: var(--text-dim);
+    }
+    .faq-item.open .faq-chevron { transform: rotate(180deg); background: var(--gold); color: var(--bg); border-color: var(--gold); }
+    .faq-answer {
+      max-height: 0; overflow: hidden;
+      transition: max-height 0.4s cubic-bezier(0.4,0,0.2,1), padding 0.3s;
+      font-size: 13px; color: var(--text-dim); line-height: 1.8;
+    }
+    .faq-item.open .faq-answer { max-height: 300px; padding: 0 28px 24px; }
+
+    /* ═══════════════════════════════════════
+       FOOTER
+    ═══════════════════════════════════════ */
+    .footer { background: var(--bg-2); border-top: 1px solid var(--border); padding: 80px 0 0; }
+    .footer-inner { display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: 60px; padding-bottom: 60px; border-bottom: 1px solid var(--border-soft); }
+    .footer-brand-name { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 600; color: var(--cream); margin-bottom: 16px; }
+    .footer-brand-name span { color: var(--gold); }
+    .footer-tagline { font-size: 14px; color: var(--text-dim); line-height: 1.8; margin-bottom: 28px; }
+    .footer-social { display: flex; gap: 10px; }
+    .social-btn { width: 36px; height: 36px; border: 1px solid var(--border); border-radius: var(--radius); display: flex; align-items: center; justify-content: center; font-size: 14px; color: var(--text-dim); transition: var(--transition); }
+    .social-btn:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-2px); }
+    .footer-col-title { font-size: 11px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--cream-dim); margin-bottom: 24px; }
+    .footer-links { display: flex; flex-direction: column; gap: 12px; }
+    .footer-link { font-size: 14px; color: var(--text-dim); transition: color 0.25s; }
+    .footer-link:hover { color: var(--gold); }
+    .footer-hours-row { display: flex; justify-content: space-between; font-size: 13px; color: var(--text-dim); margin-bottom: 8px; gap: 8px; }
+    .footer-hours-row strong { color: var(--cream-dim); font-weight: 400; }
+    .footer-contact-item { font-size: 13px; color: var(--text-dim); margin-bottom: 8px; }
+    .footer-contact-item a { transition: color 0.25s; }
+    .footer-contact-item a:hover { color: var(--gold); }
+    .newsletter-label { font-size: 12px; color: var(--text-dim); margin-bottom: 12px; line-height: 1.7; }
+    .newsletter-wrap { display: flex; }
+    .newsletter-input { flex: 1; background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-right: none; border-radius: var(--radius) 0 0 var(--radius); padding: 12px 16px; font-size: 13px; color: var(--cream); outline: none; }
+    .newsletter-input::placeholder { color: var(--text-dim); }
+    .newsletter-btn { background: var(--gold); color: var(--bg); padding: 12px 20px; font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; border-radius: 0 var(--radius) var(--radius) 0; font-family: 'Jost', sans-serif; border: none; cursor: pointer; transition: background 0.25s; }
+    .newsletter-btn:hover { background: var(--gold-light); }
+    .footer-bottom { padding: 24px 0; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+    .footer-copy { font-size: 12px; color: var(--text-dim); }
+    .footer-legal { display: flex; gap: 24px; }
+    .footer-legal a { font-size: 12px; color: var(--text-dim); transition: color 0.25s; }
+    .footer-legal a:hover { color: var(--gold); }
+
+    /* Back to top */
+    .back-to-top { position: fixed; bottom: 32px; right: 32px; z-index: 500; width: 44px; height: 44px; background: var(--gold); color: var(--bg); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; cursor: pointer; opacity: 0; pointer-events: none; transform: translateY(12px); transition: opacity 0.35s, transform 0.35s, background 0.25s; border: none; }
+    .back-to-top.show { opacity: 1; pointer-events: all; transform: translateY(0); }
+    .back-to-top:hover { background: var(--gold-light); }
+
+    /* ═══════════════════════════════════════
+       SCROLL ANIMATIONS
+    ═══════════════════════════════════════ */
+    .fade-up { opacity: 0; transform: translateY(26px); transition: opacity 0.65s ease, transform 0.65s ease; }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+    .fade-up-d1 { transition-delay: 0.1s; }
+    .fade-up-d2 { transition-delay: 0.2s; }
+    .fade-up-d3 { transition-delay: 0.3s; }
+    .fade-up-d4 { transition-delay: 0.4s; }
+
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: translateY(0); } }
+
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--gold-dim); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--gold); }
+
+    /* ═══════════════════════════════════════
+       RESPONSIVE
+    ═══════════════════════════════════════ */
+    @media (max-width: 1100px) {
+      .container { padding: 0 28px; }
+      .page-hero { grid-template-columns: 1fr; min-height: auto; }
+      .hero-left { padding: 80px 0 60px; }
+      .hero-left::before { display: none; }
+      .hero-right { display: none; }
+      .inquiry-inner { grid-template-columns: 1fr; gap: 52px; }
+      .packages-grid { grid-template-columns: 1fr 1fr; }
+      .footer-inner { grid-template-columns: 1fr 1fr; gap: 40px; }
+    }
+    @media (max-width: 820px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .event-types-grid { grid-template-columns: 1fr; }
+      .event-card.large { grid-column: auto; min-height: 380px; }
+      .event-card.large .event-card-body { grid-template-columns: 1fr; gap: 20px; }
+      .packages-grid { grid-template-columns: 1fr; }
+      .process-steps { grid-template-columns: 1fr 1fr; gap: 40px; }
+      .process-steps::before { display: none; }
+      .reviews-grid { grid-template-columns: 1fr; max-width: 520px; margin: 0 auto; }
+      .faq-grid { grid-template-columns: 1fr; }
+      .intro-strip-inner { grid-template-columns: 1fr 1fr; gap: 28px; }
+      .intro-item { border-right: none; padding: 0 0 24px; border-bottom: 1px solid var(--border-soft); }
+      .intro-item:nth-child(odd) { border-right: 1px solid var(--border-soft); padding-right: 20px; }
+      .intro-item:last-child, .intro-item:nth-last-child(2):nth-child(odd) { border-bottom: none; }
+      .gallery-masonry { grid-template-columns: 1fr 1fr; grid-template-rows: repeat(3, 200px); }
+      .gallery-cell:first-child { grid-row: auto; grid-column: 1 / -1; }
+      .footer-inner { grid-template-columns: 1fr; gap: 32px; }
+    }
+    @media (max-width: 540px) {
+      .container { padding: 0 16px; }
+      .section { padding: 72px 0; }
+      h1 { font-size: 44px; }
+      h2 { font-size: 30px; }
+      .process-steps { grid-template-columns: 1fr; }
+      .inquiry-form-wrap { padding: 28px 20px; }
+      .form-grid { grid-template-columns: 1fr; }
+      .hero-actions { flex-direction: column; }
+      .back-to-top { bottom: 20px; right: 20px; }
+      .footer-bottom { flex-direction: column; text-align: center; }
+      .footer-legal { justify-content: center; }
+    }
+
+    @media print {
+      .navbar, .back-to-top { display: none !important; }
+      body { background: white; color: black; }
+    }
+  </style>
+</head>
+
+<body>
+  <a href="#main-content" class="skip-nav">Skip to main content</a>
+
+  <!-- ══════════════════════════════════════
+       NAVBAR
+  ══════════════════════════════════════ -->
+  <header>
+    <nav class="navbar" id="navbar" aria-label="Main navigation">
+      <div class="container">
+        <div class="nav-inner">
+          <a href="index.html" class="nav-logo" aria-label="Bella Cucina Home">Bella <span>Cucina</span></a>
+          <ul class="nav-links" role="menubar">
+            <li role="none"><a href="menu.html"     class="nav-link" role="menuitem">Menu</a></li>
+            <li role="none"><a href="story.html"    class="nav-link" role="menuitem">Our Story</a></li>
+            <li role="none"><a href="catering.html" class="nav-link active" role="menuitem" aria-current="page">Catering</a></li>
+            <li role="none"><a href="index.html#location" class="nav-link" role="menuitem">Contact</a></li>
+            <li role="none"><a href="index.html#reservation" class="nav-cta" role="menuitem">Reserve a Table</a></li>
+          </ul>
+          <button class="hamburger" id="hamburger" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobile-nav">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+          </button>
+        </div>
+      </div>
+    </nav>
+    <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation" aria-hidden="true">
+      <a href="menu.html"               class="mobile-nav-link" tabindex="-1">Menu</a>
+      <a href="story.html"              class="mobile-nav-link" tabindex="-1">Our Story</a>
+      <a href="catering.html"           class="mobile-nav-link" tabindex="-1">Catering</a>
+      <a href="index.html#location"     class="mobile-nav-link" tabindex="-1">Contact</a>
+      <a href="index.html#reservation"  class="btn btn-primary" style="margin-top:16px;" tabindex="-1">Reserve a Table</a>
+    </nav>
+  </header>
+
+  <main id="main-content">
+
+    <!-- ══════════════════════════════════════
+         PAGE HERO
+    ══════════════════════════════════════ -->
+    <section class="page-hero" aria-label="Catering page hero">
+      <div class="hero-left container" style="max-width:none; padding-left: clamp(20px,5vw,140px); padding-right: 60px;">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+          <a href="index.html">Home</a>
+          <span aria-hidden="true">›</span>
+          <span aria-current="page">Catering &amp; Events</span>
+        </nav>
+        <span class="eyebrow" style="opacity:0;animation:fadeUp 0.9s 0.2s forwards;">Catering &amp; Events</span>
+        <h1 class="display" style="opacity:0;animation:fadeUp 0.9s 0.4s forwards;">
+          Your Event,<br/><em>Elevated</em>
+        </h1>
+        <p class="hero-sub" style="opacity:0;animation:fadeUp 0.9s 0.6s forwards;">
+          From intimate dinner parties to 500-guest corporate galas — Bella Cucina brings the soul of Southern Italy to every table we set across greater Chicago.
+        </p>
+        <div class="hero-actions" style="opacity:0;animation:fadeUp 0.9s 0.8s forwards;">
+          <a href="#inquiry" class="btn btn-primary">Request a Quote →</a>
+          <a href="#event-types" class="btn btn-outline">Explore Events</a>
+        </div>
+        <div class="hero-stats" style="opacity:0;animation:fadeUp 0.9s 1s forwards;" aria-label="Catering statistics">
+          <div>
+            <div class="hero-stat-num">500+</div>
+            <div class="hero-stat-label">Guests Served</div>
+          </div>
+          <div>
+            <div class="hero-stat-num">200+</div>
+            <div class="hero-stat-label">Events Catered</div>
+          </div>
+          <div>
+            <div class="hero-stat-num">10+</div>
+            <div class="hero-stat-label">Years Catering</div>
+          </div>
+        </div>
+      </div>
+      <div class="hero-right" aria-hidden="true">
+        <div class="hero-right-img"></div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════
+         INTRO STRIP
+    ══════════════════════════════════════ -->
+    <div class="intro-strip" aria-label="Catering highlights">
+      <div class="container">
+        <ul class="intro-strip-inner" role="list">
+          <li class="intro-item fade-up" role="listitem">
+            <span class="intro-icon" aria-hidden="true">🍝</span>
+            <span class="intro-title">Custom Menus</span>
+            <p class="intro-desc">Tailored to your event, guests, and dietary needs</p>
+          </li>
+          <li class="intro-item fade-up fade-up-d1" role="listitem">
+            <span class="intro-icon" aria-hidden="true">👨‍🍳</span>
+            <span class="intro-title">Full Service</span>
+            <p class="intro-desc">Setup, staffed service and complete cleanup</p>
+          </li>
+          <li class="intro-item fade-up fade-up-d2" role="listitem">
+            <span class="intro-icon" aria-hidden="true">📍</span>
+            <span class="intro-title">All Chicago</span>
+            <p class="intro-desc">We come to you — any venue in greater Chicago</p>
+          </li>
+          <li class="intro-item fade-up fade-up-d3" role="listitem">
+            <span class="intro-icon" aria-hidden="true">👥</span>
+            <span class="intro-title">20–500+ Guests</span>
+            <p class="intro-desc">Intimate dinners to large-scale corporate events</p>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════
+         EVENT TYPES
+    ══════════════════════════════════════ -->
+    <section class="events-section section" id="event-types" aria-labelledby="events-heading">
+      <div class="container">
+        <div class="section-header fade-up">
+          <span class="eyebrow">What We Cater</span>
+          <h2 class="display" id="events-heading">Every Occasion,<br/>Perfectly Served</h2>
+          <span class="gold-line-center" aria-hidden="true"></span>
+          <p>We've brought authentic Southern Italian cuisine to every kind of gathering — from boardrooms to ballrooms.</p>
+        </div>
+
+        <div class="event-types-grid fade-up">
+
+          <!-- Corporate — large featured card -->
+          <article class="event-card large" aria-label="Corporate catering">
+            <div class="event-card-bg" style="background: url('https://images.unsplash.com/photo-1556761175-4b46a572b786?w=1400&q=80') center/cover no-repeat;" role="img" aria-label="Corporate event"></div>
+            <div class="event-card-overlay"></div>
+            <div class="event-card-body">
+              <div>
+                <span class="event-card-icon" aria-hidden="true">🏢</span>
+                <h3 class="event-card-title">Corporate &amp; Business</h3>
+                <p class="event-card-desc">Board lunches, team celebrations, client entertaining, product launches, and office-wide catering. Impress your colleagues and clients with the flavors of Southern Italy.</p>
+                <div class="event-card-capacity">Up to 500 guests</div>
+              </div>
+              <div>
+                <p class="event-card-desc" style="font-size:12px; opacity:0.8;">Includes: Dedicated event coordinator · Custom menu planning · Full setup &amp; service staff · Branded presentation options</p>
+                <a href="#inquiry" class="btn btn-primary" style="margin-top:20px;font-size:11px;padding:12px 28px;">Get a Quote →</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Wedding -->
+          <article class="event-card" aria-label="Wedding catering">
+            <div class="event-card-bg" style="background: url('https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=800&q=80') center/cover no-repeat;" role="img" aria-label="Wedding reception"></div>
+            <div class="event-card-overlay"></div>
+            <div class="event-card-body">
+              <span class="event-card-icon" aria-hidden="true">💍</span>
+              <h3 class="event-card-title">Weddings &amp; Receptions</h3>
+              <p class="event-card-desc">A wedding deserves food that matches the moment. Our team creates bespoke menus for rehearsal dinners, receptions, and post-ceremony brunches.</p>
+              <div class="event-card-capacity">20 – 300 guests</div>
+            </div>
+          </article>
+
+          <!-- Private Dining -->
+          <article class="event-card" aria-label="Private dining catering">
+            <div class="event-card-bg" style="background: url('https://images.unsplash.com/photo-1424847651672-bf20a4b0982b?w=800&q=80') center/cover no-repeat;" role="img" aria-label="Private dining setup"></div>
+            <div class="event-card-overlay"></div>
+            <div class="event-card-body">
+              <span class="event-card-icon" aria-hidden="true">🕯️</span>
+              <h3 class="event-card-title">Private Dinners</h3>
+              <p class="event-card-desc">An intimate Italian dinner at home or a private venue. Our chef and service team bring the full Bella Cucina experience directly to your table.</p>
+              <div class="event-card-capacity">10 – 60 guests</div>
+            </div>
+          </article>
+
+          <!-- Cocktail Receptions -->
+          <article class="event-card" aria-label="Cocktail reception catering">
+            <div class="event-card-bg" style="background: url('https://images.unsplash.com/photo-1530062845289-9109b2c9c868?w=800&q=80') center/cover no-repeat;" role="img" aria-label="Cocktail reception"></div>
+            <div class="event-card-overlay"></div>
+            <div class="event-card-body">
+              <span class="event-card-icon" aria-hidden="true">🥂</span>
+              <h3 class="event-card-title">Cocktail Receptions</h3>
+              <p class="event-card-desc">Passed canapés, antipasti stations, and aperitivo-style spreads. Perfect for gallery openings, launch parties, networking events, and celebrations.</p>
+              <div class="event-card-capacity">30 – 500 guests</div>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════
+         PACKAGES
+    ══════════════════════════════════════ -->
+    <section class="packages-section section" id="packages" aria-labelledby="packages-heading">
+      <div class="container">
+        <div class="section-header fade-up">
+          <span class="eyebrow">Catering Packages</span>
+          <h2 class="display" id="packages-heading">Simple, Transparent<br/>Pricing</h2>
+          <span class="gold-line-center" aria-hidden="true"></span>
+          <p>All packages are fully customizable. Prices are per person — contact us for a tailored quote for your specific event.</p>
+        </div>
+
+        <div class="packages-grid fade-up">
+
+          <!-- Essenziale -->
+          <div class="package-card">
+            <span class="package-icon" aria-hidden="true">🌿</span>
+            <div class="package-name">Essenziale</div>
+            <div class="package-subtitle">The essential Italian spread</div>
+            <div class="package-price">$45</div>
+            <div class="package-price-note">per person · minimum 20 guests</div>
+            <div class="package-divider" aria-hidden="true"></div>
+            <ul class="package-features" role="list">
+              <li class="package-feature" role="listitem"><div class="package-feature-dot" aria-hidden="true"></div><span>2 Antipasti selections</span></li>
+              <li class="package-feature" role="listitem"><div class="package-feature-dot" aria-hidden="true"></div><span>1 Pasta course</span></li>
+              <li class="package-feature" role="listitem"><div class="package-feature-dot" aria-hidden="true"></div><span>1 Main course</span></li>
+              <li class="package-feature" role="listitem"><div class="package-feature-dot" aria-hidden="true"></div><span>Bread service</span></li>
+              <li class="package-feature" role="listitem"><div class="package-feature-dot" aria-hidden="true"></div><span>Delivery &amp; setup included</span></li>
+              <li class="package-feature" role="listitem"><div class="package-feature-dot" aria-hidden="true"></div><span>Disposable service ware</span></li>
+            </ul>
+            <a href="#inquiry" class="btn btn-outline package-cta">Request a Quote</a>
+          </div>
+
+          <!-- Completo — Featured -->
+          <div class="package-card featured">
+            <span class="package-icon" aria-hidden="true">🍝</span>
+            <div class="package-name">Completo</div>
+            <div class="package-subtitle">The full Italian experience</div>
+            <div class="package-price">$78</div>
+            <div class="package-price-note">per person · minimum 30 guests</div>
+            <div class="package-divider" aria-hidden="true"></div>
+            <ul class="package-features" role="list">
+              <li class="package-feature" role="listitem"><div class="package-feature-dot" aria-hidden="true"></div><span>3 Antipasti selections</span></li>
+              <li class="package-feature" role="listitem"><div class="package-feature-dot" aria-hidden="true"></div><span>2 Pasta courses</span></li>
+              <li class="package-feature" role="listitem"><div class="package-feature-dot" aria-hidden="true"></div><span>2 Main courses</span></li>
+              <li class="package-feature" role="listitem"><div class="package-feature-dot" aria-hidden="true"></div><span>Dessert selection</span></li>
+              <li class="package-feature" role="listitem"><div class="package-feature-dot" aria-hidden="true"></div><span>Full service staff included</span></li>
+              <li class="package-feature" role="listitem"><div class="package-feature-dot" aria-hidden="true"></div><span>China &amp; real cutlery</span></li>
+              <li class="package-feature" role="listitem"><div class="package-feature-dot" aria-hidden="true"></div><span>Complete cleanup</span></li>
+            </ul>
+            <a href="#inquiry" class="btn btn-primary package-cta">Request a Quote</a>
+          </div>
+
+          <!-- Gran Festa -->
+          <div class="package-card">
+            <span class="package-icon" aria-hidden="true">🥂</span>
+            <div class="package-name">Gran Festa</div>
+            <div class="package-subtitle">A truly unforgettable banquet</div>
+            <div class="package-price">$120</div>
+            <div class="package-price-note">per person · minimum 50 guests</div>
+            <div class="package-divider" aria-hidden="true"></div>
+            <ul class="package-features" role="list">
+              <li class="package-feature" role="listitem"><div class="package-feature-dot" aria-hidden="true"></div><span>Unlimited antipasti stations</span></li>
+              <li class="package-feature" role="listitem"><div class="package-feature-dot" aria-hidden="true"></div><span>3 Pasta courses</span></li>
+              <li class="package-feature" role="listitem"><div class="package-feature-dot" aria-hidden="true"></div><span>3 Main courses</span></li>
+              <li class="package-feature" role="listitem"><div class="package-feature-dot" aria-hidden="true"></div><span>Dessert &amp; dolci table</span></li>
+              <li class="package-feature" role="listitem"><div class="package-feature-dot" aria-hidden="true"></div><span>Italian wine pairing</span></li>
+              <li class="package-feature" role="listitem"><div class="package-feature-dot" aria-hidden="true"></div><span>Dedicated event coordinator</span></li>
+              <li class="package-feature" role="listitem"><div class="package-feature-dot" aria-hidden="true"></div><span>Full luxury service &amp; setup</span></li>
+            </ul>
+            <a href="#inquiry" class="btn btn-outline package-cta">Request a Quote</a>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════
+         HOW IT WORKS
+    ══════════════════════════════════════ -->
+    <section class="process-section section" aria-labelledby="process-heading">
+      <div class="container">
+        <div class="section-header fade-up">
+          <span class="eyebrow">How It Works</span>
+          <h2 class="display" id="process-heading">From Inquiry<br/>to Celebration</h2>
+          <span class="gold-line-center" aria-hidden="true"></span>
+          <p>We make the catering process effortless — from first contact to final bite.</p>
+        </div>
+
+        <div class="process-steps fade-up" role="list">
+          <div class="process-step" role="listitem">
+            <div class="process-num" aria-hidden="true">1</div>
+            <div class="process-step-title">Submit Inquiry</div>
+            <p class="process-step-desc">Fill in the form below with your event details — date, size, type, and any special requirements.</p>
+          </div>
+          <div class="process-step" role="listitem">
+            <div class="process-num" aria-hidden="true">2</div>
+            <div class="process-step-title">Consultation</div>
+            <p class="process-step-desc">Our catering manager will contact you within 24 hours to discuss your vision and create a custom menu.</p>
+          </div>
+          <div class="process-step" role="listitem">
+            <div class="process-num" aria-hidden="true">3</div>
+            <div class="process-step-title">Tasting &amp; Quote</div>
+            <p class="process-step-desc">We invite you for a complimentary tasting session at the restaurant and provide a detailed written proposal.</p>
+          </div>
+          <div class="process-step" role="listitem">
+            <div class="process-num" aria-hidden="true">4</div>
+            <div class="process-step-title">Your Event</div>
+            <p class="process-step-desc">Our team arrives early, sets up flawlessly, delivers exceptional food and service, and handles all cleanup.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════
+         GALLERY
+    ══════════════════════════════════════ -->
+    <section class="catering-gallery section-sm" aria-labelledby="gallery-heading">
+      <div class="container">
+        <div class="section-header fade-up" style="margin-bottom:0;">
+          <span class="eyebrow">Past Events</span>
+          <h2 class="display" id="gallery-heading">A Glimpse of What<br/>We Create</h2>
+        </div>
+        <div class="gallery-masonry fade-up" role="list" aria-label="Catering event photos">
+          <div class="gallery-cell" role="listitem">
+            <img src="https://images.unsplash.com/photo-1530062845289-9109b2c9c868?w=900&q=80" alt="Large catering event setup" loading="lazy" style="height:100%;"/>
+            <div class="gallery-cell-overlay" aria-hidden="true"></div>
+          </div>
+          <div class="gallery-cell" role="listitem">
+            <img src="https://images.unsplash.com/photo-1547592166-23ac45744acd?w=600&q=80" alt="Italian food spread" loading="lazy" style="height:100%;"/>
+            <div class="gallery-cell-overlay" aria-hidden="true"></div>
+          </div>
+          <div class="gallery-cell" role="listitem">
+            <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&q=80" alt="Elegant dinner setting" loading="lazy" style="height:100%;"/>
+            <div class="gallery-cell-overlay" aria-hidden="true"></div>
+          </div>
+          <div class="gallery-cell" role="listitem">
+            <img src="https://images.unsplash.com/photo-1555244162-803834f70033?w=600&q=80" alt="Wedding catering" loading="lazy" style="height:100%;"/>
+            <div class="gallery-cell-overlay" aria-hidden="true"></div>
+          </div>
+          <div class="gallery-cell" role="listitem">
+            <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=600&q=80" alt="Reception table setting" loading="lazy" style="height:100%;"/>
+            <div class="gallery-cell-overlay" aria-hidden="true"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════
+         TESTIMONIALS
+    ══════════════════════════════════════ -->
+    <section class="catering-reviews section" aria-labelledby="reviews-heading">
+      <div class="container">
+        <div class="section-header fade-up">
+          <span class="eyebrow">Client Stories</span>
+          <h2 class="display" id="reviews-heading">Trusted by Chicago's<br/>Best Hosts</h2>
+          <span class="gold-line-center" aria-hidden="true"></span>
+        </div>
+        <div class="reviews-grid">
+          <article class="review-card fade-up" role="article">
+            <div class="review-stars" aria-label="5 stars"><span aria-hidden="true">★★★★★</span></div>
+            <div class="review-event-type">Corporate Lunch · 80 Guests</div>
+            <blockquote class="review-text">"We hired Bella Cucina for our Q4 company lunch and every single person raved. The pasta was made fresh that morning, the service was impeccable, and they handled everything. Will be our go-to for all future events."</blockquote>
+            <div class="review-author">
+              <div class="review-avatar" aria-hidden="true">J</div>
+              <div>
+                <div class="review-name">James R.</div>
+                <div class="review-company">VP Operations · TechCorp Chicago</div>
+              </div>
+            </div>
+          </article>
+
+          <article class="review-card fade-up fade-up-d2" role="article">
+            <div class="review-stars" aria-label="5 stars"><span aria-hidden="true">★★★★★</span></div>
+            <div class="review-event-type">Wedding Reception · 140 Guests</div>
+            <blockquote class="review-text">"Bella Cucina catered our wedding and it was absolutely perfect. The food was extraordinary — our guests are still talking about the pasta. The team was professional, warm, and made our day completely stress-free."</blockquote>
+            <div class="review-author">
+              <div class="review-avatar" aria-hidden="true">M</div>
+              <div>
+                <div class="review-name">Maria &amp; Thomas K.</div>
+                <div class="review-company">Wedding · Lincoln Park, Chicago</div>
+              </div>
+            </div>
+          </article>
+
+          <article class="review-card fade-up fade-up-d4" role="article">
+            <div class="review-stars" aria-label="5 stars"><span aria-hidden="true">★★★★★</span></div>
+            <div class="review-event-type">Private Dinner · 24 Guests</div>
+            <blockquote class="review-text">"We had Bella Cucina for a private dinner at our home. Having a chef and full service team cook and serve in our own dining room was incredible. The experience was better than any restaurant we've been to."</blockquote>
+            <div class="review-author">
+              <div class="review-avatar" aria-hidden="true">D</div>
+              <div>
+                <div class="review-name">David &amp; Claire H.</div>
+                <div class="review-company">Private Dinner · Gold Coast, Chicago</div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════
+         INQUIRY FORM
+    ══════════════════════════════════════ -->
+    <section class="inquiry-section section" id="inquiry" aria-labelledby="inquiry-heading">
+      <div class="container">
+        <div class="inquiry-inner">
+
+          <!-- Left: info -->
+          <div class="fade-up">
+            <span class="eyebrow">Get in Touch</span>
+            <h2 class="display" id="inquiry-heading" style="color:var(--white);margin:12px 0 22px;">Request a<br/>Catering Quote</h2>
+            <span class="gold-line" aria-hidden="true"></span>
+            <p>Fill out the form and our catering team will get back to you within 24 hours with a tailored proposal. No commitment required.</p>
+            <div class="inquiry-details" role="list">
+              <div class="inquiry-detail-item" role="listitem">
+                <div class="inquiry-detail-icon" aria-hidden="true">📞</div>
+                <div>
+                  <div class="inquiry-detail-label">Catering Phone</div>
+                  <div class="inquiry-detail-value"><a href="tel:[PHONE]" style="color:inherit;">[Phone Number]</a></div>
+                </div>
+              </div>
+              <div class="inquiry-detail-item" role="listitem">
+                <div class="inquiry-detail-icon" aria-hidden="true">✉️</div>
+                <div>
+                  <div class="inquiry-detail-label">Catering Email</div>
+                  <div class="inquiry-detail-value"><a href="mailto:catering@bellacucina.com" style="color:inherit;">catering@bellacucinachicago.com</a></div>
+                </div>
+              </div>
+              <div class="inquiry-detail-item" role="listitem">
+                <div class="inquiry-detail-icon" aria-hidden="true">📅</div>
+                <div>
+                  <div class="inquiry-detail-label">Response Time</div>
+                  <div class="inquiry-detail-value">Within 24 hours<br/><span style="font-size:12px;color:var(--text-dim);">Mon–Fri 9AM–6PM CT</span></div>
+                </div>
+              </div>
+              <div class="inquiry-detail-item" role="listitem">
+                <div class="inquiry-detail-icon" aria-hidden="true">🧑‍🍳</div>
+                <div>
+                  <div class="inquiry-detail-label">Complimentary</div>
+                  <div class="inquiry-detail-value">Free tasting session included for events over 50 guests</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: form -->
+          <div class="inquiry-form-wrap fade-up fade-up-d2">
+            <h3>Event Details</h3>
+            <p class="inquiry-form-subtitle">Tell us about your event and we'll craft the perfect proposal.</p>
+
+            <form id="inquiry-form" novalidate aria-label="Catering inquiry form">
+              <div class="form-grid">
+                <div class="form-group">
+                  <label class="form-label" for="inq-name">Full Name *</label>
+                  <input type="text" id="inq-name" name="name" class="form-input" placeholder="Your full name" required aria-required="true" aria-describedby="inq-name-err" autocomplete="name"/>
+                  <span class="form-error" id="inq-name-err" role="alert">Please enter your name.</span>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="inq-company">Company / Organization</label>
+                  <input type="text" id="inq-company" name="company" class="form-input" placeholder="Optional" autocomplete="organization"/>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="inq-email">Email *</label>
+                  <input type="email" id="inq-email" name="email" class="form-input" placeholder="your@email.com" required aria-required="true" aria-describedby="inq-email-err" autocomplete="email"/>
+                  <span class="form-error" id="inq-email-err" role="alert">Please enter a valid email.</span>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="inq-phone">Phone *</label>
+                  <input type="tel" id="inq-phone" name="phone" class="form-input" placeholder="+1 (___) ___-____" required aria-required="true" aria-describedby="inq-phone-err" autocomplete="tel"/>
+                  <span class="form-error" id="inq-phone-err" role="alert">Please enter a phone number.</span>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="inq-event-type">Event Type *</label>
+                  <div class="select-wrap">
+                    <select id="inq-event-type" name="event_type" class="form-input" required aria-required="true" aria-describedby="inq-type-err">
+                      <option value="">Select event type</option>
+                      <option>Corporate Lunch / Dinner</option>
+                      <option>Wedding Reception</option>
+                      <option>Private Dinner Party</option>
+                      <option>Cocktail Reception</option>
+                      <option>Birthday / Anniversary</option>
+                      <option>Holiday Party</option>
+                      <option>Graduation Celebration</option>
+                      <option>Product Launch / Event</option>
+                      <option>Other</option>
+                    </select>
+                  </div>
+                  <span class="form-error" id="inq-type-err" role="alert">Please select an event type.</span>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="inq-guests">Expected Guests *</label>
+                  <div class="select-wrap">
+                    <select id="inq-guests" name="guests" class="form-input" required aria-required="true">
+                      <option value="">Select range</option>
+                      <option>20 – 40 guests</option>
+                      <option>41 – 75 guests</option>
+                      <option>76 – 150 guests</option>
+                      <option>151 – 300 guests</option>
+                      <option>301 – 500 guests</option>
+                      <option>500+ guests</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="inq-date">Event Date *</label>
+                  <input type="date" id="inq-date" name="event_date" class="form-input" required aria-required="true" aria-describedby="inq-date-err"/>
+                  <span class="form-error" id="inq-date-err" role="alert">Please select an event date.</span>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="inq-venue">Venue / Location</label>
+                  <input type="text" id="inq-venue" name="venue" class="form-input" placeholder="Venue name or address"/>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="inq-package">Package Interest</label>
+                  <div class="select-wrap">
+                    <select id="inq-package" name="package" class="form-input">
+                      <option value="">Not sure yet</option>
+                      <option>Essenziale ($45/person)</option>
+                      <option>Completo ($78/person)</option>
+                      <option>Gran Festa ($120/person)</option>
+                      <option>Custom / Bespoke</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="inq-budget">Approximate Budget</label>
+                  <div class="select-wrap">
+                    <select id="inq-budget" name="budget" class="form-input">
+                      <option value="">Prefer not to say</option>
+                      <option>Under $2,000</option>
+                      <option>$2,000 – $5,000</option>
+                      <option>$5,000 – $10,000</option>
+                      <option>$10,000 – $25,000</option>
+                      <option>$25,000+</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group full">
+                  <label class="form-label" for="inq-details">Additional Details</label>
+                  <textarea id="inq-details" name="details" class="form-input form-textarea" placeholder="Dietary requirements, cuisine preferences, special requests, theme, or anything else we should know…"></textarea>
+                </div>
+              </div>
+
+              <button type="submit" class="btn btn-primary form-submit" id="inq-submit">
+                Send Catering Inquiry →
+              </button>
+
+              <div class="form-success" id="inq-success" role="status" aria-live="polite">
+                <span class="form-success-icon" aria-hidden="true">🍝</span>
+                <div class="form-success-title">Grazie! We'll be in touch.</div>
+                <p class="form-success-msg">Your catering inquiry has been received. Our team will contact you within 24 hours to discuss your event and create a custom proposal. We look forward to making your occasion truly memorable.</p>
+              </div>
+            </form>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════
+         FAQ
+    ══════════════════════════════════════ -->
+    <section class="faq-section section" aria-labelledby="faq-heading">
+      <div class="container">
+        <div class="section-header fade-up">
+          <span class="eyebrow">Questions</span>
+          <h2 class="display" id="faq-heading">Frequently Asked</h2>
+          <span class="gold-line-center" aria-hidden="true"></span>
+        </div>
+
+        <div class="faq-grid fade-up" role="list">
+
+          <div class="faq-item" role="listitem">
+            <button class="faq-question" aria-expanded="false" aria-controls="faq-1">
+              How far in advance should I book?
+              <span class="faq-chevron" aria-hidden="true">▾</span>
+            </button>
+            <div class="faq-answer" id="faq-1" role="region">
+              We recommend booking at least 4–6 weeks in advance for smaller events and 3–6 months for large events like weddings. However, we'll always do our best to accommodate shorter timelines — reach out and we'll let you know our availability.
+            </div>
+          </div>
+
+          <div class="faq-item" role="listitem">
+            <button class="faq-question" aria-expanded="false" aria-controls="faq-2">
+              Do you cater outside Chicago?
+              <span class="faq-chevron" aria-hidden="true">▾</span>
+            </button>
+            <div class="faq-answer" id="faq-2" role="region">
+              We primarily serve Chicago and the greater Chicagoland area including the suburbs. For large events (100+ guests) we may be able to travel further — please mention your location in your inquiry and we'll confirm availability.
+            </div>
+          </div>
+
+          <div class="faq-item" role="listitem">
+            <button class="faq-question" aria-expanded="false" aria-controls="faq-3">
+              Can you accommodate dietary requirements?
+              <span class="faq-chevron" aria-hidden="true">▾</span>
+            </button>
+            <div class="faq-answer" id="faq-3" role="region">
+              Absolutely. We can accommodate vegetarian, vegan, gluten-free, nut-free, halal, kosher-style, and most other dietary needs. We'll create customized menu options for any dietary requirement — just let us know during the consultation.
+            </div>
+          </div>
+
+          <div class="faq-item" role="listitem">
+            <button class="faq-question" aria-expanded="false" aria-controls="faq-4">
+              Is a deposit required to secure a booking?
+              <span class="faq-chevron" aria-hidden="true">▾</span>
+            </button>
+            <div class="faq-answer" id="faq-4" role="region">
+              Yes, we require a 25% non-refundable deposit to hold your event date, with the balance due 7 days before your event. For events over $10,000, a custom payment schedule can be arranged. We accept all major credit cards and bank transfer.
+            </div>
+          </div>
+
+          <div class="faq-item" role="listitem">
+            <button class="faq-question" aria-expanded="false" aria-controls="faq-5">
+              Do you provide serving equipment and linens?
+              <span class="faq-chevron" aria-hidden="true">▾</span>
+            </button>
+            <div class="faq-answer" id="faq-5" role="region">
+              The Completo and Gran Festa packages include full china, glassware, silverware, and linen napkins. The Essenziale package uses premium biodegradable service ware. Additional rental items (tablecloths, floral, décor) can be arranged through our preferred vendors.
+            </div>
+          </div>
+
+          <div class="faq-item" role="listitem">
+            <button class="faq-question" aria-expanded="false" aria-controls="faq-6">
+              Can I do a tasting before booking?
+              <span class="faq-chevron" aria-hidden="true">▾</span>
+            </button>
+            <div class="faq-answer" id="faq-6" role="region">
+              For events of 50 or more guests, we offer a complimentary tasting session at the restaurant for up to 2 people. You'll sample a curated selection of dishes from your proposed menu. For smaller events, a tasting can be arranged for a small fee that is credited toward your booking.
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ══════════════════════════════════════
+       FOOTER
+  ══════════════════════════════════════ -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-inner">
+        <div>
+          <div class="footer-brand-name">Bella <span>Cucina</span></div>
+          <p class="footer-tagline">Authentic Southern Italian cuisine in the heart of downtown Chicago. Open every day from 8 AM to midnight.</p>
+          <nav class="footer-social" aria-label="Social media">
+            <a href="#" class="social-btn" aria-label="Facebook">f</a>
+            <a href="#" class="social-btn" aria-label="Instagram">📷</a>
+            <a href="#" class="social-btn" aria-label="TripAdvisor">★</a>
+          </nav>
+        </div>
+        <nav aria-label="Footer navigation">
+          <div class="footer-col-title">Navigate</div>
+          <ul class="footer-links">
+            <li><a href="index.html"             class="footer-link">Home</a></li>
+            <li><a href="menu.html"              class="footer-link">Menu</a></li>
+            <li><a href="index.html#reservation" class="footer-link">Reservations</a></li>
+            <li><a href="story.html"             class="footer-link">Our Story</a></li>
+            <li><a href="catering.html"          class="footer-link">Catering</a></li>
+            <li><a href="index.html#location"    class="footer-link">Contact</a></li>
+          </ul>
+        </nav>
+        <div>
+          <div class="footer-col-title">Hours</div>
+          <div class="footer-hours-row"><strong>Monday – Sunday</strong></div>
+          <div class="footer-hours-row"><span>Restaurant</span><strong>8AM – 12AM</strong></div>
+          <div class="footer-hours-row"><span>Kitchen</span><strong>Until 11PM</strong></div>
+          <div class="footer-hours-row"><span>Bar</span><strong>Until Midnight</strong></div>
+        </div>
+        <div>
+          <div class="footer-col-title">Stay in Touch</div>
+          <div class="footer-contact-item">📍 [Address, Chicago IL]</div>
+          <div class="footer-contact-item">📞 <a href="tel:[PHONE]">[Phone]</a></div>
+          <div class="footer-contact-item">✉️ <a href="mailto:catering@bellacucina.com">catering@bellacucinachicago.com</a></div>
+          <p class="newsletter-label" style="margin-top:20px;">Subscribe for seasonal menus &amp; events.</p>
+          <form class="newsletter-wrap" id="newsletter-form" novalidate>
+            <input type="email" class="newsletter-input" id="newsletter-email" placeholder="your@email.com" aria-label="Email" required/>
+            <button type="submit" class="newsletter-btn">Join</button>
+          </form>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span class="footer-copy">© 2025 Bella Cucina. All rights reserved.</span>
+        <nav class="footer-legal" aria-label="Legal">
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="terms.html">Terms of Service</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+  <button class="back-to-top" id="back-to-top" aria-label="Back to top">↑</button>
+
+  <!-- ══════════════════════════════════════
+       JAVASCRIPT
+  ══════════════════════════════════════ -->
+  <script>
+    // ─── Hamburger ──────────────────────────────────
+    const hamburger = document.getElementById('hamburger');
+    const mobileNav = document.getElementById('mobile-nav');
+    const mobileLinks = mobileNav.querySelectorAll('a');
+    let menuOpen = false;
+    function openMenu() {
+      menuOpen = true; hamburger.classList.add('open'); mobileNav.classList.add('open');
+      mobileNav.setAttribute('aria-hidden','false'); hamburger.setAttribute('aria-expanded','true');
+      hamburger.setAttribute('aria-label','Close menu');
+      mobileLinks.forEach(l => l.setAttribute('tabindex','0'));
+      document.body.style.overflow = 'hidden';
+    }
+    function closeMenu() {
+      menuOpen = false; hamburger.classList.remove('open'); mobileNav.classList.remove('open');
+      mobileNav.setAttribute('aria-hidden','true'); hamburger.setAttribute('aria-expanded','false');
+      hamburger.setAttribute('aria-label','Open menu');
+      mobileLinks.forEach(l => l.setAttribute('tabindex','-1'));
+      document.body.style.overflow = '';
+    }
+    hamburger.addEventListener('click', () => menuOpen ? closeMenu() : openMenu());
+    mobileLinks.forEach(l => l.addEventListener('click', closeMenu));
+    document.addEventListener('keydown', e => { if (e.key === 'Escape' && menuOpen) closeMenu(); });
+
+    // ─── Smooth scroll ───────────────────────────────
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        const target = document.querySelector(a.getAttribute('href'));
+        if (!target) return;
+        e.preventDefault();
+        const top = target.getBoundingClientRect().top + window.scrollY - 96;
+        window.scrollTo({ top, behavior: 'smooth' });
+      });
+    });
+
+    // ─── Scroll animations ──────────────────────────
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+    // ─── Back to top ─────────────────────────────────
+    const backToTop = document.getElementById('back-to-top');
+    window.addEventListener('scroll', () => {
+      backToTop.classList.toggle('show', window.scrollY > 400);
+    }, { passive: true });
+    backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+    // ─── FAQ Accordion ───────────────────────────────
+    document.querySelectorAll('.faq-question').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const item = btn.closest('.faq-item');
+        const isOpen = item.classList.contains('open');
+        // close all
+        document.querySelectorAll('.faq-item').forEach(i => {
+          i.classList.remove('open');
+          i.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
+        });
+        // open clicked (unless it was already open)
+        if (!isOpen) {
+          item.classList.add('open');
+          btn.setAttribute('aria-expanded', 'true');
+        }
+      });
+      btn.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); btn.click(); }
+      });
+    });
+
+    // ─── Inquiry Form Validation ─────────────────────
+    const form = document.getElementById('inquiry-form');
+    const success = document.getElementById('inq-success');
+    const submitBtn = document.getElementById('inq-submit');
+
+    function validate(id, errId, condition) {
+      const input = document.getElementById(id);
+      const err = document.getElementById(errId);
+      if (condition) {
+        input.classList.add('error');
+        if (err) err.classList.add('show');
+        return false;
+      }
+      input.classList.remove('error');
+      if (err) err.classList.remove('show');
+      return true;
+    }
+
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      const name  = document.getElementById('inq-name');
+      const email = document.getElementById('inq-email');
+      const phone = document.getElementById('inq-phone');
+      const type  = document.getElementById('inq-event-type');
+      const date  = document.getElementById('inq-date');
+
+      const v1 = validate('inq-name',  'inq-name-err',  !name.value.trim());
+      const v2 = validate('inq-email', 'inq-email-err', !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value));
+      const v3 = validate('inq-phone', 'inq-phone-err', !phone.value.trim());
+      const v4 = validate('inq-event-type', 'inq-type-err', !type.value);
+      const v5 = validate('inq-date',  'inq-date-err',  !date.value);
+
+      if (v1 && v2 && v3 && v4 && v5) {
+        // TODO: connect to Formspree / Netlify Forms / backend
+        submitBtn.style.display = 'none';
+        success.classList.add('show');
+        success.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    });
+
+    // Live validation
+    ['inq-name','inq-email','inq-phone','inq-event-type','inq-date'].forEach(id => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.addEventListener('blur', () => {
+        if (el.value) {
+          el.classList.remove('error');
+          const err = document.getElementById(id + '-err');
+          if (err) err.classList.remove('show');
+        }
+      });
+    });
+
+    // ─── Set min date ────────────────────────────────
+    const dateInput = document.getElementById('inq-date');
+    if (dateInput) {
+      const tomorrow = new Date(); tomorrow.setDate(tomorrow.getDate() + 1);
+      dateInput.setAttribute('min', tomorrow.toISOString().split('T')[0]);
+    }
+
+    // ─── Newsletter ──────────────────────────────────
+    document.getElementById('newsletter-form').addEventListener('submit', e => {
+      e.preventDefault();
+      const input = document.getElementById('newsletter-email');
+      if (input.value && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.value)) {
+        input.value = ''; input.placeholder = '✓ Subscribed! Thank you.';
+        setTimeout(() => { input.placeholder = 'your@email.com'; }, 3500);
+      }
+    });
+  </script>
+
+</body>
+</html>

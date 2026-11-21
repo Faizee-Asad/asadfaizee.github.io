@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact Us — NISS | Noor Infotech & Software Solutions</title>
+  <meta name="description" content="Get in touch with NISS — Noor Infotech & Software Solutions. Contact us for custom software, web apps, mobile development, and digital solutions. Malegaon, Maharashtra."/>
+  <meta property="og:title" content="Contact NISS — Let's Build Something Together"/>
+  <meta property="og:description" content="Tell us about your project. We respond within 24 hours."/>
+  <meta property="og:type" content="website"/>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600;1,700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+
+<style>
+/* ─────────────────────────────────────────
+   TOKENS
+───────────────────────────────────────── */
+:root{
+  --bg:#f7f4ef;--bg2:#edeae3;--white:#ffffff;
+  --ink:#1a1714;--ink2:#4a4540;--ink3:#8c847c;
+  --orange:#d4601a;--orange2:#f07840;--orange-bg:#fff2ea;
+  --dark:#16120e;--dark2:#221d18;
+  --border:rgba(26,23,20,.1);--bsoft:rgba(26,23,20,.06);
+  --shsm:0 2px 20px rgba(26,23,20,.07);
+  --shmd:0 8px 48px rgba(26,23,20,.12);
+  --shlg:0 20px 80px rgba(26,23,20,.16);
+  --f1:'Cormorant Garamond',Georgia,serif;
+  --f2:'Outfit',system-ui,sans-serif;
+  --ease:cubic-bezier(.16,1,.3,1);
+  --red:#c0392b;--green:#1e7e4a;
+}
+
+/* ─────────────────────────────────────────
+   RESET
+───────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{
+  background:var(--bg);color:var(--ink);
+  font-family:var(--f2);font-size:16px;line-height:1.65;
+  overflow-x:hidden;-webkit-font-smoothing:antialiased;
+}
+img{display:block;max-width:100%;height:auto}
+a{color:inherit;text-decoration:none}
+button{font-family:var(--f2);cursor:pointer}
+ul,ol{list-style:none}
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--bg2)}
+::-webkit-scrollbar-thumb{background:var(--orange);border-radius:2px}
+
+/* ─────────────────────────────────────────
+   UTILITIES
+───────────────────────────────────────── */
+.wrap{width:100%;max-width:1260px;margin:0 auto;padding:0 20px}
+@media(min-width:640px){.wrap{padding:0 32px}}
+@media(min-width:1100px){.wrap{padding:0 48px}}
+
+.tag{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:6px 14px;background:var(--orange-bg);border-radius:100px;
+  font-size:11px;font-weight:700;color:var(--orange);letter-spacing:.1em;text-transform:uppercase;
+}
+.tag::before{content:'';width:5px;height:5px;background:var(--orange);border-radius:50%}
+
+.stitle{
+  font-family:var(--f1);font-size:clamp(30px,4.5vw,54px);font-weight:700;
+  line-height:1.1;letter-spacing:-.01em;color:var(--ink);
+}
+.sdesc{font-size:16px;color:var(--ink2);line-height:1.75;max-width:560px}
+
+.rv{opacity:0;transform:translateY(32px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.rv.in{opacity:1;transform:translateY(0)}
+.d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}
+.d4{transition-delay:.32s}.d5{transition-delay:.40s}.d6{transition-delay:.48s}
+
+/* ─────────────────────────────────────────
+   NAV
+───────────────────────────────────────── */
+#nav{
+  position:fixed;top:0;left:0;right:0;z-index:500;height:68px;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 20px;
+  background:rgba(247,244,239,.95);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  box-shadow:var(--shsm);
+}
+@media(min-width:640px){#nav{padding:0 32px}}
+@media(min-width:1100px){#nav{padding:0 48px}}
+
+.nl{display:flex;align-items:center;gap:10px}
+.nl-mark{width:38px;height:38px;background:var(--ink);border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.nl-mark svg{width:20px;height:20px}
+.nl-name{font-family:var(--f1);font-size:20px;font-weight:700;color:var(--ink);letter-spacing:-.02em;line-height:1}
+.nl-sub{display:block;font-family:var(--f2);font-size:9px;font-weight:500;color:var(--ink3);letter-spacing:.12em;text-transform:uppercase;margin-top:1px}
+
+.nlinks{display:none;gap:28px}
+@media(min-width:900px){.nlinks{display:flex}}
+.nlinks a{font-size:14px;font-weight:500;color:var(--ink2);position:relative;padding-bottom:2px;transition:color .2s}
+.nlinks a::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:2px;background:var(--orange);border-radius:2px;transition:width .3s var(--ease)}
+.nlinks a.active{color:var(--orange)}
+.nlinks a.active::after,.nlinks a:hover::after{width:100%}
+.nlinks a:hover{color:var(--ink)}
+
+.ncta{display:none;padding:9px 20px;background:var(--ink);color:#f7f4ef;font-size:13px;font-weight:600;border-radius:8px;transition:background .2s,transform .2s}
+@media(min-width:900px){.ncta{display:inline-flex;align-items:center;gap:6px}}
+.ncta:hover{background:var(--orange);transform:translateY(-1px)}
+
+.hbg{display:flex;flex-direction:column;gap:5px;background:none;border:none;padding:6px;position:relative;z-index:601}
+@media(min-width:900px){.hbg{display:none}}
+.hbg span{display:block;width:24px;height:2px;background:var(--ink);border-radius:2px;transition:all .32s var(--ease);transform-origin:center}
+.hbg.on span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.hbg.on span:nth-child(2){opacity:0;transform:scaleX(0)}
+.hbg.on span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+/* ─────────────────────────────────────────
+   DRAWER
+───────────────────────────────────────── */
+#drawer{
+  position:fixed;inset:0;z-index:600;background:var(--bg);
+  padding:84px 24px 40px;transform:translateX(100%);
+  transition:transform .4s var(--ease);overflow-y:auto;display:flex;flex-direction:column;
+  /* ensure safe area on notched phones */
+  padding-top:max(84px, calc(68px + env(safe-area-inset-top, 16px)));
+}
+#drawer.on{transform:translateX(0)}
+.dr-list{margin-bottom:32px}
+.dr-list li{border-bottom:1px solid var(--border)}
+.dr-list li:first-child{border-top:1px solid var(--border)}
+.dr-list a{display:flex;justify-content:space-between;align-items:center;padding:18px 0;font-family:var(--f1);font-size:26px;font-weight:700;color:var(--ink);transition:color .2s}
+.dr-list a:hover,.dr-list a.active{color:var(--orange)}
+.dr-list a em{font-style:normal;font-size:18px;opacity:.35}
+.dr-cta{display:inline-flex;align-items:center;gap:8px;padding:15px 28px;background:var(--ink);color:var(--bg);font-size:15px;font-weight:600;border-radius:10px;margin-bottom:32px;transition:background .2s}
+.dr-cta:hover{background:var(--orange)}
+.dr-contact{font-size:13px;color:var(--ink3);line-height:2.2}
+.dr-contact a{color:var(--orange);font-weight:600}
+
+/* ─────────────────────────────────────────
+   PAGE HERO — DARK
+───────────────────────────────────────── */
+#page-hero{
+  position:relative;padding:140px 20px 80px;
+  background:var(--dark);overflow:hidden;
+}
+@media(min-width:640px){#page-hero{padding:150px 32px 96px}}
+@media(min-width:1100px){#page-hero{padding:160px 48px 108px}}
+
+.ph-rule{position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--orange),transparent);opacity:.6}
+.ph-orb1{position:absolute;width:600px;height:600px;top:-200px;right:-100px;border-radius:50%;pointer-events:none;filter:blur(90px);background:radial-gradient(circle,rgba(212,96,26,.2),transparent 70%)}
+.ph-orb2{position:absolute;width:380px;height:380px;bottom:-80px;left:-60px;border-radius:50%;pointer-events:none;filter:blur(80px);background:radial-gradient(circle,rgba(255,255,255,.04),transparent 70%)}
+
+.ph-inner{max-width:1260px;margin:0 auto;position:relative;z-index:1}
+.ph-breadcrumb{
+  display:flex;align-items:center;gap:8px;font-size:12px;font-weight:600;
+  color:rgba(247,244,239,.35);letter-spacing:.06em;text-transform:uppercase;margin-bottom:28px;
+  opacity:0;transform:translateY(12px);animation:fup .7s var(--ease) .1s forwards;
+}
+.ph-breadcrumb a{color:var(--orange);transition:opacity .2s}
+.ph-breadcrumb a:hover{opacity:.7}
+.ph-breadcrumb span{opacity:.4}
+
+.ph-cols{display:grid;grid-template-columns:1fr;gap:40px;align-items:end}
+@media(min-width:860px){.ph-cols{grid-template-columns:1fr 1fr;gap:64px}}
+
+.ph-tag-anim{opacity:0;transform:translateY(14px);animation:fup .8s var(--ease) .16s forwards}
+.ph-tag-anim.tag{background:rgba(212,96,26,.18)}
+.ph-h1{
+  font-family:var(--f1);font-size:clamp(42px,7vw,88px);font-weight:700;
+  line-height:1.02;letter-spacing:-.025em;color:var(--bg);margin-top:18px;
+  opacity:0;transform:translateY(20px);animation:fup .9s var(--ease) .26s forwards;
+}
+.ph-h1 em{font-style:italic;color:var(--orange)}
+
+.ph-right{opacity:0;transform:translateY(16px);animation:fup .9s var(--ease) .4s forwards}
+.ph-right p{font-size:17px;color:rgba(247,244,239,.6);line-height:1.8;max-width:440px;margin-bottom:32px}
+
+/* Response time chips */
+.resp-chips{display:flex;flex-wrap:wrap;gap:10px}
+.rchip{
+  display:flex;align-items:center;gap:8px;
+  padding:10px 16px;background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.1);border-radius:100px;
+  font-size:13px;font-weight:600;color:rgba(247,244,239,.6);
+}
+.rchip-dot{width:7px;height:7px;border-radius:50%;background:var(--orange);animation:blink 2.4s ease-in-out infinite;flex-shrink:0}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+@keyframes fup{to{opacity:1;transform:translateY(0)}}
+
+/* ─────────────────────────────────────────
+   MAIN CONTACT SECTION
+───────────────────────────────────────── */
+#contact-main{padding:0;background:var(--bg)}
+
+.contact-split{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:0;
+  min-height:100vh;
+}
+@media(min-width:960px){
+  .contact-split{grid-template-columns:1fr 1fr}
+}
+
+/* Left panel — info */
+.ci-panel{
+  background:var(--bg2);
+  padding:56px 20px 64px;
+  display:flex;flex-direction:column;
+  border-right:1px solid var(--border);
+}
+@media(min-width:640px){.ci-panel{padding:64px 40px 72px}}
+@media(min-width:960px){.ci-panel{padding:72px 48px 80px}}
+
+.ci-panel .tag{margin-bottom:18px}
+.ci-panel .stitle{margin-bottom:14px}
+.ci-panel .sdesc{margin-bottom:40px}
+
+/* Contact info items */
+.ci-list{display:flex;flex-direction:column;gap:0;margin-bottom:48px}
+.ci-item{
+  display:flex;gap:16px;align-items:flex-start;
+  padding:22px 0;
+  border-bottom:1px solid var(--border);
+}
+.ci-item:first-child{border-top:1px solid var(--border)}
+.ci-ico{
+  width:48px;height:48px;background:var(--orange-bg);border-radius:12px;
+  display:flex;align-items:center;justify-content:center;font-size:20px;
+  flex-shrink:0;margin-top:2px;transition:background .2s;
+}
+.ci-item:hover .ci-ico{background:var(--orange)}
+.ci-lbl{font-size:11px;font-weight:700;color:var(--orange);letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px}
+.ci-val{font-size:15px;font-weight:500;color:var(--ink);line-height:1.55}
+.ci-val a{color:var(--ink);transition:color .2s}
+.ci-val a:hover{color:var(--orange)}
+.ci-sub{font-size:12px;color:var(--ink3);margin-top:2px}
+
+/* Office hours */
+.hours-card{
+  background:var(--white);border:1px solid var(--bsoft);
+  border-radius:16px;padding:24px;box-shadow:var(--shsm);
+  margin-bottom:32px;
+}
+.hours-title{font-size:13px;font-weight:700;color:var(--ink);text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.hours-title span{font-size:16px}
+.hours-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--bsoft);font-size:14px}
+.hours-row:last-child{border-bottom:none}
+.hours-day{font-weight:600;color:var(--ink)}
+.hours-time{color:var(--ink3)}
+.hours-badge{
+  display:inline-flex;align-items:center;gap:5px;
+  padding:2px 8px;background:rgba(30,126,74,.1);border-radius:100px;
+  font-size:10px;font-weight:700;color:var(--green);
+}
+.hours-badge-dot{width:5px;height:5px;border-radius:50%;background:var(--green);animation:blink 2s infinite}
+
+/* Social links */
+.social-row{display:flex;gap:10px;flex-wrap:wrap}
+.soc-btn{
+  display:flex;align-items:center;gap:7px;
+  padding:10px 14px;background:var(--white);
+  border:1px solid var(--border);border-radius:9px;
+  font-size:13px;font-weight:600;color:var(--ink2);
+  box-shadow:var(--shsm);
+  transition:background .2s,border-color .2s,color .2s,transform .2s;
+  flex:1;min-width:100px;justify-content:center;
+}
+.soc-btn:hover{background:var(--orange);border-color:var(--orange);color:white;transform:translateY(-2px)}
+.soc-btn span{font-size:15px}
+
+/* Right panel — form */
+.cf-panel{
+  background:var(--white);
+  padding:56px 20px 64px;
+  display:flex;flex-direction:column;
+}
+@media(min-width:640px){.cf-panel{padding:64px 40px 72px}}
+@media(min-width:960px){.cf-panel{padding:72px 48px 80px}}
+
+.cf-heading{font-family:var(--f1);font-size:clamp(24px,3vw,34px);font-weight:700;color:var(--ink);letter-spacing:-.015em;margin-bottom:8px}
+.cf-sub{font-size:15px;color:var(--ink3);margin-bottom:36px;line-height:1.65}
+
+/* Form elements */
+.frow2{display:grid;grid-template-columns:1fr;gap:14px}
+@media(min-width:480px){.frow2{grid-template-columns:1fr 1fr}}
+.fg{display:flex;flex-direction:column;gap:6px;margin-bottom:16px;position:relative}
+.fg label{font-size:11px;font-weight:700;color:var(--ink2);letter-spacing:.07em;text-transform:uppercase}
+.fg label .req{color:var(--orange);margin-left:2px}
+
+.fg input,.fg textarea,.fg select{
+  padding:13px 16px;
+  background:var(--bg);border:1.5px solid var(--border);border-radius:10px;
+  font-family:var(--f2);font-size:14px;color:var(--ink);
+  outline:none;transition:border-color .2s,background .2s,box-shadow .2s;
+  -webkit-appearance:none;resize:none;width:100%;
+}
+.fg input:focus,.fg textarea:focus,.fg select:focus{
+  border-color:var(--orange);background:var(--white);
+  box-shadow:0 0 0 3px rgba(212,96,26,.1);
+}
+.fg input.error,.fg textarea.error{border-color:var(--red);box-shadow:0 0 0 3px rgba(192,57,43,.1)}
+.fg input::placeholder,.fg textarea::placeholder{color:var(--ink3);opacity:.6}
+.fg textarea{height:120px}
+.fg select{cursor:pointer}
+.fg select option{background:white}
+.fg .field-err{font-size:11px;font-weight:600;color:var(--red);margin-top:4px;display:none}
+.fg.has-error .field-err{display:block}
+
+/* Budget options */
+.budget-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px;
+}
+@media(min-width:480px){.budget-grid{grid-template-columns:repeat(4,1fr)}}
+.budget-opt{display:none}
+.budget-lbl{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:12px 8px;background:var(--bg);border:1.5px solid var(--border);
+  border-radius:10px;text-align:center;cursor:pointer;
+  transition:all .2s;
+}
+.budget-lbl-val{font-size:13px;font-weight:700;color:var(--ink);line-height:1.2}
+.budget-lbl-sub{font-size:10px;color:var(--ink3);margin-top:2px}
+.budget-opt:checked + .budget-lbl{background:var(--orange-bg);border-color:var(--orange);color:var(--orange)}
+.budget-opt:checked + .budget-lbl .budget-lbl-val{color:var(--orange)}
+
+/* Submit */
+.fsub{
+  width:100%;padding:15px;
+  background:var(--ink);color:var(--bg);
+  font-family:var(--f2);font-size:15px;font-weight:700;
+  border:none;border-radius:10px;
+  transition:background .2s,transform .2s,box-shadow .2s;
+  margin-top:4px;
+  position:relative;overflow:hidden;
+}
+.fsub:hover{background:var(--orange);transform:translateY(-2px);box-shadow:0 8px 24px rgba(212,96,26,.35)}
+.fsub:disabled{opacity:.55;cursor:not-allowed;transform:none;box-shadow:none}
+
+/* Success state */
+.form-success{
+  display:none;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;padding:48px 24px;
+  background:var(--bg);border-radius:14px;margin-top:16px;
+}
+.form-success.show{display:flex}
+.success-icon{font-size:52px;margin-bottom:16px;animation:popIn .5s var(--ease) forwards}
+@keyframes popIn{from{transform:scale(.6);opacity:0}to{transform:scale(1);opacity:1}}
+.success-title{font-family:var(--f1);font-size:26px;font-weight:700;color:var(--ink);margin-bottom:8px}
+.success-desc{font-size:15px;color:var(--ink3);line-height:1.7;max-width:340px}
+
+/* Error banner */
+#form-error{
+  display:none;padding:12px 16px;
+  background:rgba(192,57,43,.08);border:1px solid rgba(192,57,43,.2);
+  border-radius:9px;font-size:13px;font-weight:600;color:var(--red);
+  margin-bottom:16px;
+}
+#form-error.show{display:block}
+
+/* ─────────────────────────────────────────
+   MAP SECTION
+───────────────────────────────────────── */
+#map-section{padding:0;background:var(--bg2)}
+.map-inner{
+  display:grid;grid-template-columns:1fr;gap:0;
+}
+@media(min-width:860px){.map-inner{grid-template-columns:1fr 1.6fr}}
+
+.map-info{
+  padding:48px 20px;background:var(--dark);
+  display:flex;flex-direction:column;justify-content:center;
+}
+@media(min-width:640px){.map-info{padding:56px 40px}}
+@media(min-width:860px){.map-info{padding:64px 48px}}
+
+.map-info .tag{background:rgba(212,96,26,.18);margin-bottom:18px}
+.map-title{font-family:var(--f1);font-size:clamp(26px,3.5vw,38px);font-weight:700;color:var(--bg);margin-bottom:14px;line-height:1.1;letter-spacing:-.015em}
+.map-addr{font-size:15px;color:rgba(247,244,239,.55);line-height:1.8;margin-bottom:28px}
+
+.dir-btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:12px 24px;background:var(--orange);color:white;
+  font-size:14px;font-weight:600;border-radius:9px;
+  width:fit-content;
+  transition:opacity .2s,transform .2s;
+}
+.dir-btn:hover{opacity:.88;transform:translateY(-1px)}
+
+.map-frame{
+  width:100%;height:320px;position:relative;overflow:hidden;
+}
+@media(min-width:860px){.map-frame{height:100%;min-height:420px}}
+.map-frame iframe{
+  width:100%;height:100%;border:none;display:block;
+  filter:grayscale(20%) contrast(1.05);
+}
+
+/* ─────────────────────────────────────────
+   QUICK CONTACT CHIPS
+───────────────────────────────────────── */
+#quick-contact{
+  padding:56px 0;background:var(--bg);
+  border-top:1px solid var(--border);
+}
+.qc-inner{
+  display:flex;flex-wrap:wrap;gap:14px;
+  align-items:center;justify-content:center;
+  max-width:1260px;margin:0 auto;padding:0 20px;
+}
+.qc-label{font-size:13px;font-weight:700;color:var(--ink3);letter-spacing:.06em;text-transform:uppercase;margin-right:4px;width:100%;text-align:center;margin-bottom:4px}
+.qc-chip{
+  display:inline-flex;align-items:center;gap:9px;
+  padding:12px 22px;background:var(--white);
+  border:1.5px solid var(--border);border-radius:100px;
+  font-size:14px;font-weight:600;color:var(--ink);
+  box-shadow:var(--shsm);
+  transition:border-color .2s,background .2s,color .2s,transform .2s;
+}
+.qc-chip:hover{border-color:var(--orange);color:var(--orange);background:var(--orange-bg);transform:translateY(-2px)}
+.qc-chip span{font-size:18px}
+
+/* ─────────────────────────────────────────
+   FOOTER
+───────────────────────────────────────── */
+footer{background:var(--dark);padding:60px 20px 28px}
+@media(min-width:640px){footer{padding:72px 32px 32px}}
+@media(min-width:1100px){footer{padding:80px 48px 36px}}
+.fg-grid{max-width:1260px;margin:0 auto;display:grid;grid-template-columns:1fr;gap:40px;margin-bottom:48px}
+@media(min-width:540px){.fg-grid{grid-template-columns:1fr 1fr;gap:36px}}
+@media(min-width:860px){.fg-grid{grid-template-columns:2fr 1fr 1fr 1fr;gap:48px}}
+.fb-name{font-family:var(--f1);font-size:22px;font-weight:700;color:var(--bg);letter-spacing:-.02em;margin-bottom:10px}
+.fb-tag{font-size:13px;color:rgba(247,244,239,.4);line-height:1.7;max-width:260px;margin-bottom:24px}
+.fbsocs{display:flex;gap:8px}
+.fbs{width:36px;height:36px;border-radius:8px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:rgba(247,244,239,.5);transition:background .2s,color .2s,border-color .2s}
+.fbs:hover{background:var(--orange);border-color:var(--orange);color:white}
+.fcol h4{font-size:11px;font-weight:700;color:rgba(247,244,239,.35);letter-spacing:.13em;text-transform:uppercase;margin-bottom:18px}
+.fl{display:flex;flex-direction:column;gap:11px}
+.fl a{font-size:13px;color:rgba(247,244,239,.55);transition:color .2s}
+.fl a:hover{color:var(--orange)}
+.fbot{max-width:1260px;margin:0 auto;padding-top:22px;border-top:1px solid rgba(255,255,255,.07);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
+.fbot p{font-size:12px;color:rgba(247,244,239,.3)}
+.fbot a{color:var(--orange)}
+
+#btt{position:fixed;bottom:24px;right:24px;z-index:200;width:44px;height:44px;border-radius:11px;background:var(--ink);color:var(--bg);border:none;font-size:18px;display:flex;align-items:center;justify-content:center;box-shadow:var(--shmd);opacity:0;transform:translateY(10px);transition:opacity .3s,transform .3s,background .2s}
+#btt.vis{opacity:1;transform:translateY(0)}
+#btt:hover{background:var(--orange)}
+
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
+  .rv{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════ NAV ══════════ -->
+<nav id="nav" role="navigation" aria-label="Main navigation">
+  <a href="index.html" class="nl" aria-label="NISS Home">
+    <div class="nl-mark">
+      <svg viewBox="0 0 20 20" fill="none"><path d="M3 17V3L10 13L17 3V17" stroke="#f7f4ef" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+    <div>
+      <div class="nl-name">NISS</div>
+      <span class="nl-sub">Noor Infotech &amp; Software</span>
+    </div>
+  </a>
+  <ul class="nlinks" role="list">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="services.html">Services</a></li>
+    <li><a href="portfolio.html">Work</a></li>
+    <li><a href="contact.html" class="active">Contact</a></li>
+  </ul>
+  <a href="#contact-form" class="ncta">Send Message →</a>
+  <button class="hbg" id="hbg" aria-label="Toggle menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- ══════════ DRAWER ══════════ -->
+<div id="drawer" aria-hidden="true" role="dialog" aria-label="Navigation menu">
+  <ul class="dr-list">
+    <li><a href="index.html"     class="dl">Home     <em>→</em></a></li>
+    <li><a href="about.html"     class="dl">About    <em>→</em></a></li>
+    <li><a href="services.html"  class="dl">Services <em>→</em></a></li>
+    <li><a href="portfolio.html" class="dl">Work     <em>→</em></a></li>
+    <li><a href="contact.html"   class="dl active">Contact  <em>→</em></a></li>
+  </ul>
+  <a href="#contact-form" class="dr-cta" id="dr-cta-btn">Send Message →</a>
+  <div class="dr-contact">
+    <div>📞 <a href="tel:09372239892">093722 39892</a></div>
+    <div>✉️ <a href="mailto:info@noorinfotech.co.in">info@noorinfotech.co.in</a></div>
+  </div>
+</div>
+
+<!-- ══════════ PAGE HERO ══════════ -->
+<div id="page-hero">
+  <div class="ph-rule" aria-hidden="true"></div>
+  <div class="ph-orb1" aria-hidden="true"></div>
+  <div class="ph-orb2" aria-hidden="true"></div>
+  <div class="ph-inner">
+    <nav class="ph-breadcrumb" aria-label="Breadcrumb">
+      <a href="index.html">Home</a>
+      <span aria-hidden="true">/</span>
+      <span aria-current="page">Contact</span>
+    </nav>
+    <div class="ph-cols">
+      <div>
+        <div class="tag ph-tag-anim">Get In Touch</div>
+        <h1 class="ph-h1">Let's Build<br>Something <em>Great</em></h1>
+      </div>
+      <div class="ph-right">
+        <p>Tell us about your project — whether it's a website, mobile app, enterprise software, or anything in between. We'll come back with a clear plan and honest estimate.</p>
+        <div class="resp-chips">
+          <div class="rchip"><span class="rchip-dot"></span>Replies within 24 hours</div>
+          <div class="rchip"><span class="rchip-dot"></span>Free consultation</div>
+          <div class="rchip"><span class="rchip-dot"></span>No obligation quote</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ MAIN CONTACT SPLIT ══════════ -->
+<section id="contact-main" aria-label="Contact information and form">
+  <div class="contact-split">
+
+    <!-- LEFT — Info panel -->
+    <aside class="ci-panel rv">
+      <div class="tag">Contact Details</div>
+      <h2 class="stitle" style="margin-top:14px">Reach Us<br>Directly</h2>
+      <p class="sdesc">Prefer a direct call or email? All our contact details are below. We're a small team — when you reach out, you speak to the people building your product.</p>
+
+      <div class="ci-list" role="list">
+        <div class="ci-item" role="listitem">
+          <div class="ci-ico">📍</div>
+          <div>
+            <div class="ci-lbl">Office Address</div>
+            <!-- PLACEHOLDER: Update if address changes -->
+            <div class="ci-val">172, Darul Aman, Fort<br>Malegaon, Nashik<br>Maharashtra — 423203</div>
+          </div>
+        </div>
+        <div class="ci-item" role="listitem">
+          <div class="ci-ico">📞</div>
+          <div>
+            <div class="ci-lbl">Phone / WhatsApp</div>
+            <!-- PLACEHOLDER: Replace with actual number -->
+            <div class="ci-val"><a href="tel:09372239892">+91 93722 39892</a></div>
+            <div class="ci-sub">Available Mon–Sat, 9am–7pm IST</div>
+          </div>
+        </div>
+        <div class="ci-item" role="listitem">
+          <div class="ci-ico">✉️</div>
+          <div>
+            <div class="ci-lbl">Email</div>
+            <!-- PLACEHOLDER: Replace with actual email -->
+            <div class="ci-val"><a href="mailto:info@noorinfotech.co.in">info@noorinfotech.co.in</a></div>
+            <div class="ci-sub">We reply within 24 hours</div>
+          </div>
+        </div>
+        <div class="ci-item" role="listitem">
+          <div class="ci-ico">🌐</div>
+          <div>
+            <div class="ci-lbl">Website</div>
+            <div class="ci-val"><a href="https://noorinfotech.co.in" target="_blank" rel="noopener">noorinfotech.co.in</a></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Office hours -->
+      <div class="hours-card">
+        <div class="hours-title"><span>🕐</span> Office Hours</div>
+        <div class="hours-row">
+          <span class="hours-day">Monday – Friday</span>
+          <span class="hours-time">9:00 AM – 7:00 PM IST</span>
+        </div>
+        <div class="hours-row">
+          <span class="hours-day">Saturday</span>
+          <span class="hours-time">9:00 AM – 5:00 PM IST</span>
+        </div>
+        <div class="hours-row">
+          <span class="hours-day">Sunday</span>
+          <span class="hours-time" style="color:var(--ink3)">Closed</span>
+        </div>
+        <div style="margin-top:12px;display:flex;align-items:center;gap:8px">
+          <div class="hours-badge"><span class="hours-badge-dot"></span>Currently Open</div>
+          <span style="font-size:12px;color:var(--ink3)">IST (UTC+5:30)</span>
+        </div>
+      </div>
+
+      <!-- Social -->
+      <div class="social-row" aria-label="Social media links">
+        <!-- PLACEHOLDER: Replace # with actual social media URLs -->
+        <a href="#" class="soc-btn" aria-label="LinkedIn"><span>💼</span>LinkedIn</a>
+        <a href="#" class="soc-btn" aria-label="Facebook"><span>📘</span>Facebook</a>
+        <a href="#" class="soc-btn" aria-label="Instagram"><span>📸</span>Instagram</a>
+      </div>
+    </aside>
+
+    <!-- RIGHT — Form panel -->
+    <div class="cf-panel rv d2" id="contact-form">
+      <h2 class="cf-heading">Send Us a Message</h2>
+      <p class="cf-sub">Fill in the details below and we'll get back to you with a plan and a quote — usually within one business day.</p>
+
+      <div id="form-error" role="alert">⚠️ Please fix the errors below before submitting.</div>
+
+      <!-- PLACEHOLDER: Connect action to Formspree / EmailJS / Netlify Forms before going live -->
+      <form id="cform" novalidate aria-label="Contact form">
+
+        <div class="frow2">
+          <div class="fg" id="fg-name">
+            <label for="cf-name">Full Name<span class="req">*</span></label>
+            <input type="text" id="cf-name" name="name" placeholder="e.g. Mohammed Noor" required autocomplete="name"/>
+            <span class="field-err">Please enter your name</span>
+          </div>
+          <div class="fg" id="fg-email">
+            <label for="cf-email">Email Address<span class="req">*</span></label>
+            <input type="email" id="cf-email" name="email" placeholder="you@company.com" required autocomplete="email"/>
+            <span class="field-err">Please enter a valid email</span>
+          </div>
+        </div>
+
+        <div class="frow2">
+          <div class="fg">
+            <label for="cf-phone">Phone / WhatsApp</label>
+            <input type="tel" id="cf-phone" name="phone" placeholder="+91 98765 43210" autocomplete="tel"/>
+          </div>
+          <div class="fg">
+            <label for="cf-company">Company / Organisation</label>
+            <input type="text" id="cf-company" name="company" placeholder="Your company name"/>
+          </div>
+        </div>
+
+        <div class="fg" id="fg-service">
+          <label for="cf-service">Service Required<span class="req">*</span></label>
+          <select id="cf-service" name="service" required>
+            <option value="">Select the service you need…</option>
+            <option value="software">Custom Software Development</option>
+            <option value="web">Web Application Development</option>
+            <option value="ecom">E-Commerce Store</option>
+            <option value="design">Web Design &amp; Branding</option>
+            <option value="mobile">Mobile App Development</option>
+            <option value="seo">SEO &amp; Digital Marketing</option>
+            <option value="erp">ERP / MIS System</option>
+            <option value="other">Other / Not Sure Yet</option>
+          </select>
+          <span class="field-err">Please select a service</span>
+        </div>
+
+        <!-- Budget selector -->
+        <div class="fg" style="margin-bottom:4px">
+          <label>Approximate Budget (INR)</label>
+        </div>
+        <div class="budget-grid" role="group" aria-label="Select budget range">
+          <div>
+            <input type="radio" name="budget" id="b1" value="under-25k" class="budget-opt"/>
+            <label for="b1" class="budget-lbl"><span class="budget-lbl-val">Under ₹25K</span><span class="budget-lbl-sub">Small project</span></label>
+          </div>
+          <div>
+            <input type="radio" name="budget" id="b2" value="25k-75k" class="budget-opt"/>
+            <label for="b2" class="budget-lbl"><span class="budget-lbl-val">₹25K – 75K</span><span class="budget-lbl-sub">Medium project</span></label>
+          </div>
+          <div>
+            <input type="radio" name="budget" id="b3" value="75k-2l" class="budget-opt"/>
+            <label for="b3" class="budget-lbl"><span class="budget-lbl-val">₹75K – 2L</span><span class="budget-lbl-sub">Large project</span></label>
+          </div>
+          <div>
+            <input type="radio" name="budget" id="b4" value="above-2l" class="budget-opt"/>
+            <label for="b4" class="budget-lbl"><span class="budget-lbl-val">₹2L+</span><span class="budget-lbl-sub">Enterprise</span></label>
+          </div>
+        </div>
+        <div style="margin-bottom:16px"></div>
+
+        <div class="fg" id="fg-message">
+          <label for="cf-message">Project Description<span class="req">*</span></label>
+          <textarea id="cf-message" name="message" placeholder="Tell us about your project — what you need, your goals, any existing systems, and your preferred timeline…" required></textarea>
+          <span class="field-err">Please describe your project</span>
+        </div>
+
+        <div class="fg">
+          <label for="cf-hear">How did you hear about us?</label>
+          <select id="cf-hear" name="source">
+            <option value="">Select an option…</option>
+            <option>Google Search</option>
+            <option>Word of mouth / Referral</option>
+            <option>Social Media</option>
+            <option>Previous client</option>
+            <option>Other</option>
+          </select>
+        </div>
+
+        <button type="submit" class="fsub" id="fsub-btn">Send Message →</button>
+      </form>
+
+      <!-- Success state (hidden until form submitted) -->
+      <div class="form-success" id="form-success" aria-live="polite" role="status">
+        <div class="success-icon">✅</div>
+        <div class="success-title">Message Sent!</div>
+        <div class="success-desc">Thank you — we've received your message and will reply to your email within one business day. We're looking forward to working with you!</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════ MAP ══════════ -->
+<div id="map-section" aria-label="Office location map">
+  <div class="map-inner">
+    <div class="map-info rv">
+      <div class="tag">Find Us</div>
+      <h2 class="map-title">Our Office<br>in Malegaon</h2>
+      <!-- PLACEHOLDER: Update address details if needed -->
+      <p class="map-addr">
+        172, Darul Aman, Fort<br>
+        Malegaon, Nashik<br>
+        Maharashtra — 423203<br>
+        India
+      </p>
+      <!-- PLACEHOLDER: Replace href with actual Google Maps directions link -->
+      <a href="https://www.google.com/maps/search/Malegaon,+Maharashtra,+India" target="_blank" rel="noopener" class="dir-btn">
+        📍 Get Directions
+      </a>
+    </div>
+    <div class="map-frame">
+      <!-- PLACEHOLDER: Replace this with an actual Google Maps embed URL for 172, Darul Aman, Fort, Malegaon -->
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d60255.0!2d74.5250!3d20.5579!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bdb98f2c97d4a8d%3A0x1a60b5ce0b8f9b5!2sMalegaon%2C%20Maharashtra!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"
+        title="NISS Office Location — Malegaon, Maharashtra"
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        allowfullscreen
+      ></iframe>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ QUICK CONTACT ══════════ -->
+<div id="quick-contact" aria-label="Quick contact options">
+  <div class="qc-inner">
+    <p class="qc-label">Prefer a quick message?</p>
+    <!-- PLACEHOLDER: Replace href values with real links -->
+    <a href="tel:09372239892" class="qc-chip"><span>📞</span> Call Now</a>
+    <a href="mailto:info@noorinfotech.co.in" class="qc-chip"><span>✉️</span> Send Email</a>
+    <a href="https://wa.me/919372239892" target="_blank" rel="noopener" class="qc-chip"><span>💬</span> WhatsApp</a>
+    <a href="https://noorinfotech.co.in" target="_blank" rel="noopener" class="qc-chip"><span>🌐</span> Visit Website</a>
+  </div>
+</div>
+
+<!-- ══════════ FOOTER ══════════ -->
+<footer role="contentinfo">
+  <div class="fg-grid">
+    <div>
+      <div class="fb-name">NISS</div>
+      <p class="fb-tag">Where innovation meets excellence. Custom software &amp; digital solutions from Malegaon to the world.</p>
+      <div class="fbsocs" aria-label="Social media links">
+        <!-- PLACEHOLDER: Replace # with actual social URLs -->
+        <a href="#" class="fbs" aria-label="LinkedIn">in</a>
+        <a href="#" class="fbs" aria-label="Twitter">𝕏</a>
+        <a href="#" class="fbs" aria-label="Facebook">f</a>
+        <a href="#" class="fbs" aria-label="Instagram">ig</a>
+      </div>
+    </div>
+    <div class="fcol">
+      <h4>Services</h4>
+      <div class="fl">
+        <a href="services.html">Software Development</a>
+        <a href="services.html">E-Commerce</a>
+        <a href="services.html">Web Applications</a>
+        <a href="services.html">Web Design</a>
+        <a href="services.html">Mobile Apps</a>
+        <a href="services.html">SEO Services</a>
+      </div>
+    </div>
+    <div class="fcol">
+      <h4>Company</h4>
+      <div class="fl">
+        <a href="index.html">Home</a>
+        <a href="about.html">About NISS</a>
+        <a href="portfolio.html">Our Work</a>
+        <a href="services.html">Services</a>
+        <a href="https://noorinfotech.co.in/privacy-policy-2/" target="_blank" rel="noopener">Privacy Policy</a>
+      </div>
+    </div>
+    <div class="fcol">
+      <h4>Contact</h4>
+      <div class="fl">
+        <a href="tel:09372239892">+91 93722 39892</a>
+        <a href="mailto:info@noorinfotech.co.in">info@noorinfotech.co.in</a>
+        <a href="https://wa.me/919372239892" target="_blank" rel="noopener">WhatsApp Us</a>
+        <a href="https://www.google.com/maps/search/Malegaon+Maharashtra" target="_blank" rel="noopener">Find on Maps</a>
+      </div>
+    </div>
+  </div>
+  <div class="fbot">
+    <p>© 2024 <a href="index.html">Noor Infotech &amp; Software Solutions</a>. All rights reserved.</p>
+    <p>Malegaon · Maharashtra · India</p>
+  </div>
+</footer>
+
+<button id="btt" aria-label="Back to top">↑</button>
+
+<!-- ══════════════════════════════════════════
+     SCRIPTS
+══════════════════════════════════════════ -->
+<script>
+(function(){
+  'use strict';
+
+  /* ── BACK TO TOP ── */
+  const btt = document.getElementById('btt');
+  window.addEventListener('scroll', () => btt.classList.toggle('vis', scrollY > 400), { passive: true });
+  btt.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+  /* ── HAMBURGER / DRAWER ── */
+  const hbg = document.getElementById('hbg');
+  const drawer = document.getElementById('drawer');
+  let drawerOpen = false;
+
+  function toggleDrawer(s) {
+    drawerOpen = s;
+    hbg.classList.toggle('on', drawerOpen);
+    hbg.setAttribute('aria-expanded', String(drawerOpen));
+    drawer.classList.toggle('on', drawerOpen);
+    drawer.setAttribute('aria-hidden', String(!drawerOpen));
+    document.body.style.overflow = drawerOpen ? 'hidden' : '';
+  }
+
+  hbg.addEventListener('click', () => toggleDrawer(!drawerOpen));
+
+  // Regular nav links — close drawer instantly
+  document.querySelectorAll('.dl').forEach(l => {
+    l.addEventListener('click', () => toggleDrawer(false));
+  });
+
+  // CTA "Send Message" inside drawer — close first, then scroll after overflow restores
+  const drCtaBtn = document.getElementById('dr-cta-btn');
+  if (drCtaBtn) {
+    drCtaBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      toggleDrawer(false);
+      // Wait for drawer close transition + overflow restore before scrolling
+      setTimeout(() => {
+        const target = document.getElementById('contact-form');
+        if (target) {
+          window.scrollTo({ top: target.getBoundingClientRect().top + scrollY - 80, behavior: 'smooth' });
+        }
+      }, 420);
+    });
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && drawerOpen) { toggleDrawer(false); hbg.focus(); }
+  });
+
+  /* ── SMOOTH ANCHOR SCROLL — skip drawer-internal links (handled above) ── */
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    if (a.id === 'dr-cta-btn') return; // already handled
+    a.addEventListener('click', function(e) {
+      const href = this.getAttribute('href');
+      const t = document.querySelector(href);
+      if (!t) return;
+      e.preventDefault();
+      window.scrollTo({ top: t.getBoundingClientRect().top + scrollY - 80, behavior: 'smooth' });
+    });
+  });
+
+  /* ── REVEAL ── */
+  const io = new IntersectionObserver(en => {
+    en.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.rv').forEach(el => io.observe(el));
+
+  /* ── OFFICE HOURS — live "open/closed" badge ── */
+  function updateHoursBadge() {
+    const badge = document.querySelector('.hours-badge');
+    const dot   = document.querySelector('.hours-badge-dot');
+    if (!badge) return;
+    const now  = new Date();
+    const day  = now.getDay(); // 0=Sun, 6=Sat
+    const hour = now.getHours();
+    // Mon–Fri 9–19, Sat 9–17
+    const isOpen =
+      (day >= 1 && day <= 5 && hour >= 9 && hour < 19) ||
+      (day === 6 && hour >= 9 && hour < 17);
+    badge.innerHTML = isOpen
+      ? '<span class="hours-badge-dot" style="width:5px;height:5px;border-radius:50%;background:var(--green);animation:blink 2s infinite;display:inline-block;margin-right:4px"></span>Currently Open'
+      : '<span style="width:5px;height:5px;border-radius:50%;background:#c0392b;display:inline-block;margin-right:4px"></span>Currently Closed';
+    badge.style.background = isOpen ? 'rgba(30,126,74,.1)' : 'rgba(192,57,43,.08)';
+    badge.style.color = isOpen ? 'var(--green)' : 'var(--red)';
+  }
+  updateHoursBadge();
+
+  /* ── FORM VALIDATION & SUBMISSION ── */
+  const form        = document.getElementById('cform');
+  const fsubBtn     = document.getElementById('fsub-btn');
+  const formError   = document.getElementById('form-error');
+  const formSuccess = document.getElementById('form-success');
+
+  // Field-level validation helpers
+  const validators = {
+    'cf-name':    v => v.trim().length >= 2,
+    'cf-email':   v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()),
+    'cf-service': v => v !== '',
+    'cf-message': v => v.trim().length >= 10,
+  };
+  const groups = {
+    'cf-name':    'fg-name',
+    'cf-email':   'fg-email',
+    'cf-service': 'fg-service',
+    'cf-message': 'fg-message',
+  };
+
+  // Validate individual field
+  function validateField(id) {
+    const field = document.getElementById(id);
+    if (!field) return true;
+    const ok = validators[id](field.value);
+    const grp = document.getElementById(groups[id]);
+    if (grp) grp.classList.toggle('has-error', !ok);
+    field.classList.toggle('error', !ok);
+    return ok;
+  }
+
+  // Live validation on blur
+  Object.keys(validators).forEach(id => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.addEventListener('blur', () => validateField(id));
+      el.addEventListener('input', () => {
+        // Clear error as user types
+        const grp = document.getElementById(groups[id]);
+        if (grp && grp.classList.contains('has-error')) validateField(id);
+      });
+    }
+  });
+
+  form.addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    // Validate all required fields
+    const results = Object.keys(validators).map(id => validateField(id));
+    const allValid = results.every(Boolean);
+
+    if (!allValid) {
+      formError.classList.add('show');
+      // Scroll to first error
+      const firstError = form.querySelector('.error');
+      if (firstError) firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+
+    formError.classList.remove('show');
+    fsubBtn.textContent = 'Sending…';
+    fsubBtn.disabled = true;
+
+    /* ── PLACEHOLDER ──────────────────────────────────────────────
+       Replace the timeout below with your actual form endpoint.
+       
+       Option A — Formspree:
+         const res = await fetch('https://formspree.io/f/YOUR_ID', {
+           method: 'POST',
+           headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+           body: JSON.stringify({
+             name:    document.getElementById('cf-name').value,
+             email:   document.getElementById('cf-email').value,
+             phone:   document.getElementById('cf-phone').value,
+             service: document.getElementById('cf-service').value,
+             message: document.getElementById('cf-message').value,
+           })
+         });
+         if (!res.ok) throw new Error('Failed');
+       
+       Option B — EmailJS:
+         emailjs.send('SERVICE_ID','TEMPLATE_ID',{ name, email, message });
+       
+       Option C — Netlify Forms:
+         Add `netlify` attribute to <form> tag and remove fetch call.
+    ─────────────────────────────────────────────────────────────── */
+    await new Promise(r => setTimeout(r, 1400));
+
+    // Show success
+    form.style.display = 'none';
+    formSuccess.classList.add('show');
+  });
+
+})();
+</script>
+
+</body>
+</html>

@@ -1,33 +1,41 @@
-# Archive — saved, not published
+# 📦 Archive — Save Kiya Hua Kaam (Publish Nahi)
 
-Everything listed here is **saved in this repository only**. It is not
-published on https://asadfaizee.is-a.dev/ — these projects and single-page
-sites were made to save/store, not to publish.
+Is folder ke andar Asad ke purane projects, demo pages aur site copies **save**
+hain. Ye sab sirf rakhne ke liye banaye gaye the, publish karne ke liye nahi —
+isliye ye live site par nahi dikhte.
 
-Publishing is controlled by `_config.yml` in the repo root: anything in its
-`exclude` list stays in the repo but never reaches the live site.
-**Nothing here is deleted.** To publish any item again, remove its line
-from `_config.yml` and push.
+**Kuch bhi delete nahi hua hai.** Har cheez apni asal file ke saath yahan
+maujood hai, bas ek hi folder me simat kar, taaki repo saaf dikhe.
 
-## What is archived
+## Is folder ke andar kya hai
 
-| Location in repo | What it is |
+| Folder / File | Kya hai |
 |---|---|
-| `projects/` | Client / concept project sites — Bella-Cucina, EggShella, aura-archtects, kuts_kolor, NativeBombay, beam, ironforge, severin, stillwater, tfc, turf, asad |
-| `demos/` | Standalone demo & landing pages — Aurora (design studio), Noor Infotech landing, NISS services, Restaurant QR Cloud |
-| `experiments/` | Personal one-offs — birthday page (`bd.html`) |
-| `niss/` | Full Noor Infotech company website copy (index, about, services, portfolio, careers, blog, faq, contact) |
-| `1/` | Small standalone experiment |
-| `LITHOS/` | Single-page design demo |
-| `KRO-FLITE/` | Design demo with 300 frame images |
-| `STUDIO/` | Design demo with frame images |
-| `NINJUTSU-CREATIVE/` | Design demo with video |
-| `neo/` | Design experiment — many variants, frames and video |
-| `Aurora.html` `Aurora.md` | Aurora demo + its prompt notes (root copies / redirect stub) |
-| `noor.html` `niss-service.html` `qr-cloud.html` `bd.html` | Old root URLs (redirect stubs to the archived pages above) |
+| `projects/` | Purane client-style project pages — Native Bombay, Bella Cucina, EggShella, Aura Architects, Kuts Kolor, Beam, Ironforge, Severin, Stillwater, TFC, Turf wagera |
+| `demos/` | Single-page demo sites — Noor Infotech landing, NISS service page, Restaurant QR Cloud, Aurora design studio |
+| `experiments/` | Chhote experiments — birthday page (bd) |
+| `niss/` | Noor Infotech company website ki poori copy |
+| `1/` | Ek purana chhota experiment (page + script + style) |
+| `LITHOS/` | LITHOS single-page site |
+| `Aurora.md` | Aurora demo ke notes |
 
-## What stays LIVE
+## Photo/video wale folders (abhi root me, lekin band)
 
-- **Portfolio** — `index.html`, `services.html` (+ `css/` `js/` `img/` `fonts/`)
-- **daauc** — `daauc/`
-- **Tools** — `tools/`
+Ye folders photo aur video files ki wajah se is folder ke andar move nahi hue,
+lekin ye **live site par band hain** (root ki `_config.yml` setting se) aur
+repo me bilkul safe hain:
+
+- `KRO-FLITE/` — sneaker site (300+ photos)
+- `STUDIO/` — AR photo gallery (150+ photos)
+- `NINJUTSU-CREATIVE/` — video wala page
+- `neo/` — purane experiment pages + photos/video
+
+Inhe yahan lane ke liye computer par GitHub kholkar folders ko is `_archive`
+folder me drag karna hoga — phone/connector se photo-video files move nahi
+hoti.
+
+## Wapas live karna ho to
+
+Jis cheez ko wapas publish karna ho, uski files is folder se bahar root me
+rakho aur push kar do — `_archive` naam ki wajah se is folder ke andar ki
+koi cheez GitHub Pages par publish nahi hoti.

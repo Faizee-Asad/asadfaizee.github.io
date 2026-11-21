@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FAQ — NISS | Noor Infotech & Software Solutions</title>
+  <meta name="description" content="Frequently asked questions about NISS services, process, pricing, timelines, and support. Get answers before you start your project."/>
+  <meta property="og:title" content="FAQ — NISS"/>
+  <meta property="og:type" content="website"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600;1,700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --bg:#f7f4ef;--bg2:#edeae3;--white:#ffffff;
+  --ink:#1a1714;--ink2:#4a4540;--ink3:#8c847c;
+  --orange:#d4601a;--orange2:#f07840;--orange-bg:#fff2ea;
+  --dark:#16120e;--dark2:#221d18;
+  --border:rgba(26,23,20,.1);--bsoft:rgba(26,23,20,.06);
+  --shsm:0 2px 20px rgba(26,23,20,.07);--shmd:0 8px 48px rgba(26,23,20,.12);--shlg:0 20px 80px rgba(26,23,20,.16);
+  --f1:'Cormorant Garamond',Georgia,serif;--f2:'Outfit',system-ui,sans-serif;
+  --ease:cubic-bezier(.16,1,.3,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--f2);font-size:16px;line-height:1.65;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+img{display:block;max-width:100%;height:auto}
+a{color:inherit;text-decoration:none}
+button{font-family:var(--f2);cursor:pointer}
+ul,ol{list-style:none}
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--bg2)}
+::-webkit-scrollbar-thumb{background:var(--orange);border-radius:2px}
+
+.wrap{width:100%;max-width:1260px;margin:0 auto;padding:0 20px}
+@media(min-width:640px){.wrap{padding:0 32px}}
+@media(min-width:1100px){.wrap{padding:0 48px}}
+
+.tag{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;background:var(--orange-bg);border-radius:100px;font-size:11px;font-weight:700;color:var(--orange);letter-spacing:.1em;text-transform:uppercase;}
+.tag::before{content:'';width:5px;height:5px;background:var(--orange);border-radius:50%}
+.stitle{font-family:var(--f1);font-size:clamp(30px,4.5vw,54px);font-weight:700;line-height:1.1;letter-spacing:-.01em;color:var(--ink);}
+.sdesc{font-size:16px;color:var(--ink2);line-height:1.75;max-width:560px}
+.rv{opacity:0;transform:translateY(32px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.rv.in{opacity:1;transform:translateY(0)}
+.d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}.d4{transition-delay:.32s}.d5{transition-delay:.4s}
+
+/* NAV */
+#nav{position:fixed;top:0;left:0;right:0;z-index:500;height:68px;display:flex;align-items:center;justify-content:space-between;padding:0 20px;background:rgba(247,244,239,.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);box-shadow:var(--shsm);}
+@media(min-width:640px){#nav{padding:0 32px}}
+@media(min-width:1100px){#nav{padding:0 48px}}
+.nl{display:flex;align-items:center;gap:10px}
+.nl-mark{width:38px;height:38px;background:var(--ink);border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.nl-mark svg{width:20px;height:20px}
+.nl-name{font-family:var(--f1);font-size:20px;font-weight:700;color:var(--ink);letter-spacing:-.02em;line-height:1}
+.nl-sub{display:block;font-family:var(--f2);font-size:9px;font-weight:500;color:var(--ink3);letter-spacing:.12em;text-transform:uppercase;margin-top:1px}
+.nlinks{display:none;gap:28px}
+@media(min-width:900px){.nlinks{display:flex}}
+.nlinks a{font-size:14px;font-weight:500;color:var(--ink2);position:relative;padding-bottom:2px;transition:color .2s}
+.nlinks a::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:2px;background:var(--orange);border-radius:2px;transition:width .3s var(--ease)}
+.nlinks a:hover{color:var(--ink)}.nlinks a:hover::after{width:100%}
+.ncta{display:none;padding:9px 20px;background:var(--ink);color:#f7f4ef;font-size:13px;font-weight:600;border-radius:8px;transition:background .2s,transform .2s}
+@media(min-width:900px){.ncta{display:inline-flex;align-items:center;gap:6px}}
+.ncta:hover{background:var(--orange);transform:translateY(-1px)}
+.hbg{display:flex;flex-direction:column;gap:5px;background:none;border:none;padding:6px;position:relative;z-index:601}
+@media(min-width:900px){.hbg{display:none}}
+.hbg span{display:block;width:24px;height:2px;background:var(--ink);border-radius:2px;transition:all .32s var(--ease);transform-origin:center}
+.hbg.on span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.hbg.on span:nth-child(2){opacity:0;transform:scaleX(0)}
+.hbg.on span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+/* DRAWER */
+#drawer{position:fixed;inset:0;z-index:600;background:var(--bg);padding-top:max(84px,calc(68px + env(safe-area-inset-top,16px)));padding-left:24px;padding-right:24px;padding-bottom:40px;transform:translateX(100%);transition:transform .4s var(--ease);overflow-y:auto;display:flex;flex-direction:column;}
+#drawer.on{transform:translateX(0)}
+.dr-list{margin-bottom:32px}
+.dr-list li{border-bottom:1px solid var(--border)}
+.dr-list li:first-child{border-top:1px solid var(--border)}
+.dr-list a{display:flex;justify-content:space-between;align-items:center;padding:18px 0;font-family:var(--f1);font-size:26px;font-weight:700;color:var(--ink);transition:color .2s}
+.dr-list a:hover,.dr-list a.active{color:var(--orange)}
+.dr-list a em{font-style:normal;font-size:18px;opacity:.35}
+.dr-cta{display:inline-flex;align-items:center;gap:8px;padding:15px 28px;background:var(--ink);color:var(--bg);font-size:15px;font-weight:600;border-radius:10px;margin-bottom:32px;transition:background .2s}
+.dr-cta:hover{background:var(--orange)}
+.dr-contact{font-size:13px;color:var(--ink3);line-height:2.2}
+.dr-contact a{color:var(--orange);font-weight:600}
+
+/* PAGE HERO */
+#page-hero{position:relative;padding:140px 20px 80px;background:var(--bg);overflow:hidden;}
+@media(min-width:640px){#page-hero{padding:150px 32px 88px}}
+@media(min-width:1100px){#page-hero{padding:160px 48px 96px}}
+.ph-orb1{position:absolute;width:500px;height:500px;top:-120px;right:-80px;border-radius:50%;pointer-events:none;filter:blur(80px);background:radial-gradient(circle,rgba(212,96,26,.13),transparent 70%)}
+.ph-rule{position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--orange),transparent);opacity:.45}
+.ph-inner{max-width:1260px;margin:0 auto;position:relative;z-index:1}
+.ph-bc{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:600;color:var(--ink3);letter-spacing:.06em;text-transform:uppercase;margin-bottom:24px;opacity:0;transform:translateY(12px);animation:fup .7s var(--ease) .1s forwards}
+.ph-bc a{color:var(--orange)}.ph-bc span{opacity:.4}
+.ph-h1{font-family:var(--f1);font-size:clamp(42px,7vw,88px);font-weight:700;line-height:1.02;letter-spacing:-.025em;color:var(--ink);margin-top:18px;opacity:0;transform:translateY(20px);animation:fup .9s var(--ease) .24s forwards}
+.ph-h1 em{font-style:italic;color:var(--orange)}
+.ph-sub{font-size:17px;color:var(--ink2);line-height:1.8;max-width:520px;margin-top:16px;opacity:0;transform:translateY(14px);animation:fup .9s var(--ease) .38s forwards}
+@keyframes fup{to{opacity:1;transform:translateY(0)}}
+
+/* SEARCH BAR */
+#search-bar{padding:40px 0;background:var(--bg);border-bottom:1px solid var(--border)}
+.search-wrap{max-width:600px;margin:0 auto;padding:0 20px;position:relative}
+@media(min-width:640px){.search-wrap{padding:0 32px}}
+.search-input-wrap{position:relative;display:flex;align-items:center}
+.search-ico{position:absolute;left:16px;font-size:18px;pointer-events:none;opacity:.4}
+#faq-search{
+  width:100%;padding:14px 16px 14px 46px;
+  background:var(--white);border:1.5px solid var(--border);border-radius:12px;
+  font-family:var(--f2);font-size:15px;color:var(--ink);outline:none;
+  box-shadow:var(--shsm);transition:border-color .2s,box-shadow .2s;
+}
+#faq-search:focus{border-color:var(--orange);box-shadow:0 0 0 3px rgba(212,96,26,.1)}
+#faq-search::placeholder{color:var(--ink3);opacity:.6}
+.search-clear{position:absolute;right:14px;background:none;border:none;font-size:18px;color:var(--ink3);opacity:0;pointer-events:none;transition:opacity .2s}
+.search-clear.show{opacity:1;pointer-events:all}
+#search-count{text-align:center;margin-top:12px;font-size:13px;color:var(--ink3);font-weight:500;min-height:20px}
+
+/* CATEGORY TABS */
+#cat-tabs{padding:32px 0;background:var(--bg);position:sticky;top:68px;z-index:100;border-bottom:1px solid var(--border);background:rgba(247,244,239,.96);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+.cat-tabs-inner{display:flex;gap:8px;flex-wrap:wrap;max-width:1260px;margin:0 auto;padding:0 20px}
+@media(min-width:640px){.cat-tabs-inner{padding:0 32px}}
+@media(min-width:1100px){.cat-tabs-inner{padding:0 48px}}
+.ctab{padding:8px 18px;background:transparent;border:1.5px solid var(--border);border-radius:100px;font-size:13px;font-weight:600;color:var(--ink3);transition:all .2s}
+.ctab:hover{border-color:var(--orange);color:var(--orange);background:var(--orange-bg)}
+.ctab.active{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+
+/* FAQ SECTIONS */
+#faq-main{padding:64px 0 96px;background:var(--bg)}
+
+.faq-category{margin-bottom:64px}
+.faq-category:last-child{margin-bottom:0}
+.faq-cat-header{display:flex;align-items:center;gap:14px;margin-bottom:28px;padding-bottom:18px;border-bottom:2px solid var(--border)}
+.faq-cat-ico{width:44px;height:44px;background:var(--orange-bg);border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.faq-cat-name{font-family:var(--f1);font-size:clamp(22px,3vw,30px);font-weight:700;color:var(--ink)}
+.faq-cat-count{font-size:12px;font-weight:700;color:var(--ink3);background:var(--bg2);padding:3px 10px;border-radius:100px;margin-left:auto}
+
+/* Accordion */
+.acc{display:flex;flex-direction:column;gap:0}
+.acc-item{border-bottom:1px solid var(--border);transition:background .2s}
+.acc-item:first-child{border-top:1px solid var(--border)}
+.acc-item.highlight{background:var(--orange-bg);border-radius:10px;border-color:rgba(212,96,26,.25)!important;margin:4px 0}
+.acc-trigger{display:flex;justify-content:space-between;align-items:center;width:100%;padding:20px 0;background:none;border:none;text-align:left;gap:16px;cursor:pointer}
+.acc-q{font-size:15px;font-weight:600;color:var(--ink);line-height:1.45;transition:color .2s}
+.acc-trigger:hover .acc-q{color:var(--orange)}
+.acc-ico{width:30px;height:30px;border-radius:50%;flex-shrink:0;background:var(--bg2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:16px;color:var(--ink3);font-weight:400;transition:all .25s var(--ease)}
+.acc-item.open .acc-ico{background:var(--orange);color:white;transform:rotate(45deg);border-color:var(--orange)}
+.acc-body{max-height:0;overflow:hidden;transition:max-height .4s var(--ease),padding .3s}
+.acc-item.open .acc-body{max-height:400px;padding-bottom:20px}
+.acc-a{font-size:14px;color:var(--ink2);line-height:1.8}
+.acc-a a{color:var(--orange);font-weight:600}
+.acc-a strong{color:var(--ink);font-weight:700}
+
+/* No results */
+#no-results{display:none;text-align:center;padding:64px 0;color:var(--ink3)}
+#no-results.show{display:block}
+.nr-ico{font-size:48px;margin-bottom:16px}
+.nr-t{font-family:var(--f1);font-size:26px;font-weight:700;color:var(--ink);margin-bottom:8px}
+.nr-d{font-size:15px;color:var(--ink3)}
+
+/* CTA BAND */
+#ctaband{padding:96px 20px;background:var(--dark2);position:relative;overflow:hidden;text-align:center}
+.cta-orb{position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(212,96,26,.18),transparent 70%);top:-200px;right:-100px;pointer-events:none}
+.cta-inner{position:relative;z-index:1;max-width:660px;margin:0 auto}
+.cta-t{font-family:var(--f1);font-size:clamp(32px,5vw,58px);font-weight:700;color:var(--bg);line-height:1.1;letter-spacing:-.015em;margin-bottom:16px}
+.cta-t em{font-style:italic;color:var(--orange)}
+.cta-d{font-size:17px;color:rgba(247,244,239,.5);line-height:1.8;margin-bottom:40px;max-width:500px;margin-left:auto;margin-right:auto}
+.cta-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn-white{display:inline-flex;align-items:center;gap:8px;padding:13px 28px;background:var(--bg);color:var(--ink);font-size:14px;font-weight:600;border-radius:9px;transition:background .2s,transform .2s,color .2s}
+.btn-white:hover{background:var(--orange);color:white;transform:translateY(-2px)}
+.btn-ghost{display:inline-flex;align-items:center;gap:8px;padding:13px 28px;background:transparent;color:var(--bg);font-size:14px;font-weight:500;border-radius:9px;border:1.5px solid rgba(247,244,239,.2);transition:border-color .2s,background .2s}
+.btn-ghost:hover{border-color:rgba(247,244,239,.6);background:rgba(247,244,239,.06)}
+
+/* FOOTER */
+footer{background:var(--dark);padding:60px 20px 28px}
+@media(min-width:640px){footer{padding:72px 32px 32px}}
+@media(min-width:1100px){footer{padding:80px 48px 36px}}
+.fg-grid{max-width:1260px;margin:0 auto;display:grid;grid-template-columns:1fr;gap:40px;margin-bottom:48px}
+@media(min-width:540px){.fg-grid{grid-template-columns:1fr 1fr;gap:36px}}
+@media(min-width:860px){.fg-grid{grid-template-columns:2fr 1fr 1fr 1fr;gap:48px}}
+.fb-name{font-family:var(--f1);font-size:22px;font-weight:700;color:var(--bg);letter-spacing:-.02em;margin-bottom:10px}
+.fb-tag{font-size:13px;color:rgba(247,244,239,.4);line-height:1.7;max-width:260px;margin-bottom:24px}
+.fbsocs{display:flex;gap:8px}
+.fbs{width:36px;height:36px;border-radius:8px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:rgba(247,244,239,.5);transition:background .2s,color .2s,border-color .2s}
+.fbs:hover{background:var(--orange);border-color:var(--orange);color:white}
+.fcol h4{font-size:11px;font-weight:700;color:rgba(247,244,239,.35);letter-spacing:.13em;text-transform:uppercase;margin-bottom:18px}
+.fl{display:flex;flex-direction:column;gap:11px}
+.fl a{font-size:13px;color:rgba(247,244,239,.55);transition:color .2s}
+.fl a:hover{color:var(--orange)}
+.fbot{max-width:1260px;margin:0 auto;padding-top:22px;border-top:1px solid rgba(255,255,255,.07);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
+.fbot p{font-size:12px;color:rgba(247,244,239,.3)}
+.fbot a{color:var(--orange)}
+
+#btt{position:fixed;bottom:24px;right:24px;z-index:200;width:44px;height:44px;border-radius:11px;background:var(--ink);color:var(--bg);border:none;font-size:18px;display:flex;align-items:center;justify-content:center;box-shadow:var(--shmd);opacity:0;transform:translateY(10px);transition:opacity .3s,transform .3s,background .2s}
+#btt.vis{opacity:1;transform:translateY(0)}
+#btt:hover{background:var(--orange)}
+
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}.rv{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+
+<nav id="nav" role="navigation" aria-label="Main navigation">
+  <a href="index.html" class="nl" aria-label="NISS Home">
+    <div class="nl-mark"><svg viewBox="0 0 20 20" fill="none"><path d="M3 17V3L10 13L17 3V17" stroke="#f7f4ef" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    <div><div class="nl-name">NISS</div><span class="nl-sub">Noor Infotech &amp; Software</span></div>
+  </a>
+  <ul class="nlinks" role="list">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="services.html">Services</a></li>
+    <li><a href="portfolio.html">Work</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <a href="contact.html" class="ncta">Get a Quote →</a>
+  <button class="hbg" id="hbg" aria-label="Toggle menu" aria-expanded="false"><span></span><span></span><span></span></button>
+</nav>
+
+<div id="drawer" aria-hidden="true" role="dialog" aria-label="Navigation menu">
+  <ul class="dr-list">
+    <li><a href="index.html" class="dl">Home <em>→</em></a></li>
+    <li><a href="about.html" class="dl">About <em>→</em></a></li>
+    <li><a href="services.html" class="dl">Services <em>→</em></a></li>
+    <li><a href="portfolio.html" class="dl">Work <em>→</em></a></li>
+    <li><a href="contact.html" class="dl">Contact <em>→</em></a></li>
+  </ul>
+  <a href="contact.html" class="dr-cta dl">Start a Project →</a>
+  <div class="dr-contact">
+    <div>📞 <a href="tel:09372239892">093722 39892</a></div>
+    <div>✉️ <a href="mailto:info@noorinfotech.co.in">info@noorinfotech.co.in</a></div>
+  </div>
+</div>
+
+<!-- HERO -->
+<div id="page-hero">
+  <div class="ph-rule" aria-hidden="true"></div>
+  <div class="ph-orb1" aria-hidden="true"></div>
+  <div class="ph-inner">
+    <nav class="ph-bc" aria-label="Breadcrumb">
+      <a href="index.html">Home</a><span aria-hidden="true">/</span><span aria-current="page">FAQ</span>
+    </nav>
+    <div class="tag rv" style="opacity:0;transform:translateY(14px);animation:fup .8s var(--ease) .16s forwards">Frequently Asked</div>
+    <h1 class="ph-h1">Questions We<br>Hear <em>Every Day</em></h1>
+    <p class="ph-sub">Everything you need to know before starting a project with NISS. Can't find your answer? <a href="contact.html" style="color:var(--orange);font-weight:600">Ask us directly →</a></p>
+  </div>
+</div>
+
+<!-- SEARCH -->
+<div id="search-bar">
+  <div class="search-wrap">
+    <div class="search-input-wrap">
+      <span class="search-ico">🔍</span>
+      <input type="search" id="faq-search" placeholder="Search questions…" autocomplete="off" aria-label="Search FAQ"/>
+      <button class="search-clear" id="search-clear" aria-label="Clear search">✕</button>
+    </div>
+    <div id="search-count"></div>
+  </div>
+</div>
+
+<!-- CATEGORY TABS -->
+<div id="cat-tabs" role="toolbar" aria-label="Filter by category">
+  <div class="cat-tabs-inner">
+    <button class="ctab active" data-cat="all">All Questions</button>
+    <button class="ctab" data-cat="general">General</button>
+    <button class="ctab" data-cat="process">Process</button>
+    <button class="ctab" data-cat="pricing">Pricing</button>
+    <button class="ctab" data-cat="technical">Technical</button>
+    <button class="ctab" data-cat="support">Support</button>
+  </div>
+</div>
+
+<!-- FAQ MAIN -->
+<section id="faq-main" aria-label="FAQ sections">
+  <div class="wrap">
+
+    <div id="no-results">
+      <div class="nr-ico">🔍</div>
+      <div class="nr-t">No results found</div>
+      <div class="nr-d">Try a different keyword or <a href="contact.html" style="color:var(--orange);font-weight:600">ask us directly</a>.</div>
+    </div>
+
+    <!-- GENERAL -->
+    <div class="faq-category rv" data-category="general">
+      <div class="faq-cat-header">
+        <div class="faq-cat-ico">💡</div>
+        <div class="faq-cat-name">General</div>
+        <div class="faq-cat-count">5 questions</div>
+      </div>
+      <div class="acc">
+        <div class="acc-item open">
+          <button class="acc-trigger" aria-expanded="true"><span class="acc-q">What does NISS stand for, and where are you based?</span><span class="acc-ico">+</span></button>
+          <div class="acc-body"><p class="acc-a">NISS stands for <strong>Noor Infotech &amp; Software Solutions</strong>. We are based in Malegaon, Nashik, Maharashtra, India. Founded in 2010, we have grown into a full-service digital agency while remaining rooted in our hometown.</p></div>
+        </div>
+        <div class="acc-item">
+          <button class="acc-trigger" aria-expanded="false"><span class="acc-q">What types of businesses do you work with?</span><span class="acc-ico">+</span></button>
+          <div class="acc-body"><p class="acc-a">We work with businesses of all sizes — from local startups and small businesses in Maharashtra to established organisations across India. Our clients span education, retail, media, architecture, manufacturing, and government sectors. If you have a digital challenge, we'd love to hear about it.</p></div>
+        </div>
+        <div class="acc-item">
+          <button class="acc-trigger" aria-expanded="false"><span class="acc-q">Do you work with clients outside Malegaon / Maharashtra?</span><span class="acc-ico">+</span></button>
+          <div class="acc-body"><p class="acc-a">Absolutely. We work with clients across India and internationally. All project communication, reviews, and approvals happen remotely via video calls, email, and shared tools. Distance has never been a barrier for us — many of our strongest client relationships are fully remote.</p></div>
+        </div>
+        <div class="acc-item">
+          <button class="acc-trigger" aria-expanded="false"><span class="acc-q">How experienced is your team?</span><span class="acc-ico">+</span></button>
+          <div class="acc-body"><p class="acc-a">Our core team has been building software since 2010 — that's <strong>14+ years</strong> of hands-on experience. We've delivered 50+ projects across web, mobile, desktop, and enterprise domains. Our developers, designers, and strategists all work in-house; we don't outsource your project.</p></div>
+        </div>
+        <div class="acc-item">
+          <button class="acc-trigger" aria-expanded="false"><span class="acc-q">Can I see examples of your previous work?</span><span class="acc-ico">+</span></button>
+          <div class="acc-body"><p class="acc-a">Yes! Visit our <a href="portfolio.html">Portfolio page</a> to see detailed case studies of projects including Wigital Campus (Educational ERP), PR Corp (E-Commerce), Ummid.com (News Portal), Archi Athar (Architecture Portfolio), and more. Each case study includes the problem, solution, and technologies used.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROCESS -->
+    <div class="faq-category rv d1" data-category="process">
+      <div class="faq-cat-header">
+        <div class="faq-cat-ico">🔄</div>
+        <div class="faq-cat-name">Process &amp; Timeline</div>
+        <div class="faq-cat-count">6 questions</div>
+      </div>
+      <div class="acc">
+        <div class="acc-item">
+          <button class="acc-trigger" aria-expanded="false"><span class="acc-q">What is your development process?</span><span class="acc-ico">+</span></button>
+          <div class="acc-body"><p class="acc-a">We follow a structured 4-step process: <strong>1) Discovery &amp; Strategy</strong> — we understand your goals and requirements. <strong>2) UX &amp; Wireframing</strong> — we map structure before design. <strong>3) UI Design &amp; Prototype</strong> — high-fidelity designs approved by you. <strong>4) Development &amp; Launch</strong> — clean code, tested and deployed. You approve each stage before we proceed.</p></div>
+        </div>
+        <div class="acc-item">
+          <button class="acc-trigger" aria-expanded="false"><span class="acc-q">How long does a typical project take?</span><span class="acc-ico">+</span></button>
+          <div class="acc-body"><p class="acc-a">Timelines vary by scope: a <strong>simple website</strong> takes 2–4 weeks; a <strong>web application or e-commerce store</strong> takes 4–8 weeks; a <strong>full ERP or enterprise system</strong> takes 3–6 months. We provide a detailed timeline estimate before starting — and we stick to it. We'll always communicate proactively if anything changes.</p></div>
+        </div>
+        <div class="acc-item">
+          <button class="acc-trigger" aria-expanded="false"><span class="acc-q">What do you need from me to get started?</span><span class="acc-ico">+</span></button>
+          <div class="acc-body"><p class="acc-a">Just a conversation. Tell us what you want to build, who your users are, and what problem you're solving. We'll ask the right questions and handle all the technical scoping. You don't need to provide a specification document — though if you have one, we're happy to review it.</p></div>
+        </div>
+        <div class="acc-item">
+          <button class="acc-trigger" aria-expanded="false"><span class="acc-q">How involved do I need to be during the project?</span><span class="acc-ico">+</span></button>
+          <div class="acc-body"><p class="acc-a">We need your input at key approval stages — after wireframes, after designs, and before launch. Outside of those checkpoints, we handle everything independently. Most clients spend <strong>2–4 hours per week</strong> reviewing and giving feedback. We never leave you guessing — weekly progress updates are standard.</p></div>
+        </div>
+        <div class="acc-item">
+          <button class="acc-trigger" aria-expanded="false"><span class="acc-q">Can I make changes during the project?</span><span class="acc-ico">+</span></button>
+          <div class="acc-body"><p class="acc-a">Yes, within reason. Each stage includes a round of revisions. Changes requested <em>within</em> the agreed scope are included. Significant scope additions may require a change order with adjusted timeline and cost — but we'll always discuss this transparently before proceeding. We never surprise you with hidden charges.</p></div>
+        </div>
+        <div class="acc-item">
+          <button class="acc-trigger" aria-expanded="false"><span class="acc-q">Do you sign NDAs and contracts?</span><span class="acc-ico">+</span></button>
+          <div class="acc-body"><p class="acc-a">Yes. We sign NDAs for all projects where confidential business information is involved. We also provide a formal project agreement covering scope, timeline, payment terms, and IP ownership before any work begins. Your business ideas and data are safe with us.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PRICING -->
+    <div class="faq-category rv d2" data-category="pricing">
+      <div class="faq-cat-header">
+        <div class="faq-cat-ico">💰</div>
+        <div class="faq-cat-name">Pricing &amp; Payment</div>
+        <div class="faq-cat-count">5 questions</div>
+      </div>
+      <div class="acc">
+        <div class="acc-item">
+          <button class="acc-trigger" aria-expanded="false"><span class="acc-q">How much does a project cost?</span><span class="acc-ico">+</span></button>
+          <div class="acc-body"><p class="acc-a">Costs vary widely depending on scope and complexity. As a rough guide: a <strong>simple informational website</strong> starts at ₹15,000–₹30,000; a <strong>web application or e-commerce store</strong> typically ranges from ₹50,000–₹2,00,000; a <strong>full enterprise ERP system</strong> starts at ₹2,00,000+. We provide a detailed, itemised quote after our discovery call — no vague ballparks.</p></div>
+        </div>
+        <div class="acc-item">
+          <button class="acc-trigger" aria-expanded="false"><span class="acc-q">What is your payment structure?</span><span class="acc-ico">+</span></button>
+          <div class="acc-body"><p class="acc-a">For fixed-price projects we typically structure payments as: <strong>40% upfront</strong> (project kick-off), <strong>40% at mid-project milestone</strong> (designs approved / development half-complete), and <strong>20% on final delivery</strong>. For ongoing retainers, we invoice monthly. We're flexible and happy to discuss structures that work for your cash flow.</p></div>
+        </div>
+        <div class="acc-item">
+          <button class="acc-trigger" aria-expanded="false"><span class="acc-q">Do you offer fixed-price or hourly pricing?</span><span class="acc-ico">+</span></button>
+          <div class="acc-body"><p class="acc-a">We primarily offer <strong>fixed-price project quotes</strong> for well-defined scopes — so you always know exactly what you're paying. For ongoing work, maintenance retainers, or projects with evolving requirements, we can work on a monthly retainer or time-and-materials basis. We'll recommend the right model for your situation.</p></div>
+        </div>
+        <div class="acc-item">
+          <button class="acc-trigger" aria-expanded="false"><span class="acc-q">Are there any hidden fees?</span><span class="acc-ico">+</span></button>
+          <div class="acc-body"><p class="acc-a">No. Our quotes are transparent and itemised. Any third-party costs (domain, hosting, premium plugins, API subscriptions) are clearly called out separately. If scope changes during the project, we discuss and agree on any cost implications before proceeding. We don't believe in surprise invoices.</p></div>
+        </div>
+        <div class="acc-item">
+          <button class="acc-trigger" aria-expanded="false"><span class="acc-q">Do you offer discounts for startups or non-profits?</span><span class="acc-ico">+</span></button>
+          <div class="acc-body"><p class="acc-a">Yes, we do consider discounts for early-stage startups, educational institutions, and registered NGOs on a case-by-case basis. If this applies to you, mention it when you reach out and we'll see what we can do. We believe good software should be accessible to organisations doing meaningful work.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TECHNICAL -->
+    <div class="faq-category rv d3" data-category="technical">
+      <div class="faq-cat-header">
+        <div class="faq-cat-ico">⚙️</div>
+        <div class="faq-cat-name">Technical</div>
+        <div class="faq-cat-count">5 questions</div>
+      </div>
+      <div class="acc">
+        <div class="acc-item">
+          <button class="acc-trigger" aria-expanded="false"><span class="acc-q">What technologies do you use?</span><span class="acc-ico">+</span></button>
+          <div class="acc-body"><p class="acc-a">Our core stack includes <strong>C# / .NET / VB.NET / SQL Server</strong> for enterprise and desktop software; <strong>PHP / MySQL / JavaScript / Bootstrap</strong> for web applications; <strong>WordPress / WooCommerce</strong> for CMS and e-commerce; <strong>Android (Java)</strong> for mobile apps; and <strong>AWS</strong> for cloud hosting. We choose the right technology for your specific needs — not the other way around.</p></div>
+        </div>
+        <div class="acc-item">
+          <button class="acc-trigger" aria-expanded="false"><span class="acc-q">Will my website be mobile-friendly?</span><span class="acc-ico">+</span></button>
+          <div class="acc-body"><p class="acc-a">Always. Every website and web application we build is fully <strong>responsive and mobile-first</strong>. We test across iOS, Android, and all major browsers before delivery. With over 70% of Indian internet users on mobile, mobile performance is never an afterthought — it's the starting point of our design process.</p></div>
+        </div>
+        <div class="acc-item">
+          <button class="acc-trigger" aria-expanded="false"><span class="acc-q">Who will own the code and intellectual property?</span><span class="acc-ico">+</span></button>
+          <div class="acc-body"><p class="acc-a">You do. Once the project is paid in full, all code, design assets, and intellectual property transfer to you completely. We don't retain licenses or ownership. You're free to take the code to any developer in the future — though we hope you'll stay with us for ongoing support.</p></div>
+        </div>
+        <div class="acc-item">
+          <button class="acc-trigger" aria-expanded="false"><span class="acc-q">Can you work with our existing systems or codebase?</span><span class="acc-ico">+</span></button>
+          <div class="acc-body"><p class="acc-a">Yes. We regularly take over existing projects, integrate with third-party systems, and extend or refactor legacy codebases. We'll conduct a technical review first to understand the current state before committing to a plan. We're comfortable with messy legacy code — we've seen it all.</p></div>
+        </div>
+        <div class="acc-item">
+          <button class="acc-trigger" aria-expanded="false"><span class="acc-q">Do you handle hosting and domain setup?</span><span class="acc-ico">+</span></button>
+          <div class="acc-body"><p class="acc-a">Yes, we can set up and configure hosting on your behalf — whether that's cPanel shared hosting, VPS, or AWS cloud. We recommend hosting providers based on your budget and traffic needs. Domain registration is typically handled by the client for ownership reasons, but we'll guide you through it step by step.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SUPPORT -->
+    <div class="faq-category rv d4" data-category="support">
+      <div class="faq-cat-header">
+        <div class="faq-cat-ico">🛡️</div>
+        <div class="faq-cat-name">Support &amp; Maintenance</div>
+        <div class="faq-cat-count">4 questions</div>
+      </div>
+      <div class="acc">
+        <div class="acc-item">
+          <button class="acc-trigger" aria-expanded="false"><span class="acc-q">What happens after the project is launched?</span><span class="acc-ico">+</span></button>
+          <div class="acc-body"><p class="acc-a">Every project includes a <strong>30-day free support period</strong> after launch — covering any bugs, fixes, or minor adjustments. After that, we offer monthly maintenance retainers that cover security updates, performance monitoring, content changes, and priority bug fixes. We don't abandon projects after delivery.</p></div>
+        </div>
+        <div class="acc-item">
+          <button class="acc-trigger" aria-expanded="false"><span class="acc-q">Can you maintain a website or app built by someone else?</span><span class="acc-ico">+</span></button>
+          <div class="acc-body"><p class="acc-a">Yes. We take on maintenance and support contracts for existing websites and applications, regardless of who originally built them. We'll conduct a code audit first to understand the codebase, flag any issues, and then agree on a support scope that makes sense for your needs.</p></div>
+        </div>
+        <div class="acc-item">
+          <button class="acc-trigger" aria-expanded="false"><span class="acc-q">How quickly do you respond to support requests?</span><span class="acc-ico">+</span></button>
+          <div class="acc-body"><p class="acc-a">For clients on a maintenance retainer, we respond to <strong>critical issues within 4 hours</strong> and non-critical requests within 1 business day. For one-off support requests without a retainer, response time is typically 1–2 business days. We're reachable by phone, WhatsApp, and email.</p></div>
+        </div>
+        <div class="acc-item">
+          <button class="acc-trigger" aria-expanded="false"><span class="acc-q">Do you provide training on how to manage the website?</span><span class="acc-ico">+</span></button>
+          <div class="acc-body"><p class="acc-a">Yes. For all CMS-based projects (WordPress, custom admin panels), we provide a handover training session — either in person in Malegaon or via video call. We also provide written documentation and, where applicable, short video walkthroughs so your team can manage content independently without needing to call us for every update.</p></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CTA -->
+<div id="ctaband">
+  <div class="cta-orb" aria-hidden="true"></div>
+  <div class="cta-inner rv">
+    <div class="tag" style="background:rgba(212,96,26,.18);margin-bottom:20px">Still Have Questions?</div>
+    <h2 class="cta-t">Can't Find Your<br><em>Answer Here?</em></h2>
+    <p class="cta-d">Send us a message and we'll reply within 24 hours with a clear, honest answer — no sales pressure.</p>
+    <div class="cta-btns">
+      <a href="contact.html" class="btn-white">Ask Us Directly →</a>
+      <a href="tel:09372239892" class="btn-ghost">📞 Call Us</a>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer role="contentinfo">
+  <div class="fg-grid">
+    <div>
+      <div class="fb-name">NISS</div>
+      <p class="fb-tag">Where innovation meets excellence. Custom software &amp; digital solutions from Malegaon to the world.</p>
+      <div class="fbsocs">
+        <a href="#" class="fbs" aria-label="LinkedIn">in</a>
+        <a href="#" class="fbs" aria-label="Twitter">𝕏</a>
+        <a href="#" class="fbs" aria-label="Facebook">f</a>
+        <a href="#" class="fbs" aria-label="Instagram">ig</a>
+      </div>
+    </div>
+    <div class="fcol"><h4>Services</h4><div class="fl"><a href="services.html">Software Development</a><a href="services.html">E-Commerce</a><a href="services.html">Web Applications</a><a href="services.html">Mobile Apps</a><a href="services.html">SEO Services</a></div></div>
+    <div class="fcol"><h4>Company</h4><div class="fl"><a href="index.html">Home</a><a href="about.html">About</a><a href="portfolio.html">Work</a><a href="contact.html">Contact</a><a href="faq.html">FAQ</a></div></div>
+    <div class="fcol"><h4>Contact</h4><div class="fl"><a href="tel:09372239892">+91 93722 39892</a><a href="mailto:info@noorinfotech.co.in">info@noorinfotech.co.in</a><a href="https://wa.me/919372239892" target="_blank" rel="noopener">WhatsApp Us</a></div></div>
+  </div>
+  <div class="fbot">
+    <p>© 2024 <a href="index.html">Noor Infotech &amp; Software Solutions</a>. All rights reserved.</p>
+    <p>Malegaon · Maharashtra · India</p>
+  </div>
+</footer>
+<button id="btt" aria-label="Back to top">↑</button>
+
+<script>
+(function(){
+  'use strict';
+  const btt=document.getElementById('btt');
+  window.addEventListener('scroll',()=>btt.classList.toggle('vis',scrollY>400),{passive:true});
+  btt.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+
+  // Drawer
+  const hbg=document.getElementById('hbg'),drawer=document.getElementById('drawer');
+  let open=false;
+  function tog(s){open=s;hbg.classList.toggle('on',open);hbg.setAttribute('aria-expanded',String(open));drawer.classList.toggle('on',open);drawer.setAttribute('aria-hidden',String(!open));document.body.style.overflow=open?'hidden':'';}
+  hbg.addEventListener('click',()=>tog(!open));
+  document.querySelectorAll('.dl').forEach(l=>l.addEventListener('click',()=>tog(false)));
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&open){tog(false);hbg.focus();}});
+
+  // Reveal
+  const io=new IntersectionObserver(en=>{en.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.1});
+  document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+
+  // Accordion
+  function initAccordion(root){
+    root.querySelectorAll('.acc-trigger').forEach(btn=>{
+      btn.addEventListener('click',function(){
+        const item=this.closest('.acc-item'),isOpen=item.classList.contains('open');
+        item.closest('.acc').querySelectorAll('.acc-item').forEach(i=>{i.classList.remove('open');i.querySelector('.acc-trigger').setAttribute('aria-expanded','false');});
+        if(!isOpen){item.classList.add('open');this.setAttribute('aria-expanded','true');}
+      });
+    });
+  }
+  initAccordion(document);
+
+  // Category tabs
+  const ctabs=document.querySelectorAll('.ctab');
+  const cats=document.querySelectorAll('.faq-category');
+  ctabs.forEach(tab=>{
+    tab.addEventListener('click',function(){
+      ctabs.forEach(t=>t.classList.remove('active'));
+      this.classList.add('active');
+      const cat=this.getAttribute('data-cat');
+      cats.forEach(c=>{c.style.display=(cat==='all'||c.getAttribute('data-category')===cat)?'':'none';});
+      updateCount();
+    });
+  });
+
+  // Search
+  const searchInput=document.getElementById('faq-search');
+  const clearBtn=document.getElementById('search-clear');
+  const countEl=document.getElementById('search-count');
+  const noResults=document.getElementById('no-results');
+
+  function updateCount(){
+    const visible=[...document.querySelectorAll('.acc-item')].filter(i=>i.style.display!=='none'&&i.closest('.faq-category').style.display!=='none');
+    countEl.textContent=searchInput.value?`${visible.length} result${visible.length!==1?'s':''} found`:'';
+    noResults.classList.toggle('show',visible.length===0&&!!searchInput.value);
+  }
+
+  searchInput.addEventListener('input',function(){
+    const q=this.value.toLowerCase().trim();
+    clearBtn.classList.toggle('show',q.length>0);
+    // Reset category to all when searching
+    ctabs.forEach(t=>t.classList.toggle('active',t.getAttribute('data-cat')==='all'));
+    cats.forEach(c=>{c.style.display='';});
+
+    document.querySelectorAll('.acc-item').forEach(item=>{
+      const q_text=item.querySelector('.acc-q').textContent.toLowerCase();
+      const a_text=item.querySelector('.acc-a').textContent.toLowerCase();
+      const match=!q||q_text.includes(q)||a_text.includes(q);
+      item.style.display=match?'':'none';
+      item.classList.toggle('highlight',q.length>0&&match);
+      if(match&&q) item.classList.add('open');
+    });
+    // Hide empty categories
+    cats.forEach(c=>{
+      const visible=[...c.querySelectorAll('.acc-item')].some(i=>i.style.display!=='none');
+      c.style.display=visible?'':'none';
+    });
+    updateCount();
+  });
+
+  clearBtn.addEventListener('click',()=>{
+    searchInput.value='';searchInput.dispatchEvent(new Event('input'));searchInput.focus();
+  });
+})();
+</script>
+</body>
+</html>

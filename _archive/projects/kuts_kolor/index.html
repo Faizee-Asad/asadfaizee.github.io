@@ -1,0 +1,1184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KUTS & KOLOR - Luxury Unisex Salon</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        .font-playfair { font-family: 'Playfair Display', serif; }
+        .font-poppins { font-family: 'Poppins', sans-serif; }
+        .gradient-gold { background: linear-gradient(135deg, #c9a227 0%, #f4d03f 50%, #c9a227 100%); }
+        .text-gold { color: #c9a227; }
+        .bg-gold { background-color: #c9a227; }
+        .border-gold { border-color: #c9a227; }
+        .hero-bg {
+            background: linear-gradient(135deg, rgba(0,0,0,0.85) 0%, rgba(30,30,30,0.9) 100%),
+                        url('https://images.unsplash.com/photo-1560066984-138dadb4c035?w=1920') center/cover;
+        }
+        .service-card:hover { transform: translateY(-5px); }
+        .review-card { animation: fadeIn 0.5s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .star-rating { color: #FFD700; }
+        .gallery-item:hover img { transform: scale(1.1); }
+        .gallery-item:hover .gallery-overlay { opacity: 1; }
+        .team-card:hover { transform: translateY(-10px); }
+        .team-card:hover .team-img { border-color: #c9a227; }
+        .pricing-card:hover { border-color: #c9a227; transform: scale(1.02); }
+        .faq-item.active .faq-answer { max-height: 500px; padding-top: 1rem; }
+        .faq-item.active .faq-icon { transform: rotate(180deg); }
+        .float-animation { animation: float 3s ease-in-out infinite; }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+    </style>
+</head>
+<body class="font-poppins bg-gray-900 text-white">
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-black/90 backdrop-blur-md border-b border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-scissors text-gold text-2xl"></i>
+                    <span class="font-playfair text-2xl font-bold">KUTS & <span class="text-gold">KOLOR</span></span>
+                </div>
+                <div class="hidden lg:flex space-x-6">
+                    <a href="#home" class="hover:text-gold transition">Home</a>
+                    <a href="#services" class="hover:text-gold transition">Services</a>
+                    <a href="#gallery" class="hover:text-gold transition">Gallery</a>
+                    <a href="#team" class="hover:text-gold transition">Team</a>
+                    <a href="#pricing" class="hover:text-gold transition">Pricing</a>
+                    <a href="#reviews" class="hover:text-gold transition">Reviews</a>
+                    <a href="#contact" class="hover:text-gold transition">Contact</a>
+                </div>
+                <a href="tel:09167860528" class="hidden md:flex items-center space-x-2 gradient-gold text-black px-6 py-2 rounded-full font-semibold hover:opacity-90 transition">
+                    <i class="fas fa-phone"></i>
+                    <span>Call Now</span>
+                </a>
+                <button id="menuBtn" class="lg:hidden text-2xl">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="hidden lg:hidden bg-black/95 border-t border-gray-800">
+            <div class="px-4 py-4 space-y-3">
+                <a href="#home" class="block py-2 hover:text-gold transition">Home</a>
+                <a href="#services" class="block py-2 hover:text-gold transition">Services</a>
+                <a href="#gallery" class="block py-2 hover:text-gold transition">Gallery</a>
+                <a href="#team" class="block py-2 hover:text-gold transition">Team</a>
+                <a href="#pricing" class="block py-2 hover:text-gold transition">Pricing</a>
+                <a href="#reviews" class="block py-2 hover:text-gold transition">Reviews</a>
+                <a href="#contact" class="block py-2 hover:text-gold transition">Contact</a>
+                <a href="tel:09167860528" class="block text-center gradient-gold text-black px-6 py-3 rounded-full font-semibold">
+                    <i class="fas fa-phone mr-2"></i>Call Now
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-bg min-h-screen flex items-center justify-center pt-20">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <div class="inline-flex items-center space-x-2 bg-gold/20 border border-gold/40 rounded-full px-4 py-2 mb-6">
+                <span class="text-gold font-semibold">Luxury Unisex Salon</span>
+            </div>
+            <h1 class="font-playfair text-5xl md:text-7xl font-bold mb-6">
+                KUTS & <span class="text-gold">KOLOR</span>
+            </h1>
+            <p class="text-xl md:text-2xl text-gray-300 mb-4 max-w-2xl mx-auto">
+                Where Style Meets Elegance
+            </p>
+            <div class="flex items-center justify-center space-x-3 mb-8">
+                <div class="star-rating text-xl">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <span class="text-2xl font-bold">4.9</span>
+                <span class="text-gray-400">(1,323 Reviews)</span>
+            </div>
+            <div class="flex items-center justify-center space-x-2 text-green-400 mb-8">
+                <i class="fas fa-clock"></i>
+                <span>Open Now · Closes 9 PM</span>
+            </div>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="#booking" class="gradient-gold text-black px-8 py-4 rounded-full font-semibold text-lg hover:opacity-90 transition inline-flex items-center justify-center space-x-2">
+                    <i class="fas fa-calendar-check"></i>
+                    <span>Book Appointment</span>
+                </a>
+                <a href="#services" class="border-2 border-gold text-gold px-8 py-4 rounded-full font-semibold text-lg hover:bg-gold hover:text-black transition inline-flex items-center justify-center space-x-2">
+                    <i class="fas fa-eye"></i>
+                    <span>View Services</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="bg-black py-12 border-y border-gray-800">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                <div>
+                    <div class="text-4xl font-bold text-gold mb-2">1.3K+</div>
+                    <div class="text-gray-400">Happy Clients</div>
+                </div>
+                <div>
+                    <div class="text-4xl font-bold text-gold mb-2">25+</div>
+                    <div class="text-gray-400">Services</div>
+                </div>
+                <div>
+                    <div class="text-4xl font-bold text-gold mb-2">4.9</div>
+                    <div class="text-gray-400">Rating</div>
+                </div>
+                <div>
+                    <div class="text-4xl font-bold text-gold mb-2">10+</div>
+                    <div class="text-gray-400">Years Experience</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us Section -->
+    <section id="why-us" class="py-20 bg-gray-900">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="font-playfair text-4xl md:text-5xl font-bold mb-4">Why Choose <span class="text-gold">Us</span></h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">Experience the difference of premium salon services with our dedicated team</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="text-center p-6 bg-gray-800/30 border border-gray-700 rounded-2xl hover:border-gold/50 transition">
+                    <div class="w-16 h-16 bg-gold/20 rounded-full flex items-center justify-center mx-auto mb-4 float-animation">
+                        <i class="fas fa-award text-gold text-2xl"></i>
+                    </div>
+                    <h3 class="font-playfair text-xl font-semibold mb-2">Expert Stylists</h3>
+                    <p class="text-gray-400 text-sm">Our team of certified professionals brings years of experience and creativity</p>
+                </div>
+
+                <div class="text-center p-6 bg-gray-800/30 border border-gray-700 rounded-2xl hover:border-gold/50 transition">
+                    <div class="w-16 h-16 bg-gold/20 rounded-full flex items-center justify-center mx-auto mb-4 float-animation" style="animation-delay: 0.2s;">
+                        <i class="fas fa-gem text-gold text-2xl"></i>
+                    </div>
+                    <h3 class="font-playfair text-xl font-semibold mb-2">Premium Products</h3>
+                    <p class="text-gray-400 text-sm">We use only the finest quality products for all our treatments</p>
+                </div>
+
+                <div class="text-center p-6 bg-gray-800/30 border border-gray-700 rounded-2xl hover:border-gold/50 transition">
+                    <div class="w-16 h-16 bg-gold/20 rounded-full flex items-center justify-center mx-auto mb-4 float-animation" style="animation-delay: 0.4s;">
+                        <i class="fas fa-heart text-gold text-2xl"></i>
+                    </div>
+                    <h3 class="font-playfair text-xl font-semibold mb-2">Hygiene First</h3>
+                    <p class="text-gray-400 text-sm">Sanitized equipment and clean environment for your safety</p>
+                </div>
+
+                <div class="text-center p-6 bg-gray-800/30 border border-gray-700 rounded-2xl hover:border-gold/50 transition">
+                    <div class="w-16 h-16 bg-gold/20 rounded-full flex items-center justify-center mx-auto mb-4 float-animation" style="animation-delay: 0.6s;">
+                        <i class="fas fa-smile text-gold text-2xl"></i>
+                    </div>
+                    <h3 class="font-playfair text-xl font-semibold mb-2">100% Satisfaction</h3>
+                    <p class="text-gray-400 text-sm">Your happiness is our priority with personalized consultations</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-20 bg-black">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="font-playfair text-4xl md:text-5xl font-bold mb-4">Our <span class="text-gold">Services</span></h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">Experience premium beauty and grooming services tailored for everyone</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Hair Services -->
+                <div class="service-card bg-gray-800/50 border border-gray-700 rounded-2xl p-6 transition duration-300 hover:border-gold/50">
+                    <div class="w-14 h-14 bg-gold/20 rounded-xl flex items-center justify-center mb-4">
+                        <i class="fas fa-cut text-gold text-2xl"></i>
+                    </div>
+                    <h3 class="font-playfair text-xl font-semibold mb-3">Hair Cutting</h3>
+                    <p class="text-gray-400 text-sm">Haircut, Children's cuts, Shaving, Updos, Hairstyling</p>
+                </div>
+
+                <!-- Coloring -->
+                <div class="service-card bg-gray-800/50 border border-gray-700 rounded-2xl p-6 transition duration-300 hover:border-gold/50">
+                    <div class="w-14 h-14 bg-gold/20 rounded-xl flex items-center justify-center mb-4">
+                        <i class="fas fa-palette text-gold text-2xl"></i>
+                    </div>
+                    <h3 class="font-playfair text-xl font-semibold mb-3">Hair Colouring</h3>
+                    <p class="text-gray-400 text-sm">Balayage, Ombre, Highlights, Hair colouring</p>
+                </div>
+
+                <!-- Treatments -->
+                <div class="service-card bg-gray-800/50 border border-gray-700 rounded-2xl p-6 transition duration-300 hover:border-gold/50">
+                    <div class="w-14 h-14 bg-gold/20 rounded-xl flex items-center justify-center mb-4">
+                        <i class="fas fa-spa text-gold text-2xl"></i>
+                    </div>
+                    <h3 class="font-playfair text-xl font-semibold mb-3">Hair Treatments</h3>
+                    <p class="text-gray-400 text-sm">Keratin, Hair straightening, Perms, Hair regrowth</p>
+                </div>
+
+                <!-- Bridal -->
+                <div class="service-card bg-gray-800/50 border border-gray-700 rounded-2xl p-6 transition duration-300 hover:border-gold/50">
+                    <div class="w-14 h-14 bg-gold/20 rounded-xl flex items-center justify-center mb-4">
+                        <i class="fas fa-crown text-gold text-2xl"></i>
+                    </div>
+                    <h3 class="font-playfair text-xl font-semibold mb-3">Bridal Services</h3>
+                    <p class="text-gray-400 text-sm">Complete bridal packages, Updos, Styling</p>
+                </div>
+
+                <!-- Nail Care -->
+                <div class="service-card bg-gray-800/50 border border-gray-700 rounded-2xl p-6 transition duration-300 hover:border-gold/50">
+                    <div class="w-14 h-14 bg-gold/20 rounded-xl flex items-center justify-center mb-4">
+                        <i class="fas fa-hand-sparkles text-gold text-2xl"></i>
+                    </div>
+                    <h3 class="font-playfair text-xl font-semibold mb-3">Nail Care</h3>
+                    <p class="text-gray-400 text-sm">Manicure, Pedicure, French gel polish</p>
+                </div>
+
+                <!-- Body Care -->
+                <div class="service-card bg-gray-800/50 border border-gray-700 rounded-2xl p-6 transition duration-300 hover:border-gold/50">
+                    <div class="w-14 h-14 bg-gold/20 rounded-xl flex items-center justify-center mb-4">
+                        <i class="fas fa-leaf text-gold text-2xl"></i>
+                    </div>
+                    <h3 class="font-playfair text-xl font-semibold mb-3">Body Care</h3>
+                    <p class="text-gray-400 text-sm">Body waxing, Shampoo & conditioning, Extensions</p>
+                </div>
+            </div>
+
+            <!-- All Services List -->
+            <div class="mt-12 bg-gray-800/30 border border-gray-700 rounded-2xl p-8">
+                <h3 class="font-playfair text-2xl font-semibold mb-6 text-center">All Services</h3>
+                <div class="flex flex-wrap gap-3 justify-center">
+                    <span class="px-4 py-2 bg-gray-700/50 rounded-full text-sm hover:bg-gold/20 hover:text-gold transition cursor-pointer">Updos</span>
+                    <span class="px-4 py-2 bg-gray-700/50 rounded-full text-sm hover:bg-gold/20 hover:text-gold transition cursor-pointer">Keratin treatments</span>
+                    <span class="px-4 py-2 bg-gray-700/50 rounded-full text-sm hover:bg-gold/20 hover:text-gold transition cursor-pointer">Curly hair</span>
+                    <span class="px-4 py-2 bg-gray-700/50 rounded-full text-sm hover:bg-gold/20 hover:text-gold transition cursor-pointer">Braiding</span>
+                    <span class="px-4 py-2 bg-gray-700/50 rounded-full text-sm hover:bg-gold/20 hover:text-gold transition cursor-pointer">Shaving</span>
+                    <span class="px-4 py-2 bg-gray-700/50 rounded-full text-sm hover:bg-gold/20 hover:text-gold transition cursor-pointer">Bridal services</span>
+                    <span class="px-4 py-2 bg-gray-700/50 rounded-full text-sm hover:bg-gold/20 hover:text-gold transition cursor-pointer">Pedicure</span>
+                    <span class="px-4 py-2 bg-gray-700/50 rounded-full text-sm hover:bg-gold/20 hover:text-gold transition cursor-pointer">Children's cuts</span>
+                    <span class="px-4 py-2 bg-gray-700/50 rounded-full text-sm hover:bg-gold/20 hover:text-gold transition cursor-pointer">Haircut</span>
+                    <span class="px-4 py-2 bg-gray-700/50 rounded-full text-sm hover:bg-gold/20 hover:text-gold transition cursor-pointer">Perms</span>
+                    <span class="px-4 py-2 bg-gray-700/50 rounded-full text-sm hover:bg-gold/20 hover:text-gold transition cursor-pointer">Hair colouring</span>
+                    <span class="px-4 py-2 bg-gray-700/50 rounded-full text-sm hover:bg-gold/20 hover:text-gold transition cursor-pointer">Blow dry</span>
+                    <span class="px-4 py-2 bg-gray-700/50 rounded-full text-sm hover:bg-gold/20 hover:text-gold transition cursor-pointer">Hair highlighting</span>
+                    <span class="px-4 py-2 bg-gray-700/50 rounded-full text-sm hover:bg-gold/20 hover:text-gold transition cursor-pointer">Hair treatments</span>
+                    <span class="px-4 py-2 bg-gray-700/50 rounded-full text-sm hover:bg-gold/20 hover:text-gold transition cursor-pointer">Ombre hair colour</span>
+                    <span class="px-4 py-2 bg-gray-700/50 rounded-full text-sm hover:bg-gold/20 hover:text-gold transition cursor-pointer">Hair regrowth</span>
+                    <span class="px-4 py-2 bg-gray-700/50 rounded-full text-sm hover:bg-gold/20 hover:text-gold transition cursor-pointer">Hair extensions</span>
+                    <span class="px-4 py-2 bg-gray-700/50 rounded-full text-sm hover:bg-gold/20 hover:text-gold transition cursor-pointer">Balayage</span>
+                    <span class="px-4 py-2 bg-gray-700/50 rounded-full text-sm hover:bg-gold/20 hover:text-gold transition cursor-pointer">Body waxing</span>
+                    <span class="px-4 py-2 bg-gray-700/50 rounded-full text-sm hover:bg-gold/20 hover:text-gold transition cursor-pointer">Manicure</span>
+                    <span class="px-4 py-2 bg-gray-700/50 rounded-full text-sm hover:bg-gold/20 hover:text-gold transition cursor-pointer">Mobile hair salon</span>
+                    <span class="px-4 py-2 bg-gray-700/50 rounded-full text-sm hover:bg-gold/20 hover:text-gold transition cursor-pointer">Hair straightening</span>
+                    <span class="px-4 py-2 bg-gray-700/50 rounded-full text-sm hover:bg-gold/20 hover:text-gold transition cursor-pointer">Hairstyling</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="py-20 bg-gray-900">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="font-playfair text-4xl md:text-5xl font-bold mb-4">Our <span class="text-gold">Gallery</span></h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">Take a look at our stunning transformations and salon ambiance</p>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                <div class="gallery-item relative overflow-hidden rounded-2xl cursor-pointer group col-span-2 row-span-2">
+                    <img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?w=600" alt="Salon Interior" class="w-full h-full object-cover transition duration-500">
+                    <div class="gallery-overlay absolute inset-0 bg-black/60 flex items-center justify-center opacity-0 transition duration-300">
+                        <div class="text-center">
+                            <i class="fas fa-expand text-gold text-3xl mb-2"></i>
+                            <p class="text-white font-semibold">Salon Interior</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gallery-item relative overflow-hidden rounded-2xl cursor-pointer group">
+                    <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=400" alt="Hair Styling" class="w-full h-48 object-cover transition duration-500">
+                    <div class="gallery-overlay absolute inset-0 bg-black/60 flex items-center justify-center opacity-0 transition duration-300">
+                        <i class="fas fa-expand text-gold text-2xl"></i>
+                    </div>
+                </div>
+
+                <div class="gallery-item relative overflow-hidden rounded-2xl cursor-pointer group">
+                    <img src="https://images.unsplash.com/photo-1562322140-8baeececf3df?w=400" alt="Hair Coloring" class="w-full h-48 object-cover transition duration-500">
+                    <div class="gallery-overlay absolute inset-0 bg-black/60 flex items-center justify-center opacity-0 transition duration-300">
+                        <i class="fas fa-expand text-gold text-2xl"></i>
+                    </div>
+                </div>
+
+                <div class="gallery-item relative overflow-hidden rounded-2xl cursor-pointer group">
+                    <img src="https://images.unsplash.com/photo-1595476108010-b4d1f102b1b1?w=400" alt="Men's Haircut" class="w-full h-48 object-cover transition duration-500">
+                    <div class="gallery-overlay absolute inset-0 bg-black/60 flex items-center justify-center opacity-0 transition duration-300">
+                        <i class="fas fa-expand text-gold text-2xl"></i>
+                    </div>
+                </div>
+
+                <div class="gallery-item relative overflow-hidden rounded-2xl cursor-pointer group">
+                    <img src="https://images.unsplash.com/photo-1604654894610-df63bc536371?w=400" alt="Nail Art" class="w-full h-48 object-cover transition duration-500">
+                    <div class="gallery-overlay absolute inset-0 bg-black/60 flex items-center justify-center opacity-0 transition duration-300">
+                        <i class="fas fa-expand text-gold text-2xl"></i>
+                    </div>
+                </div>
+
+                <div class="gallery-item relative overflow-hidden rounded-2xl cursor-pointer group">
+                    <img src="https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?w=400" alt="Hair Treatment" class="w-full h-48 object-cover transition duration-500">
+                    <div class="gallery-overlay absolute inset-0 bg-black/60 flex items-center justify-center opacity-0 transition duration-300">
+                        <i class="fas fa-expand text-gold text-2xl"></i>
+                    </div>
+                </div>
+
+                <div class="gallery-item relative overflow-hidden rounded-2xl cursor-pointer group">
+                    <img src="https://images.unsplash.com/photo-1559599101-f09722fb4948?w=400" alt="Bridal Makeup" class="w-full h-48 object-cover transition duration-500">
+                    <div class="gallery-overlay absolute inset-0 bg-black/60 flex items-center justify-center opacity-0 transition duration-300">
+                        <i class="fas fa-expand text-gold text-2xl"></i>
+                    </div>
+                </div>
+
+                <div class="gallery-item relative overflow-hidden rounded-2xl cursor-pointer group">
+                    <img src="https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?w=400" alt="Styling" class="w-full h-48 object-cover transition duration-500">
+                    <div class="gallery-overlay absolute inset-0 bg-black/60 flex items-center justify-center opacity-0 transition duration-300">
+                        <i class="fas fa-expand text-gold text-2xl"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section id="team" class="py-20 bg-black">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="font-playfair text-4xl md:text-5xl font-bold mb-4">Meet Our <span class="text-gold">Team</span></h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">Our talented stylists are dedicated to making you look and feel amazing</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="team-card text-center transition duration-300">
+                    <div class="relative mb-4">
+                        <img src="https://images.unsplash.com/photo-1580618672591-eb180b1a973f?w=400" alt="Stylist" class="team-img w-40 h-40 object-cover rounded-full mx-auto border-4 border-gray-700 transition duration-300">
+                        <div class="absolute bottom-2 right-1/2 translate-x-1/2 translate-y-1/2 w-10 h-10 bg-gold rounded-full flex items-center justify-center">
+                            <i class="fas fa-scissors text-black"></i>
+                        </div>
+                    </div>
+                    <h3 class="font-playfair text-xl font-semibold">Priya Sharma</h3>
+                    <p class="text-gold text-sm mb-2">Senior Stylist</p>
+                    <p class="text-gray-400 text-sm">Specializes in Balayage & Hair Coloring</p>
+                    <div class="flex justify-center space-x-3 mt-4">
+                        <a href="#" class="text-gray-400 hover:text-gold transition"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-gold transition"><i class="fab fa-facebook"></i></a>
+                    </div>
+                </div>
+
+                <div class="team-card text-center transition duration-300">
+                    <div class="relative mb-4">
+                        <img src="https://images.unsplash.com/photo-1622286342621-4bd786c2447c?w=400" alt="Stylist" class="team-img w-40 h-40 object-cover rounded-full mx-auto border-4 border-gray-700 transition duration-300">
+                        <div class="absolute bottom-2 right-1/2 translate-x-1/2 translate-y-1/2 w-10 h-10 bg-gold rounded-full flex items-center justify-center">
+                            <i class="fas fa-cut text-black"></i>
+                        </div>
+                    </div>
+                    <h3 class="font-playfair text-xl font-semibold">Rahul Verma</h3>
+                    <p class="text-gold text-sm mb-2">Master Barber</p>
+                    <p class="text-gray-400 text-sm">Expert in Men's Cuts & Beard Styling</p>
+                    <div class="flex justify-center space-x-3 mt-4">
+                        <a href="#" class="text-gray-400 hover:text-gold transition"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-gold transition"><i class="fab fa-facebook"></i></a>
+                    </div>
+                </div>
+
+                <div class="team-card text-center transition duration-300">
+                    <div class="relative mb-4">
+                        <img src="https://images.unsplash.com/photo-1594744803329-e58b31de8bf5?w=400" alt="Stylist" class="team-img w-40 h-40 object-cover rounded-full mx-auto border-4 border-gray-700 transition duration-300">
+                        <div class="absolute bottom-2 right-1/2 translate-x-1/2 translate-y-1/2 w-10 h-10 bg-gold rounded-full flex items-center justify-center">
+                            <i class="fas fa-crown text-black"></i>
+                        </div>
+                    </div>
+                    <h3 class="font-playfair text-xl font-semibold">Anjali Patel</h3>
+                    <p class="text-gold text-sm mb-2">Bridal Specialist</p>
+                    <p class="text-gray-400 text-sm">Bridal Makeup & Hairstyling Expert</p>
+                    <div class="flex justify-center space-x-3 mt-4">
+                        <a href="#" class="text-gray-400 hover:text-gold transition"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-gold transition"><i class="fab fa-facebook"></i></a>
+                    </div>
+                </div>
+
+                <div class="team-card text-center transition duration-300">
+                    <div class="relative mb-4">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400" alt="Stylist" class="team-img w-40 h-40 object-cover rounded-full mx-auto border-4 border-gray-700 transition duration-300">
+                        <div class="absolute bottom-2 right-1/2 translate-x-1/2 translate-y-1/2 w-10 h-10 bg-gold rounded-full flex items-center justify-center">
+                            <i class="fas fa-spa text-black"></i>
+                        </div>
+                    </div>
+                    <h3 class="font-playfair text-xl font-semibold">Vikram Singh</h3>
+                    <p class="text-gold text-sm mb-2">Treatment Specialist</p>
+                    <p class="text-gray-400 text-sm">Keratin & Hair Treatment Expert</p>
+                    <div class="flex justify-center space-x-3 mt-4">
+                        <a href="#" class="text-gray-400 hover:text-gold transition"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-gold transition"><i class="fab fa-facebook"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="py-20 bg-gray-900">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="font-playfair text-4xl md:text-5xl font-bold mb-4">Our <span class="text-gold">Pricing</span></h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">Transparent pricing for all our premium services</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Hair Services -->
+                <div class="pricing-card bg-gray-800/50 border border-gray-700 rounded-2xl p-6 transition duration-300">
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="w-12 h-12 bg-gold/20 rounded-xl flex items-center justify-center">
+                            <i class="fas fa-cut text-gold text-xl"></i>
+                        </div>
+                        <h3 class="font-playfair text-2xl font-semibold">Hair Services</h3>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center border-b border-gray-700 pb-3">
+                            <span>Men's Haircut</span>
+                            <span class="text-gold font-semibold">₹300</span>
+                        </div>
+                        <div class="flex justify-between items-center border-b border-gray-700 pb-3">
+                            <span>Women's Haircut</span>
+                            <span class="text-gold font-semibold">₹500</span>
+                        </div>
+                        <div class="flex justify-between items-center border-b border-gray-700 pb-3">
+                            <span>Children's Cut</span>
+                            <span class="text-gold font-semibold">₹200</span>
+                        </div>
+                        <div class="flex justify-between items-center border-b border-gray-700 pb-3">
+                            <span>Blow Dry</span>
+                            <span class="text-gold font-semibold">₹400</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span>Hairstyling</span>
+                            <span class="text-gold font-semibold">₹800+</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Coloring -->
+                <div class="pricing-card bg-gray-800/50 border border-gray-700 rounded-2xl p-6 transition duration-300">
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="w-12 h-12 bg-gold/20 rounded-xl flex items-center justify-center">
+                            <i class="fas fa-palette text-gold text-xl"></i>
+                        </div>
+                        <h3 class="font-playfair text-2xl font-semibold">Colouring</h3>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center border-b border-gray-700 pb-3">
+                            <span>Global Colour</span>
+                            <span class="text-gold font-semibold">₹2,000+</span>
+                        </div>
+                        <div class="flex justify-between items-center border-b border-gray-700 pb-3">
+                            <span>Highlights</span>
+                            <span class="text-gold font-semibold">₹2,500+</span>
+                        </div>
+                        <div class="flex justify-between items-center border-b border-gray-700 pb-3">
+                            <span>Balayage</span>
+                            <span class="text-gold font-semibold">₹4,000+</span>
+                        </div>
+                        <div class="flex justify-between items-center border-b border-gray-700 pb-3">
+                            <span>Ombre</span>
+                            <span class="text-gold font-semibold">₹3,500+</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span>Root Touch Up</span>
+                            <span class="text-gold font-semibold">₹1,200+</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Treatments -->
+                <div class="pricing-card bg-gray-800/50 border border-gray-700 rounded-2xl p-6 transition duration-300">
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="w-12 h-12 bg-gold/20 rounded-xl flex items-center justify-center">
+                            <i class="fas fa-spa text-gold text-xl"></i>
+                        </div>
+                        <h3 class="font-playfair text-2xl font-semibold">Treatments</h3>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center border-b border-gray-700 pb-3">
+                            <span>Keratin Treatment</span>
+                            <span class="text-gold font-semibold">₹5,000+</span>
+                        </div>
+                        <div class="flex justify-between items-center border-b border-gray-700 pb-3">
+                            <span>Hair Straightening</span>
+                            <span class="text-gold font-semibold">₹4,500+</span>
+                        </div>
+                        <div class="flex justify-between items-center border-b border-gray-700 pb-3">
+                            <span>Hair Spa</span>
+                            <span class="text-gold font-semibold">₹1,000+</span>
+                        </div>
+                        <div class="flex justify-between items-center border-b border-gray-700 pb-3">
+                            <span>Deep Conditioning</span>
+                            <span class="text-gold font-semibold">₹800+</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span>Scalp Treatment</span>
+                            <span class="text-gold font-semibold">₹1,500+</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Nail Care -->
+                <div class="pricing-card bg-gray-800/50 border border-gray-700 rounded-2xl p-6 transition duration-300">
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="w-12 h-12 bg-gold/20 rounded-xl flex items-center justify-center">
+                            <i class="fas fa-hand-sparkles text-gold text-xl"></i>
+                        </div>
+                        <h3 class="font-playfair text-2xl font-semibold">Nail Care</h3>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center border-b border-gray-700 pb-3">
+                            <span>Classic Manicure</span>
+                            <span class="text-gold font-semibold">₹400</span>
+                        </div>
+                        <div class="flex justify-between items-center border-b border-gray-700 pb-3">
+                            <span>Classic Pedicure</span>
+                            <span class="text-gold font-semibold">₹500</span>
+                        </div>
+                        <div class="flex justify-between items-center border-b border-gray-700 pb-3">
+                            <span>Gel Polish</span>
+                            <span class="text-gold font-semibold">₹600+</span>
+                        </div>
+                        <div class="flex justify-between items-center border-b border-gray-700 pb-3">
+                            <span>French Gel</span>
+                            <span class="text-gold font-semibold">₹800+</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span>Nail Art</span>
+                            <span class="text-gold font-semibold">₹200+</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Waxing -->
+                <div class="pricing-card bg-gray-800/50 border border-gray-700 rounded-2xl p-6 transition duration-300">
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="w-12 h-12 bg-gold/20 rounded-xl flex items-center justify-center">
+                            <i class="fas fa-leaf text-gold text-xl"></i>
+                        </div>
+                        <h3 class="font-playfair text-2xl font-semibold">Waxing</h3>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center border-b border-gray-700 pb-3">
+                            <span>Full Arms</span>
+                            <span class="text-gold font-semibold">₹300</span>
+                        </div>
+                        <div class="flex justify-between items-center border-b border-gray-700 pb-3">
+                            <span>Full Legs</span>
+                            <span class="text-gold font-semibold">₹500</span>
+                        </div>
+                        <div class="flex justify-between items-center border-b border-gray-700 pb-3">
+                            <span>Underarms</span>
+                            <span class="text-gold font-semibold">₹100</span>
+                        </div>
+                        <div class="flex justify-between items-center border-b border-gray-700 pb-3">
+                            <span>Full Body</span>
+                            <span class="text-gold font-semibold">₹2,000+</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span>Face Wax</span>
+                            <span class="text-gold font-semibold">₹200</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bridal Package -->
+                <div class="pricing-card bg-gradient-to-br from-gold/20 to-transparent border border-gold/50 rounded-2xl p-6 transition duration-300 relative overflow-hidden">
+                    <div class="absolute top-4 right-4 bg-gold text-black text-xs font-bold px-3 py-1 rounded-full">POPULAR</div>
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="w-12 h-12 bg-gold/30 rounded-xl flex items-center justify-center">
+                            <i class="fas fa-crown text-gold text-xl"></i>
+                        </div>
+                        <h3 class="font-playfair text-2xl font-semibold">Bridal</h3>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center border-b border-gray-700 pb-3">
+                            <span>Bridal Makeup</span>
+                            <span class="text-gold font-semibold">₹15,000+</span>
+                        </div>
+                        <div class="flex justify-between items-center border-b border-gray-700 pb-3">
+                            <span>Bridal Updo</span>
+                            <span class="text-gold font-semibold">₹5,000+</span>
+                        </div>
+                        <div class="flex justify-between items-center border-b border-gray-700 pb-3">
+                            <span>Pre-Bridal Package</span>
+                            <span class="text-gold font-semibold">₹20,000+</span>
+                        </div>
+                        <div class="flex justify-between items-center border-b border-gray-700 pb-3">
+                            <span>Complete Package</span>
+                            <span class="text-gold font-semibold">₹40,000+</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span>Trial Session</span>
+                            <span class="text-gold font-semibold">₹3,000</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <p class="text-center text-gray-500 mt-8 text-sm">* Prices may vary based on hair length and product used. Contact us for exact pricing.</p>
+        </div>
+    </section>
+
+    <!-- Reviews Section -->
+    <section id="reviews" class="py-20 bg-black">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="font-playfair text-4xl md:text-5xl font-bold mb-4">Client <span class="text-gold">Reviews</span></h2>
+                <div class="flex items-center justify-center space-x-4">
+                    <div class="text-5xl font-bold text-gold">4.9</div>
+                    <div>
+                        <div class="star-rating text-xl mb-1">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <p class="text-gray-400">Based on 1,323 reviews</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Rating Bars -->
+            <div class="max-w-md mx-auto mb-12">
+                <div class="flex items-center gap-3 mb-2">
+                    <span class="w-8">5</span>
+                    <div class="flex-1 bg-gray-700 rounded-full h-3">
+                        <div class="bg-gold h-3 rounded-full" style="width: 90%"></div>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3 mb-2">
+                    <span class="w-8">4</span>
+                    <div class="flex-1 bg-gray-700 rounded-full h-3">
+                        <div class="bg-gold h-3 rounded-full" style="width: 7%"></div>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3 mb-2">
+                    <span class="w-8">3</span>
+                    <div class="flex-1 bg-gray-700 rounded-full h-3">
+                        <div class="bg-gold h-3 rounded-full" style="width: 2%"></div>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3 mb-2">
+                    <span class="w-8">2</span>
+                    <div class="flex-1 bg-gray-700 rounded-full h-3">
+                        <div class="bg-gold h-3 rounded-full" style="width: 1%"></div>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3">
+                    <span class="w-8">1</span>
+                    <div class="flex-1 bg-gray-700 rounded-full h-3">
+                        <div class="bg-gold h-3 rounded-full" style="width: 0%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Review Cards -->
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="review-card bg-gray-800/50 border border-gray-700 rounded-2xl p-6">
+                    <div class="star-rating mb-4">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-gray-300 mb-4 italic">"My go to place v nice service all staff are v polite good in their work .... 🙂"</p>
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-gold rounded-full flex items-center justify-center text-black font-bold">R</div>
+                        <div>
+                            <p class="font-semibold">Regular Client</p>
+                            <p class="text-gray-500 text-sm">Google Review</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="review-card bg-gray-800/50 border border-gray-700 rounded-2xl p-6">
+                    <div class="star-rating mb-4">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-gray-300 mb-4 italic">"Been a regular client since ages, luv the services and atmosphere."</p>
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-gold rounded-full flex items-center justify-center text-black font-bold">L</div>
+                        <div>
+                            <p class="font-semibold">Loyal Customer</p>
+                            <p class="text-gray-500 text-sm">Google Review</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="review-card bg-gray-800/50 border border-gray-700 rounded-2xl p-6">
+                    <div class="star-rating mb-4">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-gray-300 mb-4 italic">"I did my pedicure, manicure and french gel polish. Excellent service!"</p>
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-gold rounded-full flex items-center justify-center text-black font-bold">S</div>
+                        <div>
+                            <p class="font-semibold">Satisfied Client</p>
+                            <p class="text-gray-500 text-sm">Google Review</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Booking Section -->
+    <section id="booking" class="py-20 bg-gray-900">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="font-playfair text-4xl md:text-5xl font-bold mb-4">Book an <span class="text-gold">Appointment</span></h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">Schedule your visit online or call us directly</p>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-12">
+                <!-- Booking Form -->
+                <div class="bg-gray-800/50 border border-gray-700 rounded-2xl p-8">
+                    <form id="bookingForm" class="space-y-6">
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Full Name *</label>
+                                <input type="text" required class="w-full bg-gray-700/50 border border-gray-600 rounded-xl px-4 py-3 focus:border-gold focus:outline-none transition" placeholder="Your name">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Phone Number *</label>
+                                <input type="tel" required class="w-full bg-gray-700/50 border border-gray-600 rounded-xl px-4 py-3 focus:border-gold focus:outline-none transition" placeholder="Your phone">
+                            </div>
+                        </div>
+
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Email</label>
+                                <input type="email" class="w-full bg-gray-700/50 border border-gray-600 rounded-xl px-4 py-3 focus:border-gold focus:outline-none transition" placeholder="Your email">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Service *</label>
+                                <select required class="w-full bg-gray-700/50 border border-gray-600 rounded-xl px-4 py-3 focus:border-gold focus:outline-none transition">
+                                    <option value="">Select a service</option>
+                                    <option>Haircut</option>
+                                    <option>Hair Colouring</option>
+                                    <option>Hair Treatment</option>
+                                    <option>Bridal Services</option>
+                                    <option>Manicure</option>
+                                    <option>Pedicure</option>
+                                    <option>Waxing</option>
+                                    <option>Other</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Preferred Date *</label>
+                                <input type="date" required class="w-full bg-gray-700/50 border border-gray-600 rounded-xl px-4 py-3 focus:border-gold focus:outline-none transition">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Preferred Time *</label>
+                                <select required class="w-full bg-gray-700/50 border border-gray-600 rounded-xl px-4 py-3 focus:border-gold focus:outline-none transition">
+                                    <option value="">Select time</option>
+                                    <option>10:00 AM</option>
+                                    <option>11:00 AM</option>
+                                    <option>12:00 PM</option>
+                                    <option>1:00 PM</option>
+                                    <option>2:00 PM</option>
+                                    <option>3:00 PM</option>
+                                    <option>4:00 PM</option>
+                                    <option>5:00 PM</option>
+                                    <option>6:00 PM</option>
+                                    <option>7:00 PM</option>
+                                    <option>8:00 PM</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Special Requests</label>
+                            <textarea rows="3" class="w-full bg-gray-700/50 border border-gray-600 rounded-xl px-4 py-3 focus:border-gold focus:outline-none transition resize-none" placeholder="Any special requests or notes..."></textarea>
+                        </div>
+
+                        <button type="submit" class="w-full gradient-gold text-black py-4 rounded-xl font-semibold text-lg hover:opacity-90 transition flex items-center justify-center space-x-2">
+                            <i class="fas fa-calendar-check"></i>
+                            <span>Book Appointment</span>
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Quick Contact -->
+                <div class="space-y-6">
+                    <div class="bg-gradient-to-br from-gold/20 to-transparent border border-gold/50 rounded-2xl p-8 text-center">
+                        <div class="w-20 h-20 bg-gold/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-phone text-gold text-3xl"></i>
+                        </div>
+                        <h3 class="font-playfair text-2xl font-semibold mb-2">Prefer to Call?</h3>
+                        <p class="text-gray-400 mb-4">Get instant booking over the phone</p>
+                        <a href="tel:09167860528" class="text-gold text-3xl font-bold hover:underline">091678 60528</a>
+                    </div>
+
+                    <div class="bg-gray-800/50 border border-gray-700 rounded-2xl p-6">
+                        <h3 class="font-playfair text-xl font-semibold mb-4">Working Hours</h3>
+                        <div class="space-y-3">
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">Monday - Friday</span>
+                                <span>10:00 AM - 9:00 PM</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">Saturday</span>
+                                <span>10:00 AM - 9:00 PM</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">Sunday</span>
+                                <span>10:00 AM - 8:00 PM</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-gray-800/50 border border-gray-700 rounded-2xl p-6">
+                        <h3 class="font-playfair text-xl font-semibold mb-4">Online Booking</h3>
+                        <p class="text-gray-400 mb-4">Book through our official partner for instant confirmation</p>
+                        <a href="https://dingg.app" target="_blank" class="inline-flex items-center space-x-2 bg-gray-700 hover:bg-gray-600 px-6 py-3 rounded-xl transition">
+                            <i class="fas fa-external-link-alt"></i>
+                            <span>Book on Dingg</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="py-20 bg-black">
+        <div class="max-w-4xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="font-playfair text-4xl md:text-5xl font-bold mb-4">Frequently Asked <span class="text-gold">Questions</span></h2>
+                <p class="text-gray-400">Find answers to common questions about our services</p>
+            </div>
+
+            <div class="space-y-4">
+                <div class="faq-item bg-gray-800/50 border border-gray-700 rounded-2xl overflow-hidden">
+                    <button class="faq-question w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-800/70 transition">
+                        <span class="font-semibold">Do I need to book an appointment in advance?</span>
+                        <i class="faq-icon fas fa-chevron-down text-gold transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-answer px-6 max-h-0 overflow-hidden transition-all duration-300">
+                        <p class="text-gray-400 pb-4">While walk-ins are welcome, we recommend booking an appointment in advance to ensure availability, especially for popular services like hair coloring, treatments, and bridal packages. You can book by calling us or using our online booking system.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item bg-gray-800/50 border border-gray-700 rounded-2xl overflow-hidden">
+                    <button class="faq-question w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-800/70 transition">
+                        <span class="font-semibold">What products do you use for hair treatments?</span>
+                        <i class="faq-icon fas fa-chevron-down text-gold transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-answer px-6 max-h-0 overflow-hidden transition-all duration-300">
+                        <p class="text-gray-400 pb-4">We use only premium, salon-grade products from renowned brands. Our hair coloring services use ammonia-free options when possible, and our keratin treatments are formaldehyde-free for your safety and best results.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item bg-gray-800/50 border border-gray-700 rounded-2xl overflow-hidden">
+                    <button class="faq-question w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-800/70 transition">
+                        <span class="font-semibold">How long does a keratin treatment take?</span>
+                        <i class="faq-icon fas fa-chevron-down text-gold transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-answer px-6 max-h-0 overflow-hidden transition-all duration-300">
+                        <p class="text-gray-400 pb-4">A keratin treatment typically takes 2-4 hours depending on your hair length and thickness. The results last 3-6 months with proper care. We recommend a consultation before the treatment to assess your hair condition.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item bg-gray-800/50 border border-gray-700 rounded-2xl overflow-hidden">
+                    <button class="faq-question w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-800/70 transition">
+                        <span class="font-semibold">Do you offer bridal packages?</span>
+                        <i class="faq-icon fas fa-chevron-down text-gold transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-answer px-6 max-h-0 overflow-hidden transition-all duration-300">
+                        <p class="text-gray-400 pb-4">Yes! We offer comprehensive bridal packages that include pre-bridal treatments, trial sessions, and day-of bridal makeup and hairstyling. Our bridal specialist will work with you to create your perfect wedding look. Contact us for customized packages.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item bg-gray-800/50 border border-gray-700 rounded-2xl overflow-hidden">
+                    <button class="faq-question w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-800/70 transition">
+                        <span class="font-semibold">What payment methods do you accept?</span>
+                        <i class="faq-icon fas fa-chevron-down text-gold transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-answer px-6 max-h-0 overflow-hidden transition-all duration-300">
+                        <p class="text-gray-400 pb-4">We accept cash, all major credit/debit cards, UPI payments (Google Pay, PhonePe, Paytm), and bank transfers. For bridal packages, we also offer flexible payment plans with advance booking.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item bg-gray-800/50 border border-gray-700 rounded-2xl overflow-hidden">
+                    <button class="faq-question w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-800/70 transition">
+                        <span class="font-semibold">Is parking available near the salon?</span>
+                        <i class="faq-icon fas fa-chevron-down text-gold transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-answer px-6 max-h-0 overflow-hidden transition-all duration-300">
+                        <p class="text-gray-400 pb-4">Yes, there is street parking available on Lamington Road and nearby areas. The salon is also easily accessible by public transport - Mumbai Central station is just a short walk away.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-gray-900">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="font-playfair text-4xl md:text-5xl font-bold mb-4">Visit <span class="text-gold">Us</span></h2>
+                <p class="text-gray-400">We'd love to see you!</p>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-8">
+                <!-- Contact Info -->
+                <div class="space-y-6">
+                    <div class="bg-gray-800/50 border border-gray-700 rounded-2xl p-6">
+                        <div class="flex items-start space-x-4">
+                            <div class="w-12 h-12 bg-gold/20 rounded-xl flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-map-marker-alt text-gold text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-lg mb-2">Address</h3>
+                                <p class="text-gray-400">Shop no.9, Ground Floor, 3, Lamington Rd, Navjeevan Society, Navjeevan Area, Dalal Estate, Mumbai Central, Mumbai, Maharashtra 400008</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-gray-800/50 border border-gray-700 rounded-2xl p-6">
+                        <div class="flex items-start space-x-4">
+                            <div class="w-12 h-12 bg-gold/20 rounded-xl flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-phone text-gold text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-lg mb-2">Phone</h3>
+                                <a href="tel:09167860528" class="text-gold text-xl hover:underline">091678 60528</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-gray-800/50 border border-gray-700 rounded-2xl p-6">
+                        <div class="flex items-start space-x-4">
+                            <div class="w-12 h-12 bg-gold/20 rounded-xl flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-clock text-gold text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-lg mb-2">Hours</h3>
+                                <p class="text-green-400 font-semibold">Open Now</p>
+                                <p class="text-gray-400">Closes at 9:00 PM</p>
+                                <p class="text-yellow-500 text-sm mt-2"><i class="fas fa-exclamation-triangle mr-1"></i>Christmas Day might affect these hours</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="grid grid-cols-2 gap-4">
+                        <a href="tel:09167860528" class="gradient-gold text-black py-4 rounded-xl font-semibold text-center hover:opacity-90 transition flex items-center justify-center space-x-2">
+                            <i class="fas fa-phone"></i>
+                            <span>Call</span>
+                        </a>
+                        <a href="https://maps.google.com/?q=KUTS+%26+KOLOR+Luxury+Unisex+Salon+Mumbai" target="_blank" class="bg-gray-700 hover:bg-gray-600 py-4 rounded-xl font-semibold text-center transition flex items-center justify-center space-x-2">
+                            <i class="fas fa-directions"></i>
+                            <span>Directions</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Map -->
+                <div class="bg-gray-800/50 border border-gray-700 rounded-2xl overflow-hidden h-96 lg:h-auto">
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3772.963!2d72.821!3d18.97!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTjCsDU4JzEyLjAiTiA3MsKwNDknMTUuNiJF!5e0!3m2!1sen!2sin!4v1640000000000!5m2!1sen!2sin"
+                        width="100%" 
+                        height="100%" 
+                        style="border:0; min-height: 400px;" 
+                        allowfullscreen="" 
+                        loading="lazy">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-16 gradient-gold">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+            <h2 class="font-playfair text-3xl md:text-4xl font-bold text-black mb-4">Ready to Transform Your Look?</h2>
+            <p class="text-black/70 mb-8 text-lg">Book your appointment today and experience luxury grooming</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="tel:09167860528" class="inline-flex items-center justify-center space-x-2 bg-black text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-gray-800 transition">
+                    <i class="fas fa-phone"></i>
+                    <span>Call 091678 60528</span>
+                </a>
+                <a href="#booking" class="inline-flex items-center justify-center space-x-2 bg-white/20 backdrop-blur text-black px-8 py-4 rounded-full font-semibold text-lg hover:bg-white/30 transition border-2 border-black/20">
+                    <i class="fas fa-calendar-check"></i>
+                    <span>Book Online</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black py-12 border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8 mb-8">
+                <div class="md:col-span-2">
+                    <div class="flex items-center space-x-2 mb-4">
+                        <i class="fas fa-scissors text-gold text-2xl"></i>
+                        <span class="font-playfair text-2xl font-bold">KUTS & <span class="text-gold">KOLOR</span></span>
+                    </div>
+                    <p class="text-gray-400 mb-4">Mumbai's premier luxury unisex salon offering world-class hair, beauty, and grooming services since over a decade.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 bg-gray-800 hover:bg-gold rounded-full flex items-center justify-center transition hover:text-black">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 hover:bg-gold rounded-full flex items-center justify-center transition hover:text-black">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 hover:bg-gold rounded-full flex items-center justify-center transition hover:text-black">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 hover:bg-gold rounded-full flex items-center justify-center transition hover:text-black">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-lg mb-4">Quick Links</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#home" class="hover:text-gold transition">Home</a></li>
+                        <li><a href="#services" class="hover:text-gold transition">Services</a></li>
+                        <li><a href="#gallery" class="hover:text-gold transition">Gallery</a></li>
+                        <li><a href="#pricing" class="hover:text-gold transition">Pricing</a></li>
+                        <li><a href="#booking" class="hover:text-gold transition">Book Now</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-lg mb-4">Services</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#services" class="hover:text-gold transition">Hair Cutting</a></li>
+                        <li><a href="#services" class="hover:text-gold transition">Hair Colouring</a></li>
+                        <li><a href="#services" class="hover:text-gold transition">Hair Treatments</a></li>
+                        <li><a href="#services" class="hover:text-gold transition">Bridal Services</a></li>
+                        <li><a href="#services" class="hover:text-gold transition">Nail Care</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-500 text-sm mb-4 md:mb-0">© 2024 KUTS & KOLOR. All rights reserved.</p>
+                <div class="flex items-center space-x-4 text-gray-500 text-sm">
+                    <span class="flex items-center"><i class="fas fa-map-marker-alt text-gold mr-2"></i>Mumbai Central</span>
+                    <span class="flex items-center"><i class="fas fa-phone text-gold mr-2"></i>091678 60528</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const menuBtn = document.getElementById('menuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu when clicking a link
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Navbar background on scroll
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 100) {
+                nav.classList.add('bg-black');
+            } else {
+                nav.classList.remove('bg-black');
+            }
+        });
+
+        // FAQ Accordion
+        document.querySelectorAll('.faq-question').forEach(button => {
+            button.addEventListener('click', () => {
+                const faqItem = button.parentElement;
+                const isActive = faqItem.classList.contains('active');
+                
+                // Close all FAQ items
+                document.querySelectorAll('.faq-item').forEach(item => {
+                    item.classList.remove('active');
+                });
+                
+                // Open clicked item if it wasn't active
+                if (!isActive) {
+                    faqItem.classList.add('active');
+                }
+            });
+        });
+
+        // Booking form submission
+        document.getElementById('bookingForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thank you for your booking request! We will contact you shortly to confirm your appointment.');
+            this.reset();
+        });
+
+        // Animate elements on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.service-card, .team-card, .pricing-card, .review-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>

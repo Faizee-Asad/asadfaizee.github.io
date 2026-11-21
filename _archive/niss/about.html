@@ -1,0 +1,1109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About Us — NISS | Noor Infotech & Software Solutions</title>
+  <meta name="description" content="Learn about NISS — our story, our team, our values, and why businesses across India trust us to build their digital future. Founded 2010, Malegaon."/>
+  <meta property="og:title" content="About Us — NISS"/>
+  <meta property="og:description" content="Crafting Tomorrow's Technology Today. 14+ years of software excellence from Malegaon, Maharashtra."/>
+  <meta property="og:type" content="website"/>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600;1,700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+
+<style>
+/* ─────────────────────────────────────────
+   TOKENS — identical to homepage
+───────────────────────────────────────── */
+:root{
+  --bg:       #f7f4ef;
+  --bg2:      #edeae3;
+  --white:    #ffffff;
+  --ink:      #1a1714;
+  --ink2:     #4a4540;
+  --ink3:     #8c847c;
+  --orange:   #d4601a;
+  --orange2:  #f07840;
+  --orange-bg:#fff2ea;
+  --dark:     #16120e;
+  --dark2:    #221d18;
+  --border:   rgba(26,23,20,.1);
+  --bsoft:    rgba(26,23,20,.06);
+  --shsm:     0 2px 20px rgba(26,23,20,.07);
+  --shmd:     0 8px 48px rgba(26,23,20,.12);
+  --shlg:     0 20px 80px rgba(26,23,20,.16);
+  --f1:'Cormorant Garamond',Georgia,serif;
+  --f2:'Outfit',system-ui,sans-serif;
+  --ease:cubic-bezier(.16,1,.3,1);
+}
+
+/* ─────────────────────────────────────────
+   RESET
+───────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:var(--f2);
+  font-size:16px;
+  line-height:1.65;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+img{display:block;max-width:100%;height:auto}
+a{color:inherit;text-decoration:none}
+button{font-family:var(--f2);cursor:pointer}
+ul,ol{list-style:none}
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--bg2)}
+::-webkit-scrollbar-thumb{background:var(--orange);border-radius:2px}
+
+/* ─────────────────────────────────────────
+   SHARED UTILITIES
+───────────────────────────────────────── */
+.wrap{width:100%;max-width:1260px;margin:0 auto;padding:0 20px}
+@media(min-width:640px){.wrap{padding:0 32px}}
+@media(min-width:1100px){.wrap{padding:0 48px}}
+
+.tag{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:6px 14px;background:var(--orange-bg);border-radius:100px;
+  font-size:11px;font-weight:700;color:var(--orange);
+  letter-spacing:.1em;text-transform:uppercase;
+}
+.tag::before{content:'';width:5px;height:5px;background:var(--orange);border-radius:50%}
+
+.stitle{
+  font-family:var(--f1);font-size:clamp(30px,4.5vw,54px);font-weight:700;
+  line-height:1.1;letter-spacing:-.01em;color:var(--ink);
+}
+.sdesc{font-size:16px;color:var(--ink2);line-height:1.75;max-width:560px}
+
+/* Reveal */
+.rv{opacity:0;transform:translateY(32px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.rv.in{opacity:1;transform:translateY(0)}
+.d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}
+.d4{transition-delay:.32s}.d5{transition-delay:.40s}.d6{transition-delay:.48s}
+
+/* Buttons */
+.btn-primary{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:13px 26px;background:var(--ink);color:var(--bg);
+  font-size:14px;font-weight:600;border-radius:9px;
+  box-shadow:0 4px 18px rgba(26,23,20,.2);
+  transition:background .2s,transform .2s,box-shadow .2s;
+}
+.btn-primary:hover{background:var(--orange);transform:translateY(-2px);box-shadow:0 8px 28px rgba(212,96,26,.35)}
+.btn-sec{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:13px 26px;background:transparent;color:var(--ink);
+  font-size:14px;font-weight:500;border-radius:9px;
+  border:1.5px solid var(--border);
+  transition:border-color .2s,color .2s,background .2s;
+}
+.btn-sec:hover{border-color:var(--orange);color:var(--orange);background:var(--orange-bg)}
+
+/* ─────────────────────────────────────────
+   NAVBAR
+───────────────────────────────────────── */
+#nav{
+  position:fixed;top:0;left:0;right:0;z-index:500;height:68px;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 20px;
+  background:rgba(247,244,239,.95);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  box-shadow:var(--shsm);
+  transition:box-shadow .4s;
+}
+@media(min-width:640px){#nav{padding:0 32px}}
+@media(min-width:1100px){#nav{padding:0 48px}}
+
+.nl{display:flex;align-items:center;gap:10px}
+.nl-mark{
+  width:38px;height:38px;background:var(--ink);border-radius:9px;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.nl-mark svg{width:20px;height:20px}
+.nl-name{font-family:var(--f1);font-size:20px;font-weight:700;color:var(--ink);letter-spacing:-.02em;line-height:1}
+.nl-sub{display:block;font-family:var(--f2);font-size:9px;font-weight:500;color:var(--ink3);letter-spacing:.12em;text-transform:uppercase;margin-top:1px}
+
+.nlinks{display:none;gap:28px}
+@media(min-width:900px){.nlinks{display:flex}}
+.nlinks a{
+  font-size:14px;font-weight:500;color:var(--ink2);
+  position:relative;padding-bottom:2px;transition:color .2s;
+}
+.nlinks a.active{color:var(--orange)}
+.nlinks a::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:2px;background:var(--orange);border-radius:2px;transition:width .3s var(--ease)}
+.nlinks a.active::after,.nlinks a:hover::after{width:100%}
+.nlinks a:hover{color:var(--ink)}
+
+.ncta{
+  display:none;padding:9px 20px;background:var(--ink);color:#f7f4ef;
+  font-size:13px;font-weight:600;border-radius:8px;
+  transition:background .2s,transform .2s;
+}
+@media(min-width:900px){.ncta{display:inline-flex;align-items:center;gap:6px}}
+.ncta:hover{background:var(--orange);transform:translateY(-1px)}
+
+.hbg{display:flex;flex-direction:column;gap:5px;background:none;border:none;padding:6px}
+@media(min-width:900px){.hbg{display:none}}
+.hbg span{display:block;width:24px;height:2px;background:var(--ink);border-radius:2px;transition:all .32s var(--ease);transform-origin:center}
+.hbg.on span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.hbg.on span:nth-child(2){opacity:0;transform:scaleX(0)}
+.hbg.on span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+/* ─────────────────────────────────────────
+   MOBILE DRAWER
+───────────────────────────────────────── */
+#drawer{
+  position:fixed;inset:0;z-index:499;background:var(--bg);
+  padding:84px 24px 40px;
+  transform:translateX(100%);transition:transform .4s var(--ease);
+  overflow-y:auto;display:flex;flex-direction:column;
+}
+#drawer.on{transform:translateX(0)}
+.dr-list{margin-bottom:32px}
+.dr-list li{border-bottom:1px solid var(--border)}
+.dr-list a{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:18px 0;font-family:var(--f1);font-size:26px;font-weight:700;
+  color:var(--ink);transition:color .2s;
+}
+.dr-list a:hover,.dr-list a.active{color:var(--orange)}
+.dr-list a em{font-style:normal;font-size:18px;opacity:.35}
+.dr-cta{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:15px 28px;background:var(--ink);color:var(--bg);
+  font-size:15px;font-weight:600;border-radius:10px;margin-bottom:32px;
+  transition:background .2s;
+}
+.dr-cta:hover{background:var(--orange)}
+.dr-contact{font-size:13px;color:var(--ink3);line-height:2.2}
+.dr-contact a{color:var(--orange);font-weight:600}
+
+/* ─────────────────────────────────────────
+   PAGE HERO (no canvas — static elegance)
+───────────────────────────────────────── */
+#page-hero{
+  position:relative;
+  padding:140px 20px 80px;
+  background:var(--bg);
+  overflow:hidden;
+}
+@media(min-width:640px){#page-hero{padding:150px 32px 96px}}
+@media(min-width:1100px){#page-hero{padding:160px 48px 108px}}
+
+/* Decorative orbs */
+.ph-orb1,.ph-orb2{
+  position:absolute;border-radius:50%;pointer-events:none;filter:blur(80px);
+}
+.ph-orb1{width:500px;height:500px;top:-120px;right:-80px;background:radial-gradient(circle,rgba(212,96,26,.16),transparent 70%)}
+.ph-orb2{width:400px;height:400px;bottom:-80px;left:-60px;background:radial-gradient(circle,rgba(26,23,20,.06),transparent 70%)}
+
+/* Thin horizontal rule decoration */
+.ph-rule{
+  position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,transparent,var(--orange),transparent);
+  opacity:.5;
+}
+
+.ph-inner{max-width:1260px;margin:0 auto;position:relative;z-index:1}
+
+.ph-breadcrumb{
+  display:flex;align-items:center;gap:8px;
+  font-size:12px;font-weight:600;color:var(--ink3);
+  letter-spacing:.06em;text-transform:uppercase;
+  margin-bottom:24px;
+  opacity:0;transform:translateY(12px);
+  animation:fup .7s var(--ease) .1s forwards;
+}
+.ph-breadcrumb a{color:var(--orange);transition:opacity .2s}
+.ph-breadcrumb a:hover{opacity:.7}
+.ph-breadcrumb span{opacity:.4}
+
+.ph-cols{
+  display:grid;grid-template-columns:1fr;gap:40px;align-items:end;
+}
+@media(min-width:860px){.ph-cols{grid-template-columns:1fr 1fr;gap:64px}}
+
+.ph-left .tag{
+  opacity:0;transform:translateY(14px);
+  animation:fup .8s var(--ease) .18s forwards;
+  margin-bottom:20px;
+}
+.ph-h1{
+  font-family:var(--f1);
+  font-size:clamp(42px,7vw,88px);
+  font-weight:700;line-height:1.02;letter-spacing:-.025em;
+  color:var(--ink);
+  opacity:0;transform:translateY(20px);
+  animation:fup .9s var(--ease) .28s forwards;
+}
+.ph-h1 em{font-style:italic;color:var(--orange)}
+
+.ph-right{
+  opacity:0;transform:translateY(16px);
+  animation:fup .9s var(--ease) .4s forwards;
+}
+.ph-right p{
+  font-size:17px;color:var(--ink2);line-height:1.8;
+  max-width:480px;margin-bottom:28px;
+}
+.ph-right .ph-btns{display:flex;flex-wrap:wrap;gap:12px}
+
+@keyframes fup{to{opacity:1;transform:translateY(0)}}
+
+/* Stat bar under hero */
+.stat-bar{
+  display:flex;flex-wrap:wrap;
+  border-top:1px solid var(--border);
+  margin-top:56px;
+  padding-top:40px;
+  gap:0;
+}
+.sb-item{
+  flex:1;min-width:130px;
+  padding:0 32px 0 0;
+  border-right:1px solid var(--border);
+  opacity:0;transform:translateY(12px);
+  animation:fup .8s var(--ease) forwards;
+}
+.sb-item:last-child{border-right:none;padding-right:0}
+.sb-item:nth-child(1){animation-delay:.55s}
+.sb-item:nth-child(2){animation-delay:.65s}
+.sb-item:nth-child(3){animation-delay:.75s}
+.sb-item:nth-child(4){animation-delay:.85s}
+@media(max-width:540px){
+  .sb-item{flex:0 0 50%;border-right:none;padding:16px 0;border-bottom:1px solid var(--border)}
+  .sb-item:last-child{border-bottom:none}
+}
+.sb-num{font-family:var(--f1);font-size:40px;font-weight:700;color:var(--ink);letter-spacing:-.03em;line-height:1}
+.sb-num span{color:var(--orange)}
+.sb-lbl{font-size:12px;font-weight:600;color:var(--ink3);text-transform:uppercase;letter-spacing:.09em;margin-top:5px}
+
+/* ─────────────────────────────────────────
+   STORY SECTION
+───────────────────────────────────────── */
+#story{padding:96px 0;background:var(--bg)}
+@media(max-width:640px){#story{padding:72px 0}}
+
+.story-grid{
+  display:grid;grid-template-columns:1fr;gap:56px;align-items:center;
+}
+@media(min-width:860px){.story-grid{grid-template-columns:1fr 1fr;gap:80px}}
+
+/* Image mosaic */
+.story-imgs{position:relative;height:460px}
+@media(min-width:480px){.story-imgs{height:520px}}
+@media(min-width:860px){.story-imgs{height:580px}}
+
+.si-a{
+  position:absolute;top:0;left:0;
+  width:72%;height:75%;
+  border-radius:20px;overflow:hidden;box-shadow:var(--shlg);
+}
+.si-a img{width:100%;height:100%;object-fit:cover}
+
+.si-b{
+  position:absolute;bottom:0;right:0;
+  width:50%;height:50%;
+  border-radius:18px;overflow:hidden;box-shadow:var(--shmd);
+  border:5px solid var(--bg);
+}
+.si-b img{width:100%;height:100%;object-fit:cover}
+
+.si-badge{
+  position:absolute;bottom:56px;left:-6px;
+  background:var(--dark);color:var(--bg);
+  border-radius:14px;padding:16px 20px;
+  box-shadow:var(--shmd);z-index:3;
+}
+@media(max-width:380px){.si-badge{left:6px;bottom:32px}}
+.si-year{font-family:var(--f1);font-size:30px;font-weight:700;color:var(--orange);line-height:1}
+.si-label{font-size:10px;color:rgba(247,244,239,.5);letter-spacing:.1em;text-transform:uppercase;margin-top:3px}
+
+/* Story text */
+.story-txt .tag{margin-bottom:16px}
+.story-txt .stitle{margin-bottom:20px}
+.story-txt .sdesc{margin-bottom:14px}
+
+.timeline{margin-top:36px;display:flex;flex-direction:column;gap:0}
+.tl-item{
+  display:flex;gap:20px;align-items:flex-start;
+  padding-bottom:28px;
+  position:relative;
+}
+.tl-item:last-child{padding-bottom:0}
+.tl-item:not(:last-child)::after{
+  content:'';position:absolute;
+  left:15px;top:32px;bottom:0;
+  width:1px;background:var(--border);
+}
+.tl-dot{
+  width:32px;height:32px;border-radius:50%;flex-shrink:0;
+  background:var(--orange-bg);border:2px solid var(--orange);
+  display:flex;align-items:center;justify-content:center;
+  position:relative;z-index:1;
+}
+.tl-dot-inner{width:8px;height:8px;border-radius:50%;background:var(--orange)}
+.tl-body{}
+.tl-year{font-size:11px;font-weight:700;color:var(--orange);letter-spacing:.1em;text-transform:uppercase;margin-bottom:3px}
+.tl-text{font-size:14px;color:var(--ink2);line-height:1.65}
+
+/* ─────────────────────────────────────────
+   VALUES SECTION
+───────────────────────────────────────── */
+#values{padding:96px 0;background:var(--dark)}
+@media(max-width:640px){#values{padding:72px 0}}
+
+.values-head{
+  display:grid;grid-template-columns:1fr;gap:16px;margin-bottom:56px;
+}
+@media(min-width:760px){.values-head{grid-template-columns:1fr 1fr;align-items:end}}
+
+.values-head .tag{background:rgba(212,96,26,.15)}
+.values-head .stitle{color:var(--bg);margin-top:14px}
+
+.val-grid{
+  display:grid;grid-template-columns:1fr;gap:16px;
+}
+@media(min-width:540px){.val-grid{grid-template-columns:1fr 1fr}}
+@media(min-width:960px){.val-grid{grid-template-columns:repeat(4,1fr)}}
+
+.vc{
+  padding:32px 26px;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:18px;
+  transition:background .28s,border-color .28s,transform .28s var(--ease);
+}
+.vc:hover{background:rgba(212,96,26,.1);border-color:rgba(212,96,26,.25);transform:translateY(-4px)}
+.vc-ico{font-size:32px;margin-bottom:18px;line-height:1}
+.vc-t{font-size:17px;font-weight:700;color:var(--bg);margin-bottom:10px;font-family:var(--f1)}
+.vc-d{font-size:13px;color:rgba(247,244,239,.5);line-height:1.7}
+
+/* ─────────────────────────────────────────
+   TEAM SECTION
+───────────────────────────────────────── */
+#team{padding:96px 0;background:var(--bg2)}
+@media(max-width:640px){#team{padding:72px 0}}
+
+.team-head{text-align:center;margin-bottom:56px}
+.team-head .tag{margin-bottom:16px}
+.team-head .stitle{margin-bottom:12px}
+
+.team-grid{
+  display:grid;grid-template-columns:1fr;gap:20px;
+}
+@media(min-width:480px){.team-grid{grid-template-columns:1fr 1fr}}
+@media(min-width:860px){.team-grid{grid-template-columns:repeat(3,1fr)}}
+
+.tm{
+  background:var(--white);border:1px solid var(--bsoft);
+  border-radius:20px;overflow:hidden;box-shadow:var(--shsm);
+  transition:transform .3s var(--ease),box-shadow .3s;
+}
+.tm:hover{transform:translateY(-5px);box-shadow:var(--shlg)}
+
+.tm-img{
+  width:100%;aspect-ratio:4/3;overflow:hidden;background:var(--bg2);
+  position:relative;
+}
+.tm-img img{width:100%;height:100%;object-fit:cover;object-position:center top;transition:transform .5s var(--ease)}
+.tm:hover .tm-img img{transform:scale(1.05)}
+
+.tm-body{padding:22px 24px}
+.tm-name{font-family:var(--f1);font-size:20px;font-weight:700;color:var(--ink);margin-bottom:4px}
+.tm-role{font-size:12px;font-weight:700;color:var(--orange);letter-spacing:.09em;text-transform:uppercase;margin-bottom:10px}
+.tm-bio{font-size:13px;color:var(--ink3);line-height:1.65}
+.tm-skills{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.tm-skill{
+  padding:4px 10px;background:var(--orange-bg);border-radius:100px;
+  font-size:11px;font-weight:600;color:var(--orange);
+}
+
+/* ─────────────────────────────────────────
+   EXPERTISE / SKILLS BAR
+───────────────────────────────────────── */
+#expertise{padding:96px 0;background:var(--bg)}
+@media(max-width:640px){#expertise{padding:72px 0}}
+
+.exp-grid{
+  display:grid;grid-template-columns:1fr;gap:56px;align-items:center;
+}
+@media(min-width:860px){.exp-grid{grid-template-columns:1fr 1fr;gap:72px}}
+
+.exp-txt .tag{margin-bottom:16px}
+.exp-txt .stitle{margin-bottom:16px}
+.exp-txt .sdesc{margin-bottom:32px}
+
+.exp-cats{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px}
+.exp-cat{
+  padding:8px 16px;background:var(--white);
+  border:1px solid var(--border);border-radius:100px;
+  font-size:13px;font-weight:600;color:var(--ink2);
+  box-shadow:var(--shsm);transition:all .2s;
+}
+.exp-cat:hover,.exp-cat.active{background:var(--orange);border-color:var(--orange);color:white}
+
+/* Skills bars */
+.skills{display:flex;flex-direction:column;gap:20px}
+.skill-item{}
+.skill-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.skill-name{font-size:14px;font-weight:600;color:var(--ink)}
+.skill-pct{font-size:13px;font-weight:700;color:var(--orange)}
+.skill-bar{
+  height:6px;background:var(--bg2);border-radius:100px;overflow:hidden;
+}
+.skill-fill{
+  height:100%;border-radius:100px;
+  background:linear-gradient(90deg,var(--orange),var(--orange2));
+  width:0;transition:width 1.2s var(--ease);
+}
+
+/* ─────────────────────────────────────────
+   AWARDS / RECOGNITION
+───────────────────────────────────────── */
+#recognition{padding:96px 0;background:var(--dark2)}
+@media(max-width:640px){#recognition{padding:72px 0}}
+
+.rec-head{text-align:center;margin-bottom:52px}
+.rec-head .tag{background:rgba(212,96,26,.15);margin-bottom:16px}
+.rec-head .stitle{color:var(--bg);margin-bottom:12px}
+.rec-head p{font-size:16px;color:rgba(247,244,239,.5);line-height:1.75;max-width:500px;margin:0 auto}
+
+.rec-grid{
+  display:grid;grid-template-columns:1fr;gap:16px;
+}
+@media(min-width:540px){.rec-grid{grid-template-columns:1fr 1fr}}
+@media(min-width:860px){.rec-grid{grid-template-columns:repeat(4,1fr)}}
+
+.rc{
+  text-align:center;padding:32px 20px;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.07);
+  border-radius:18px;
+  transition:background .28s,border-color .28s,transform .28s var(--ease);
+}
+.rc:hover{background:rgba(212,96,26,.08);border-color:rgba(212,96,26,.2);transform:translateY(-3px)}
+.rc-ico{font-size:36px;margin-bottom:14px;line-height:1}
+.rc-num{
+  font-family:var(--f1);font-size:36px;font-weight:700;
+  color:var(--orange);line-height:1;letter-spacing:-.02em;margin-bottom:6px;
+}
+.rc-num span{color:var(--orange2)}
+.rc-lbl{font-size:13px;color:rgba(247,244,239,.55);line-height:1.5;font-weight:500}
+
+/* ─────────────────────────────────────────
+   CTA BAND
+───────────────────────────────────────── */
+#ctaband{
+  padding:96px 20px;background:var(--bg2);
+  border-top:1px solid var(--border);
+  text-align:center;position:relative;overflow:hidden;
+}
+.cta-orb{
+  position:absolute;width:500px;height:500px;border-radius:50%;
+  background:radial-gradient(circle,rgba(212,96,26,.1),transparent 70%);
+  top:-150px;right:-100px;pointer-events:none;
+}
+.cta-inner{position:relative;z-index:1;max-width:660px;margin:0 auto}
+.cta-t{
+  font-family:var(--f1);font-size:clamp(32px,5vw,58px);font-weight:700;
+  color:var(--ink);line-height:1.1;letter-spacing:-.015em;margin-bottom:16px;
+}
+.cta-t em{font-style:italic;color:var(--orange)}
+.cta-d{font-size:17px;color:var(--ink2);line-height:1.75;margin-bottom:36px;max-width:480px;margin-left:auto;margin-right:auto}
+.cta-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+
+/* ─────────────────────────────────────────
+   FOOTER — identical to homepage
+───────────────────────────────────────── */
+footer{background:var(--dark);padding:60px 20px 28px}
+@media(min-width:640px){footer{padding:72px 32px 32px}}
+@media(min-width:1100px){footer{padding:80px 48px 36px}}
+
+.fg-grid{
+  max-width:1260px;margin:0 auto;
+  display:grid;grid-template-columns:1fr;gap:40px;margin-bottom:48px;
+}
+@media(min-width:540px){.fg-grid{grid-template-columns:1fr 1fr;gap:36px}}
+@media(min-width:860px){.fg-grid{grid-template-columns:2fr 1fr 1fr 1fr;gap:48px}}
+
+.fb-name{font-family:var(--f1);font-size:22px;font-weight:700;color:var(--bg);letter-spacing:-.02em;margin-bottom:10px}
+.fb-tag{font-size:13px;color:rgba(247,244,239,.4);line-height:1.7;max-width:260px;margin-bottom:24px}
+.fbsocs{display:flex;gap:8px}
+.fbs{
+  width:36px;height:36px;border-radius:8px;
+  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);
+  display:flex;align-items:center;justify-content:center;
+  font-size:12px;font-weight:700;color:rgba(247,244,239,.5);
+  transition:background .2s,color .2s,border-color .2s;
+}
+.fbs:hover{background:var(--orange);border-color:var(--orange);color:white}
+.fcol h4{font-size:11px;font-weight:700;color:rgba(247,244,239,.35);letter-spacing:.13em;text-transform:uppercase;margin-bottom:18px}
+.fl{display:flex;flex-direction:column;gap:11px}
+.fl a{font-size:13px;color:rgba(247,244,239,.55);transition:color .2s}
+.fl a:hover{color:var(--orange)}
+.fbot{
+  max-width:1260px;margin:0 auto;
+  padding-top:22px;border-top:1px solid rgba(255,255,255,.07);
+  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;
+}
+.fbot p{font-size:12px;color:rgba(247,244,239,.3)}
+.fbot a{color:var(--orange)}
+
+/* Back to top */
+#btt{
+  position:fixed;bottom:24px;right:24px;z-index:200;
+  width:44px;height:44px;border-radius:11px;
+  background:var(--ink);color:var(--bg);border:none;
+  font-size:18px;display:flex;align-items:center;justify-content:center;
+  box-shadow:var(--shmd);opacity:0;transform:translateY(10px);
+  transition:opacity .3s,transform .3s,background .2s;
+}
+#btt.vis{opacity:1;transform:translateY(0)}
+#btt:hover{background:var(--orange)}
+
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
+  .rv{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════ NAV ══════════ -->
+<nav id="nav" role="navigation" aria-label="Main navigation">
+  <a href="index.html" class="nl" aria-label="NISS Home">
+    <div class="nl-mark">
+      <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M3 17V3L10 13L17 3V17" stroke="#f7f4ef" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div>
+      <div class="nl-name">NISS</div>
+      <span class="nl-sub">Noor Infotech &amp; Software</span>
+    </div>
+  </a>
+
+  <ul class="nlinks" role="list">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html" class="active">About</a></li>
+    <li><a href="services.html">Services</a></li>
+    <li><a href="portfolio.html">Work</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+
+  <a href="contact.html" class="ncta">Get a Quote →</a>
+
+  <button class="hbg" id="hbg" aria-label="Toggle menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- ══════════ MOBILE DRAWER ══════════ -->
+<div id="drawer" aria-hidden="true" role="dialog" aria-label="Navigation menu">
+  <ul class="dr-list">
+    <li><a href="index.html"    class="dl">Home     <em>→</em></a></li>
+    <li><a href="about.html"    class="dl active">About    <em>→</em></a></li>
+    <li><a href="services.html" class="dl">Services <em>→</em></a></li>
+    <li><a href="portfolio.html"class="dl">Work     <em>→</em></a></li>
+    <li><a href="contact.html"  class="dl">Contact  <em>→</em></a></li>
+  </ul>
+  <a href="contact.html" class="dr-cta dl">Start a Project →</a>
+  <div class="dr-contact">
+    <div>📞 <a href="tel:09372239892">093722 39892</a></div>
+    <div>✉️ <a href="mailto:info@noorinfotech.co.in">info@noorinfotech.co.in</a></div>
+  </div>
+</div>
+
+<!-- ══════════ PAGE HERO ══════════ -->
+<div id="page-hero" aria-label="About Us page header">
+  <div class="ph-rule" aria-hidden="true"></div>
+  <div class="ph-orb1" aria-hidden="true"></div>
+  <div class="ph-orb2" aria-hidden="true"></div>
+
+  <div class="ph-inner">
+    <nav class="ph-breadcrumb" aria-label="Breadcrumb">
+      <a href="index.html">Home</a>
+      <span aria-hidden="true">/</span>
+      <span aria-current="page">About Us</span>
+    </nav>
+
+    <div class="ph-cols">
+      <div class="ph-left">
+        <div class="tag">About NISS</div>
+        <h1 class="ph-h1">Built on Code,<br>Driven by <em>Purpose</em></h1>
+      </div>
+      <div class="ph-right">
+        <p>
+          We are a team of passionate developers, designers, and strategists from Malegaon, Maharashtra — crafting digital solutions that solve real business problems since 2010.
+        </p>
+        <div class="ph-btns">
+          <a href="#story" class="btn-primary">Our Story →</a>
+          <a href="contact.html" class="btn-sec">Work With Us</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="stat-bar" role="list" aria-label="Company statistics">
+      <div class="sb-item" role="listitem">
+        <div class="sb-num" data-count="14">0<span>+</span></div>
+        <div class="sb-lbl">Years of Experience</div>
+      </div>
+      <div class="sb-item" role="listitem">
+        <div class="sb-num" data-count="50">0<span>+</span></div>
+        <div class="sb-lbl">Projects Delivered</div>
+      </div>
+      <div class="sb-item" role="listitem">
+        <div class="sb-num" data-count="30">0<span>+</span></div>
+        <div class="sb-lbl">Happy Clients</div>
+      </div>
+      <div class="sb-item" role="listitem">
+        <div class="sb-num">24/7</div>
+        <div class="sb-lbl">Support Available</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ OUR STORY ══════════ -->
+<section id="story">
+  <div class="wrap">
+    <div class="story-grid">
+
+      <!-- Image mosaic -->
+      <div class="story-imgs rv">
+        <div class="si-a">
+          <img
+            src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=800&q=85&auto=format&fit=crop"
+            alt="NISS team collaboration"
+            loading="lazy" decoding="async" width="800" height="600"
+          />
+        </div>
+        <div class="si-b">
+          <img
+            src="https://images.unsplash.com/photo-1531497865144-0464ef8fb9a9?w=600&q=85&auto=format&fit=crop"
+            alt="Strategy and planning session"
+            loading="lazy" decoding="async" width="600" height="450"
+          />
+        </div>
+        <div class="si-badge">
+          <div class="si-year">2010</div>
+          <div class="si-label">Est. Malegaon</div>
+        </div>
+      </div>
+
+      <!-- Story text + timeline -->
+      <div class="story-txt">
+        <div class="tag rv">Our Story</div>
+        <h2 class="stitle rv d1">From a Small Town<br>to a Global Mindset</h2>
+        <p class="sdesc rv d2">
+          NISS was founded in 2010 in Malegaon, Maharashtra, with a simple but ambitious belief — that world-class software doesn't need to come from a big city. It needs to come from talented, dedicated people.
+        </p>
+        <p class="sdesc rv d3">
+          What started as a small web development studio has grown into a full-service IT company, delivering custom software, ERPs, mobile apps, and e-commerce platforms to clients across India and beyond.
+        </p>
+
+        <div class="timeline">
+          <div class="tl-item rv d2">
+            <div class="tl-dot"><div class="tl-dot-inner"></div></div>
+            <div class="tl-body">
+              <div class="tl-year">2010 — Foundation</div>
+              <div class="tl-text">NISS founded in Malegaon. First clients: local businesses needing websites and basic software automation.</div>
+            </div>
+          </div>
+          <div class="tl-item rv d3">
+            <div class="tl-dot"><div class="tl-dot-inner"></div></div>
+            <div class="tl-body">
+              <div class="tl-year">2013 — ERP Growth</div>
+              <div class="tl-text">Expanded into educational ERP solutions. Launched Wigital Campus, now used by multiple institutions.</div>
+            </div>
+          </div>
+          <div class="tl-item rv d4">
+            <div class="tl-dot"><div class="tl-dot-inner"></div></div>
+            <div class="tl-body">
+              <div class="tl-year">2017 — Mobile &amp; E-Commerce</div>
+              <div class="tl-text">Built the Ummid Android app and launched full e-commerce solutions. Client base doubled.</div>
+            </div>
+          </div>
+          <div class="tl-item rv d5">
+            <div class="tl-dot"><div class="tl-dot-inner"></div></div>
+            <div class="tl-body">
+              <div class="tl-year">2024 — Present</div>
+              <div class="tl-text">30+ active clients, 50+ projects delivered. Full-service digital agency with cloud, branding, and SEO capabilities.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ OUR VALUES ══════════ -->
+<section id="values">
+  <div class="wrap">
+    <div class="values-head">
+      <div>
+        <div class="tag rv">Our Values</div>
+        <h2 class="stitle rv d1">What We Stand For</h2>
+      </div>
+      <p class="rv d2" style="font-size:15px;color:rgba(247,244,239,.45);max-width:340px;line-height:1.75">
+        These aren't words on a wall. They shape every project, every meeting, every line of code.
+      </p>
+    </div>
+
+    <div class="val-grid">
+      <div class="vc rv">
+        <div class="vc-ico">🎯</div>
+        <div class="vc-t">Integrity</div>
+        <div class="vc-d">We say what we mean and deliver what we promise. Honest timelines, transparent pricing, no surprises.</div>
+      </div>
+      <div class="vc rv d1">
+        <div class="vc-ico">💡</div>
+        <div class="vc-t">Innovation</div>
+        <div class="vc-d">We stay ahead of the curve — exploring new tools, approaches, and architectures so our clients don't have to.</div>
+      </div>
+      <div class="vc rv d2">
+        <div class="vc-ico">⭐</div>
+        <div class="vc-t">Excellence</div>
+        <div class="vc-d">Good enough is never enough. Every deliverable is tested, refined, and built to perform for years to come.</div>
+      </div>
+      <div class="vc rv d3">
+        <div class="vc-ico">🤝</div>
+        <div class="vc-t">Partnership</div>
+        <div class="vc-d">We don't just build and leave. We become long-term technology partners who grow alongside our clients.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ TEAM ══════════ -->
+<section id="team">
+  <div class="wrap">
+    <div class="team-head">
+      <div class="tag rv">Our People</div>
+      <h2 class="stitle rv d1">Meet the Team</h2>
+      <p class="sdesc rv d2" style="margin:0 auto">
+        The talented people behind every project at NISS.
+      </p>
+    </div>
+
+    <div class="team-grid">
+
+      <div class="tm rv">
+        <div class="tm-img">
+          <img
+            src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&q=85&auto=format&fit=crop"
+            alt="Lead Developer"
+            loading="lazy" decoding="async" width="600" height="450"
+          />
+        </div>
+        <div class="tm-body">
+          <!-- PLACEHOLDER: Replace with actual team member name -->
+          <div class="tm-name">Mohammed Noor</div>
+          <div class="tm-role">Founder &amp; Lead Developer</div>
+          <div class="tm-bio">14+ years building enterprise software. Specialises in C#, .NET, and ERP architecture.</div>
+          <div class="tm-skills">
+            <span class="tm-skill">C# / .NET</span>
+            <span class="tm-skill">SQL Server</span>
+            <span class="tm-skill">ERP</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="tm rv d1">
+        <div class="tm-img">
+          <img
+            src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=600&q=85&auto=format&fit=crop"
+            alt="UI/UX Designer"
+            loading="lazy" decoding="async" width="600" height="450"
+          />
+        </div>
+        <div class="tm-body">
+          <!-- PLACEHOLDER: Replace with actual team member name -->
+          <div class="tm-name">Ayesha Khan</div>
+          <div class="tm-role">UI/UX Designer &amp; Front-End</div>
+          <div class="tm-bio">Creates intuitive, beautiful interfaces that users love. Expert in Figma, HTML, CSS, and JavaScript.</div>
+          <div class="tm-skills">
+            <span class="tm-skill">Figma</span>
+            <span class="tm-skill">HTML/CSS</span>
+            <span class="tm-skill">JavaScript</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="tm rv d2">
+        <div class="tm-img">
+          <img
+            src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=600&q=85&auto=format&fit=crop"
+            alt="Mobile & Backend Developer"
+            loading="lazy" decoding="async" width="600" height="450"
+          />
+        </div>
+        <div class="tm-body">
+          <!-- PLACEHOLDER: Replace with actual team member name -->
+          <div class="tm-name">Zaid Ansari</div>
+          <div class="tm-role">Mobile &amp; Backend Developer</div>
+          <div class="tm-bio">Builds high-performance Android apps and PHP/MySQL backends. Delivered 20+ mobile projects.</div>
+          <div class="tm-skills">
+            <span class="tm-skill">Android</span>
+            <span class="tm-skill">PHP</span>
+            <span class="tm-skill">MySQL</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ EXPERTISE / SKILLS ══════════ -->
+<section id="expertise">
+  <div class="wrap">
+    <div class="exp-grid">
+
+      <div class="exp-txt">
+        <div class="tag rv">Expertise</div>
+        <h2 class="stitle rv d1">Skills That<br>Drive Results</h2>
+        <p class="sdesc rv d2">
+          Our team's technical depth spans the full software development lifecycle — from database architecture and backend systems to beautiful, responsive front-ends and mobile apps.
+        </p>
+        <p class="sdesc rv d3" style="margin-top:12px">
+          We invest continuously in learning, so you always benefit from modern, industry-standard approaches.
+        </p>
+        <div class="exp-cats rv d3">
+          <span class="exp-cat active">All</span>
+          <span class="exp-cat">Web</span>
+          <span class="exp-cat">Mobile</span>
+          <span class="exp-cat">Enterprise</span>
+        </div>
+      </div>
+
+      <div class="skills rv d2">
+        <div class="skill-item">
+          <div class="skill-top"><span class="skill-name">Custom Software (C# / .NET)</span><span class="skill-pct">95%</span></div>
+          <div class="skill-bar"><div class="skill-fill" data-width="95"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-top"><span class="skill-name">Web Development (PHP / JS)</span><span class="skill-pct">92%</span></div>
+          <div class="skill-bar"><div class="skill-fill" data-width="92"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-top"><span class="skill-name">E-Commerce (WooCommerce)</span><span class="skill-pct">90%</span></div>
+          <div class="skill-bar"><div class="skill-fill" data-width="90"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-top"><span class="skill-name">Mobile Apps (Android)</span><span class="skill-pct">85%</span></div>
+          <div class="skill-bar"><div class="skill-fill" data-width="85"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-top"><span class="skill-name">UI/UX Design</span><span class="skill-pct">88%</span></div>
+          <div class="skill-bar"><div class="skill-fill" data-width="88"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-top"><span class="skill-name">SEO &amp; Digital Marketing</span><span class="skill-pct">80%</span></div>
+          <div class="skill-bar"><div class="skill-fill" data-width="80"></div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ RECOGNITION / NUMBERS ══════════ -->
+<section id="recognition">
+  <div class="wrap">
+    <div class="rec-head">
+      <div class="tag rv">By the Numbers</div>
+      <h2 class="stitle rv d1">14 Years of<br>Measurable Impact</h2>
+      <p class="rv d2">Results that speak louder than words.</p>
+    </div>
+    <div class="rec-grid">
+      <div class="rc rv">
+        <div class="rc-ico">🚀</div>
+        <div class="rc-num" data-count="50">0<span>+</span></div>
+        <div class="rc-lbl">Projects delivered across 6+ industries</div>
+      </div>
+      <div class="rc rv d1">
+        <div class="rc-ico">👥</div>
+        <div class="rc-num" data-count="30">0<span>+</span></div>
+        <div class="rc-lbl">Long-term client relationships maintained</div>
+      </div>
+      <div class="rc rv d2">
+        <div class="rc-ico">📱</div>
+        <div class="rc-num" data-count="10">0<span>+</span></div>
+        <div class="rc-lbl">Mobile apps published on Play Store</div>
+      </div>
+      <div class="rc rv d3">
+        <div class="rc-ico">⭐</div>
+        <div class="rc-num" data-count="100">0<span>%</span></div>
+        <div class="rc-lbl">Project completion &amp; delivery rate</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ CTA ══════════ -->
+<div id="ctaband">
+  <div class="cta-orb" aria-hidden="true"></div>
+  <div class="cta-inner rv">
+    <div class="tag" style="margin-bottom:20px">Work With Us</div>
+    <h2 class="cta-t">Ready to Build<br><em>Something Great?</em></h2>
+    <p class="cta-d">Let's turn your idea into a product. Whether you need a simple website or a complex enterprise system — we're ready.</p>
+    <div class="cta-btns">
+      <a href="contact.html" class="btn-primary">Start Your Project →</a>
+      <a href="tel:09372239892" class="btn-sec">📞 Call Us</a>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ FOOTER ══════════ -->
+<footer role="contentinfo">
+  <div class="fg-grid">
+    <div>
+      <div class="fb-name">NISS</div>
+      <p class="fb-tag">Where innovation meets excellence. Custom software &amp; digital solutions from Malegaon to the world.</p>
+      <div class="fbsocs" aria-label="Social media links">
+        <!-- PLACEHOLDER: Replace # with actual social URLs -->
+        <a href="#" class="fbs" aria-label="LinkedIn">in</a>
+        <a href="#" class="fbs" aria-label="Twitter">𝕏</a>
+        <a href="#" class="fbs" aria-label="Facebook">f</a>
+        <a href="#" class="fbs" aria-label="Instagram">ig</a>
+      </div>
+    </div>
+    <div class="fcol">
+      <h4>Services</h4>
+      <div class="fl">
+        <a href="services.html">Software Development</a>
+        <a href="services.html">E-Commerce</a>
+        <a href="services.html">Web Applications</a>
+        <a href="services.html">Web Design</a>
+        <a href="services.html">Mobile Apps</a>
+        <a href="services.html">SEO Services</a>
+      </div>
+    </div>
+    <div class="fcol">
+      <h4>Portfolio</h4>
+      <div class="fl">
+        <a href="https://wigitalcampus.com" target="_blank" rel="noopener">Wigital Campus</a>
+        <a href="https://prcorp.co.in/" target="_blank" rel="noopener">PR Corp</a>
+        <a href="https://archi-athar.com/" target="_blank" rel="noopener">Archi Athar</a>
+        <a href="https://ummid.com/" target="_blank" rel="noopener">Ummid.com</a>
+      </div>
+    </div>
+    <div class="fcol">
+      <h4>Company</h4>
+      <div class="fl">
+        <a href="index.html">Home</a>
+        <a href="about.html">About NISS</a>
+        <a href="portfolio.html">Our Work</a>
+        <a href="contact.html">Contact</a>
+        <a href="https://noorinfotech.co.in/privacy-policy-2/" target="_blank" rel="noopener">Privacy Policy</a>
+      </div>
+    </div>
+  </div>
+  <div class="fbot">
+    <p>© 2024 <a href="index.html">Noor Infotech &amp; Software Solutions</a>. All rights reserved.</p>
+    <p>Malegaon · Maharashtra · India</p>
+  </div>
+</footer>
+
+<button id="btt" aria-label="Back to top">↑</button>
+
+<!-- ══════════════════════════════════════════
+     SCRIPTS
+══════════════════════════════════════════ -->
+<script>
+(function(){
+  'use strict';
+
+  /* ── NAV SCROLL ── */
+  const nav = document.getElementById('nav');
+  const btt = document.getElementById('btt');
+  window.addEventListener('scroll', () => {
+    btt.classList.toggle('vis', scrollY > 500);
+  }, { passive: true });
+
+  /* ── HAMBURGER / DRAWER ── */
+  const hbg = document.getElementById('hbg');
+  const drawer = document.getElementById('drawer');
+  let open = false;
+
+  function toggleDrawer(state) {
+    open = state;
+    hbg.classList.toggle('on', open);
+    hbg.setAttribute('aria-expanded', open);
+    drawer.classList.toggle('on', open);
+    drawer.setAttribute('aria-hidden', !open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+
+  hbg.addEventListener('click', () => toggleDrawer(!open));
+  document.querySelectorAll('.dl').forEach(l => l.addEventListener('click', () => toggleDrawer(false)));
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && open) { toggleDrawer(false); hbg.focus(); }
+  });
+
+  /* ── SMOOTH ANCHOR SCROLL ── */
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', function(e) {
+      const t = document.querySelector(this.getAttribute('href'));
+      if (!t) return;
+      e.preventDefault();
+      window.scrollTo({ top: t.getBoundingClientRect().top + scrollY - 68, behavior: 'smooth' });
+    });
+  });
+
+  /* ── REVEAL ── */
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(en => { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.rv').forEach(el => io.observe(el));
+
+  /* ── COUNTERS ── */
+  const co = new IntersectionObserver(entries => {
+    entries.forEach(en => {
+      if (!en.isIntersecting) return;
+      const el = en.target, target = +el.getAttribute('data-count');
+      const suf = el.querySelector('span') ? el.querySelector('span').outerHTML : '';
+      const dur = 1600, t0 = performance.now();
+      function tick(now) {
+        const p = Math.min((now - t0) / dur, 1);
+        el.innerHTML = Math.round((1 - Math.pow(1 - p, 3)) * target) + suf;
+        if (p < 1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+      co.unobserve(el);
+    });
+  }, { threshold: 0.5 });
+  document.querySelectorAll('[data-count]').forEach(el => co.observe(el));
+
+  /* ── SKILL BARS — animate when visible ── */
+  const barIO = new IntersectionObserver(entries => {
+    entries.forEach(en => {
+      if (!en.isIntersecting) return;
+      en.target.querySelectorAll('.skill-fill').forEach(bar => {
+        const w = bar.getAttribute('data-width');
+        setTimeout(() => { bar.style.width = w + '%'; }, 200);
+      });
+      barIO.unobserve(en.target);
+    });
+  }, { threshold: 0.3 });
+  const skillsSection = document.querySelector('.skills');
+  if (skillsSection) barIO.observe(skillsSection);
+
+  /* ── BACK TO TOP ── */
+  btt.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+})();
+</script>
+
+</body>
+</html>

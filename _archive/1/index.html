@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>izen.lol Bypass Tool</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="hero">
+      <h1>izen.lol Bypass</h1>
+      <p class="subtitle">Paste a URL. Bypass link shorteners, file locks, and redirects.</p>
+    </header>
+
+    <section class="card config">
+      <div class="card-head">
+        <h2>Configuration</h2>
+        <button id="toggleKey" class="link-btn" type="button">Show</button>
+      </div>
+      <label class="field">
+        <span class="label">API Key</span>
+        <div class="input-wrap">
+          <input
+            id="apiKey"
+            type="password"
+            placeholder="x-api-key"
+            autocomplete="off"
+            spellcheck="false"
+          />
+          <button id="saveKey" class="btn ghost" type="button">Save</button>
+        </div>
+        <span id="keyStatus" class="hint">Stored locally in your browser.</span>
+      </label>
+    </section>
+
+    <section class="card">
+      <div class="card-head">
+        <h2>Bypass a Link</h2>
+        <div class="modes" role="tablist">
+          <button class="mode active" data-mode="bypass" type="button">Bypass</button>
+          <button class="mode" data-mode="refresh" type="button">Force Refresh</button>
+        </div>
+      </div>
+
+      <label class="field">
+        <span class="label">Target URL</span>
+        <div class="input-wrap">
+          <input
+            id="targetUrl"
+            type="url"
+            placeholder="https://example.com/some/locked/link"
+            spellcheck="false"
+          />
+          <button id="runBtn" class="btn primary" type="button">
+            <span class="btn-label">Run</span>
+            <span class="spinner" aria-hidden="true"></span>
+          </button>
+        </div>
+      </label>
+
+      <div class="endpoint">
+        <span class="endpoint-label">Endpoint</span>
+        <code id="endpointPreview">/v1/bypass?url=…</code>
+      </div>
+
+      <div id="resultBox" class="result hidden">
+        <div class="result-head">
+          <span class="dot" id="statusDot"></span>
+          <span id="statusText">—</span>
+          <button id="copyBtn" class="link-btn" type="button">Copy result</button>
+        </div>
+        <pre id="resultBody" class="result-body"></pre>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="card-head">
+        <h2>Supported Services</h2>
+        <button id="loadServices" class="btn ghost" type="button">Load list</button>
+      </div>
+      <div id="servicesBox" class="services empty">
+        Click <strong>Load list</strong> to fetch supported services.
+      </div>
+    </section>
+
+    <footer class="foot">
+      <span>API base: <code>https://api.izen.lol</code></span>
+      <span>•</span>
+      <span>Key is saved in <code>localStorage</code></span>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

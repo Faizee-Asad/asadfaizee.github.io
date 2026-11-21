@@ -49,17 +49,21 @@ All tools run live at [asadfaizee.is-a.dev/tools](https://asadfaizee.is-a.dev/to
 
 ## Repository Structure
 
+Only the portfolio, the daauc clinic page and the tools are published.
+Everything else was built just to save, and now sits inside one
+`_archive/` folder — nothing is deleted, it simply is not live.
+
 ```
 .
-├── index.html        # Portfolio homepage
-├── services.html     # Website & SEO service plans
-├── tools/            # Free online tools (listed above)
-├── projects/         # Project / client demo pages
-├── daauc/            # The daauc page (live)
-├── _archive/         # Index of saved-but-unpublished work (see below)
-├── projects/ demos/ experiments/ niss/ and other demo folders
-│                     # Saved in this repo only — NOT published.
-│                     # Publishing is controlled by _config.yml (see STRUCTURE.md)
+├── index.html        # Portfolio homepage (live)
+├── services.html     # Website & SEO service plans (live)
+├── tools/            # Free online tools (live)
+├── daauc/            # Dr. Abdul Awwal Unani Clinic page (live)
+├── _archive/         # Saved, NOT published: projects/, demos/,
+│                     # experiments/, niss/ site copy, 1/, LITHOS/
+├── KRO-FLITE/  STUDIO/  NINJUTSU-CREATIVE/  neo/
+│                     # Photo/video folders — saved in root but
+│                     # unpublished via _config.yml
 ├── css/  js/  img/   # Styles, scripts and images
 └── fonts/            # Web fonts
 ```

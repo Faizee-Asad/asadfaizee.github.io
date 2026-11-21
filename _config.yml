@@ -1,28 +1,16 @@
-# Publishing control for asadfaizee.is-a.dev
+# GitHub Pages (Jekyll) settings for asadfaizee.github.io
 #
-# LIVE on the site: the portfolio (index.html, services.html),
-# the daauc page (daauc/) and the free tools (tools/).
+# Sirf portfolio, daauc aur tools live hain.
+# Baaki saara purana kaam _archive/ folder ke andar save hai
+# (underscore wale folder GitHub Pages publish hi nahi karta).
 #
-# Everything in the exclude list below stays saved in this repository
-# but is NOT published on the live site.
-# To publish something again, remove its line from this list and push.
-
+# Photo/video wale ye folders abhi root me hain, isliye inhe yahan
+# band rakha gaya hai. Jab ye _archive/ ke andar chale jayenge to
+# in lines ki zaroorat nahi rahegi:
 exclude:
   - _archive
-  - projects
-  - demos
-  - experiments
-  - niss
-  - "1"
-  - LITHOS
   - KRO-FLITE
   - STUDIO
   - NINJUTSU-CREATIVE
   - neo
-  - Aurora.html
-  - Aurora.md
-  - noor.html
-  - niss-service.html
-  - qr-cloud.html
-  - bd.html
   - STRUCTURE.md

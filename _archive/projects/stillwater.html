@@ -1,0 +1,1856 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stillwater · A Yoga Studio in Cobble Hill</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=Inter:wght@300;400;500&display=swap">
+<style>
+  :root {
+    --sand:        #e3d5c1;
+    --sand-deep:   #c9b89e;
+    --sage:        #8a9a87;
+    --sage-deep:   #5d6e5a;
+    --cream:       #f4ede0;
+    --cream-bright:#faf5ec;
+    --cream-soft:  #efe6d4;
+    --terracotta:  #b16a48;
+    --terracotta-deep: #8e4f33;
+    --dusk-pink:   #d4a5a0;
+    --ink:         #2c2620;
+    --ink-soft:    #4a4036;
+    --ink-mute:    #7a6e60;
+    --line:        rgba(44, 38, 32, 0.14);
+    --line-soft:   rgba(44, 38, 32, 0.07);
+    --ease-quiet:    cubic-bezier(.22, 1, .36, 1);
+    --ease-precise:  cubic-bezier(.4, 0, .2, 1);
+    --ease-emphasis: cubic-bezier(.16, 1, .3, 1);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    font-weight: 300;
+    line-height: 1.75;
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+  ::selection { background: var(--terracotta); color: var(--cream-bright); }
+
+  /* ─────── Linen grain overlay ─────── */
+  .grain {
+    position: fixed; inset: 0;
+    pointer-events: none;
+    z-index: 9998;
+    opacity: 0.5;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.17 0 0 0 0 0.15 0 0 0 0 0.12 0 0 0 0.08 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  }
+
+  /* ─────── Topbar ─────── */
+  .topbar {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(244, 237, 224, 0.86);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--line-soft);
+    transition: background 600ms var(--ease-quiet);
+  }
+  .topbar__inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 1.1rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+  .brand {
+    display: flex; align-items: center; gap: 0.7rem;
+    text-decoration: none;
+    color: var(--ink);
+  }
+  .brand__mark {
+    width: 22px; height: 22px;
+    position: relative;
+    border-radius: 50%;
+    border: 1px solid var(--ink);
+  }
+  .brand__mark::before {
+    content: '';
+    position: absolute;
+    inset: 4px;
+    border-radius: 50%;
+    background: var(--terracotta);
+    animation: brand-breath 8s ease-in-out infinite;
+  }
+  @keyframes brand-breath {
+    0%, 100% { transform: scale(0.55); opacity: 0.6; }
+    50% { transform: scale(1); opacity: 1; }
+  }
+  .brand__name {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: 1.15rem;
+    letter-spacing: 0.01em;
+    font-variation-settings: "opsz" 14;
+  }
+  .nav {
+    display: flex;
+    gap: 2.2rem;
+  }
+  .nav a {
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    text-decoration: none;
+    font-weight: 400;
+    transition: color 400ms var(--ease-quiet);
+    position: relative;
+  }
+  .nav a::after {
+    content: '';
+    position: absolute;
+    left: 0; right: 0; bottom: -6px;
+    height: 1px;
+    background: var(--terracotta);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 500ms var(--ease-quiet);
+  }
+  .nav a:hover { color: var(--ink); }
+  .nav a:hover::after { transform: scaleX(1); }
+  .sound-toggle {
+    background: none;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 0.55rem 1rem 0.55rem 0.7rem;
+    display: flex; align-items: center; gap: 0.55rem;
+    cursor: pointer;
+    color: var(--ink-soft);
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 500;
+    transition: all 500ms var(--ease-quiet);
+  }
+  .sound-toggle:hover { border-color: var(--terracotta); color: var(--terracotta); }
+  .sound-toggle.is-on { background: var(--terracotta); color: var(--cream-bright); border-color: var(--terracotta); }
+  .sound-toggle svg { display: block; }
+  .sound-toggle .sound-wave { opacity: 0; transition: opacity 400ms; transform-origin: center; }
+  .sound-toggle.is-on .sound-wave { opacity: 1; animation: wave 1.4s ease-in-out infinite; }
+  .sound-toggle.is-on .wave-2 { animation-delay: 0.2s; }
+  @keyframes wave {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 1; }
+  }
+
+  /* ─────── Section frame ─────── */
+  section { position: relative; }
+  .section-head {
+    max-width: 880px;
+    margin: 0 auto;
+    text-align: center;
+    padding: 0 2rem;
+  }
+  .section-label {
+    display: inline-block;
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--terracotta);
+    margin-bottom: 2rem;
+  }
+  .section-title {
+    font-family: 'Fraunces', serif;
+    font-weight: 300;
+    font-variation-settings: "opsz" 144;
+    font-size: clamp(2.6rem, 6vw, 4.6rem);
+    line-height: 1.05;
+    letter-spacing: -0.015em;
+    color: var(--ink);
+    margin-bottom: 2rem;
+  }
+  .section-title em {
+    font-style: italic;
+    font-weight: 300;
+    color: var(--sage-deep);
+  }
+  .section-lead {
+    font-family: 'Fraunces', serif;
+    font-weight: 300;
+    font-style: italic;
+    font-size: clamp(1.05rem, 1.4vw, 1.2rem);
+    line-height: 1.7;
+    color: var(--ink-soft);
+    max-width: 580px;
+    margin: 0 auto;
+  }
+
+  /* ─────── Fade-up entrance ─────── */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(36px);
+    transition: opacity 1000ms var(--ease-quiet), transform 1000ms var(--ease-quiet);
+    will-change: transform, opacity;
+  }
+  .fade-up.is-in { opacity: 1; transform: none; }
+  .fade-up.delay-1 { transition-delay: 120ms; }
+  .fade-up.delay-2 { transition-delay: 240ms; }
+  .fade-up.delay-3 { transition-delay: 360ms; }
+  .fade-up.delay-4 { transition-delay: 480ms; }
+
+  /* ─────── HERO ─────── */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+    color: var(--cream-bright);
+    padding: 8rem 2rem 6rem;
+  }
+  .hero__media {
+    position: absolute; inset: 0;
+    overflow: hidden;
+    z-index: 0;
+  }
+  .hero__img-wrap {
+    position: absolute;
+    inset: -3%;
+    will-change: transform;
+    animation: hero-breath 8s ease-in-out infinite alternate;
+  }
+  .hero__img-wrap img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    filter: brightness(0.78) saturate(0.85) contrast(0.95);
+  }
+  @keyframes hero-breath {
+    0%   { transform: scale(1.00) translate(0%, 0%); }
+    100% { transform: scale(1.06) translate(-1.2%, -1.2%); }
+  }
+  .hero__veil {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse at 50% 60%, transparent 0%, rgba(40, 32, 24, 0.35) 70%, rgba(30, 22, 16, 0.7) 100%),
+      linear-gradient(180deg, rgba(40, 32, 24, 0.45) 0%, transparent 35%, transparent 65%, rgba(30, 22, 16, 0.55) 100%);
+    z-index: 1;
+  }
+  .hero__beam {
+    position: absolute; inset: 0;
+    background:
+      linear-gradient(115deg,
+        transparent 22%,
+        rgba(255, 232, 200, 0.16) 28%,
+        transparent 35%,
+        transparent 52%,
+        rgba(255, 232, 200, 0.10) 60%,
+        transparent 67%
+      );
+    mix-blend-mode: screen;
+    pointer-events: none;
+    z-index: 2;
+  }
+  .hero__content {
+    position: relative;
+    z-index: 3;
+    max-width: 920px;
+  }
+  .hero__label {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.36em;
+    text-transform: uppercase;
+    color: rgba(244, 237, 224, 0.78);
+    margin-bottom: 3.5rem;
+  }
+  .hero__label span {
+    display: inline-block;
+    width: 28px; height: 1px;
+    background: rgba(244, 237, 224, 0.5);
+    vertical-align: middle;
+    margin: 0 1rem;
+  }
+  .hero__title {
+    font-family: 'Fraunces', serif;
+    font-weight: 300;
+    font-variation-settings: "opsz" 144;
+    font-size: clamp(4rem, 14vw, 11rem);
+    line-height: 0.95;
+    letter-spacing: -0.025em;
+    margin-bottom: 1.8rem;
+    color: var(--cream-bright);
+  }
+  .hero__tag {
+    font-family: 'Fraunces', serif;
+    font-weight: 300;
+    font-style: italic;
+    font-variation-settings: "opsz" 24;
+    font-size: clamp(1.05rem, 1.6vw, 1.3rem);
+    line-height: 1.65;
+    color: rgba(244, 237, 224, 0.85);
+    max-width: 480px;
+    margin: 0 auto 3.5rem;
+  }
+  .hero__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.15rem 2.4rem;
+    border: 1px solid rgba(244, 237, 224, 0.45);
+    color: var(--cream-bright);
+    text-decoration: none;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    border-radius: 999px;
+    background: rgba(244, 237, 224, 0.04);
+    transition: all 600ms var(--ease-quiet);
+  }
+  .hero__cta:hover {
+    background: var(--cream-bright);
+    color: var(--ink);
+    border-color: var(--cream-bright);
+  }
+  .hero__cta .arrow {
+    display: inline-block;
+    transition: transform 500ms var(--ease-quiet);
+  }
+  .hero__cta:hover .arrow { transform: translateX(6px); }
+  .hero__scroll {
+    position: absolute;
+    bottom: 2.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    z-index: 3;
+    color: rgba(244, 237, 224, 0.7);
+    font-size: 10px;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+  .hero__scrollline {
+    width: 1px;
+    height: 50px;
+    background: rgba(244, 237, 224, 0.25);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero__scrollline::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: 0;
+    width: 100%;
+    height: 50%;
+    background: rgba(244, 237, 224, 0.8);
+    animation: scrollline 2.6s var(--ease-quiet) infinite;
+  }
+  @keyframes scrollline {
+    0% { top: -50%; }
+    100% { top: 100%; }
+  }
+
+  /* ─────── PRACTICES ─────── */
+  .practices {
+    padding: 10rem 2rem 10rem;
+    background: var(--cream);
+  }
+  .practices__grid {
+    max-width: 1280px;
+    margin: 6rem auto 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0;
+    border-top: 1px solid var(--line);
+  }
+  .practice {
+    padding: 4rem 3rem;
+    border-bottom: 1px solid var(--line);
+    border-right: 1px solid var(--line);
+    position: relative;
+    transition: background 700ms var(--ease-quiet);
+  }
+  .practice:nth-child(2n) { border-right: none; }
+  .practice:last-child, .practice:nth-last-child(2) { border-bottom: none; }
+  .practice:hover { background: var(--cream-soft); }
+  .practice__num {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.32em;
+    color: var(--terracotta);
+    margin-bottom: 2.5rem;
+  }
+  .practice__name {
+    font-family: 'Fraunces', serif;
+    font-weight: 300;
+    font-variation-settings: "opsz" 90;
+    font-size: clamp(2.4rem, 3.5vw, 3.2rem);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin-bottom: 0.5rem;
+  }
+  .practice__sanskrit {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 1rem;
+    color: var(--sage-deep);
+    margin-bottom: 2rem;
+  }
+  .practice__desc {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+    line-height: 1.75;
+    color: var(--ink-soft);
+    max-width: 380px;
+    margin-bottom: 2.5rem;
+  }
+  .practice__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    font-weight: 500;
+  }
+  .practice__meta span {
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+  .practice__meta span::before {
+    content: '';
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    background: var(--sage);
+  }
+
+  /* ─────── TEACHERS ─────── */
+  .teachers {
+    padding: 10rem 2rem;
+    background: var(--cream-soft);
+    position: relative;
+  }
+  .teachers__grid {
+    max-width: 1280px;
+    margin: 6rem auto 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3rem;
+  }
+  .teacher {
+    background: var(--cream-bright);
+    border-radius: 4px;
+    overflow: hidden;
+    transition: transform 800ms var(--ease-quiet), box-shadow 800ms var(--ease-quiet);
+    cursor: pointer;
+  }
+  .teacher:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 24px 50px -28px rgba(44, 38, 32, 0.18);
+  }
+  .teacher__photo {
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+    position: relative;
+    background: var(--sand);
+  }
+  .teacher__photo img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    filter: saturate(0.85) contrast(0.95);
+    transition: transform 1400ms var(--ease-quiet);
+  }
+  .teacher:hover .teacher__photo img {
+    transform: scale(1.06);
+  }
+  .teacher__photo::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, transparent 50%, rgba(60, 50, 40, 0.18) 100%);
+    pointer-events: none;
+  }
+  .teacher__body {
+    padding: 2rem 1.8rem 2.4rem;
+  }
+  .teacher__name {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-variation-settings: "opsz" 60;
+    font-size: 1.6rem;
+    line-height: 1.1;
+    color: var(--ink);
+    margin-bottom: 0.4rem;
+  }
+  .teacher__role {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--sage-deep);
+    font-weight: 500;
+    margin-bottom: 1.6rem;
+  }
+  .teacher__quote-wrap {
+    position: relative;
+    min-height: 90px;
+    padding-top: 1.4rem;
+    border-top: 1px solid var(--line-soft);
+  }
+  .teacher__prompt {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 0.92rem;
+    color: var(--ink-mute);
+    transition: opacity 500ms var(--ease-quiet);
+  }
+  .teacher__prompt::before {
+    content: '↳ ';
+    color: var(--terracotta);
+    font-style: normal;
+  }
+  .teacher.is-typing .teacher__prompt { opacity: 0; }
+  .teacher__quote {
+    position: absolute;
+    top: 1.4rem; left: 0; right: 0;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 0.95rem;
+    line-height: 1.65;
+    color: var(--ink);
+    opacity: 0;
+    transition: opacity 400ms var(--ease-quiet);
+  }
+  .teacher__quote::before {
+    content: '"';
+    color: var(--terracotta);
+    font-size: 1.4em;
+    line-height: 0;
+    vertical-align: -0.1em;
+    margin-right: 0.1em;
+  }
+  .teacher.is-typing .teacher__quote { opacity: 1; }
+  .teacher__quote-cursor {
+    display: inline-block;
+    width: 2px;
+    height: 1em;
+    background: var(--terracotta);
+    vertical-align: text-bottom;
+    margin-left: 1px;
+    animation: cursor 1s steps(2) infinite;
+  }
+  @keyframes cursor {
+    50% { opacity: 0; }
+  }
+
+  /* ─────── SCHEDULE ─────── */
+  .schedule {
+    padding: 10rem 2rem;
+    background: var(--cream);
+  }
+  .schedule__list {
+    max-width: 1180px;
+    margin: 6rem auto 0;
+    border-top: 1px solid var(--line);
+  }
+  .sched-day-header {
+    display: grid;
+    grid-template-columns: 100px 110px 1fr 130px 180px 30px;
+    gap: 1.5rem;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--line-soft);
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    font-weight: 500;
+  }
+  .sched-row {
+    border-bottom: 1px solid var(--line-soft);
+    transition: background 500ms var(--ease-quiet);
+  }
+  .sched-row:hover { background: var(--cream-soft); }
+  .sched-row.is-open { background: var(--cream-soft); }
+  .sched-row__main {
+    display: grid;
+    grid-template-columns: 100px 110px 1fr 130px 180px 30px;
+    gap: 1.5rem;
+    padding: 1.8rem 1.5rem;
+    align-items: center;
+    cursor: pointer;
+  }
+  .sched-day {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: 1.15rem;
+    color: var(--ink);
+  }
+  .sched-time {
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    color: var(--ink-soft);
+    font-weight: 400;
+    letter-spacing: 0.02em;
+  }
+  .sched-class {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: 1.2rem;
+    color: var(--ink);
+    line-height: 1.2;
+  }
+  .sched-class em {
+    font-style: italic;
+    color: var(--ink-mute);
+    font-size: 0.85rem;
+    font-weight: 300;
+    margin-left: 0.4rem;
+  }
+  .sched-teacher {
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    color: var(--ink-soft);
+    letter-spacing: 0.04em;
+  }
+  .sched-seats {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+  .dots {
+    display: inline-flex;
+    gap: 4px;
+  }
+  .dots i {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--sage);
+    display: block;
+  }
+  .dots i.off {
+    background: transparent;
+    border: 1px solid var(--line);
+    width: 5px; height: 5px;
+    margin: 1px;
+  }
+  .seats-text {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    color: var(--ink-mute);
+    letter-spacing: 0.06em;
+    font-variant-numeric: tabular-nums;
+  }
+  .seats-text.is-low { color: var(--terracotta); }
+  .sched-expand {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    border: 1px solid var(--line);
+    display: flex; align-items: center; justify-content: center;
+    transition: all 500ms var(--ease-quiet);
+    color: var(--ink-soft);
+    font-size: 14px;
+    font-weight: 300;
+  }
+  .sched-row:hover .sched-expand { border-color: var(--terracotta); color: var(--terracotta); }
+  .sched-row.is-open .sched-expand {
+    background: var(--terracotta);
+    border-color: var(--terracotta);
+    color: var(--cream-bright);
+    transform: rotate(45deg);
+  }
+  .sched-row__detail {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 700ms var(--ease-quiet);
+  }
+  .sched-row.is-open .sched-row__detail {
+    max-height: 360px;
+  }
+  .sched-detail__inner {
+    padding: 0 1.5rem 2.4rem;
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    gap: 1rem 3rem;
+    border-top: 1px dashed var(--line-soft);
+    padding-top: 1.6rem;
+    margin-top: 0.4rem;
+  }
+  .sched-detail__inner > div {
+    display: contents;
+  }
+  .sched-detail__inner dt {
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    font-weight: 500;
+    padding-top: 0.15rem;
+  }
+  .sched-detail__inner dd {
+    font-family: 'Fraunces', serif;
+    font-weight: 300;
+    font-size: 1rem;
+    color: var(--ink);
+    line-height: 1.55;
+  }
+  .sched-detail__inner dd em {
+    font-style: italic;
+    color: var(--sage-deep);
+  }
+
+  /* ─────── FIRST CLASS FREE ─────── */
+  .signup {
+    padding: 10rem 2rem 12rem;
+    background: var(--sand);
+    position: relative;
+    overflow: hidden;
+  }
+  .signup::before {
+    content: '';
+    position: absolute;
+    top: -10%; right: -10%;
+    width: 50%; height: 70%;
+    background: radial-gradient(circle, rgba(212, 165, 160, 0.4) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .signup::after {
+    content: '';
+    position: absolute;
+    bottom: -10%; left: -10%;
+    width: 50%; height: 70%;
+    background: radial-gradient(circle, rgba(138, 154, 135, 0.25) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .signup__inner {
+    max-width: 1180px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: start;
+    position: relative;
+    z-index: 2;
+  }
+  .signup__text { padding-top: 1rem; }
+  .signup__text .section-label,
+  .signup__text .section-title,
+  .signup__text .section-lead {
+    text-align: left;
+    margin-left: 0;
+  }
+  .signup__text .section-title em { color: var(--terracotta-deep); }
+  .signup__list {
+    list-style: none;
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--line);
+  }
+  .signup__list li {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 300;
+    color: var(--ink-soft);
+    padding: 0.7rem 0;
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+  .signup__list li::before {
+    content: '·';
+    color: var(--terracotta);
+    margin-right: 0.7rem;
+    font-style: normal;
+    font-size: 1.4em;
+    vertical-align: -0.15em;
+  }
+  .signup__form {
+    background: var(--cream-bright);
+    padding: 3rem 2.6rem;
+    border-radius: 6px;
+    box-shadow: 0 30px 60px -40px rgba(44, 38, 32, 0.2);
+  }
+  .signup__form label {
+    display: block;
+    margin-bottom: 1.6rem;
+  }
+  .signup__form label span {
+    display: block;
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    font-weight: 500;
+    margin-bottom: 0.6rem;
+  }
+  .signup__form input,
+  .signup__form select,
+  .signup__form textarea {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--line);
+    padding: 0.6rem 0;
+    font-family: 'Fraunces', serif;
+    font-weight: 300;
+    font-size: 1.1rem;
+    color: var(--ink);
+    transition: border-color 500ms var(--ease-quiet);
+    border-radius: 0;
+  }
+  .signup__form textarea {
+    resize: vertical;
+    min-height: 60px;
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+  .signup__form input:focus,
+  .signup__form select:focus,
+  .signup__form textarea:focus {
+    outline: none;
+    border-color: var(--terracotta);
+  }
+  .signup__form input::placeholder,
+  .signup__form textarea::placeholder {
+    color: var(--ink-mute);
+    font-style: italic;
+  }
+  .signup__btn {
+    width: 100%;
+    background: var(--ink);
+    color: var(--cream-bright);
+    border: none;
+    padding: 1.2rem 2rem;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 999px;
+    margin-top: 1rem;
+    transition: all 600ms var(--ease-quiet);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8rem;
+  }
+  .signup__btn:hover {
+    background: var(--terracotta);
+  }
+  .signup__btn .arrow { transition: transform 500ms var(--ease-quiet); }
+  .signup__btn:hover .arrow { transform: translateX(4px); }
+  .signup__note {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 0.85rem;
+    color: var(--ink-mute);
+    text-align: center;
+    margin-top: 1.4rem;
+    line-height: 1.5;
+  }
+
+  /* ─────── FOOTER ─────── */
+  footer {
+    background: var(--ink);
+    color: var(--cream);
+    padding: 6rem 2rem 2rem;
+    position: relative;
+  }
+  .footer__inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr 1fr;
+    gap: 3rem;
+    padding-bottom: 4rem;
+    border-bottom: 1px solid rgba(244, 237, 224, 0.12);
+  }
+  .footer__brand .footer-name {
+    font-family: 'Fraunces', serif;
+    font-weight: 300;
+    font-variation-settings: "opsz" 90;
+    font-size: 2.4rem;
+    line-height: 1;
+    margin-bottom: 1.4rem;
+    letter-spacing: -0.02em;
+  }
+  .footer__brand p {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 300;
+    color: rgba(244, 237, 224, 0.7);
+    line-height: 1.7;
+    max-width: 320px;
+    font-size: 0.95rem;
+  }
+  .footer__col h4 {
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: rgba(244, 237, 224, 0.5);
+    margin-bottom: 1.5rem;
+  }
+  .footer__col ul { list-style: none; }
+  .footer__col li {
+    font-family: 'Fraunces', serif;
+    font-weight: 300;
+    color: rgba(244, 237, 224, 0.85);
+    line-height: 1.9;
+    font-size: 1rem;
+  }
+  .footer__col li.em {
+    font-style: italic;
+    color: rgba(244, 237, 224, 0.6);
+    font-size: 0.88rem;
+  }
+  .footer__base {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding-top: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    color: rgba(244, 237, 224, 0.4);
+  }
+
+  /* ─────── Breath guide ─────── */
+  .breath-guide {
+    position: fixed;
+    bottom: 1.8rem; left: 1.8rem;
+    z-index: 90;
+    display: flex; align-items: center;
+    gap: 0.8rem;
+    pointer-events: none;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 1200ms var(--ease-quiet) 2s, transform 1200ms var(--ease-quiet) 2s;
+  }
+  .breath-guide.is-in { opacity: 1; transform: none; }
+  .breath-orb {
+    width: 11px; height: 11px;
+    border-radius: 50%;
+    background: var(--terracotta);
+    animation: breath-orb 8s ease-in-out infinite;
+    box-shadow: 0 0 0 1px rgba(177, 106, 72, 0.2);
+  }
+  @keyframes breath-orb {
+    0%, 100% { transform: scale(0.6); opacity: 0.55; box-shadow: 0 0 0 0px rgba(177, 106, 72, 0.2); }
+    50% { transform: scale(1.6); opacity: 1; box-shadow: 0 0 0 8px rgba(177, 106, 72, 0.05); }
+  }
+  .breath-info {
+    display: flex; flex-direction: column;
+    line-height: 1.2;
+  }
+  .breath-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  .breath-phase {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 0.78rem;
+    color: var(--ink-mute);
+    margin-top: 2px;
+  }
+
+  /* ─────── Sound toast ─────── */
+  .sound-toast {
+    position: fixed;
+    bottom: 1.5rem;
+    left: 50%;
+    transform: translateX(-50%) translateY(140%);
+    background: var(--ink);
+    color: var(--cream-bright);
+    padding: 0.9rem 0.9rem 0.9rem 1.4rem;
+    border-radius: 999px;
+    display: flex; align-items: center;
+    gap: 1rem;
+    z-index: 200;
+    box-shadow: 0 18px 40px -15px rgba(44, 38, 32, 0.4);
+    transition: transform 800ms var(--ease-emphasis);
+    max-width: calc(100% - 2rem);
+  }
+  .sound-toast.is-shown {
+    transform: translateX(-50%) translateY(0);
+  }
+  .sound-toast__text {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 0.92rem;
+    line-height: 1.3;
+  }
+  .sound-toast__btns { display: flex; gap: 0.5rem; }
+  .sound-toast__btn {
+    background: var(--cream-bright);
+    color: var(--ink);
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 999px;
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 400ms var(--ease-quiet);
+  }
+  .sound-toast__btn:hover { background: var(--terracotta); color: var(--cream-bright); }
+  .sound-toast__btn.secondary {
+    background: transparent;
+    color: rgba(244, 237, 224, 0.7);
+    border: 1px solid rgba(244, 237, 224, 0.2);
+  }
+  .sound-toast__btn.secondary:hover {
+    background: rgba(244, 237, 224, 0.08);
+    color: var(--cream-bright);
+  }
+
+  /* ─────── Responsive ─────── */
+  @media (max-width: 960px) {
+    .topbar__inner { padding: 0.9rem 1.5rem; }
+    .nav { display: none; }
+    .sound-toggle__label { display: none; }
+    .sound-toggle { padding: 0.55rem; }
+
+    .hero { padding: 7rem 1.5rem 5rem; }
+    .hero__title { font-size: clamp(3.5rem, 18vw, 6rem); }
+
+    .practices, .teachers, .schedule, .signup { padding: 6rem 1.5rem; }
+    .section-head { padding: 0 0; }
+    .practices__grid { grid-template-columns: 1fr; margin-top: 4rem; }
+    .practice { padding: 3rem 1.5rem; border-right: none; }
+    .practice:last-child { border-bottom: none; }
+
+    .teachers__grid { grid-template-columns: 1fr; gap: 2rem; margin-top: 4rem; }
+
+    .sched-day-header { display: none; }
+    .sched-row__main {
+      grid-template-columns: 70px 1fr;
+      grid-template-areas:
+        "day class"
+        "time teacher"
+        "time seats"
+        "expand expand";
+      gap: 0.5rem 1rem;
+      padding: 1.4rem 1rem;
+    }
+    .sched-day { grid-area: day; font-size: 1rem; }
+    .sched-time { grid-area: time; font-size: 12px; }
+    .sched-class { grid-area: class; font-size: 1.05rem; }
+    .sched-teacher { grid-area: teacher; }
+    .sched-seats { grid-area: seats; }
+    .sched-expand { grid-area: expand; margin-top: 0.6rem; }
+    .sched-detail__inner { grid-template-columns: 1fr; padding: 0 1rem 2rem; gap: 0.4rem 0; }
+    .sched-detail__inner dt { padding-top: 0.8rem; }
+
+    .signup__inner { grid-template-columns: 1fr; gap: 3rem; }
+    .signup__form { padding: 2rem 1.5rem; }
+
+    .footer__inner { grid-template-columns: 1fr 1fr; gap: 2rem; }
+
+    .breath-guide { bottom: 1.2rem; left: 1.2rem; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.1ms !important;
+    }
+    .hero__img-wrap { animation: none; }
+    .breath-orb { animation: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="grain"></div>
+
+<!-- ───────── Topbar ───────── -->
+<header class="topbar">
+  <div class="topbar__inner">
+    <a href="#top" class="brand">
+      <span class="brand__mark"></span>
+      <span class="brand__name">Stillwater</span>
+    </a>
+    <nav class="nav">
+      <a href="#practices">Practices</a>
+      <a href="#teachers">Teachers</a>
+      <a href="#schedule">Schedule</a>
+      <a href="#signup">First Class</a>
+    </nav>
+    <button class="sound-toggle" id="soundToggle" aria-label="Toggle ambient sound">
+      <span class="sound-toggle__icon">
+        <svg width="14" height="14" viewBox="0 0 14 14">
+          <path d="M2 5 L2 9 L5 9 L8 12 L8 2 L5 5 Z" fill="currentColor"/>
+          <path class="sound-wave wave-1" d="M9.8 4 Q11.5 7 9.8 10" stroke="currentColor" fill="none" stroke-width="0.8" stroke-linecap="round"/>
+          <path class="sound-wave wave-2" d="M11.5 2.4 Q14 7 11.5 11.6" stroke="currentColor" fill="none" stroke-width="0.8" stroke-linecap="round"/>
+        </svg>
+      </span>
+      <span class="sound-toggle__label" id="soundLabel">Sound · Off</span>
+    </button>
+  </div>
+</header>
+
+<!-- ───────── Hero ───────── -->
+<section class="hero" id="top">
+  <div class="hero__media">
+    <div class="hero__img-wrap">
+      <img src="https://picsum.photos/seed/yoga-morning-light-studio-window/2400/1600" alt="Soft morning light through tall windows onto a wooden studio floor">
+    </div>
+    <div class="hero__veil"></div>
+    <div class="hero__beam"></div>
+  </div>
+  <div class="hero__content">
+    <div class="hero__label fade-up">A Yoga Studio<span></span>Cobble Hill, Brooklyn<span></span>Est. 2014</div>
+    <h1 class="hero__title fade-up delay-1">Stillwater</h1>
+    <p class="hero__tag fade-up delay-2">Slow practice for fast lives. Eight mats to a room, one breath at a time, taught by people who have done this for twenty years.</p>
+    <a href="#signup" class="hero__cta fade-up delay-3">
+      <span>Reserve a mat</span>
+      <span class="arrow">→</span>
+    </a>
+  </div>
+  <div class="hero__scroll fade-up delay-4">
+    <span>scroll</span>
+    <div class="hero__scrollline"></div>
+  </div>
+</section>
+
+<!-- ───────── Practices ───────── -->
+<section class="practices" id="practices">
+  <header class="section-head">
+    <span class="section-label fade-up">02 · Practices</span>
+    <h2 class="section-title fade-up delay-1">Four ways<br><em>to come home.</em></h2>
+    <p class="section-lead fade-up delay-2">Each room holds eight mats at most. No music. No mirrors. No teacher calling out corrections from across the room. Just breath, slow movement, and the long quiet that follows.</p>
+  </header>
+
+  <div class="practices__grid">
+    <article class="practice fade-up">
+      <div class="practice__num">— 01</div>
+      <h3 class="practice__name">Vinyasa</h3>
+      <p class="practice__sanskrit"><em>nyāsa · to place, with care</em></p>
+      <p class="practice__desc">Movement woven to the breath in a slow, intelligent sequence. We build heat without urgency — one pose revealed at a time, never more than your body is ready to receive today.</p>
+      <div class="practice__meta">
+        <span>60 minutes</span>
+        <span>Sun Room</span>
+        <span>All levels</span>
+      </div>
+    </article>
+
+    <article class="practice fade-up delay-1">
+      <div class="practice__num">— 02</div>
+      <h3 class="practice__name">Yin</h3>
+      <p class="practice__sanskrit"><em>the hidden, the inward</em></p>
+      <p class="practice__desc">Long-held floor poses, three to seven minutes each, that gently stress the deep connective tissue of hips, spine, and pelvis. A practice of patience — the body opens when it is ready, not before.</p>
+      <div class="practice__meta">
+        <span>75 minutes</span>
+        <span>Cedar Room</span>
+        <span>All levels</span>
+      </div>
+    </article>
+
+    <article class="practice fade-up">
+      <div class="practice__num">— 03</div>
+      <h3 class="practice__name">Restorative</h3>
+      <p class="practice__sanskrit"><em>to make whole again</em></p>
+      <p class="practice__desc">Twenty poses in ninety minutes, almost all of them on the floor, fully supported by bolsters, blankets, and blocks. The nervous system is given the conditions to leave alert mode. Nothing is asked of you.</p>
+      <div class="practice__meta">
+        <span>90 minutes</span>
+        <span>Sun Room</span>
+        <span>Six mats only</span>
+      </div>
+    </article>
+
+    <article class="practice fade-up delay-1">
+      <div class="practice__num">— 04</div>
+      <h3 class="practice__name">Breathwork</h3>
+      <p class="practice__sanskrit"><em>prāṇāyāma · the extension of breath</em></p>
+      <p class="practice__desc">Forty-five minutes of guided breathing, lying down, eyes covered. We work with three patterns — balancing, lengthening, and release — and let the breath do what it has always known how to do.</p>
+      <div class="practice__meta">
+        <span>45 minutes</span>
+        <span>Sun Room</span>
+        <span>Beginner friendly</span>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ───────── Teachers ───────── -->
+<section class="teachers" id="teachers">
+  <header class="section-head">
+    <span class="section-label fade-up">03 · Teachers</span>
+    <h2 class="section-title fade-up delay-1">The people<br><em>who hold the room.</em></h2>
+    <p class="section-lead fade-up delay-2">Three teachers, forty-one years of practice between them. Hover over any card to read why they still teach.</p>
+  </header>
+
+  <div class="teachers__grid">
+    <article class="teacher" data-quote="I came to yoga in 2003, after a car accident that ended my running. The first six months I cried in every savasana. I teach because movement is the oldest language I know — older than words, older than thought. When a student finds the breath inside a pose, I have done my work.">
+      <div class="teacher__photo">
+        <img src="https://picsum.photos/seed/yoga-teacher-anya-portrait/600/750" alt="Anya Perrin, lead teacher">
+      </div>
+      <div class="teacher__body">
+        <h3 class="teacher__name">Anya Perrin</h3>
+        <div class="teacher__role">Vinyasa · Lead Teacher · 21 yrs</div>
+        <div class="teacher__quote-wrap">
+          <p class="teacher__prompt">hover to read my why</p>
+          <blockquote class="teacher__quote"></blockquote>
+        </div>
+      </div>
+    </article>
+
+    <article class="teacher" data-quote="Stillness is not the absence of motion. It is the listening that motion leaves behind. I teach yin because most of us have been told, our whole lives, that to rest is to fail. The mat is one of the last places we are allowed to do nothing — and to find that doing nothing is, in fact, the work.">
+      <div class="teacher__photo">
+        <img src="https://picsum.photos/seed/yoga-teacher-marcus-portrait/600/750" alt="Marcus Reed, yin and restorative teacher">
+      </div>
+      <div class="teacher__body">
+        <h3 class="teacher__name">Marcus Reed</h3>
+        <div class="teacher__role">Yin · Restorative · 14 yrs</div>
+        <div class="teacher__quote-wrap">
+          <p class="teacher__prompt">hover to read my why</p>
+          <blockquote class="teacher__quote"></blockquote>
+        </div>
+      </div>
+    </article>
+
+    <article class="teacher" data-quote="The breath always knows. It knew before the meeting went badly, it knew before the email you wish you hadn't sent. My job is not to fix anyone's breathing — it is to make the room quiet enough, and the time long enough, that you can hear what yours has been trying to tell you for years.">
+      <div class="teacher__photo">
+        <img src="https://picsum.photos/seed/yoga-teacher-iris-portrait/600/750" alt="Iris Tanaka, breathwork teacher">
+      </div>
+      <div class="teacher__body">
+        <h3 class="teacher__name">Iris Tanaka</h3>
+        <div class="teacher__role">Breathwork · Meditation · 9 yrs</div>
+        <div class="teacher__quote-wrap">
+          <p class="teacher__prompt">hover to read my why</p>
+          <blockquote class="teacher__quote"></blockquote>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ───────── Schedule ───────── -->
+<section class="schedule" id="schedule">
+  <header class="section-head">
+    <span class="section-label fade-up">04 · Week of October 14</span>
+    <h2 class="section-title fade-up delay-1">This week<br><em>at Stillwater.</em></h2>
+    <p class="section-lead fade-up delay-2">Eight mats per class. Six in restorative. Tap a row to see the room and what to bring.</p>
+  </header>
+
+  <div class="schedule__list fade-up delay-1">
+    <div class="sched-day-header">
+      <div>Day</div>
+      <div>Time</div>
+      <div>Class</div>
+      <div>Teacher</div>
+      <div>Seats</div>
+      <div></div>
+    </div>
+
+    <div class="sched-row" data-room="Sun Room · 74°F · north-facing with tall windows">
+      <div class="sched-row__main">
+        <div class="sched-day">Mon</div>
+        <div class="sched-time">7:00 AM</div>
+        <div class="sched-class">Slow Vinyasa</div>
+        <div class="sched-teacher">Anya Perrin</div>
+        <div class="sched-seats">
+          <span class="dots"><i></i><i></i><i></i><i class="off"></i><i class="off"></i><i class="off"></i><i class="off"></i><i class="off"></i></span>
+          <span class="seats-text">3 / 8</span>
+        </div>
+        <div class="sched-expand">+</div>
+      </div>
+      <dl class="sched-row__detail">
+        <div class="sched-detail__inner">
+          <dt>Room</dt><dd>Sun Room · 74°F · <em>north-facing with tall windows</em></dd>
+          <dt>Bring</dt><dd>Water. We provide the mat, two blankets, and a bolster. <em>Arrive ten minutes early.</em></dd>
+          <dt>Prep</dt><dd>Light breakfast is fine. No perfume, please — we share the air.</dd>
+        </div>
+      </dl>
+    </div>
+
+    <div class="sched-row" data-room="Cedar Room · 68°F · cool and quiet">
+      <div class="sched-row__main">
+        <div class="sched-day">Mon</div>
+        <div class="sched-time">6:30 PM</div>
+        <div class="sched-class">Restorative <em>· full</em></div>
+        <div class="sched-teacher">Marcus Reed</div>
+        <div class="sched-seats">
+          <span class="dots"><i></i><i></i><i></i><i></i><i></i><i></i></span>
+          <span class="seats-text is-low">6 / 6 · waitlist</span>
+        </div>
+        <div class="sched-expand">+</div>
+      </div>
+      <dl class="sched-row__detail">
+        <div class="sched-detail__inner">
+          <dt>Room</dt><dd>Cedar Room · 68°F · <em>cool, north-facing, low light</em></dd>
+          <dt>Bring</dt><dd>Socks and a long-sleeve layer. You will be still for long stretches. <em>Everything else is provided.</em></dd>
+          <dt>Prep</dt><dd>Avoid caffeine for two hours beforehand. Empty stomach is ideal but not required.</dd>
+        </div>
+      </dl>
+    </div>
+
+    <div class="sched-row" data-room="Sun Room">
+      <div class="sched-row__main">
+        <div class="sched-day">Tue</div>
+        <div class="sched-time">7:00 AM</div>
+        <div class="sched-class">Slow Vinyasa</div>
+        <div class="sched-teacher">Anya Perrin</div>
+        <div class="sched-seats">
+          <span class="dots"><i></i><i></i><i></i><i></i><i></i><i class="off"></i><i class="off"></i><i class="off"></i></span>
+          <span class="seats-text">5 / 8</span>
+        </div>
+        <div class="sched-expand">+</div>
+      </div>
+      <dl class="sched-row__detail">
+        <div class="sched-detail__inner">
+          <dt>Room</dt><dd>Sun Room · 74°F · <em>north-facing with tall windows</em></dd>
+          <dt>Bring</dt><dd>Water. Mat and props provided. <em>Arrive ten minutes early.</em></dd>
+          <dt>Prep</dt><dd>Light breakfast is fine. No perfume, please.</dd>
+        </div>
+      </dl>
+    </div>
+
+    <div class="sched-row" data-room="Cedar Room">
+      <div class="sched-row__main">
+        <div class="sched-day">Tue</div>
+        <div class="sched-time">12:00 PM</div>
+        <div class="sched-class">Midday Reset <em>· 45 min</em></div>
+        <div class="sched-teacher">Marcus Reed</div>
+        <div class="sched-seats">
+          <span class="dots"><i></i><i></i><i></i><i></i><i class="off"></i><i class="off"></i><i class="off"></i><i class="off"></i></span>
+          <span class="seats-text">4 / 8</span>
+        </div>
+        <div class="sched-expand">+</div>
+      </div>
+      <dl class="sched-row__detail">
+        <div class="sched-detail__inner">
+          <dt>Room</dt><dd>Cedar Room · 70°F</dd>
+          <dt>Bring</dt><dd>Comfortable clothes you can move in. <em>Perfect for the lunch hour.</em></dd>
+          <dt>Prep</dt><dd>A mix of gentle flow, breathwork, and a long savasana. Designed to fit into a workday.</dd>
+        </div>
+      </dl>
+    </div>
+
+    <div class="sched-row" data-room="Sun Room">
+      <div class="sched-row__main">
+        <div class="sched-day">Tue</div>
+        <div class="sched-time">7:30 PM</div>
+        <div class="sched-class">Breathwork</div>
+        <div class="sched-teacher">Iris Tanaka</div>
+        <div class="sched-seats">
+          <span class="dots"><i></i><i></i><i></i><i></i><i></i><i></i><i class="off"></i><i class="off"></i><i class="off"></i><i class="off"></i></span>
+          <span class="seats-text">6 / 10</span>
+        </div>
+        <div class="sched-expand">+</div>
+      </div>
+      <dl class="sched-row__detail">
+        <div class="sched-detail__inner">
+          <dt>Room</dt><dd>Sun Room · 72°F · <em>candles, eye pillows, low light</em></dd>
+          <dt>Bring</dt><dd>Nothing. Everything is provided. <em>Wear layers — body temperature drops.</em></dd>
+          <dt>Prep</dt><dd>Avoid eating heavily for two hours before. Caffeine will make this harder.</dd>
+        </div>
+      </dl>
+    </div>
+
+    <div class="sched-row" data-room="Cedar Room">
+      <div class="sched-row__main">
+        <div class="sched-day">Wed</div>
+        <div class="sched-time">7:00 AM</div>
+        <div class="sched-class">Yin</div>
+        <div class="sched-teacher">Marcus Reed</div>
+        <div class="sched-seats">
+          <span class="dots"><i></i><i class="off"></i><i class="off"></i><i class="off"></i><i class="off"></i><i class="off"></i></span>
+          <span class="seats-text">1 / 6</span>
+        </div>
+        <div class="sched-expand">+</div>
+      </div>
+      <dl class="sched-row__detail">
+        <div class="sched-detail__inner">
+          <dt>Room</dt><dd>Cedar Room · 70°F · <em>quiet, low light</em></dd>
+          <dt>Bring</dt><dd>Layers. Two blankets and a bolster are at your mat. <em>Arrive ten minutes early.</em></dd>
+          <dt>Prep</dt><dd>Warm muscles respond better — a hot shower beforehand helps.</dd>
+        </div>
+      </dl>
+    </div>
+
+    <div class="sched-row" data-room="Sun Room">
+      <div class="sched-row__main">
+        <div class="sched-day">Wed</div>
+        <div class="sched-time">6:30 PM</div>
+        <div class="sched-class">Slow Vinyasa <em>· 75 min</em></div>
+        <div class="sched-teacher">Anya Perrin</div>
+        <div class="sched-seats">
+          <span class="dots"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="off"></i></span>
+          <span class="seats-text is-low">7 / 8</span>
+        </div>
+        <div class="sched-expand">+</div>
+      </div>
+      <dl class="sched-row__detail">
+        <div class="sched-detail__inner">
+          <dt>Room</dt><dd>Sun Room · 75°F</dd>
+          <dt>Bring</dt><dd>Water and a hand towel. <em>Mat and props provided.</em></dd>
+          <dt>Prep</dt><dd>Our flagship 75-minute sequence. Expect long holds and patient transitions.</dd>
+        </div>
+      </dl>
+    </div>
+
+    <div class="sched-row" data-room="Sun Room">
+      <div class="sched-row__main">
+        <div class="sched-day">Thu</div>
+        <div class="sched-time">7:30 PM</div>
+        <div class="sched-class">Breathwork <em>· 60 min</em></div>
+        <div class="sched-teacher">Iris Tanaka</div>
+        <div class="sched-seats">
+          <span class="dots"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="off"></i><i class="off"></i></span>
+          <span class="seats-text is-low">8 / 10</span>
+        </div>
+        <div class="sched-expand">+</div>
+      </div>
+      <dl class="sched-row__detail">
+        <div class="sched-detail__inner">
+          <dt>Room</dt><dd>Sun Room · 72°F · <em>candles, low light</em></dd>
+          <dt>Bring</dt><dd>Layers. <em>Eye pillow and blanket provided.</em></dd>
+          <dt>Prep</dt><dd>Empty-ish stomach. No caffeine for three hours.</dd>
+        </div>
+      </dl>
+    </div>
+
+    <div class="sched-row" data-room="Sun Room">
+      <div class="sched-row__main">
+        <div class="sched-day">Sat</div>
+        <div class="sched-time">9:00 AM</div>
+        <div class="sched-class">Long Practice <em>· 120 min · both rooms</em></div>
+        <div class="sched-teacher">Anya &amp; Iris</div>
+        <div class="sched-seats">
+          <span class="dots"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="off"></i><i class="off"></i><i class="off"></i></span>
+          <span class="seats-text is-low">9 / 12</span>
+        </div>
+        <div class="sched-expand">+</div>
+      </div>
+      <dl class="sched-row__detail">
+        <div class="sched-detail__inner">
+          <dt>Room</dt><dd>Both rooms open · <em>followed by tea in the kitchen</em></dd>
+          <dt>Bring</dt><dd>Layers, water, and a friend if you like. <em>Stay for tea afterward.</em></dd>
+          <dt>Prep</dt><dd>Two hours of slow vinyasa, long yin, breathwork, and a twenty-minute savasana. The week's anchor.</dd>
+        </div>
+      </dl>
+    </div>
+
+    <div class="sched-row" data-room="Cedar Room">
+      <div class="sched-row__main">
+        <div class="sched-day">Sun</div>
+        <div class="sched-time">9:00 AM</div>
+        <div class="sched-class">Restorative</div>
+        <div class="sched-teacher">Marcus Reed</div>
+        <div class="sched-seats">
+          <span class="dots"><i></i><i></i><i></i><i></i><i class="off"></i><i class="off"></i></span>
+          <span class="seats-text">4 / 6</span>
+        </div>
+        <div class="sched-expand">+</div>
+      </div>
+      <dl class="sched-row__detail">
+        <div class="sched-detail__inner">
+          <dt>Room</dt><dd>Cedar Room · 68°F · <em>cool and dim</em></dd>
+          <dt>Bring</dt><dd>Socks, a long-sleeve layer. <em>Everything else provided.</em></dd>
+          <dt>Prep</dt><dd>The slowest class of the week. Ninety minutes, almost entirely on the floor.</dd>
+        </div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<!-- ───────── First Class Free ───────── -->
+<section class="signup" id="signup">
+  <div class="signup__inner">
+    <div class="signup__text">
+      <span class="section-label fade-up">05 · First Class Free</span>
+      <h2 class="section-title fade-up delay-1">Come sit<br><em>with us.</em></h2>
+      <p class="section-lead fade-up delay-2">Your first class is on us. No card. No commitment. Just a mat by the window, an hour that is yours alone, and tea afterward if you'd like to stay.</p>
+      <ul class="signup__list fade-up delay-3">
+        <li>Choose any class, any teacher, any room.</li>
+        <li>Mat, two blankets, a bolster, and towel — all provided.</li>
+        <li>We will write you back within a day, by hand.</li>
+        <li>Parking validated. Bike room in the back.</li>
+      </ul>
+    </div>
+
+    <form class="signup__form fade-up delay-2" onsubmit="event.preventDefault(); document.getElementById('submitBtn').textContent = 'thank you — we will write back soon'; this.querySelector('input,select,textarea').blur();">
+      <label>
+        <span>Your name</span>
+        <input type="text" name="name" placeholder="First and last" required>
+      </label>
+      <label>
+        <span>Email</span>
+        <input type="email" name="email" placeholder="you@home.com" required>
+      </label>
+      <label>
+        <span>Preferred day</span>
+        <select name="day">
+          <option>Weekday morning</option>
+          <option>Weekday midday</option>
+          <option>Weekday evening</option>
+          <option>Saturday Long Practice</option>
+          <option>Sunday Restorative</option>
+          <option>Not sure — please advise</option>
+        </select>
+      </label>
+      <label>
+        <span>Anything we should know? <em style="font-style:italic;color:var(--ink-mute);text-transform:none;letter-spacing:0;font-size:11px;">(optional)</em></span>
+        <textarea name="notes" rows="3" placeholder="Injuries, experience, what you are looking for..."></textarea>
+      </label>
+      <button type="submit" class="signup__btn" id="submitBtn">
+        <span>Reserve my first mat</span>
+        <span class="arrow">→</span>
+      </button>
+      <p class="signup__note">No credit card. No confirmation email until Iris writes you back, by hand.</p>
+    </form>
+  </div>
+</section>
+
+<!-- ───────── Footer ───────── -->
+<footer>
+  <div class="footer__inner">
+    <div class="footer__brand">
+      <div class="footer-name">Stillwater</div>
+      <p>A small yoga studio on Henry Street, between a bakery and a bookshop. Two rooms. Eight mats each. Open since the autumn of 2014.</p>
+    </div>
+    <div class="footer__col">
+      <h4>Visit</h4>
+      <ul>
+        <li>116 Henry Street</li>
+        <li>Cobble Hill, Brooklyn</li>
+        <li class="em">NY 11201</li>
+        <li class="em">718 · 555 · 0142</li>
+      </ul>
+    </div>
+    <div class="footer__col">
+      <h4>Hours</h4>
+      <ul>
+        <li>Mon–Fri · 6:30a–8:30p</li>
+        <li>Saturday · 8:00a–6:00p</li>
+        <li>Sunday · 8:00a–4:00p</li>
+        <li class="em">Closed in August</li>
+      </ul>
+    </div>
+    <div class="footer__col">
+      <h4>Quietly</h4>
+      <ul>
+        <li>Instagram</li>
+        <li>Substack · letters</li>
+        <li class="em">No apps. No push.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer__base">
+    <span>© Stillwater Studio · MMXIV</span>
+    <span>Two rooms · Eight mats · One breath</span>
+  </div>
+</footer>
+
+<!-- ───────── Breath guide ───────── -->
+<div class="breath-guide" id="breathGuide">
+  <div class="breath-orb"></div>
+  <div class="breath-info">
+    <span class="breath-label" id="breathLabel">Inhale</span>
+    <span class="breath-phase" id="breathPhase">slow · 4 — 4</span>
+  </div>
+</div>
+
+<!-- ───────── Sound opt-in toast ───────── -->
+<div class="sound-toast" id="soundToast">
+  <span class="sound-toast__text">A single soft chime on first scroll — opt in?</span>
+  <div class="sound-toast__btns">
+    <button class="sound-toast__btn secondary" id="soundDecline">Not now</button>
+    <button class="sound-toast__btn" id="soundAccept">Enable</button>
+  </div>
+</div>
+
+<script>
+(() => {
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ─────── Fade-up IntersectionObserver ─────── */
+  const fadeEls = document.querySelectorAll('.fade-up');
+  const fadeObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('is-in');
+        fadeObserver.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
+  fadeEls.forEach(el => fadeObserver.observe(el));
+
+  // Hero ones fire immediately so the headline is in on load
+  document.querySelectorAll('.hero .fade-up').forEach(el => {
+    setTimeout(() => el.classList.add('is-in'), 100);
+  });
+
+  /* ─────── Breath guide phase cycling ─────── */
+  // 8-second cycle: 4s inhale + 4s exhale (yogic breath)
+  const breathLabel = document.getElementById('breathLabel');
+  const breathPhase = document.getElementById('breathPhase');
+  const breathGuide = document.getElementById('breathGuide');
+  setTimeout(() => breathGuide.classList.add('is-in'), 1200);
+
+  if (!reduceMotion) {
+    const startTime = Date.now();
+    function tickBreath() {
+      const elapsed = (Date.now() - startTime) / 1000;
+      const cycle = elapsed % 8; // 0-4 inhale, 4-8 exhale
+      const sec = Math.floor(cycle % 4) + 1;
+      if (cycle < 4) {
+        breathLabel.textContent = 'Inhale';
+        breathPhase.textContent = 'slow · ' + sec + ' of 4';
+      } else {
+        breathLabel.textContent = 'Exhale';
+        breathPhase.textContent = 'slow · ' + sec + ' of 4';
+      }
+      requestAnimationFrame(tickBreath);
+    }
+    tickBreath();
+  }
+
+  /* ─────── Teacher quote typewriter on hover ─────── */
+  document.querySelectorAll('.teacher').forEach(card => {
+    const quoteEl = card.querySelector('.teacher__quote');
+    const full = card.dataset.quote;
+    let timer = null;
+    let typing = false;
+
+    function clear() {
+      if (timer) { clearTimeout(timer); timer = null; }
+      typing = false;
+      quoteEl.innerHTML = '';
+      card.classList.remove('is-typing');
+    }
+
+    function type() {
+      if (typing) return;
+      typing = true;
+      card.classList.add('is-typing');
+      let i = 0;
+      quoteEl.innerHTML = '';
+      const cursor = document.createElement('span');
+      cursor.className = 'teacher__quote-cursor';
+      quoteEl.appendChild(cursor);
+
+      function step() {
+        if (i < full.length && typing) {
+          const text = document.createTextNode(full.charAt(i));
+          quoteEl.insertBefore(text, cursor);
+          i++;
+          // slight variation in speed for natural feel
+          const delay = full.charAt(i - 1) === ' ' ? 18 : (full.charAt(i - 1) === ',' ? 60 : (/[\.—]/.test(full.charAt(i - 1)) ? 140 : 28));
+          timer = setTimeout(step, delay);
+        } else {
+          // done typing — remove cursor after a beat
+          setTimeout(() => { if (cursor.parentNode) cursor.remove(); }, 800);
+          typing = false;
+        }
+      }
+      step();
+    }
+
+    card.addEventListener('mouseenter', type);
+    card.addEventListener('mouseleave', clear);
+
+    // Touch: tap to type
+    card.addEventListener('click', (e) => {
+      if (card.classList.contains('is-typing')) {
+        clear();
+      } else {
+        type();
+      }
+    });
+  });
+
+  /* ─────── Schedule row expansion ─────── */
+  document.querySelectorAll('.sched-row').forEach(row => {
+    row.addEventListener('click', () => {
+      const wasOpen = row.classList.contains('is-open');
+      // optional: close others
+      // document.querySelectorAll('.sched-row.is-open').forEach(r => r.classList.remove('is-open'));
+      row.classList.toggle('is-open', !wasOpen);
+    });
+  });
+
+  /* ─────── Sound: opt-in toast + chime on first scroll ─────── */
+  const soundToggle = document.getElementById('soundToggle');
+  const soundLabel = document.getElementById('soundLabel');
+  const soundToast = document.getElementById('soundToast');
+  const acceptBtn = document.getElementById('soundAccept');
+  const declineBtn = document.getElementById('soundDecline');
+
+  let soundEnabled = false;
+  let chimePlayed = false;
+  let audioCtx = null;
+
+  function playChime() {
+    try {
+      if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+      const now = audioCtx.currentTime;
+
+      // Two oscillators: root (A4=440) + fifth (E5=659.25), soft triangle
+      const tones = [
+        { freq: 440.00, gain: 0.08, delay: 0.00 },
+        { freq: 659.25, gain: 0.05, delay: 0.04 },
+        { freq: 220.00, gain: 0.04, delay: 0.10 } // sub-octave for warmth
+      ];
+
+      tones.forEach(t => {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.value = t.freq;
+
+        gain.gain.setValueAtTime(0, now + t.delay);
+        gain.gain.linearRampToValueAtTime(t.gain, now + t.delay + 0.08);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + t.delay + 2.8);
+
+        osc.connect(gain).connect(audioCtx.destination);
+        osc.start(now + t.delay);
+        osc.stop(now + t.delay + 3.0);
+      });
+    } catch (err) {
+      // Audio failed — silent fail, this is optional
+    }
+  }
+
+  function enableSound() {
+    soundEnabled = true;
+    soundToggle.classList.add('is-on');
+    soundLabel.textContent = 'Sound · On';
+    soundToast.classList.remove('is-shown');
+    // prime context with a user gesture
+    if (!audioCtx) {
+      try { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); } catch(e) {}
+    }
+    if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+    // confirmation chime
+    setTimeout(playChime, 200);
+  }
+
+  function disableSound() {
+    soundEnabled = false;
+    soundToggle.classList.remove('is-on');
+    soundLabel.textContent = 'Sound · Off';
+  }
+
+  acceptBtn.addEventListener('click', enableSound);
+  declineBtn.addEventListener('click', () => {
+    soundToast.classList.remove('is-shown');
+  });
+  soundToggle.addEventListener('click', () => {
+    if (soundEnabled) disableSound();
+    else enableSound();
+  });
+
+  // Show toast shortly after load
+  setTimeout(() => {
+    soundToast.classList.add('is-shown');
+  }, 2400);
+
+  // Auto-hide toast after a while
+  setTimeout(() => {
+    soundToast.classList.remove('is-shown');
+  }, 14000);
+
+  // First scroll chime — only if enabled, only once
+  let scrollListenerAttached = false;
+  function attachScrollChime() {
+    if (scrollListenerAttached) return;
+    scrollListenerAttached = true;
+    window.addEventListener('scroll', () => {
+      if (soundEnabled && !chimePlayed) {
+        chimePlayed = true;
+        playChime();
+      }
+    }, { passive: true, once: false });
+  }
+  attachScrollChime();
+
+  /* ─────── Pause hero breath when off-screen ─────── */
+  const heroImg = document.querySelector('.hero__img-wrap');
+  const heroSection = document.querySelector('.hero');
+  if (heroImg && heroSection && !reduceMotion) {
+    const heroObs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        heroImg.style.animationPlayState = e.isIntersecting ? 'running' : 'paused';
+      });
+    }, { threshold: 0 });
+    heroObs.observe(heroSection);
+  }
+
+  /* ─────── Topbar subtle condense on scroll ─────── */
+  const topbar = document.querySelector('.topbar');
+  let lastY = 0;
+  window.addEventListener('scroll', () => {
+    const y = window.scrollY;
+    if (y > 60) {
+      topbar.style.background = 'rgba(244, 237, 224, 0.94)';
+    } else {
+      topbar.style.background = 'rgba(244, 237, 224, 0.86)';
+    }
+    lastY = y;
+  }, { passive: true });
+
+  /* ─────── Smooth anchor scroll with offset ─────── */
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', (e) => {
+      const id = a.getAttribute('href').slice(1);
+      const target = document.getElementById(id);
+      if (target) {
+        e.preventDefault();
+        const y = target.getBoundingClientRect().top + window.scrollY - 60;
+        window.scrollTo({ top: y, behavior: 'smooth' });
+      }
+    });
+  });
+
+})();
+</script>
+
+</body>
+</html>
