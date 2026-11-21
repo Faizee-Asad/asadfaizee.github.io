@@ -40,6 +40,7 @@ All tools run live at [asadfaizee.is-a.dev/tools](https://asadfaizee.is-a.dev/to
 
 **Image, Media & Productivity**
 - [Image Compressor](https://asadfaizee.is-a.dev/tools/image-compressor)
+- [AI Carousel Maker](https://asadfaizee.is-a.dev/tools/ai-carousel-maker)
 - [QR Code Generator](https://asadfaizee.is-a.dev/tools/qr_code_generator)
 - [LinkedIn Previewer](https://asadfaizee.is-a.dev/tools/linkedin-previewer/)
 - [ATS Resume Builder](https://asadfaizee.is-a.dev/tools/ats_resume_builder)
@@ -53,10 +54,15 @@ All tools run live at [asadfaizee.is-a.dev/tools](https://asadfaizee.is-a.dev/to
 ├── index.html        # Portfolio homepage
 ├── services.html     # Website & SEO service plans
 ├── tools/            # Free online tools (listed above)
-├── projects/         # Project / demo pages
+├── projects/         # Project / client demo pages
+├── demos/            # Standalone demo & landing pages (Noor, QR Cloud, Aurora)
+├── experiments/      # Personal one-off experiments
+├── niss/             # Noor Infotech company website (separate site, see STRUCTURE.md)
 ├── css/  js/  img/   # Styles, scripts and images
 └── fonts/            # Web fonts
 ```
+
+Full map of every folder: see [STRUCTURE.md](STRUCTURE.md)
 
 ## Connect
 
