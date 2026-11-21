@@ -1,0 +1,28 @@
+# Publishing control for asadfaizee.is-a.dev
+#
+# LIVE on the site: the portfolio (index.html, services.html),
+# the daauc page (daauc/) and the free tools (tools/).
+#
+# Everything in the exclude list below stays saved in this repository
+# but is NOT published on the live site.
+# To publish something again, remove its line from this list and push.
+
+exclude:
+  - _archive
+  - projects
+  - demos
+  - experiments
+  - niss
+  - "1"
+  - LITHOS
+  - KRO-FLITE
+  - STUDIO
+  - NINJUTSU-CREATIVE
+  - neo
+  - Aurora.html
+  - Aurora.md
+  - noor.html
+  - niss-service.html
+  - qr-cloud.html
+  - bd.html
+  - STRUCTURE.md

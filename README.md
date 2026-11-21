@@ -55,9 +55,11 @@ All tools run live at [asadfaizee.is-a.dev/tools](https://asadfaizee.is-a.dev/to
 ├── services.html     # Website & SEO service plans
 ├── tools/            # Free online tools (listed above)
 ├── projects/         # Project / client demo pages
-├── demos/            # Standalone demo & landing pages (Noor, QR Cloud, Aurora)
-├── experiments/      # Personal one-off experiments
-├── niss/             # Noor Infotech company website (separate site, see STRUCTURE.md)
+├── daauc/            # The daauc page (live)
+├── _archive/         # Index of saved-but-unpublished work (see below)
+├── projects/ demos/ experiments/ niss/ and other demo folders
+│                     # Saved in this repo only — NOT published.
+│                     # Publishing is controlled by _config.yml (see STRUCTURE.md)
 ├── css/  js/  img/   # Styles, scripts and images
 └── fonts/            # Web fonts
 ```
