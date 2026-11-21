@@ -4,25 +4,13 @@
 # Baaki saara purana kaam _archive/ folder ke andar save hai
 # (underscore wale folder GitHub Pages publish hi nahi karta).
 #
-# Neeche wali lines un folders/files ko band rakhti hain jo ya to
-# abhi root me hain (photo/video wale), ya _archive me ja chuke hain
-# aur jinki purani copy root se hatayi ja rahi hai:
+# Photo/video wale ye folders abhi root me hain, isliye inhe yahan
+# band rakha gaya hai. Jab ye _archive/ ke andar chale jayenge to
+# in lines ki zaroorat nahi rahegi:
 exclude:
   - _archive
-  - projects
-  - demos
-  - experiments
-  - niss
-  - "1"
-  - LITHOS
   - KRO-FLITE
   - STUDIO
   - NINJUTSU-CREATIVE
   - neo
-  - Aurora.html
-  - Aurora.md
-  - noor.html
-  - niss-service.html
-  - qr-cloud.html
-  - bd.html
   - STRUCTURE.md
