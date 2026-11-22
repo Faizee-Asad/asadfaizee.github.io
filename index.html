@@ -65,6 +65,25 @@
 		<div class="scroll-static"></div>
 	</div>
 	<!--  end page loader  -->
+	<script>
+		// Preloader safety: dismiss the loader even if a slow resource delays full page load
+		(function () {
+			function hidePreloader() {
+				var p = document.getElementById('preloader');
+				if (!p) return;
+				var line = p.querySelector('.scroll-static');
+				if (line) line.classList.add('loaded');
+				setTimeout(function () {
+					p.classList.add('loaded');
+					setTimeout(function () { if (p.parentNode) p.parentNode.removeChild(p); }, 450);
+				}, 350);
+			}
+			if (document.readyState === 'loading') {
+				document.addEventListener('DOMContentLoaded', function () { setTimeout(hidePreloader, 400); });
+			} else { setTimeout(hidePreloader, 400); }
+			setTimeout(hidePreloader, 3000);
+		})();
+	</script>
 
 	<!-- begin of main-wrapper -->
 	<div class="main-wrapper">
